@@ -1,0 +1,107 @@
+{
+  "ats_score": 86,
+  "location": "Seattle, WA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI,React",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Developed ML-based anomaly detection system using TensorFlow for inventory workflows, reducing redundant alerts by 25% and improving merchandise planning accuracy.",
+    "\\item Conducted exploratory data analysis on 30,000+ product records to identify key features that improved demand forecasting model performance for retail inventory optimization.",
+    "\\item Built end-to-end predictive modeling pipeline using Docker and CI/CD, achieving 87% model accuracy on sales data for merchandising and inventory decision-making.",
+    "\\item Implemented data validation and preprocessing pipelines for ML workflows, reducing manual data preparation effort for large-scale retail datasets.",
+    "\\item Containerized and deployed production ML solutions using Docker and AWS (Lambda, S3, EC2), ensuring scalable pipelines for inventory optimization and demand forecasting.",
+    "\\item Built CI/CD pipeline using GitHub Actions for automated model retraining and deployment to AWS, ensuring reliable and repeatable releases for merchandising ML systems."
+  ],
+  "meta_job_title": "Data Scientist - Merchandising & Inventory Machine Learning - Hybrid - Seattle, WA",
+  "meta_company": "Nordstrom",
+  "meta_link": "",
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI,React",
+      "Docker Containerization"
+    ]
+  }
+}

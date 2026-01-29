@@ -24,7 +24,7 @@ ChartJS.register(
   Legend
 )
 
-const API_URL = 'http://localhost:8000'
+const API_URL = 'http://localhost:5001'
 
 function App() {
   const [jobs, setJobs] = useState([])
@@ -48,8 +48,7 @@ function App() {
   const [roleFilter, setRoleFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all')
 
-  // Job statuses (stored in local state)
-  const [jobStatuses, setJobStatuses] = useState({})
+
 
   // Fetch jobs from API
   const fetchJobs = async () => {
@@ -62,11 +61,7 @@ function App() {
       setLoading(false)
       setError(null)
 
-      // Load saved statuses from localStorage
-      const savedStatuses = localStorage.getItem('jobStatuses')
-      if (savedStatuses) {
-        setJobStatuses(JSON.parse(savedStatuses))
-      }
+
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to load jobs. Make sure the API is running.')
       setLoading(false)
@@ -112,7 +107,7 @@ function App() {
 
       // Status filter
       if (statusFilter !== 'all') {
-        const jobStatus = jobStatuses[job.Link] || 'not_applied'
+        const jobStatus = job.Status || 'not_applied'
         if (statusFilter !== jobStatus) return false
       }
 
@@ -144,13 +139,27 @@ function App() {
     })
 
     setFilteredJobs(filtered)
-  }, [jobs, tierFilter, minScore, searchText, showNewOnly, filterDate, filterTime, roleFilter, statusFilter, jobStatuses])
+  }, [jobs, tierFilter, minScore, searchText, showNewOnly, filterDate, filterTime, roleFilter, statusFilter])
 
   // Handle status change
-  const handleStatusChange = (jobLink, newStatus) => {
-    const updatedStatuses = { ...jobStatuses, [jobLink]: newStatus }
-    setJobStatuses(updatedStatuses)
-    localStorage.setItem('jobStatuses', JSON.stringify(updatedStatuses))
+  const handleStatusChange = async (job, newStatus) => {
+    // Optimistic update
+    const updatedJobs = jobs.map(j =>
+      j._rowIndex === job._rowIndex ? { ...j, Status: newStatus } : j
+    )
+    setJobs(updatedJobs)
+    setFilteredJobs(updatedJobs) // Re-apply filters ideally, but this updates the view
+
+    // Update backend
+    try {
+      await axios.post(`${API_URL}/api/update-status`, {
+        row_index: job._rowIndex,
+        status: newStatus
+      })
+    } catch (err) {
+      console.error('Failed to update status:', err)
+      // Revert on error (optional, skipping for now)
+    }
   }
 
   // Handle job card click to open sidebar
@@ -252,7 +261,7 @@ function App() {
 
   jobs.forEach(job => {
     const tier = job.Tier || ''
-    const status = jobStatuses[job.Link] || 'not_applied'
+    const status = job.Status || 'not_applied'
 
     let tierKey = null
     if (tier.includes('🟢')) tierKey = 'perfect'
@@ -480,10 +489,10 @@ function App() {
                     Status:
                   </label>
                   <select
-                    value={jobStatuses[job.Link] || 'not_applied'}
+                    value={job.Status || 'not_applied'}
                     onChange={(e) => {
                       e.stopPropagation()
-                      handleStatusChange(job.Link, e.target.value)
+                      handleStatusChange(job, e.target.value)
                     }}
                     onClick={(e) => e.stopPropagation()}
                     className="status-select"
@@ -505,7 +514,11 @@ function App() {
 
       {/* Sidebar */}
       {sidebarOpen && (
-        <JobSidebar job={selectedJob} onClose={handleCloseSidebar} />
+        <JobSidebar
+          job={selectedJob}
+          onClose={handleCloseSidebar}
+          onStatusChange={handleStatusChange}
+        />
       )}
     </div>
   )

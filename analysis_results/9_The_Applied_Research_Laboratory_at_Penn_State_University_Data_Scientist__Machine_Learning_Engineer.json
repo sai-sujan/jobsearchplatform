@@ -1,0 +1,49 @@
+{
+    "ats_score": 85,
+    "location": "State College, PA or Reston, VA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "C++",
+            "MATLAB"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Pandas",
+            "NumPy"
+        ],
+        "LLM & NLP Tools": [
+            "Data Visualization",
+            "Pattern Recognition",
+            "Anomaly Detection"
+        ],
+        "Cloud & Deployment": [
+            "Docker",
+            "Linux",
+            "HPC"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Geospatial Data (GIS)"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "Visualization Libraries"
+        ],
+        "ML Specializations": [
+            "Multivariate Analysis",
+            "Data Fusion",
+            "Decision Support Systems"
+        ]
+    },
+    "points": [
+        "\\item Developed advanced machine learning prototypes for complex multivariate data analysis, enabling enhanced decision support for mission-critical objectives.",
+        "\\item Implemented anomaly detection algorithms to identify patterns of life and irregularities in large-scale datasets, improving threat detection capabilities.",
+        "\\item Designed and visualized high-dimensional data using Python libraries, providing stakeholders with intuitive insights into complex system behaviors.",
+        "\\item Engineered robust software prototypes for data fusion and correlation, integrating diverse data sources to create a unified operational picture.",
+        "\\item Conducted rigorous statistical analysis and research to select appropriate datasets and modeling techniques for specific sponsor domains.",
+        "\\item Collaborated with cross-functional research teams to transition algorithmic solutions from prototype to pre-production environments."
+    ]
+}

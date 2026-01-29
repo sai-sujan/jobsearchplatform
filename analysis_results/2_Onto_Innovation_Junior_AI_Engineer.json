@@ -1,0 +1,46 @@
+{
+    "ats_score": 92,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Agents",
+            "Multi-Agents",
+            "RAG Systems"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "FAISS"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "Git"
+        ],
+        "ML Specializations": [
+            "Computer Vision",
+            "Anomaly Detection",
+            "Deep Learning"
+        ]
+    },
+    "points": [
+        "\\item Designed and implemented self-correcting RAG agents to automate internal manufacturing workflows, improving knowledge retrieval efficiency by 30%.",
+        "\\item Engineered ML-based anomaly detection systems for high-precision defect inspection, significantly reducing false positive rates in automated quality control.",
+        "\\item Built a robust LLM-as-Judge evaluation pipeline to validate the accuracy and reasoning capabilities of internal AI helpers and chatbots.",
+        "\\item Developed a hybrid retrieval architecture combining semantic search and keyword matching to optimize playbook lookups for field engineering support.",
+        "\\item Implementation of batched query extraction pipelines to accelerate the responsiveness of AI agents utilized in time-critical troubleshooting tasks.",
+        "\\item Leveraged advanced computer vision techniques and transfer learning to enhance defect classification models on limited industrial datasets."
+    ]
+}

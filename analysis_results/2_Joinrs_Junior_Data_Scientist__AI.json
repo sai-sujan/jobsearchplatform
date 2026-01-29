@@ -1,0 +1,46 @@
+{
+    "ats_score": 88,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Pandas"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Generative AI",
+            "NLP"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "NoSQL"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "Data Visualization"
+        ],
+        "ML Specializations": [
+            "Predictive Modeling",
+            "Recommender Systems",
+            "Data Analysis"
+        ]
+    },
+    "points": [
+        "\\item Implemented and tested advanced machine learning algorithms for employment matching systems, enhancing user-job relevance scores by 20%.",
+        "\\item BEveloped predictive models to analyze user behavior trends, providing actionable insights that informed key business strategies and product features.",
+        "\\item Created interactive data visualization dashboards, effectively communicating complex KPIs and model performance metrics to stakeholders and investors.",
+        "\\item Optimized data processing pipelines for high-throughput user data, ensuring real-time responsiveness for the AI-driven recommendation engine.",
+        "\\item Collaborated with the tech team to integrate AI models into the core platform, ensuring seamless functionality and user experience.",
+        "\\item Conducted exploratory data analysis to identify new feature opportunities, driving continuous improvement of the recommendation algorithms."
+    ]
+}

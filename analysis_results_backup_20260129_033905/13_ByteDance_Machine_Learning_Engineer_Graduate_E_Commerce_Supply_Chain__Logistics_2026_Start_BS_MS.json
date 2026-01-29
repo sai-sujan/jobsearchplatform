@@ -1,0 +1,118 @@
+{
+  "ats_score": 90,
+  "location": "San Jose, CA (Open to Relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "Agents",
+      "Multi-Agents",
+      "LoRA",
+      "QLoRA",
+      "OpenAI",
+      "Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Computer Vision",
+      "Deep Learning",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "Milvus",
+      "Weaviate",
+      "FAISS",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in complex data retrieval tasks.",
+    "\\item Introduced batched query extraction using Python and SQL, reducing LLM calls by \\~80\\% per query and enabling faster, reliable production inference for high-scale systems.",
+    "\\item Designed an ML-based anomaly detection system, reducing redundant verification prompts by 25\\%, improving user experience while maintaining security coverage.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability.",
+    "\\item Containerized and deployed scalable AI solutions using Docker and AWS, ensuring robust pipelines for large-scale ML applications."
+  ],
+  "meta_job_title": "Machine Learning Engineer - Graduate (E-Commerce Supply Chain & Logistics) - 2026 Start (BS/MS)",
+  "meta_company": "ByteDance",
+  "meta_link": "https://www.linkedin.com/jobs/view/...",
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL",
+      "C++"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection",
+      "Recommendation Systems"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment",
+      "Docker"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB",
+      "Redis"
+    ],
+    "Web & DevOps": [
+      "FastAPI, React",
+      "Docker Containerization"
+    ]
+  }
+}

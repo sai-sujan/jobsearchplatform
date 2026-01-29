@@ -1,0 +1,47 @@
+{
+    "ats_score": 90,
+    "location": "Remote",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python"
+        ],
+        "ML Frameworks & Libraries": [
+            "LangChain",
+            "LlamaIndex",
+            "OpenAI API"
+        ],
+        "LLM & NLP Tools": [
+            "RAG Systems",
+            "Agentic AI",
+            "Embeddings",
+            "Azure OpenAI"
+        ],
+        "Cloud & Deployment": [
+            "Azure",
+            "Azure Blob Storage",
+            "Azure Data Factory"
+        ],
+        "Databases & AI Infrastructure": [
+            "Azure Document Intelligence",
+            "Vector Databases"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "Flask",
+            "REST APIs"
+        ],
+        "ML Specializations": [
+            "Generative AI",
+            "Multi-Agent Systems",
+            "Production AI"
+        ]
+    },
+    "points": [
+        "\\item Architected and built scalable RAG pipelines using Azure OpenAI and Azure Cognitive Services, delivering high-accuracy document retrieval systems for enterprise clients.",
+        "\\item Developed production-ready API services using FastAPI to expose GenAI capabilities, ensuring low-latency performance and seamless integration with client applications.",
+        "\\item Engineered multi-agent AI workflows to automate complex business processes, utilizing advanced prompting strategies and orchestration frameworks.",
+        "\\item Implemented end-to-end data processing pipelines with Azure Data Factory and Blob Storage, optimizing data chunking and embedding generation for large-scale corpora.",
+        "\\item Designed and deployed custom AI solutions directly for clients, leading technical demonstrations and translating business requirements into robust system architectures.",
+        "\\item Optimized retrieval logic and agentic behaviors to improve response relevance and accuracy, leveraging state-of-the-art embedding models and vector search techniques."
+    ]
+}

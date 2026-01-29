@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react'
 import './JobSidebar.css'
 
-const JobSidebar = ({ job, onClose }) => {
+const FIXED_TECH_STACK_CONST = {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"],
+    "LLM & NLP Tools": ["LangChain", "LangSmith", "LlamaIndex", "Multi-Agents", "Finetuning (LoRA, QLoRA)", "OpenAI, Ollama", "RAG Systems"],
+    "ML Specializations": ["Deep Learning", "Computer Vision", "Anomaly Detection"],
+    "MLOps & Deployment": ["MLflow", "Git, GitHub Actions", "CI/CD Pipelines", "Model Deployment"],
+    "Cloud & Infrastructure": ["AWS", "Azure"],
+    "Databases & AI Infrastructure": ["PostgreSQL, MySQL, MongoDB", "Weaviate", "FAISS", "ChromaDB"],
+    "Web & DevOps": ["FastAPI", "Docker Containerization"]
+}
+
+const JobSidebar = ({ job, onClose, onStatusChange }) => {
     const [expandedSections, setExpandedSections] = useState({
         jobDescription: false,
         analysis: false,
@@ -46,7 +57,7 @@ const JobSidebar = ({ job, onClose }) => {
 
     // Normalize old format to new format
     const normalizeData = (data) => {
-        if (!data) return { location: job.Location || '', tech_stack: {}, points: [], ats_score: 'N/A' }
+        if (!data) return { location: job.Location || '', tech_stack: {}, suggested_tech_stack: {}, points: [], ats_score: 'N/A' }
 
         // Handle ATS score (old: ai_ats_score, new: ats_score)
         const atsScore = data.ats_score || data.ai_ats_score || 'N/A'
@@ -56,6 +67,7 @@ const JobSidebar = ({ job, onClose }) => {
 
         // Handle tech stack
         const techStack = data.tech_stack || {}
+        const suggestedTechStack = data.suggested_tech_stack || {}
 
         // Handle points (old: suggested_resume_point_1/2, new: points array)
         let points = []
@@ -67,7 +79,7 @@ const JobSidebar = ({ job, onClose }) => {
             if (data.suggested_resume_point_2) points.push(data.suggested_resume_point_2)
         }
 
-        return { location, tech_stack: techStack, points, ats_score: atsScore }
+        return { location, tech_stack: techStack, suggested_tech_stack: suggestedTechStack, points, ats_score: atsScore }
     }
 
     const normalizedData = normalizeData(analysisData)
@@ -90,10 +102,11 @@ const JobSidebar = ({ job, onClose }) => {
 
         // Normalize the data
         const normalize = (data) => {
-            if (!data) return { location: job.Location || '', tech_stack: {}, points: [], ats_score: 'N/A' }
+            if (!data) return { location: job.Location || '', tech_stack: {}, suggested_tech_stack: {}, points: [], ats_score: 'N/A' }
             const atsScore = data.ats_score || data.ai_ats_score || 'N/A'
             const location = data.location || job.Location || ''
-            const techStack = data.tech_stack || {}
+            let techStack = data.tech_stack || {}
+            let suggestedTechStack = data.suggested_tech_stack || {}
             let points = []
             if (data.points && Array.isArray(data.points)) {
                 points = data.points
@@ -101,11 +114,21 @@ const JobSidebar = ({ job, onClose }) => {
                 if (data.suggested_resume_point_1) points.push(data.suggested_resume_point_1)
                 if (data.suggested_resume_point_2) points.push(data.suggested_resume_point_2)
             }
-            return { location, tech_stack: techStack, points, ats_score: atsScore }
+
+            // Heuristic for Fresh Data:
+            // If suggested_tech_stack is empty but tech_stack has items, it means this is fresh from scraper
+            // We want to show these as Suggestions (Blue) and start Final (Green) as the FIXED STACK
+            if (Object.keys(suggestedTechStack).length === 0 && Object.keys(techStack).length > 0) {
+                suggestedTechStack = { ...techStack }
+                techStack = JSON.parse(JSON.stringify(FIXED_TECH_STACK_CONST))
+            }
+
+            return { location, tech_stack: techStack, suggested_tech_stack: suggestedTechStack, points, ats_score: atsScore }
         }
 
         const data = normalize(jobAnalysisData)
         setEditedData(data)
+        // Store original suggested stack in separate state or keep in originalData
         setOriginalData(data)
     }, [job])
 
@@ -149,13 +172,14 @@ const JobSidebar = ({ job, onClose }) => {
             // Get the row index from job data
             const rowIndex = job._rowIndex || 0
 
-            const response = await fetch('http://localhost:8000/api/update-analysis', {
+            const response = await fetch('http://localhost:5001/api/update-analysis', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     row_index: rowIndex,
                     location: editedData.location,
                     tech_stack: editedData.tech_stack,
+                    suggested_tech_stack: editedData.suggested_tech_stack,
                     points: editedData.points
                 })
             })
@@ -187,7 +211,7 @@ const JobSidebar = ({ job, onClose }) => {
         try {
             const rowIndex = job._rowIndex || 0
 
-            const response = await fetch('http://localhost:8000/api/generate-resume', {
+            const response = await fetch('http://localhost:5001/api/generate-resume', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -296,6 +320,63 @@ const JobSidebar = ({ job, onClose }) => {
                             <span className="score-label">ATS Score</span>
                         </div>
 
+                        {/* Status Dropdown */}
+                        <div className="sidebar-status-section">
+                            <label className="sidebar-label">Application Status</label>
+                            <select
+                                value={job.Status || 'not_applied'}
+                                onChange={(e) => onStatusChange(job, e.target.value)}
+                                className="sidebar-status-select"
+                            >
+                                <option value="not_applied">❌ Not Applied</option>
+                                <option value="applied">✅ Applied</option>
+                                <option value="interviewing">💬 Interviewing</option>
+                                <option value="accepted">🎉 Accepted</option>
+                            </select>
+                        </div>
+
+                        {/* Link Button */}
+                        <div style={{ marginBottom: '20px' }}>
+                            <a href={job.Link} target="_blank" rel="noopener noreferrer"
+                                style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    background: '#3182ce',
+                                    color: 'white',
+                                    padding: '8px 16px',
+                                    borderRadius: '6px',
+                                    textDecoration: 'none',
+                                    fontWeight: '500',
+                                    fontSize: '0.9rem'
+                                }}>
+                                View Job Posting ↗
+                            </a>
+                        </div>
+
+                        {/* Job Description Section */}
+                        <div className="detail-section">
+                            <div className="section-header" onClick={() => toggleSection('jobDescription')}>
+                                <h3>Job Description</h3>
+                                <span className={`arrow ${expandedSections.jobDescription ? 'expanded' : ''}`}>▼</span>
+                            </div>
+                            <div className={`section-content ${expandedSections.jobDescription ? 'expanded' : ''}`}>
+                                <div style={{
+                                    whiteSpace: 'pre-wrap',
+                                    fontSize: '0.85rem',
+                                    color: '#4a5568',
+                                    maxHeight: '400px',
+                                    overflowY: 'auto',
+                                    background: '#f7fafc',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    border: '1px solid #edf2f7'
+                                }}>
+                                    {job['Job Description'] || "No description available."}
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Location Section */}
                         <div className="detail-section">
                             <div
@@ -333,85 +414,138 @@ const JobSidebar = ({ job, onClose }) => {
                             </div>
                             <div className={`section-content ${expandedSections.techStack ? 'expanded' : ''}`}>
                                 {editMode ? (
-                                    <div className="tech-stack-editor">
-                                        <div className="editor-toolbar">
-                                            <button
-                                                className={`mode-btn ${!jsonMode ? 'active' : ''}`}
-                                                onClick={() => setJsonMode(false)}
-                                            >
-                                                Visual Editor
-                                            </button>
-                                            <button
-                                                className={`mode-btn ${jsonMode ? 'active' : ''}`}
-                                                onClick={() => {
-                                                    setJsonMode(true)
-                                                    setJsonText(JSON.stringify(editedData.tech_stack, null, 2))
-                                                }}
-                                            >
-                                                JSON Editor
-                                            </button>
+                                    <div className="tech-stack-merger">
+                                        {/* Intro Text */}
+                                        <div style={{ marginBottom: '16px', fontSize: '0.9rem', color: '#666' }}>
+                                            Select skills from <strong>Suggested</strong> (Blue) to add to <strong>Your Stack</strong> (Green).
                                         </div>
 
-                                        {jsonMode ? (
-                                            <div className="json-editor-container">
-                                                <textarea
-                                                    className="json-editor"
-                                                    value={jsonText}
-                                                    onChange={(e) => {
-                                                        setJsonText(e.target.value)
-                                                        try {
-                                                            const parsed = JSON.parse(e.target.value)
+                                        {/* Compute Union of Categories to ensure we show everything */}
+                                        {(() => {
+                                            const myCategories = Object.keys(editedData.tech_stack || {})
+                                            const suggestedCategories = originalData && originalData.suggested_tech_stack ? Object.keys(originalData.suggested_tech_stack) : []
+                                            const allCategories = [...new Set([...myCategories, ...suggestedCategories])]
+
+                                            return allCategories.map(category => {
+                                                const finalSkills = (editedData.tech_stack && editedData.tech_stack[category]) || []
+                                                const suggestedSkills = originalData && originalData.suggested_tech_stack ? (originalData.suggested_tech_stack[category] || []) : []
+
+                                                // Skip if both are empty (rare)
+                                                if (finalSkills.length === 0 && suggestedSkills.length === 0) return null
+
+
+                                                // Provide function to add manual skill
+                                                const handleManualAdd = (e) => {
+                                                    if (e.key === 'Enter') {
+                                                        const val = e.target.value.trim()
+                                                        if (val && !finalSkills.includes(val)) {
+                                                            const newSkills = [...finalSkills, val]
                                                             setEditedData(prev => ({
                                                                 ...prev,
-                                                                tech_stack: parsed
+                                                                tech_stack: { ...prev.tech_stack, [category]: newSkills }
                                                             }))
-                                                            setJsonError('')
-                                                        } catch (err) {
-                                                            setJsonError(err.message)
+                                                            e.target.value = ''
                                                         }
-                                                    }}
-                                                />
-                                                {jsonError && <div className="json-error">{jsonError}</div>}
-                                            </div>
-                                        ) : (
-                                            <div className="visual-editor">
-                                                {editedData.tech_stack && Object.keys(editedData.tech_stack).length > 0 ? (
-                                                    Object.entries(editedData.tech_stack).map(([category, skills]) => (
-                                                        <div key={category} className="tech-category-edit">
-                                                            <div className="category-header-edit" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    }
+                                                }
+
+                                                return (
+                                                    <div key={category} className="merge-category-block" style={{ marginBottom: '24px', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '16px' }}>
+                                                        <h4 style={{ margin: '0 0 12px 0', fontSize: '1rem', color: '#2d3748' }}>{category}</h4>
+
+                                                        {/* Suggested (Source) */}
+                                                        <div className="merge-row" style={{ marginBottom: '12px' }}>
+                                                            <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#4299e1', fontWeight: 'bold', marginBottom: '6px' }}>Suggested</div>
+                                                            <div className="tech-skills">
+                                                                {suggestedSkills.length > 0 ? suggestedSkills.map(skill => {
+                                                                    const isAdded = finalSkills.includes(skill)
+                                                                    return (
+                                                                        <button
+                                                                            key={skill}
+                                                                            className={`skill-chip suggested ${isAdded ? 'added' : ''}`}
+                                                                            disabled={isAdded}
+                                                                            onClick={() => {
+                                                                                if (!isAdded) {
+                                                                                    const newSkills = [...finalSkills, skill]
+                                                                                    setEditedData(prev => ({
+                                                                                        ...prev,
+                                                                                        tech_stack: { ...prev.tech_stack, [category]: newSkills }
+                                                                                    }))
+                                                                                }
+                                                                            }}
+                                                                            style={{
+                                                                                background: isAdded ? '#edf2f7' : '#ebf8ff',
+                                                                                color: isAdded ? '#a0aec0' : '#2b6cb0',
+                                                                                border: isAdded ? '1px solid #e2e8f0' : '1px solid #bee3f8',
+                                                                                borderRadius: '20px',
+                                                                                padding: '4px 10px',
+                                                                                fontSize: '0.85rem',
+                                                                                cursor: isAdded ? 'default' : 'pointer',
+                                                                                marginRight: '6px',
+                                                                                marginBottom: '6px',
+                                                                                opacity: isAdded ? 0.7 : 1
+                                                                            }}
+                                                                        >
+                                                                            {skill} {isAdded ? '✓' : <span style={{ fontWeight: 'bold' }}>+</span>}
+                                                                        </button>
+                                                                    )
+                                                                }) : <span style={{ color: '#a0aec0', fontStyle: 'italic', fontSize: '0.85rem' }}>None available</span>}
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Final (Target) */}
+                                                        <div className="merge-row">
+                                                            <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#48bb78', fontWeight: 'bold', marginBottom: '6px' }}>Yours (Final)</div>
+                                                            <div className="tech-skills">
+                                                                {finalSkills.map(skill => (
+                                                                    <button
+                                                                        key={skill}
+                                                                        className="skill-chip final"
+                                                                        onClick={() => {
+                                                                            const newSkills = finalSkills.filter(s => s !== skill)
+                                                                            setEditedData(prev => ({
+                                                                                ...prev,
+                                                                                tech_stack: { ...prev.tech_stack, [category]: newSkills }
+                                                                            }))
+                                                                        }}
+                                                                        style={{
+                                                                            background: '#f0fff4',
+                                                                            color: '#2f855a',
+                                                                            border: '1px solid #c6f6d5',
+                                                                            borderRadius: '20px',
+                                                                            padding: '4px 10px',
+                                                                            fontSize: '0.85rem',
+                                                                            cursor: 'pointer',
+                                                                            marginRight: '6px',
+                                                                            marginBottom: '6px'
+                                                                        }}
+                                                                    >
+                                                                        {skill} <span style={{ fontWeight: 'bold' }}>×</span>
+                                                                    </button>
+                                                                ))}
+
+                                                                {/* Manual Add Input */}
                                                                 <input
                                                                     type="text"
-                                                                    className="category-key-input"
-                                                                    value={category}
-                                                                    onChange={(e) => handleTechStackKeyChange(category, e.target.value)}
-                                                                    placeholder="Category Name"
+                                                                    placeholder="+ Add Custom"
+                                                                    onKeyDown={handleManualAdd}
+                                                                    style={{
+                                                                        background: 'transparent',
+                                                                        border: '1px dashed #cbd5e0',
+                                                                        borderRadius: '16px',
+                                                                        padding: '4px 10px',
+                                                                        fontSize: '0.85rem',
+                                                                        width: '100px',
+                                                                        outline: 'none',
+                                                                        color: '#4a5568'
+                                                                    }}
                                                                 />
-                                                                <button
-                                                                    className="delete-point-btn"
-                                                                    onClick={() => handleTechStackDelete(category)}
-                                                                    title="Delete Category"
-                                                                    style={{ width: '24px', height: '24px', fontSize: '0.8rem' }}
-                                                                >
-                                                                    🗑️
-                                                                </button>
                                                             </div>
-                                                            <input
-                                                                type="text"
-                                                                className="edit-input"
-                                                                value={Array.isArray(skills) ? skills.join(', ') : ''}
-                                                                onChange={(e) => handleTechStackChange(category, e.target.value)}
-                                                                placeholder="Comma-separated skills"
-                                                            />
                                                         </div>
-                                                    ))
-                                                ) : (
-                                                    <div className="no-data-msg">No tech stack data. Add a category below.</div>
-                                                )}
-                                                <button className="add-point-btn" onClick={handleTechStackAdd} style={{ marginTop: '16px' }}>
-                                                    ➕ Add Category
-                                                </button>
-                                            </div>
-                                        )}
+                                                    </div>
+                                                )
+                                            })
+                                        })()}
                                     </div>
                                 ) : (
                                     <div className="tech-stack-display">
@@ -507,7 +641,7 @@ const JobSidebar = ({ job, onClose }) => {
                             <div className="pdf-success">
                                 <p>✅ Resume Generated Successfully!</p>
                                 <div className="pdf-actions">
-                                    <a href={`http://localhost:8000${pdfUrl}`} target="_blank" rel="noopener noreferrer" className="download-btn">
+                                    <a href={`http://localhost:5001${pdfUrl}`} target="_blank" rel="noopener noreferrer" className="download-btn">
                                         Download PDF
                                     </a>
                                     <button className="copy-path-btn" onClick={() => navigator.clipboard.writeText(pdfUrl)}>
@@ -516,12 +650,40 @@ const JobSidebar = ({ job, onClose }) => {
                                 </div>
                                 <div className="pdf-preview" style={{ marginTop: '16px' }}>
                                     <iframe
-                                        src={`http://localhost:8000${pdfUrl}`}
+                                        src={`http://localhost:5001${pdfUrl}`}
                                         width="100%"
                                         height="400px"
                                         style={{ border: '1px solid #e2e8f0', borderRadius: '8px' }}
                                         title="Resume Preview"
                                     />
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Persisted Resumes Section */}
+                        {(job['Resume Path'] || job.pdf_path) && !pdfUrl && (
+                            <div className="pdf-success" style={{ marginTop: '20px', background: '#f0f9ff', borderColor: '#bee3f8' }}>
+                                <p style={{ color: '#2b6cb0' }}>📄 Saved Resume Available</p>
+                                <div className="pdf-actions">
+                                    {/* We need to extract filename from path */}
+                                    {(() => {
+                                        const path = job['Resume Path'] || job.pdf_path || '';
+                                        // Handle multiple paths if separated by semicolon
+                                        const paths = path.split(';').map(p => p.trim()).filter(p => p);
+                                        const latestPath = paths[0];
+                                        const filename = latestPath.split('/').pop();
+
+                                        return (
+                                            <>
+                                                <a href={`http://localhost:5001/api/download-resume/${filename}`} target="_blank" rel="noopener noreferrer" className="download-btn">
+                                                    Download Latest PDF
+                                                </a>
+                                                <div style={{ fontSize: '0.8rem', color: '#718096', marginTop: '8px' }}>
+                                                    {filename}
+                                                </div>
+                                            </>
+                                        )
+                                    })()}
                                 </div>
                             </div>
                         )}

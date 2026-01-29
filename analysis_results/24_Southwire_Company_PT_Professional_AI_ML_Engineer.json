@@ -1,0 +1,48 @@
+{
+    "ats_score": 90,
+    "location": "Carrollton, GA (Hybrid/Remote Flexible)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "C++"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "OpenCV"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "RAG Systems",
+            "NLP",
+            "Chatbots"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "REST APIs"
+        ],
+        "Databases & AI Infrastructure": [
+            "SQL",
+            "Data Pipelines"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Computer Vision",
+            "Deep Learning",
+            "Robotics"
+        ]
+    },
+    "points": [
+        "\\item Developed and deployed scalable machine learning models for industrial applications, leveraging computer vision and NLP to optimize manufacturing processes.",
+        "\\item Engineered robust RAG systems and chatbots using LangChain, improving internal knowledge retrieval and decision support for technical teams.",
+        "\\item Designed and implemented REST API integrations for AI models, ensuring seamless interoperability with existing enterprise systems and robotics platforms.",
+        "\\item Optimized deep learning pipelines for real-time inference, utilizing Python and cutting-edge libraries to achieve high performance on constrained hardware.",
+        "\\item Collaborated with multidisciplinary teams to define AI strategies and roadmap, translating business needs into practical, high-impact technical solutions.",
+        "\\item Cleaning and preprocessing large-scale datasets to ensure high data quality, establishing best practices for model training and validation."
+    ]
+}

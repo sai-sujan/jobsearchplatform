@@ -1,0 +1,49 @@
+{
+    "ats_score": 88,
+    "location": "Washington, DC Metro Area",
+    "tech_stack": {
+        "Programming Languages": [
+            "Java",
+            "C",
+            "C++",
+            "Python"
+        ],
+        "ML Frameworks & Libraries": [
+            "Marian",
+            "TensorFlow",
+            "PyTorch",
+            "Open Source Libraries"
+        ],
+        "LLM & NLP Tools": [
+            "Natural Language Processing (NLP)",
+            "Large Language Models (LLMs)",
+            "Computational Linguistics"
+        ],
+        "Cloud & Deployment": [
+            "AWS SageMaker",
+            "AWS",
+            "Deep Learning Containers"
+        ],
+        "Databases & AI Infrastructure": [
+            "GPU Optimization",
+            "Model Deployment"
+        ],
+        "Web & DevOps": [
+            "Full-stack Development",
+            "Integration"
+        ],
+        "ML Specializations": [
+            "Multi-lingual Models",
+            "Model Tuning",
+            "Performance Analysis"
+        ]
+    },
+    "points": [
+        "\\item Developed and fine-tuned state-of-the-art machine learning models for natural language processing, specifically focusing on multi-lingual model development using Marian.",
+        "\\item Engineered robust full-stack solutions to integrate ML models into production environments, ensuring seamless scalability and high availability on AWS SageMaker.",
+        "\\item Optimized deep learning containers and GPU utilization for model training, significantly reducing computational costs and training time.",
+        "\\item Conducted rigorous model evaluation and error analysis, implementing best practices for debugging and performance improvement in complex NLP systems.",
+        "\\item Collaborated with cross-functional teams to deploy cloud-based AI platforms, translating research capabilities into mission-critical applications.",
+        "\\item Implemented advanced solutions for model performance improvement, leveraging deep understanding of computational linguistics and open-source model libraries."
+    ]
+}

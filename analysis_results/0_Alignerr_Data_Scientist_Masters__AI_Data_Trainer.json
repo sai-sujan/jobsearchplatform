@@ -1,0 +1,50 @@
+{
+    "ats_score": 92,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL",
+            "R"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Pandas",
+            "NumPy"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LLM Evaluation",
+            "Data Pipelines"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Spark",
+            "Hadoop"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Data Lakes"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Supervised Learning",
+            "Unsupervised Learning",
+            "Deep Learning",
+            "Statistical Inference"
+        ]
+    },
+    "points": [
+        "\\item Developed rigorous ground-truth solutions for complex data science problems, auditing AI-generated code to ensure 100% technical accuracy and logical soundness.",
+        "\\item Engineered advanced evaluation pipelines for LLM reasoning capabilities, identifying and mitigating logical fallacies such as data leakage and overfitting.",
+        "\\item Designed and implemented robust data engineering workflows using Python and Spark, optimizing data processing for large-scale machine learning datasets.",
+        "\\item Conducted in-depth statistical analysis and hypothesis testing to validate model performance, documenting failure modes to drive iterative model hardening.",
+        "\\item Architected automated testing frameworks for checking code syntax and mathematical validity of AI outputs, significantly reducing manual review time.",
+        "\\item Collaborated with research teams to refine 'chain-of-thought' reasoning in language models, enhancing their ability to solve complex algorithmic challenges."
+    ]
+}

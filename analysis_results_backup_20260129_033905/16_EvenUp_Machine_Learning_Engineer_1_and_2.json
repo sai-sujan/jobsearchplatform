@@ -1,0 +1,117 @@
+{
+  "ats_score": 95,
+  "location": "San Francisco, CA (Open to Relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "Agents",
+      "Multi-Agents",
+      "LoRA",
+      "QLoRA",
+      "OpenAI",
+      "Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Computer Vision",
+      "Deep Learning",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "Milvus",
+      "Weaviate",
+      "FAISS",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for legal/text-heavy domains.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for generative AI models.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for complex claims data.",
+    "\\item Introduced batched query extraction using Python and SQL, reducing LLM calls by \\~80\\% per query and enabling faster, reliable production inference.",
+    "\\item Designed an ML-based anomaly detection system, reducing redundant verification prompts by 25\\% while maintaining high security coverage.",
+    "\\item Containerized and deployed scalable AI solutions using Docker and AWS, ensuring robust pipelines for NLP and GenAI applications."
+  ],
+  "meta_job_title": "Machine Learning Engineer 1 & 2",
+  "meta_company": "EvenUp",
+  "meta_link": "https://www.linkedin.com/jobs/view/...",
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems",
+      "Generative AI"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection",
+      "NLP"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment",
+      "Docker"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI, React",
+      "Docker Containerization"
+    ]
+  }
+}

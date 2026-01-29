@@ -1,0 +1,47 @@
+{
+    "ats_score": 92,
+    "location": "Cupertino, CA (Hybrid)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "Generative AI",
+            "Diffusion Models",
+            "LLMs",
+            "Synthetic Data"
+        ],
+        "Cloud & Deployment": [
+            "Distributed Computing",
+            "Kubernetes",
+            "Docker"
+        ],
+        "Databases & AI Infrastructure": [
+            "Data Pipelines",
+            "Large Datasets"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Fine-tuning",
+            "Model Optimization",
+            "Exploratory Data Analysis"
+        ]
+    },
+    "points": [
+        "\\item Designed and implemented scalable synthetic data pipelines using LLMs and generative AI techniques, creating high-volume datasets for model training and robust testing.",
+        "\\item Fine-tuned and optimized state-of-the-art Large Language Models (LLMs) and diffusion models for specific downstream tasks, enhancing model performance and relevance.",
+        "\\item Architected end-to-end machine learning workflows for generative AI models, from data ingestion and processing to training and inference deployment.",
+        "\\item Conducted in-depth exploratory data analysis to uncover insights and drive improvements in model architecture and data quality.",
+        "\\item Collaborated with cross-functional research and engineering teams to define model requirements and deliver impactful, production-ready AI solutions.",
+        "\\item Engineered distributed computing modules to handle large-scale datasets, ensuring efficient model training and evaluation cycles."
+    ]
+}

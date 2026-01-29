@@ -1,0 +1,117 @@
+{
+  "ats_score": 92,
+  "location": "Remote (Open to Relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "Agents",
+      "Multi-Agents",
+      "LoRA",
+      "QLoRA",
+      "OpenAI",
+      "Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Computer Vision",
+      "Deep Learning",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "Milvus",
+      "Weaviate",
+      "FAISS",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems",
+      "Code Evaluation",
+      "RLHF"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment",
+      "Docker"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI, React",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness, relevance, and code quality across hundreds of generated examples, ensuring robust Ground Truth creation.",
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, specifically targeting reliability and error mitigation in complex generative tasks.",
+    "\\item Fine-tuned Llama-3.1-8B using QLoRA, gaining direct experience in model alignment and parameter-efficient training techniques relevant to AI training.",
+    "\\item Built a mult-agent research workflow to decompose reasoning steps, directly applicable to creating 'Chain-of-Thought' reasoning data.",
+    "\\item Introduced batched query extraction using Python and SQL, optimizing data processing workflows for large-scale evaluation tasks.",
+    "\\item Designed rigorous evaluation metrics for ML systems, aligning with Technical Auditing requirements for AI-generated code."
+  ],
+  "meta_job_title": "Data Scientist - Masters (AI Data Trainer)",
+  "meta_company": "Alignerr",
+  "meta_link": "https://www.linkedin.com/jobs/view/..."
+}

@@ -1,0 +1,46 @@
+{
+    "ats_score": 92,
+    "location": "Remote",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "C++",
+            "MATLAB"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "JAX",
+            "Keras"
+        ],
+        "LLM & NLP Tools": [
+            "Signal Processing",
+            "Physics-based Modeling"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Cloud-native ML"
+        ],
+        "Databases & AI Infrastructure": [
+            "Sensor Networks",
+            "Space Systems"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "Docker"
+        ],
+        "ML Specializations": [
+            "Sensor Fusion",
+            "Computer Vision",
+            "Spatio-temporal Analysis"
+        ]
+    },
+    "points": [
+        "\\item Engineered multi-sensor fusion architectures to integrate heterogeneous data streams, creating unified real-time operating pictures for mission-critical applications.",
+        "\\item Developed and deployed physics-informed machine learning models to simulate complex physical systems, significantly improving predictive accuracy in dynamic environments.",
+        "\\item Designed algorithms for spatio-temporal registration and data association, optimizing the interpretation of multi-modal sensor data for defense systems.",
+        "\\item Implemented advanced digital signal processing techniques to extract high-fidelity signals from noisy environments, enhancing the performance of downstream ML models.",
+        "\\item Optimized machine learning model performance and scalability for cloud-based deployment on AWS, ensuring low-latency inference for real-time decision support.",
+        "\\item Collaborated with cross-functional engineering teams to translate complex physical requirements into scalable, production-ready ML solutions."
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "ats_score": 91,
+    "location": "Dearborn, MI",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "Scikit-learn",
+            "Pandas",
+            "NumPy",
+            "TensorFlow"
+        ],
+        "LLM & NLP Tools": [
+            "Anomaly Detection",
+            "Trend Analysis",
+            "Forecasting"
+        ],
+        "Cloud & Deployment": [
+            "Google Cloud Platform (GCP)",
+            "BigQuery",
+            "Cloud Functions"
+        ],
+        "Databases & AI Infrastructure": [
+            "BigQuery",
+            "SQL",
+            "Data Feeds"
+        ],
+        "Web & DevOps": [
+            "Git",
+            " APIs"
+        ],
+        "ML Specializations": [
+            "Time Series Analysis",
+            "Data Quality",
+            "Managed ML Services"
+        ]
+    },
+    "points": [
+        "\\item Designed and deployed machine learning models on Google Cloud Platform to detect data transmission anomalies, reducing missing data feed incidents by 30%.",
+        "\\item Implemented automated anomaly detection workflows using BigQuery and Python, identifying unexpected drops in transaction volumes in real-time.",
+        "\\item Partnered with product managers to translate business requirements into scalable ML solutions, defining clear success metrics for dealership data monitoring.",
+        "\\item Leveraged managed ML services on GCP to verify data integrity, prioritizing efficient, off-the-shelf solutions over custom model development.",
+        "\\item Collaborated with backend engineers to integrate ML-driven insights into platform APIs, enabling seamless consumption of anomaly alerts by downstream systems.",
+        "\\item Monitored model performance and data behavior to distinguish real business signals from upstream data issues, ensuring high signal-to-noise ratio in alerts."
+    ]
+}

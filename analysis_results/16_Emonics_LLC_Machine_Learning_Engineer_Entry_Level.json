@@ -1,0 +1,46 @@
+{
+    "ats_score": 90,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Pandas"
+        ],
+        "LLM & NLP Tools": [
+            "ML Pipelines",
+            "Model Evaluation"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Airflow"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "MongoDB"
+        ],
+        "Web & DevOps": [
+            "CI/CD",
+            "Git"
+        ],
+        "ML Specializations": [
+            "MLOps",
+            "Feature Engineering",
+            "Workflow Orchestration"
+        ]
+    },
+    "points": [
+        "\\item Designed and implemented reproducible ML pipelines using Airflow and Python, ensuring consistent model training and deployment workflows.",
+        "\\item Engineered efficient data preprocessing and feature generation systems, improving model accuracy by 10% on key business metrics.",
+        "\\item Deployed machine learning models to production utilizing Docker and cloud services, ensuring high availability and scalability.",
+        "\\item Collaborated with stakeholders to define success metrics and validate model outcomes, aligning technical solutions with business objectives.",
+        "\\item Established best practices for experiment documentation and modular code development, enhancing team collaboration and code maintainability.",
+        "\\item Monitored production model performance and implemented automated alerts to proactively identify and resolve data drift issues."
+    ]
+}

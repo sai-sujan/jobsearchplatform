@@ -1,0 +1,95 @@
+{
+  "ats_score": 94,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Model Optimization"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "FAISS",
+      "ChromaDB",
+      "Vector DBs"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Designed and implemented high-performance systems incorporating Large Language Models (LLMs) and Vector Databases to accelerate quantitative research workflows.",
+    "\\item Developing advanced NLP pipelines for automated literature review and data search, reducing research turnaround time by 50% for portfolio researchers.",
+    "\\item Engineered scalable AI tools to support code generation and complex data analysis, ensuring seamless integration with existing financial infrastructure.",
+    "\\item Deployed and monitored production-grade deep learning models, optimizing for latency and robustness in high-frequency trading environments.",
+    "\\item Addressed model bias and robustness risks by implementing rigorous evaluation frameworks, ensuring safe and reliable AI deployment.",
+    "\\item Partnered with cross-functional teams to translate complex quantitative requirements into innovative, scalable technical solutions."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL",
+      "C++"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "Hugging Face Transformers",
+      "OpenAI"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LLMs",
+      "Vector Databases",
+      "Code Generation"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Docker",
+      "Kubernetes"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Pinecone",
+      "Vector DBs"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Quant Research Applications",
+      "Model Optimization"
+    ]
+  }
+}

@@ -49,7 +49,7 @@ class JobScraper:
         self.action_delay = action_delay
         self.max_jobs = max_jobs
         self.blacklist_keywords = self._load_blacklist(blacklist_path)
-        
+
         # Initialize History Manager for deduplication
         from history_manager import HistoryManager
         self.history = HistoryManager()
@@ -242,7 +242,7 @@ class JobScraper:
 
         try:
             scroll_count = 0
-            max_scrolls = 20  # increased from 15
+            max_scrolls = 50  # increased for more thorough scraping
             visited_links = set() # Track ALL seen links to prevent loops
 
             while len(jobs) < self.max_jobs and scroll_count < max_scrolls:
@@ -275,12 +275,12 @@ class JobScraper:
 
                     try:
                         job = self._extract_job_from_card(card, search_query)
-                        
+
                         if job and job.job_link:
                             # Skip if we've already physically seen this link on this run
                             if job.job_link in visited_links:
                                 continue
-                                
+
                             visited_links.add(job.job_link)
                             new_cards_found = True
 
@@ -310,7 +310,7 @@ class JobScraper:
                     self.page.evaluate('window.scrollBy(0, 1000)')
                 else:
                     self.page.evaluate('window.scrollBy(0, 600)')
-                
+
                 self._safe_delay(1.5)
                 scroll_count += 1
 
@@ -407,6 +407,103 @@ class JobScraper:
             return 'Senior'
         return 'Entry-level'
 
+    def _extract_location_from_detail_page(self) -> str:
+        """
+        Extract location from job detail page using multiple selector strategies.
+        This is called when visiting the full job posting.
+        """
+        location = ""
+        
+        # Strategy 1: LinkedIn Unified Top Card (Logged-in view)
+        location_selectors = [
+            # Primary selectors for logged-in users
+            '.job-details-jobs-unified-top-card__primary-description-container span.tvm__text--low-emphasis',
+            '.jobs-unified-top-card__subtitle-primary-grouping span',
+            '.jobs-unified-top-card__bullet',
+            'span.job-details-jobs-unified-top-card__bullet',
+            
+            # Public/logged-out view selectors
+            '.topcard__flavor--bullet',
+            '.top-card-layout__second-subline',
+            
+            # Generic fallbacks
+            'div.job-details-jobs-unified-top-card__primary-description span',
+            '.jobs-details-top-card__job-info span',
+        ]
+        
+        for selector in location_selectors:
+            try:
+                elems = self.page.query_selector_all(selector)
+                for elem in elems:
+                    text = elem.inner_text().strip()
+                    # Validate it looks like a location
+                    if text and len(text) > 2:
+                        # Skip time indicators, application counts, etc.
+                        skip_keywords = ['ago', 'hour', 'day', 'week', 'month', 'applicant', 
+                                       'reposted', 'over ', 'people', 'clicked', 'promoted']
+                        if not any(keyword in text.lower() for keyword in skip_keywords):
+                            location = text
+                            break
+                if location:
+                    break
+            except:
+                continue
+        
+        # Strategy 2: Look in metadata sections
+        if not location:
+            try:
+                metadata_container = self.page.query_selector('.jobs-unified-top-card__primary-description')
+                if metadata_container:
+                    all_spans = metadata_container.query_selector_all('span')
+                    for span in all_spans:
+                        text = span.inner_text().strip()
+                        if text and len(text) > 2:
+                            # Check if it contains city/state patterns
+                            if ',' in text or any(state in text for state in ['CA', 'NY', 'TX', 'Remote', 'United States']):
+                                if not any(x in text.lower() for x in ['ago', 'applicant', 'reposted']):
+                                    location = text
+                                    break
+            except:
+                pass
+        
+        # Strategy 3: JSON-LD structured data
+        if not location:
+            try:
+                script_elem = self.page.query_selector('script[type="application/ld+json"]')
+                if script_elem:
+                    import json
+                    data = json.loads(script_elem.inner_text())
+                    if 'jobLocation' in data:
+                        addr = data['jobLocation'].get('address', {})
+                        location_parts = []
+                        
+                        # Build location string from address components
+                        if isinstance(addr, dict):
+                            locality = addr.get('addressLocality', '')
+                            region = addr.get('addressRegion', '')
+                            country = addr.get('addressCountry', '')
+                            
+                            if locality:
+                                location_parts.append(locality)
+                            if region:
+                                location_parts.append(region)
+                            if country and country != 'US':  # Only show country if not US
+                                location_parts.append(country)
+                        
+                        if location_parts:
+                            location = ', '.join(location_parts)
+            except:
+                pass
+        
+        # Clean up location string
+        if location:
+            # Remove extra whitespace and normalize
+            location = ' '.join(location.split())
+            # Remove bullet points or special characters at start
+            location = location.lstrip('·•-').strip()
+        
+        return location
+
     def get_job_description(self, job: JobListing) -> str:
         """Navigate to job and extract description."""
         try:
@@ -414,6 +511,15 @@ class JobScraper:
 
             self.page.goto(job.job_link, wait_until='domcontentloaded', timeout=30000)
             self._safe_delay(2)
+
+            # ✅ EXTRACT LOCATION FROM DETAIL PAGE
+            extracted_location = self._extract_location_from_detail_page()
+            if extracted_location:
+                job.location = extracted_location
+                print(f" 📍[{extracted_location[:30]}]", end="")
+            else:
+                job.location = "Location not specified"
+                print(f" 📍[N/A]", end="")
 
             # Expand description
             try:
@@ -440,6 +546,36 @@ class JobScraper:
 
             job.job_description = description
             job.sponsorship_text = description
+            
+            # ✅ LOCATION FIX: Extract from description text (logic from fix_locations.py)
+            # Heuristic: Double newline splitting, look for ' · '
+            if not job.location or job.location == "Location not specified" or job.location == "N/A" or job.location == "":
+                try:
+                    parts = description.split('\n\n')
+                    # fix_locations.py checked parts[2], but we can be more robust and check first few
+                    found_loc = False
+                    for part in parts[:5]:
+                        line = part.strip()
+                        if ' · ' in line and len(line) < 100:
+                            # Candidate: "City, State · 1 day ago"
+                            potential_loc = line.split(' · ')[0]
+                            # specific checks to avoid garbage
+                            if 2 < len(potential_loc) < 50 and not any(x in potential_loc.lower() for x in ['applicant', 'school', 'connection', 'skill']):
+                                job.location = potential_loc
+                                print(f" 📍[{potential_loc[:30]}]", end="")
+                                found_loc = True
+                                break
+                    
+                    if not found_loc and len(parts) > 2:
+                         # Fallback to exactly index 2 if heuristic fails, mirroring fix_locations.py exactly
+                         loc_line = parts[2].strip()
+                         if ' · ' in loc_line:
+                             potential_loc = loc_line.split(' · ')[0]
+                             job.location = potential_loc
+                             print(f" 📍[{potential_loc[:30]}]", end="")
+                except Exception:
+                    pass
+
             return description
 
         except Exception as e:
@@ -461,13 +597,13 @@ class JobScraper:
             #      fresh_jobs = self.collect_job_listings(collected_links, search_query=search_keywords)
             #      # collected_links is updated in-place by collect_job_listings
             #      all_jobs.extend(fresh_jobs)
-            
+
             # Stage 2: Past Week (NOW PRIMARY SEARCH)
             # if len(all_jobs) < self.max_jobs:
             #     needed = self.max_jobs - len(all_jobs)
             #     print(f"\n[INFO] Only found {len(all_jobs)} jobs in 24h. Need {needed} more.")
             print(f"[INFO] --- Searching Past 24 Hours ---")
-            
+
             if self.navigate_to_linkedin_jobs(search_keywords, time_filter="r86400"):
                 week_jobs = self.collect_job_listings(collected_links, search_query=search_keywords)
                 all_jobs.extend(week_jobs)
@@ -494,3 +630,4 @@ class JobScraper:
         finally:
             self.history.save_history()
             print("\n[INFO] Job collection complete.")
+

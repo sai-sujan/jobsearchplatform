@@ -1,0 +1,48 @@
+{
+    "ats_score": 96,
+    "location": "San Francisco, CA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "RAG Systems",
+            "Finetuning (LoRA/QLoRA)",
+            "Prompt Engineering",
+            "LLM Evaluation"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Kubernetes"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Weaviate",
+            "Pinecone"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Generative AI",
+            "Deep Learning",
+            "Multimodal AI Systems"
+        ]
+    },
+    "points": [
+        "\\item Spearheaded the development of a comprehensive LLM-as-Judge evaluation pipeline, ensuring the safety and alignment of generative outputs in sensitive user interactions.",
+        "\\item Architected a high-precision RAG system using LangChain, fine-tuning retrieval algorithms to support complex, real-time query resolution with high accuracy.",
+        "\\item Engineered a scalable hybrid retrieval workflow to power context-aware AI agents, delivering sub-second response times for production voice-interface applications.",
+        "\\item Optimized extensive LLM inference workloads by implementing batched query extraction, achieving a 40% reduction in API costs and improving system throughput.",
+        "\\item Developed and deployed resilient anomaly detection models, enhancing the reliability of automated systems processing millions of user transactions.",
+        "\\item Led the end-to-end validation of multimodal AI systems, rigorously testing performance across diverse datasets to ensure 99.9% uptime in production."
+    ]
+}

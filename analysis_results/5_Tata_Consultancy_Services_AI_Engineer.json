@@ -1,0 +1,49 @@
+{
+    "ats_score": 94,
+    "location": "Dallas, TX",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Hugging Face",
+            "Agentic AI",
+            "OpenAI API",
+            "RAG Pipelines"
+        ],
+        "Cloud & Deployment": [
+            "Azure AI",
+            "AWS",
+            "Docker"
+        ],
+        "Databases & AI Infrastructure": [
+            "Pinecone",
+            "FAISS",
+            "Vector DBs"
+        ],
+        "Web & DevOps": [
+            "CI/CD Pipelines",
+            "Git"
+        ],
+        "ML Specializations": [
+            "GenAI",
+            "Prompt Engineering",
+            "Model Evaluation"
+        ]
+    },
+    "points": [
+        "\\item Developed and deployed GenAI applications using LangChain and Azure OpenAI Service, integrating advanced RAG pipelines for real-time business insights.",
+        "\\item Engineered Agentic AI solutions to automate complex workflows, utilizing Model Context Protocol (MCP) for seamless tool integration.",
+        "\\item Implemented comprehensive evaluation frameworks to assess LLM outputs for quality, accuracy, factuality, and bias mitigation.",
+        "\\item Built scalable vector search architectures using Pinecone and FAISS, optimizing retrieval latency and relevance for large-scale knowledge bases.",
+        "\\item Designed and fine-tuned deep learning models, ensuring high performance and robustness in production environments.",
+        "\\item Collaborated with cross-functional teams to integrate AI models into business applications, adhering to responsible AI and data privacy best practices."
+    ]
+}

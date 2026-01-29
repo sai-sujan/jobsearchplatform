@@ -1,0 +1,111 @@
+{
+  "ats_score": 87,
+  "location": "Houston, TX",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "Agents",
+      "Multi-Agents",
+      "LoRA",
+      "QLoRA",
+      "OpenAI",
+      "Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Computer Vision",
+      "Deep Learning",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "Milvus",
+      "Weaviate",
+      "FAISS",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Developed predictive models and anomaly detection systems using Python, translating raw data into actionable security insights.",
+    "\\item Implemented batched query extraction pipelines, optimizing data processing efficiency for large-scale analytics tasks.",
+    "\\item Built a self-correcting RAG system to extract structured intelligence from complex documents, fueling data-driven decision making.",
+    "\\item Designed hybrid retrieval workflows to enhance data discovery, ensuring comprehensive coverage for analytical assignments.",
+    "\\item Applied rigorous evaluation pipelines (LLM-as-Judge) to validate model performance, ensuring high-quality deliverables.",
+    "\\item Collaborated with cross-functional teams to deploy robust data solutions, contributing to measurable business process improvements."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI,React",
+      "Docker Containerization"
+    ]
+  }
+}

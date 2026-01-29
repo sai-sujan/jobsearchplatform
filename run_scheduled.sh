@@ -12,8 +12,11 @@ echo "Job Search Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "=========================================="
 
 # Load environment variables from .env
+# Load environment variables from .env
 if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+    set -a
+    source .env
+    set +a
     echo "[INFO] Loaded .env file"
 fi
 

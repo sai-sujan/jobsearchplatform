@@ -1,0 +1,47 @@
+{
+    "ats_score": 95,
+    "location": "Seattle, WA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "AI Voice Agents",
+            "Generative AI",
+            "RAG Systems"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Kubernetes"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "MongoDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "CI/CD",
+            "Integrations"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Customer Communications",
+            "Scalable Solutions"
+        ]
+    },
+    "points": [
+        "\\item Architected and optimized scalable, cloud-based AI solutions for customer communication platforms, handling high-volume real-time voice interactions.",
+        "\\item Developed and deployed AI Voice Agents to automate routine customer calls, significantly improving resolution times and operational efficiency.",
+        "\\item Engineered robust backend integrations using Python and FastAPI, ensuring high performance and reliability across the entire software development lifecycle.",
+        "\\item Designed ML-based anomaly detection systems to identify and resolve issues in real-time, maintaining high quality of service for global users.",
+        "\\item Collaborated with cross-functional teams to translate complex product requirements into technical architectures, driving rapid AI innovation.",
+        "\\item Implemented comprehensive CI/CD pipelines to streamline the deployment of AI models, ensuring 99.9% system availability and rapid iteration cycles."
+    ]
+}

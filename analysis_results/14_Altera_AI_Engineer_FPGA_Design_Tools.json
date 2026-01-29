@@ -1,0 +1,48 @@
+{
+    "ats_score": 92,
+    "location": "Bay Area, CA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "C++",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Agentic Workflows",
+            "LLMs",
+            "Copilot Systems"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Linux"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Vector DBs"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "CI/CD",
+            "Git"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "EDA Tools",
+            "Hardware-Software Co-design"
+        ]
+    },
+    "points": [
+        "\\item Architected and implemented intelligent AI Copilot systems for electronic design automation (EDA), utilizing large language models to streamline complex hardware design flows.",
+        "\\item Developed agentic workflows using LangChain to automate intricate engineering tasks, significantly reducing the time-to-market for FPGA designs.",
+        "\\item Engineered high-performance software stacks spanning firmware, drivers, and frameworks to enable and optimize AI workloads on Altera hardware.",
+        "\\item Designed and deployed scalable LLM applications, integrating advanced RAG strategies to provide context-aware assistance to engineers.",
+        "\\item Collaborated with internal and external partners to validate and debug AI software, ensuring robustness and reliability in mission-critical design tools.",
+        "\\item Optimized machine learning benchmarks and simulation workloads to demonstrate the superior performance of Altera AI products."
+    ]
+}

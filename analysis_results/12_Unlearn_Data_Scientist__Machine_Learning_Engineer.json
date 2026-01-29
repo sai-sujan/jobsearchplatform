@@ -1,0 +1,49 @@
+{
+    "ats_score": 95,
+    "location": "San Francisco, CA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL",
+            "R"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Pandas",
+            "NumPy"
+        ],
+        "LLM & NLP Tools": [
+            "Generative AI",
+            "Digital Twins",
+            "Causal Inference"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Kubernetes"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Clinical Data Management"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Clinical Trials",
+            "Bayesian Statistics",
+            "Predictive Modeling"
+        ]
+    },
+    "points": [
+        "\\item Engineered AI-powered digital twins for clinical trial simulation, leveraging generative models to predict patient outcomes and optimize study design.",
+        "\\item Developed robust causal inference frameworks to estimate treatment effects from observational data, directly supporting decision-making in drug development.",
+        "\\item Collaborated with cross-functional teams to integrate machine learning solutions into clinical workflows, ensuring regulatory compliance and scientific rigor.",
+        "\\item Implemented scalable data pipelines to process high-dimensional clinical datasets, ensuring data quality and readiness for advanced modeling.",
+        "\\item Designed and executed rigorous validation studies for AI models, documenting performance metrics and failure modes to meet industry standards.",
+        "\\item Conducted research on novel ML architectures for healthcare applications, contributing to the advancement of precision medicine and faster clinical trials."
+    ]
+}

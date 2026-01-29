@@ -2,6 +2,7 @@
 
 # Job Dashboard Startup Script
 # Runs both backend API and React frontend
+export PATH=$PATH:/usr/local/bin:/opt/homebrew/bin:/opt/anaconda3/bin
 
 echo "🚀 Starting Job Dashboard..."
 echo ""
@@ -14,7 +15,9 @@ if [ ! -f "dashboard_api.py" ]; then
 fi
 
 # Start backend API in background
-echo "📡 Starting Backend API on port 8000..."
+# Start backend API in background
+source venv/bin/activate
+echo "📡 Starting Backend API on port 5001..."
 python dashboard_api.py &
 BACKEND_PID=$!
 

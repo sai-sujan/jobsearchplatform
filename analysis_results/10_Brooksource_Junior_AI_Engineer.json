@@ -1,0 +1,48 @@
+{
+    "ats_score": 90,
+    "location": "Charlotte, NC",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "AgentAssist",
+            "LLM Integrations",
+            "Summarization"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Azure",
+            "Docker"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "MongoDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "Web Extensions",
+            "API Development"
+        ],
+        "ML Specializations": [
+            "NLP",
+            "Contact Center AI",
+            "Backend Logic"
+        ]
+    },
+    "points": [
+        "\\item Developed and optimized AI-driven AgentAssist tools, streamlining contact center workflows and improving agent efficiency by 25%.",
+        "\\item Implemented advanced call summarization features using Large Language Models (LLMs), enabling rapid post-call processing and analysis.",
+        "\\item Engineered robust backend services in Python to support real-time AI integrations, ensuring high availability and low latency for enterprise applications.",
+        "\\item Designed and deployed web-based extensions to deliver AI insights directly to agent interfaces, enhancing decision-making capabilities.",
+        "\\item Collaborated with senior engineers to build scalable multithreaded applications, handling high-concurrency workloads in a production banking environment.",
+        "\\item Integrated in-house ML models with cloud-based infrastructure (AWS/Azure), facilitating seamless model deployment and updates."
+    ]
+}

@@ -16,7 +16,7 @@ def update_excel_smart():
 
     # Load Excel
     try:
-        df = pd.read_excel(EXCEL_PATH, sheet_name='All Jobs')
+        df = pd.read_excel(EXCEL_PATH, sheet_name='Sheet1')
         print(f"[INFO] Loaded {len(df)} jobs from {EXCEL_PATH}")
     except Exception as e:
         print(f"[ERROR] Could not load Excel file: {e}")
@@ -87,8 +87,8 @@ def update_excel_smart():
                     # Use index hint from filename if available
                     if parts[0].isdigit():
                         hint_idx = int(parts[0])
-                        # If the hint index is basically the same row (+/- 1 shift), it's likely the one.
-                        if abs(idx - hint_idx) <= 5: # Allow small shift
+                        # STRICT MATCHING: If filename has index 3, it MUST attach to row 3 if companies match.
+                        if idx == hint_idx:
                             match_index = idx
                             break
             
@@ -104,7 +104,8 @@ def update_excel_smart():
                         match_index = idx_hint
             
             if match_index != -1:
-                df.at[match_index, 'Analysis JSON'] = json_content_str
+                df.at[match_index, 'Analysis_JSON'] = json_content_str
+                df.at[match_index, 'Analysis_File'] = os.path.abspath(json_file)
                 updates_count += 1
                 matched_rows.add(match_index)
                 print(f"  -> Linked {filename} to Row {match_index} ({df.at[match_index, 'Company']})")
@@ -124,7 +125,7 @@ def update_excel_smart():
             
             # Simple overwrite approach
             all_sheets = pd.read_excel(EXCEL_PATH, sheet_name=None)
-            all_sheets['All Jobs'] = df
+            all_sheets['Sheet1'] = df
             with pd.ExcelWriter(EXCEL_PATH, engine='openpyxl') as writer:
                 for s_name, s_df in all_sheets.items():
                     s_df.to_excel(writer, sheet_name=s_name, index=False)

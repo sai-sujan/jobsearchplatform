@@ -1,0 +1,48 @@
+{
+    "ats_score": 92,
+    "location": "Cambridge, MA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Generative AI",
+            "Data Pipelines",
+            "Model Evaluation"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Kubernetes"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Data Lakes"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "CI/CD",
+            "Git"
+        ],
+        "ML Specializations": [
+            "Applied Machine Learning",
+            "Model Optimization",
+            "Scalability"
+        ]
+    },
+    "points": [
+        "\\item Designed and deployed scalable machine learning models for production environments, serving real-world AI applications for high-value enterprise customers.",
+        "\\item Engineered robust data pipelines to process structured and unstructured datasets, ensuring high-quality inputs for training and inference workflows.",
+        "\\item Collaborated with senior engineers to optimize model performance and reliability, achieving a 15% reduction in inference latency through efficient code implementation.",
+        "\\item Implemented comprehensive model monitoring systems to track behavior in production, facilitating rapid debugging and issue resolution.",
+        "\\item Conducted rigorous experimentation and validation to improve model accuracy and scalability, documenting results to drive continuous improvement.",
+        "\\item Integrated AI components into backend products using Python and FastAPI, ensuring seamless interoperability with existing platform infrastructure."
+    ]
+}

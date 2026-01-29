@@ -1,0 +1,46 @@
+{
+    "ats_score": 88,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Generative AI",
+            "LLMs",
+            "Prompt Engineering"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Azure",
+            "Docker"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "MongoDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Prototyping",
+            "RAG Systems"
+        ]
+    },
+    "points": [
+        "\\item Developed and deployed prototype Generative AI solutions using LangChain, demonstrating the feasibility of automating complex business workflows.",
+        "\\item Implemented prompt engineering strategies to optimize LLM performance for domain-specific tasks, achieving a 20% improvement in response quality.",
+        "\\item Assisted in the end-to-end development lifecycle of AI applications, from feature engineering and model fine-tuning to testing and deployment on cloud platforms.",
+        "\\item Collaborated with product managers and cloud architects to translate business requirements into scalable technical architectures for GenAI solutions.",
+        "\\item Built comprehensive evaluation pipelines to test and validate the reliability of LLM-based applications before production release.",
+        "\\item Engineered efficient data pipelines to process and clean unstructured data, ensuring high-quality inputs for generative models."
+    ]
+}

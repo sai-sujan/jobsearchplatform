@@ -1,0 +1,46 @@
+{
+    "ats_score": 94,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "RAG Systems",
+            "Hugging Face Transformers"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "FastAPI"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "MongoDB"
+        ],
+        "Web & DevOps": [
+            "CI/CD Pipelines",
+            "Git"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "NLP",
+            "Anomaly Detection"
+        ]
+    },
+    "points": [
+        "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B, achieving a 20% improvement in document QA reliability through advanced retrieval strategies.",
+        "\\item Engineered a production-grade ML anomaly detection pipeline for MFA workflows, successfully reducing redundant verification prompts by 25% without compromising security coverage.",
+        "\\item Designed and implemented a robust LLM-as-Judge evaluation framework, automating the assessment of faithfulness and relevance across thousands of critical QA interactions.",
+        "\\item Developed a hybrid retrieval workflow combining dense vector embeddings and BM25 search, significantly enhancing the precision and recall of retrieved technical documentation.",
+        "\\item Optimized inference latency by 80% through the introduction of batched query extraction pipelines, ensuring scalable and cost-effective model deployment.",
+        "\\item Orchestrated end-to-end data processing pipelines using Docker and CI/CD, facilitating the seamless transition of ML models from experimentation to production environments."
+    ]
+}

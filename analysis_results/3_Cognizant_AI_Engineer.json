@@ -1,0 +1,49 @@
+{
+    "ats_score": 93,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Agentic AI",
+            "Generative AI",
+            "LLMs",
+            "RAG Systems"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "FastAPI"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "MongoDB",
+            "Vector DBs"
+        ],
+        "Web & DevOps": [
+            "CI/CD Pipelines",
+            "Git"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "NLP",
+            "Data Pipelines"
+        ]
+    },
+    "points": [
+        "\\item Architected and deployed scalable Agentic AI solutions using LangChain, automating complex enterprise workflows and reducing manual intervention by 40%.",
+        "\\item Engineered end-to-end Generative AI pipelines to process and analyze unstructured data from diverse sources (text, logs), enhancing decision-making capabilities.",
+        "\\item Developed a self-correcting RAG system with advanced retrieval strategies, ensuring high accuracy and reliability for domain-specific knowledge retrieval.",
+        "\\item Designed and implemented ML-based anomaly detection systems for large-scale data streams, improving operational efficiency and proactive capabilities.",
+        "\\item Built rigorous LLM evaluation frameworks to assess model performance, ensuring compliance with data governance and security policies in production.",
+        "\\item Orchestrated robust data pipelines for structured and semi-structured data ingestion, enabling seamless integration of AI models into business applications."
+    ]
+}

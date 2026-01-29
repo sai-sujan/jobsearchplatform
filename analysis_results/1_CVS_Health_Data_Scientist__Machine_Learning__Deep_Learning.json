@@ -1,0 +1,48 @@
+{
+    "ats_score": 90,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Keras"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Deep Learning",
+            "NLP"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Kubernetes"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "SQL Server"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "GitHub Actions",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Deep Neural Networks",
+            "Predictive Modeling",
+            "Feature Engineering"
+        ]
+    },
+    "points": [
+        "\\item Designed and deployed deep learning models for healthcare business use cases, optimizing predictive accuracy by 15% through advanced feature engineering.",
+        "\\item Architected scalable machine learning pipelines using Python and SQL, ensuring efficient data extraction and transformation from large-scale databases.",
+        "\\item Engineered production-ready neural network architectures, collaborating with cross-functional teams to integrate models into live business systems.",
+        "\\item Implemented rigorous model evaluation protocols, utilizing statistical modeling to validate performance and ensure reliability in critical health applications.",
+        "\\item Optimized SQL queries and data processing workflows, reducing data retrieval latency by 30% for high-volume modeling tasks.",
+        "\\item Led the end-to-end development of ML solutions from requirements gathering to deployment, strictly adhering to SDLC best practices and CI/CD workflows."
+    ]
+}

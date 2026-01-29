@@ -134,6 +134,42 @@
     font-size: 1rem;
 }
 
+/* Status Section */
+.sidebar-status-section {
+    margin-bottom: 24px;
+}
+
+.sidebar-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #718096;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sidebar-status-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #2d3748;
+    background-color: white;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+.sidebar-status-select:focus {
+    border-color: #3182ce;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
 /* Sections */
 .detail-section {
     margin-bottom: 20px;
@@ -179,6 +215,7 @@
     padding: 16px;
     background: white;
     border-top: 1px solid #e2e8f0;
+    color: #000000;
 }
 
 .section-content.expanded {

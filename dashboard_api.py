@@ -33,13 +33,14 @@ def cleanup_duplicates():
         return
 
     try:
-        df = pd.read_excel(EXCEL_FILE, sheet_name='All Jobs')
+        # Use first sheet (index 0) to be safe
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
         original_count = len(df)
 
         # Create dedup key: use Link if available, else Company-Title
         df['_DedupKey'] = df.apply(
-            lambda x: x['Link'] if pd.notna(x['Link']) and str(x['Link']).strip() != ''
-            else f"{x['Company']}-{x['Title']}",
+            lambda x: x['Job_Link'] if pd.notna(x.get('Job_Link')) and str(x.get('Job_Link')).strip() != ''
+            else f"{x.get('Company', '')}-{x.get('Job_Title', '')}",
             axis=1
         )
 
@@ -49,7 +50,7 @@ def cleanup_duplicates():
 
         removed = original_count - len(df_clean)
         if removed > 0:
-            df_clean.to_excel(EXCEL_FILE, sheet_name='All Jobs', index=False)
+            df_clean.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
             print(f"[CLEANUP] Removed {removed} duplicate jobs. Now: {len(df_clean)} unique jobs.")
         else:
             print(f"[CLEANUP] No duplicates found. {len(df_clean)} jobs.")
@@ -76,15 +77,16 @@ def get_jobs():
             )
         
         # Read Excel file
-        df = pd.read_excel(EXCEL_FILE, sheet_name='All Jobs')
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
         
         # Clean job titles - remove newlines and extra whitespace
-        df['Title'] = df['Title'].str.replace('\n', ' - ', regex=False).str.strip()
+        if 'Job_Title' in df.columns:
+            df['Job_Title'] = df['Job_Title'].str.replace('\n', ' - ', regex=False).str.strip()
         
         # Remove exact duplicate jobs (same Link)
         # Remove exact duplicate jobs (same Link, or same Company+Title)
         # Handle missing links by checking Company+Title
-        df['DedupKey'] = df.apply(lambda x: x['Link'] if pd.notna(x['Link']) and str(x['Link']).strip() != '' else f"{x['Company']}-{x['Title']}", axis=1)
+        df['DedupKey'] = df.apply(lambda x: x['Job_Link'] if pd.notna(x.get('Job_Link')) and str(x.get('Job_Link')).strip() != '' else f"{x.get('Company')}-{x.get('Job_Title')}", axis=1)
         df = df.drop_duplicates(subset=['DedupKey'], keep='first')
         
         # Convert to dict and handle NaN values
@@ -95,7 +97,7 @@ def get_jobs():
             job['_rowIndex'] = idx
             
             # Load analysis data from file if available
-            analysis_path = job.get('Analysis File')
+            analysis_path = job.get('Analysis_File')
             if pd.notna(analysis_path) and isinstance(analysis_path, str) and os.path.exists(analysis_path):
                 try:
                     with open(analysis_path, 'r') as f:
@@ -109,7 +111,59 @@ def get_jobs():
                 job['Analysis Data'] = None
         
         # Clean up data
+        # Clean up data and map to frontend expectations
         for job in jobs:
+            # Map standardized fields to Frontend fields
+            job['Title'] = job.get('Job_Title', '')
+            job['Company'] = job.get('Company', '')
+            job['Link'] = job.get('Job_Link', '')
+            job['Location'] = job.get('Location', '')
+            job['Date Found'] = job.get('Date_Added', '')
+            job['Search Query'] = job.get('Search_Query', '')
+            
+            # Map Score
+            score = job.get('Keywords_Matching_Score', 0)
+            if pd.isna(score): score = 0
+            job['Skill Score'] = int(score)
+            
+            # Compute Tier
+            if score >= 90:
+                job['Tier'] = '🟢 Perfect Match'
+            elif score >= 70:
+                job['Tier'] = '🟡 Good Match'
+            elif score >= 50:
+                job['Tier'] = '🟠 Stretch Goal'
+            else:
+                job['Tier'] = '🔴 Skip'
+                
+            # Compute New Status
+            status = str(job.get('Status', '')).lower()
+            if status == 'new':
+                job['New'] = '✨ NEW'
+            else:
+                job['New'] = ''
+            
+            # Extract Matched Skills from Analysis Data
+            matched_skills = []
+            if job.get('Analysis Data'):
+                 tech_stack = job['Analysis Data'].get('tech_stack', {})
+                 # Flatten values
+                 for cat, skills in tech_stack.items():
+                     if isinstance(skills, list):
+                         matched_skills.extend(skills)
+            
+            job['Matched Skills'] = ', '.join(matched_skills[:5]) # Top 5 skills
+            
+            # Map Description for Sidebar
+            job['Job Description'] = job.get('Job_Description', '')
+            
+            # Map Resume Path
+            job['Resume Path'] = job.get('Resume Path', '')
+            
+            # Legacy/Fallback keys for safety (though Resume Path is main one)
+            if 'Resume Path' in job and pd.notna(job['Resume Path']):
+                 job['pdf_path'] = job['Resume Path']
+
             for key, value in job.items():
                 if pd.isna(value):
                     job[key] = '' if isinstance(value, str) else 0
@@ -117,8 +171,8 @@ def get_jobs():
         # Calculate statistics
         total_jobs = len(jobs)
         yes_jobs = len([j for j in jobs if j.get('Verdict') == 'YES'])
-        good_matches = len([j for j in jobs if j.get('Skill Score', 0) >= 70])
-        perfect_matches = len([j for j in jobs if j.get('Skill Score', 0) >= 90])
+        good_matches = len([j for j in jobs if j.get('Keywords_Matching_Score', 0) >= 70])
+        perfect_matches = len([j for j in jobs if j.get('Keywords_Matching_Score', 0) >= 90])
         
         return {
             'jobs': jobs,
@@ -152,6 +206,7 @@ class UpdateAnalysisRequest(BaseModel):
     row_index: int
     location: str
     tech_stack: dict
+    suggested_tech_stack: dict = {}
     points: list
 
 @app.post("/api/update-analysis")
@@ -159,13 +214,16 @@ def update_analysis(request: UpdateAnalysisRequest):
     """Update analysis JSON for a specific job"""
     try:
         # Read Excel file
-        df = pd.read_excel(EXCEL_FILE, sheet_name='All Jobs')
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
 
         if request.row_index >= len(df):
             raise HTTPException(status_code=400, detail="Invalid row index")
 
         # Get analysis file path
-        analysis_file = df.at[request.row_index, 'Analysis File']
+        if 'Analysis_File' not in df.columns:
+             raise HTTPException(status_code=500, detail="Analysis_File column missing")
+             
+        analysis_file = df.at[request.row_index, 'Analysis_File']
 
         if pd.isna(analysis_file) or not os.path.exists(analysis_file):
             raise HTTPException(status_code=404, detail="No analysis file found for this job")
@@ -183,6 +241,7 @@ def update_analysis(request: UpdateAnalysisRequest):
         # Update fields
         analysis_data['location'] = request.location
         analysis_data['tech_stack'] = request.tech_stack
+        analysis_data['suggested_tech_stack'] = request.suggested_tech_stack
         analysis_data['points'] = request.points
 
         # Save updated analysis back to file
@@ -196,7 +255,38 @@ def update_analysis(request: UpdateAnalysisRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Request model for generating resume
+# Request model for updating status
+class UpdateStatusRequest(BaseModel):
+    row_index: int
+    status: str
+
+@app.post("/api/update-status")
+def update_status(request: UpdateStatusRequest):
+    """Update job status in Excel"""
+    try:
+        # Read Excel file
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
+
+        if request.row_index >= len(df):
+            raise HTTPException(status_code=400, detail="Invalid row index")
+        
+        # Add Status column if missing
+        if 'Status' not in df.columns:
+            df['Status'] = 'not_applied'
+
+        # Update status
+        df.at[request.row_index, 'Status'] = request.status
+
+        # Save back to Excel
+        df.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
+        
+        return {"success": True, "message": "Status updated successfully"}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
 class GenerateResumeRequest(BaseModel):
     row_index: int
     company_name: str
@@ -313,7 +403,7 @@ def generate_resume(request: GenerateResumeRequest):
         original_pdf.rename(versioned_pdf)
         
         # Update Excel with PDF path
-        df = pd.read_excel(EXCEL_FILE, sheet_name='All Jobs')
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
 
         # Add Resume Path column if it doesn't exist
         if 'Resume Path' not in df.columns:
@@ -327,7 +417,7 @@ def generate_resume(request: GenerateResumeRequest):
             # Append new version (latest first)
             df.at[request.row_index, 'Resume Path'] = f"{versioned_pdf}; {current_path}"
 
-        df.to_excel(EXCEL_FILE, sheet_name='All Jobs', index=False)
+        df.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
         
         # Return success with PDF URL
         return {
@@ -360,4 +450,4 @@ def download_resume(filename: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=5001)

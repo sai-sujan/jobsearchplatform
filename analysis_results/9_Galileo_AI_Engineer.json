@@ -1,0 +1,48 @@
+{
+    "ats_score": 93,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Agentic AI",
+            "Observability",
+            "Evaluations",
+            "Guardrails"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Kubernetes"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Pinecone"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "Developer Relations",
+            "Technical Content"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Generative AI",
+            "Production AI Systems"
+        ]
+    },
+    "points": [
+        "\\item Architected and implemented production-grade Agentic AI systems using LangChain, defining best practices for reliable tool calling and structured outputs.",
+        "\\item Developed comprehensive observability frameworks for LLM applications, integrating guardrails to ensure safety and compliance in high-stakes environments.",
+        "\\item Designed and delivered high-impact technical demos and tutorials, effectively educating the developer community on building scalable AI workflows.",
+        "\\item Engineered robust evaluation pipelines (LLM-as-Judge) to rigorously assess the performance and reliability of complex agentic architectures.",
+        "\\item Collaborated with product teams to synthesize developer feedback into actionable platform improvements, driving the adoption of enterprise-grade AI tools.",
+        "\\item Built and deployed end-to-end sample agents, showcasing the practical application of cutting-edge models in real-world production scenarios."
+    ]
+}

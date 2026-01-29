@@ -1,0 +1,49 @@
+{
+    "ats_score": 95,
+    "location": "Boston | New York | Brooklyn | Chicago | Miami | Dallas | SF | Seattle | LA | Pittsburgh",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL",
+            "C++"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "RAG Systems",
+            "LLMs",
+            "Generative AI"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Kubernetes"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Pinecone",
+            "Weaviate"
+        ],
+        "Web & DevOps": [
+            "FastAPI",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Algorithm Design",
+            "Scalable Solutions"
+        ]
+    },
+    "points": [
+        "\\item Architected and delivered high-impact Generative AI solutions for complex business challenges, driving measurable bottom-line growth and operational efficiency.",
+        "\\item Designed innovative algorithms for large-scale RAG systems, optimizing retrieval interactions to achieve 95% accuracy in domain-specific queries.",
+        "\\item Orchestrated the end-to-end analytics value chain, from framing technical requirements to deploying scalable, production-ready AI models.",
+        "\\item Engineered robust evaluation pipelines (LLM-as-Judge) to rigorously validate model performance, safety, and alignment with client business objectives.",
+        "\\item Developed and deployed self-correcting AI agents, automating intricate workflows and enabling clients to fully embrace digital transformation.",
+        "\\item Built hybrid retrieval workflows combining improved semantic understanding with precise keyword matching, ensuring reliable information access for enterprise users."
+    ]
+}

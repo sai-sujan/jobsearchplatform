@@ -1,61 +1,46 @@
 {
-    "ats_score": 75,
-    "location": "Seattle, WA (Open to relocate)",
+    "ats_score": 92,
+    "location": "Seattle, WA",
     "tech_stack": {
         "Programming Languages": [
             "Python",
             "SQL"
         ],
         "ML Frameworks & Libraries": [
-            "TensorFlow",
             "PyTorch",
-            "Scikit-learn",
-            "Hugging Face Transformers"
+            "JAX",
+            "NumPy",
+            "SciPy",
+            "Pandas"
         ],
         "LLM & NLP Tools": [
-            "LangChain",
-            "LangSmith",
-            "LlamaIndex",
-            "Multi-Agents",
-            "Finetuning (LoRA, QLoRA)",
-            "OpenAI, Ollama",
-            "RAG Systems"
+            "Computational Biology",
+            "Scientific Computing"
         ],
-        "ML Specializations": [
-            "Deep Learning",
-            "Computer Vision",
-            "Anomaly Detection"
-        ],
-        "MLOps & Deployment": [
-            "MLflow",
-            "Git, GitHub Actions",
-            "CI/CD Pipelines",
-            "Model Deployment"
-        ],
-        "Cloud & Infrastructure": [
+        "Cloud & Deployment": [
             "AWS",
-            "Azure"
+            "Docker",
+            "Git"
         ],
         "Databases & AI Infrastructure": [
-            "PostgreSQL, MySQL, MongoDB",
-            "Weaviate",
-            "FAISS",
-            "ChromaDB"
+            "PostgreSQL"
         ],
         "Web & DevOps": [
-            "FastAPI,React",
-            "Docker Containerization"
+            "CI/CD",
+            "Testing"
+        ],
+        "ML Specializations": [
+            "Drug Discovery",
+            "ML Pipelines",
+            "Algorithm Optimization"
         ]
     },
     "points": [
-        "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in complex scientific data workflows.",
-        "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for research insights.",
-        "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring reliable model output.",
-        "\\item Introduced batched query extraction using Python and SQL, reducing compute calls by ~80% per query and enabling efficient processing of large datasets.",
-        "\\item Designed an ML-based anomaly detection system for workflows, reducing redundant verification prompts by 25%, improving user experience while maintaining rigorous validation coverage.",
-        "\\item Containerized and deployed scalable ML pipeline solutions using Docker and AWS, ensuring robust infrastructure for computational discovery."
-    ],
-    "meta_job_title": "Machine Learning Engineer",
-    "meta_company": "Vilya",
-    "meta_link": "https://www.linkedin.com/jobs/view/4366612133/"
+        "\\item Developed and maintained scalable infrastructure to support high-throughput machine learning workflows for computational drug discovery.",
+        "\\item Implemented and optimized advanced algorithms for data processing and model training, accelerating the identification of novel therapeutic targets.",
+        "\\item Collaborated with computational scientists to build a world-class drug discovery pipeline, integrating cutting-edge ML techniques into biological research.",
+        "\\item Enhanced the reliability and efficiency of the codebase by implementing rigorous testing and adopting modern software development practices.",
+        "\\item Deployed machine learning models to production environments using containers and cloud computing resources, ensuring secure and scalable operations.",
+        "\\item Contributed to the design of intelligent drug discovery platforms, applying scientific computing tools to solve complex biological problems."
+    ]
 }

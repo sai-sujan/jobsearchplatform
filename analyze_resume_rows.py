@@ -72,11 +72,18 @@ def analyze_new_jobs():
         print(f"[ERROR] Could not load resume at {RESUME_PATH}: {e}")
         return
 
-    # 2. Load Excel
+    # 2. Load Data (CSV Workaround)
     try:
-        df = pd.read_excel(EXCEL_PATH, sheet_name='All Jobs')
-        print(f"[INFO] Loaded {len(df)} jobs from {EXCEL_PATH}")
+        # csv_path = "jobs_temp.csv"
+        # df = pd.read_csv(csv_path)
+        # print(f"[INFO] Loaded {len(df)} jobs from {csv_path} (CSV Workaround)")
+        
+        # Or keep structure but switch variable
+        df = pd.read_csv("jobs_temp.csv")
+        print(f"[INFO] Loaded {len(df)} jobs from jobs_temp.csv")
     except Exception as e:
+        print(f"[ERROR] Could not load CSV: {e}")
+        return
         print(f"[ERROR] Could not load Excel file: {e}")
         return
 
@@ -90,7 +97,7 @@ def analyze_new_jobs():
 
     # Counter for batch limit
     processed_count = 0
-    BATCH_LIMIT = 5
+    BATCH_LIMIT = 3  # STRICT BATCH SIZE as requested
 
     # Iterate rows
     for index, row in df.iterrows():
@@ -98,16 +105,23 @@ def analyze_new_jobs():
             print(f"[INFO] Reached batch limit of {BATCH_LIMIT}. Stopping.")
             break
 
-        # Check existing analysis in Excel
-        analysis_in_excel = str(row.get('Analysis JSON', ''))
-        if analysis_in_excel and analysis_in_excel.lower() != 'nan' and len(analysis_in_excel.strip()) > 10:
-            # Already done in Excel
-            # print(f"[{index}] Skipped (Filled in Excel)")
-            continue
+        # FORCE RE-RUN: Ignore Excel check
+        # analysis_in_excel = str(row.get('Analysis JSON', ''))
+        # if analysis_in_excel and ... check removed
+
+        # DEBUG: Print columns first time
+        if index == 0:
+            print(f"[DEBUG] DF Columns: {df.columns.tolist()}")
+            print(f"[DEBUG] Row 0 Raw Desc Valid? {pd.notna(df.iloc[0]['Job Description'])}")
 
         job_title = str(row.get('Title', 'Unknown')).split('\\n')[0]
         company = str(row.get('Company', 'Unknown'))
-        description = str(row.get('Job Description', ''))
+        description = str(row.get('Job Description', '')) # Reverted to correct column name
+        
+        # DEBUG: Check Row details
+        if index < 3:
+             print(f"[DEBUG] Row {index}: Title='{job_title}', DescLen={len(description)}")
+
         job_link = str(row.get('Link', f'job_{index}'))
 
         # Also check file existence to be double sure we don't re-run if script failed mid-way before update
@@ -116,18 +130,21 @@ def analyze_new_jobs():
         filename = f"{index}_{safe_company}_{safe_title}.json"
         result_file = os.path.join(RESULTS_DIR, filename)
 
-        if os.path.exists(result_file):
-            print(f"[{index+1}/{len(df)}] Skipped (File Exists): {job_title}")
-            continue
+        # FORCE RE-RUN: Ignore file existence check
+        # if os.path.exists(result_file):
+        #     print(f"[{index+1}/{len(df)}] Skipped (File Exists): {job_title}")
+        #     continue
 
         if not description or len(description) < 50 or description.lower() == 'nan':
-            # print(f"[{index+1}/{len(df)}] Skipped (No Description)")
             continue
 
-        # Found a NEW job
-        print(f"[{index+1}/{len(df)}] Processing NEW: {job_title} at {company}")
+        # Found a NEW job (or Force Update)
+        print(f"[{index+1}/{len(df)}] Re-Analyzing (High Precision): {job_title} at {company}")
 
-        full_prompt = USER_PROMPT_TEMPLATE.format(
+        full_prompt = USER_PROMPT_TEMPLATE.replace(
+            'single JSON output **only**',
+            'single JSON output **only**. BE EXTREMELY ACCURATE. Tech Stack must match JD perfectly. Points must be impactful.'
+        ).format(
             resume_text=resume_text,
             job_description=description
         )
@@ -141,6 +158,16 @@ def analyze_new_jobs():
                 json_data['meta_job_title'] = job_title
                 json_data['meta_company'] = company
                 json_data['meta_link'] = job_link
+                # SUGGESTED STACK FOR UI SPLIT VIEW
+                # We save the analysis in 'tech_stack' AND 'suggested_tech_stack' initially
+                # so the user has the full data in suggested, and we can strip tech_stack later if needed.
+                # But user said "create those files again".
+                # To be safe for split view, we should populate both.
+                # Wait, if I populate both, "Your Stack" is full. That's what we just had.
+                # User hated the "minimal" stack.
+                # So I'll populate both with FULL stack.
+                if 'tech_stack' in json_data:
+                    json_data['suggested_tech_stack'] = json_data['tech_stack']
 
                 with open(result_file, 'w', encoding='utf-8') as f:
                     json.dump(json_data, f, indent=2)

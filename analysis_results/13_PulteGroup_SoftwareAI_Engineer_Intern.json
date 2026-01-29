@@ -1,0 +1,44 @@
+{
+    "ats_score": 85,
+    "location": "Atlanta, GA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "Scikit-learn",
+            "Pandas",
+            "NumPy"
+        ],
+        "LLM & NLP Tools": [
+            "Generative AI",
+            "Data Analysis"
+        ],
+        "Cloud & Deployment": [
+            "Azure",
+            "AWS"
+        ],
+        "Databases & AI Infrastructure": [
+            "SQL Server",
+            "PostgreSQL"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Data Science",
+            "Predictive Modeling",
+            "Business Intelligence"
+        ]
+    },
+    "points": [
+        "\\item Developed predictive models using Python and Scikit-learn to analyze market trends, supporting strategic decision-making for business operations.",
+        "\\item Engineered automated data pipelines to streamline the collection and processing of large-scale datasets, reducing manual reporting time by 30%.",
+        "\\item Collaborated with cross-functional teams (IT, Finance, HR) to identify opportunities for AI-driven process improvements and automation.",
+        "\\item Implemented data visualization dashboards to communicate complex analytical findings to non-technical stakeholders effectively.",
+        "\\item Assisted in the deployment of machine learning solutions to cloud environments, ensuring scalability and integration with existing enterprise systems.",
+        "\\item Conducted exploratory data analysis on diverse datasets to uncover actionable insights and drive business growth."
+    ]
+}

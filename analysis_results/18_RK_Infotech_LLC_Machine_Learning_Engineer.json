@@ -1,0 +1,45 @@
+{
+    "ats_score": 88,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "Keras",
+            "PyTorch",
+            "TensorFlow",
+            "Pandas"
+        ],
+        "LLM & NLP Tools": [
+            "Data Modeling",
+            "Deep Learning Applications"
+        ],
+        "Cloud & Deployment": [
+            "Docker",
+            "Data Pipelines"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "SQL"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "Software Architecture"
+        ],
+        "ML Specializations": [
+            "Predictive Automation",
+            "User Recommendations",
+            "Algorithm Optimization"
+        ]
+    },
+    "points": [
+        "\\item Designed and developed efficient machine learning algorithms to advance predictive automation capabilities, driving measurable improvements in system performance.",
+        "\\item Solved complex data problems by analyzing multilayered datasets and optimizing existing ML libraries, ensuring robust and scalable solutions.",
+        "\\item Constructed optimized data pipelines to feed machine learning models, significantly reducing data processing time and enabling real-time analytics.",
+        "\\item Collaborated with data scientists and engineers on production systems, ensuring the seamless deployment of AI applications.",
+        "\\item Conducted rigorous testing and experimentation to validate model accuracy, documenting findings to refine ML objectives and strategies.",
+        "\\item Monitored and retraining machine learning systems in production, identifying and addressing data distribution shifts to maintain model reliability."
+    ]
+}

@@ -1,0 +1,47 @@
+{
+    "ats_score": 88,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "Pandas",
+            "Scikit-learn",
+            "NumPy"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "Data Visualization",
+            "Data Pipelines"
+        ],
+        "Cloud & Deployment": [
+            "Azure",
+            "Databricks",
+            "Cloud Technologies"
+        ],
+        "Databases & AI Infrastructure": [
+            "SQL Server",
+            "PostgreSQL"
+        ],
+        "Web & DevOps": [
+            "CI/CD Pipelines",
+            "Git",
+            "Automated Testing"
+        ],
+        "ML Specializations": [
+            "Data Engineering",
+            "System performance",
+            "Feature Roadmap"
+        ]
+    },
+    "points": [
+        "\\item Developed and optimized scalable data pipelines on Azure Databricks, ensuring high-quality data ingest for critical lithography machine analytics.",
+        "\\item Designed and implemented automated CI/CD workflows for data integration, significantly reducing release cycle times and improving code reliability.",
+        "\\item Engineered robust data solutions to support cross-functional teams, translating complex business requirements into technical feature roadmaps.",
+        "\\item Collaborated with key stakeholders to define and standardize best practices for code health, testing, and maintainability across the data engineering stack.",
+        "\\item Implemented systematic problem-solving strategies to resolve production data incidents, minimizing downtime and ensuring customer satisfaction.",
+        "\\item Built comprehensive data visualization dashboards to drive technical decision-making and improve system performance monitoring."
+    ]
+}

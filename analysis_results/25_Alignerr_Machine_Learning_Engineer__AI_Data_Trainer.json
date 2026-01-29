@@ -1,0 +1,47 @@
+{
+    "ats_score": 95,
+    "location": "Remote",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Pandas"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LLM Evaluation",
+            "Reasoning Traces",
+            "Prompt Engineering"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker"
+        ],
+        "Databases & AI Infrastructure": [
+            "Data Annotation",
+            "Evaluation Systems"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Reinforcement Learning from Human Feedback (RLHF)",
+            "Model Alignment",
+            "Chain-of-Thought"
+        ]
+    },
+    "points": [
+        "\\item Authored highly structured reasoning traces for complex technical tasks, creating high-quality training data to enhance the logical capabilities of advanced LLMs.",
+        "\\item Designed and implemented step-by-step planning workflows for AI agents, documenting decision-making processes to improve tool use and reliability.",
+        "\\item Evaluated and refined AI decision-making protocols, identifying gaps in logic and proposing structural improvements for model training datasets.",
+        "\\item Collaborated with research teams to define best practices for data annotation, ensuring consistency and accuracy across large-scale training corpora.",
+        "\\item Engineered robust evaluation metrics for AI reasoning, utilizing analytical skills to assess model performance in real-world scenarios.",
+        "\\item optimized data quality pipelines to detect and correct reasoning errors, directly contributing to the development of safer and more capable AI systems."
+    ]
+}

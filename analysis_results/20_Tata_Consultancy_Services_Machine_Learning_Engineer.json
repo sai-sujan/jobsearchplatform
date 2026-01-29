@@ -1,0 +1,48 @@
+{
+    "ats_score": 94,
+    "location": "Springfield, MO, USA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "C++",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "OpenCV"
+        ],
+        "LLM & NLP Tools": [
+            "Vision-Language Models",
+            "Multi-modal AI",
+            "Synthetic Data"
+        ],
+        "Cloud & Deployment": [
+            "AWS SageMaker",
+            "Docker",
+            "ROS/ROS2"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL",
+            "Isaac Sim",
+            "Omniverse"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "Model Evaluation"
+        ],
+        "ML Specializations": [
+            "Robotics Perception",
+            "VLA Models",
+            "Object Recognition"
+        ]
+    },
+    "points": [
+        "\\item Fine-tuned Vision-Language Alignment (VLA) models for advanced robotic perception tasks, significantly improving object recognition and scene interpretation accuracy.",
+        "\\item Curated and preprocessed large-scale multi-modal datasets from simulation and real-world sources, ensuring high-quality training data for robust AI models.",
+        "\\item Collaborated with simulation engineers to validate model performance in Isaac Sim and Omniverse, bridging the gap between synthetic environments and real-world deployment.",
+        "\\item Optimized training pipelines and model integration workflows on AWS SageMaker, enhancing the scalability and efficiency of robotic AI systems.",
+        "\\item Supported the real-world deployment of VLA models on robotic platforms, conducting rigorous testing to ensure safety and reliability in dynamic environments.",
+        "\\item Analyzed model outputs to provide actionable insights for iterative improvements, driving the continuous advancement of perception capabilities."
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "ats_score": 90,
+    "location": "Remote",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "Hugging Face Transformers",
+            "Scikit-learn"
+        ],
+        "LLM & NLP Tools": [
+            "LLM Evaluation",
+            "RLHF",
+            "DPO",
+            "Uncertainty Quantification"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Model Monitoring"
+        ],
+        "Databases & AI Infrastructure": [
+            "Vector Databases",
+            "Healthcare Data"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD",
+            "Quality Assurance"
+        ],
+        "ML Specializations": [
+            "AI Safety",
+            "Model Alignment",
+            "Confidence Calibration"
+        ]
+    },
+    "points": [
+        "\\item Designed and implemented automated evaluation pipelines for LLM applications, establishing rigorous quality gates to ensure clinical-grade reliability.",
+        "\\item Developed uncertainty quantification frameworks to calibrate model confidence scores, ensuring AI outputs are trustworthy for physician decision-making.",
+        "\\item Engineered feedback loops using RLHF and DPO techniques to align model behaviors with expert human preferences and safety guidelines.",
+        "\\item Built comprehensive benchmarking suites to assess model accuracy, robustness, and safety across diverse clinical scenarios.",
+        "\\item Collaborated with clinicians to create validated test cases, integrating human expertise into automated quality assurance workflows.",
+        "\\item Implemented scalable monitoring systems to detect model hallucinations and drift, proactively maintaining high performance in production environments."
+    ]
+}
