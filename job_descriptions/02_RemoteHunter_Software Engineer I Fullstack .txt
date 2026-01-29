@@ -1,0 +1,212 @@
+Company: RemoteHunter
+Title: Software Engineer I, Fullstack, Risk Engineering (New Grad - 2025)
+Software Engineer I, Fullstack, Risk Engineering (New Grad - 2025)
+Link: https://www.linkedin.com/jobs/view/4365881248/
+Posted: Recent
+Location: 
+
+============================================================
+
+RemoteHunter
+
+Software Engineer I, Fullstack, Risk Engineering (New Grad - 2025)
+
+United States · 1 hour ago · 95 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$125K/yr - $153K/yr
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+About the Opportunity:
+
+A growth-stage, NYC-headquartered FinTech organization is focused on improving the rent payment experience by enabling users to pay rent throughout the month on a flexible schedule. The mission is to empower renters with flexibility over their most significant recurring expense. The Software Engineer I will join the Risk Engineering team to develop services and APIs supporting risk decisioning, fraud prevention, and credit access systems.
+
+
+
+
+Responsibilities:
+
+• Build and maintain backend services and APIs in Java (Spring Boot) for real-time risk decisioning and fraud prevention.
+
+• Develop user-facing features using TypeScript with React and/or React Native for risk-related flows on web and mobile.
+
+• Collaborate with product, design, and engineering partners to deliver features from requirements to production.
+
+• Write clean, well-tested, and maintainable code; participate in code reviews and learn best practices.
+
+• Monitor, debug, and support production systems, gaining experience with distributed systems and operational excellence.
+
+
+
+
+Requirements:
+
+• Bachelor’s degree in Computer Science or related field or equivalent practical experience.
+
+• Strong knowledge of Java and object-oriented programming principles.
+
+• Experience with React or React Native and proficiency in TypeScript.
+
+• Understanding of data structures, algorithms, and basic system design concepts.
+
+• Familiarity with REST APIs and service-oriented architectures.
+
+• Experience with relational databases and SQL queries.
+
+• Familiarity with Git or other version control systems.
+
+• Effective communication and collaboration skills.
+
+• Curiosity and desire to learn about system operations.
+
+
+
+
+Preferred Qualifications:
+
+• Exposure to risk engineering, fraud detection, or decision platforms.
+
+• Experience building mobile and web UIs to product and design specifications.
+
+• Knowledge of React Native and React ecosystems, including Hooks, Components, Context, and Redux.
+
+• Experience with Spring Boot or backend service development.
+
+• Basic knowledge of cloud platforms, particularly AWS.
+
+• Familiarity with CI/CD pipelines such as GitHub Actions.
+
+• Exposure to observability and monitoring tools like DataDog.
+
+• Experience or coursework with data platforms such as Snowflake.
+
+• Familiarity with Infrastructure as Code tools like CDK or Terraform.
+
+• Strong written and verbal communication skills.
+
+
+
+
+Compensation:
+
+• For NY/NJ/CA locations, base salary range is $139,000 to $153,000.
+
+• For all other states, base salary range is $125,000 to $138,000.
+
+
+
+
+Benefits & Perks:
+
+• Competitive medical, dental, and vision coverage from Day 1 (U.S. full-time employees).
+
+• Company equity.
+
+• 401(k) plan with company match starting in 2026 (U.S. full-time employees).
+
+• Unlimited paid time off plus 13 company paid holidays.
+
+• Parental leave.
+
+• Employee assistance program.
+
+• Free subscription to the company’s service.
+
+• For full-time non-U.S. employees: competitive compensation, company equity, and unlimited PTO.
+
+
+
+
+Note:
+
+RemoteHunter is not the Employer of Record (EOR) for this role. Our purpose in this opportunity is to connect exceptional candidates with leading employers. We help job seekers worldwide discover roles that match their goals and guide them to complete their full application directly through the hiring company’s career page or ATS.
+
+… more
+
+Benefits found in job post
+
+401(k)
+
+Set alert for similar jobs
+
+Software Engineer, United States
+
+Off
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+95
+
+total
+
+95
+
+in the past day
+
+Candidate seniority level
+
+72% Entry level candidates
+
+9% Senior level candidates
+
+Candidate education level
+
+73
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+27
+
+%
+
+have a Bachelor's Degree
+
+There’s not enough quality data on this company just yet
+
+Once there are 30 complete member profiles from this company, we’ll be able to show you the company’s growth and hiring trends
+
+About the company
+
+RemoteHunter
+
+29,602 followers
+
+Follow
+
+Software Development
+
+ • 
+
+11-50 employees
+
+ • 
+
+2 on LinkedIn
+
+RemoteHunter is your dedicated AI job search assistant, turning the job hunt from a slow, individual effort into a quicker, smarter, and guided experience by streamlining each step of the process and speeding up your path to the right career opportunities.
+
+Interested in working with us in the future?
+
+Privately share your profile with our recruiters – you’ll be noted as expressing interest for up to a year and be notified about jobs and updates. Learn more
+
+I’m interested
+More jobs
+
+AI Enginee

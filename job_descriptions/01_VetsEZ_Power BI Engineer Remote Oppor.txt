@@ -1,0 +1,135 @@
+Company: VetsEZ
+Title: Power BI Engineer (Remote Opportunity)
+Power BI Engineer (Remote Opportunity)
+Link: https://www.linkedin.com/jobs/view/4365874585/
+Posted: Recent
+Location: 
+
+============================================================
+
+VetsEZ
+
+Power BI Engineer (Remote Opportunity)
+
+Dallas, TX · 16 minutes ago · 2 people clicked apply
+
+Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Michael Aoki 
+
+• 3rd
+
+Senior Product Leader, Growth & Scale, Passionate Learner with Radical Focus
+
+School alum from Missouri State University
+
+Message
+About the job
+
+VetsEZ is seeking an experienced Power BI Engineer with expertise in integrating and developing business intelligence solutions using Microsoft Dynamics products (such as Dynamics 365 Sales, Customer Service, Finance, or Supply Chain). The ideal candidate will bridge the gap between Dynamics data and actionable insights, enabling stakeholders to make informed business decisions through advanced analytics and interactive dashboards.
+
+The candidate must reside within the continental US.
+
+Responsibilities
+
+
+Power BI Development: Design, develop, and deploy Power BI dashboards and reports that leverage data from Microsoft Dynamics applications.
+Dynamics Data Integration: Connect Power BI to Dynamics 365 (via Dataverse, OData feeds, or APIs), ensuring seamless data extraction, transformation, and loading (ETL).
+Data Modeling: Build and optimize data models that accurately represent Dynamics business processes and relationships.
+Requirements Gathering: Collaborate with business users, Dynamics administrators, and IT teams to understand reporting needs and translate them into technical solutions.
+Performance Optimization: Monitor and enhance the performance of Power BI solutions, including data refresh, query optimization, and report responsiveness.
+Documentation: Document data models, integration processes, and report logic for maintainability and knowledge sharing.
+User Support & Training: Provide support and training to end-users on accessing and interpreting Power BI reports connected to Dynamics data.
+Best Practices & Governance: Promote data governance, security, and Power BI best practices, especially in the context of Dynamics data.
+
+
+Required Qualifications
+
+
+Bachelor's degree in - Computer Science, Information Systems, Data Analytics, or a related field.
+2+ years of experience developing Power BI solutions, including direct integration with Microsoft Dynamics 365.
+Proficiency in DAX, Power Query (M), and Power BI data modeling.
+Experience with Microsoft Dataverse, OData, and Dynamics 365 Security.
+Strong understanding of Dynamics 365 data structures, entities, and business processes.
+Familiarity with data security, compliance, and governance in a Dynamics environment.
+Excellent analytical, problem-solving, and communication skills
+
+
+Additional Qualifications
+
+
+Experience with MS Dynamics products at the Department of Veteran's Affairs
+Microsoft Power Platform or Dynamics 365 certifications.
+Experience with other BI tools or scripting languages (Python, R) for data analysis.
+Knowledge of Power BI administration and workspace management.
+Prior experience collaborating with Veterans Affairs stakeholders to optimize CRM workflows and enhance service delivery.
+Demonstrated experience implementing or supporting CRM systems (e.g., Microsoft Dynamics) within a federal agency environment.
+Proven knowledge of Department of Veterans Affairs operations, policies, and programs, with an emphasis on client-facing technology solutions.
+Ability to obtain a Government clearance. 
+
+
+Benefits
+
+
+Medical/Dental/Vision
+401k with Employer Match
+PTO + Federal Holidays
+Corporate Laptop
+Training Opportunities
+Remote Opportunity 
+
+
+Note: Selected candidates will be required to complete fingerprinting at a government facility and undergo a background check as part of the hiring process.
+
+Qualified applicants will receive consideration for employment without regard to race, color, religion, sex, national origin, sexual orientation, gender identity, disability, or protected veteran status.
+
+Sorry, we are unable to offer sponsorship at this time.
+… more
+
+Benefits found in job post
+
+401(k)
+
+Set alert for similar jobs
+
+Business Intelligence Engineer, Dallas, Texas, United States
+
+Off
+Based on LinkedIn data. Excludes subsidiaries.
+
+2
+
+Candidates
+
+We’re waiting on more data to deliver Competitive intelligence
+
+Once there are 3 or more candidates for this job, we will show how you compare to the competition.
+
+Exclusive Job Seeker Insights about VetsEZ
+Powered by Bing
+
+Company focus areas
+
+• Support for Department of Veterans Affairs (VA) Projects: VetsEZ focuses on supporting VA projects by providing business analysis, creating work breakdown structures, and developing program schedules.
+
+...more
+
+Sources: revopscareers.com +1 more
+
+Hiring & headcount
+
+Significant growth in engineering: The 'Engineering' department has seen a 38% increase in headcount over the past year, indicating a major focus on expanding technical capabilities and product development. Expansion in information technology: The 'Info

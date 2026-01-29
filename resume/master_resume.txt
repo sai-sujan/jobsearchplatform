@@ -1,0 +1,108 @@
+Sujan Dora
+AI Engineer
+(940) 843-0811 | sujanworkofficial@gmail.com | LinkedIn | Portfolio | Springfield, MO, USA (Open to Relocate)
+
+P ROFESSIONAL S UMMARY
+AI/ML Engineer with 2 years of experience building LLM-RAG based document QA and production-ready AI solutions. Delivered systems that improved document QA accuracy by ∼20%, reduced MFA verification load by ∼25%, and
+optimized ID authentication pipelines, with hands-on experience in Python, PyTorch, TensorFlow, OpenCV, and AWS.
+Recent graduate with strong foundation in LLMs and RAG systems, model evaluation, and end-to-end ML workflows.
+
+E DUCATION
+GPA: 3.63
+Dec 2025
+
+Missouri State University
+M.S. Computer Science – Data Science
+
+T ECHNICAL S KILLS
+Programming Languages
+
+Python, SQL
+
+ML Frameworks & Libraries
+LLM & NLP Tools
+
+TensorFlow, PyTorch, Scikit-learn, Hugging Face Transformers
+LangChain, LangGraph, LangSmith, LlamaIndex, Agents, Multi-Agents, LoRA,
+QLoRA, OpenAI, Ollama, RAG Systems
+
+ML Specializations
+
+NLP, Computer Vision, Deep Learning, Anomaly Detection
+
+MLOps & Deployment
+
+MLflow, Git, GitHub Actions, CI/CD Pipelines, Model Deployment
+
+Cloud & Infrastructure
+
+AWS (Lambda, S3, EC2, ECR, API Gateway)
+
+Databases & AI Infrastructure
+Web & DevOps
+
+PostgreSQL, MySQL, Milvus, Weaviate, FAISS, MongoDB
+FastAPI, Docker Containerization
+
+W ORK E XPERIENCE
+AI/ML Engineer
+Grootan Technologies
+
+Chennai, India
+July 2023 – December 2023
+
+• Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA.
+• Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage
+of retrieved documents.
+• Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability.
+• Introduced batched query extraction, reducing LLM calls by ∼80% per query and enabling faster, reliable production
+inference.
+• Designed an ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by
+25%, improving user experience while maintaining security coverage.
+AI/ML Intern
+Grootan Technologies
+
+Chennai, India
+September 2022 – July 2023
+
+• Built a National ID authentication system for detecting counterfeit holograms using YOLO object detection, MiDaS
+depth estimation, and GAN-generated synthetic samples to improve robustness.
+• Optimized the hologram verification pipeline by eliminating redundant processing, reducing per-card detection
+time from 7 minutes to 3 minutes.
+• Applied transfer learning to fine-tune pre-trained models for limited datasets, achieving reliable counterfeit detection across varied hologram designs.
+• Containerized and deployed solutions using Docker and AWS, ensuring scalable production-ready pipelines for
+anomaly detection, identity verification, and document QA systems.
+Data Science Intern
+iNeuron.ai
+
+Bengaluru, India
+November 2021 – March 2022
+
+• Developed an end-to-end credit card default prediction project using Docker, CircleCI, and Heroku, achieving 87%
+model accuracy on simulated customer transactions.
+• Built a CI/CD pipeline to deploy predictive models to AWS production, enabling real-time predictions.
+• Conducted exploratory data analysis on 30,000+ customer records to identify key features that improved model
+performance.
+• Implemented data validation and preprocessing pipelines, reducing manual data preparation effort.
+
+PERSONAL PROJECTS
+Wine Quality Prediction - End-to-End MLOps Pipeline
+• Built an end-to-end ML pipeline using ZenML and MLflow, deploying a REST API on AWS Lambda with Docker
+for automated training and inference.
+• Implemented CI/CD with GitHub Actions to automate model retraining and deployment to AWS (S3, ECR, API
+Gateway), ensuring reliable and repeatable releases.
+BioMedical Research Assistant – Multi-Agent LLM System
+• Fine-tuned Llama-3.1-8B using QLoRA on PubMedQA data with 4-bit quantization, gaining hands-on experience in
+parameter-efficient LLM training for biomedical QA.
+• Built a multi-agent research workflow using CrewAI and PubMed retrieval via Model Context Protocol, with a
+Streamlit interface for interactive querying.
+SafeSpace 2.0 – AI Mental Health Therapist
+• Developed an AI-powered mental health companion with empathetic conversational support, crisis detection, and
+location-aware therapist recommendations.
+• Implemented a tool-using LLM agent (LangGraph / REAct) with multi-channel frontends (Streamlit web chat +
+Twilio WhatsApp) and integrated APIs for real-time actionable outputs.
+
+P UBLICATIONS & R ESEARCH
+Dora, S. et al. (2021). "Detecting Bias in the Relative Grading System Using Machine Learning." IEEE International
+Conference on Computing and Communications Technologies.
+

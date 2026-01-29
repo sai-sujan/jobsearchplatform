@@ -1,0 +1,293 @@
+--- JOB START 30 ---
+FILENAME: 30_Jobs via Dice_Data Scientist - Agentic AI Sy.json
+COMPANY: Jobs via Dice
+TITLE: Data Scientist - Agentic AI Systems
+Data Scientist - Agentic AI Systems
+LINK: https://www.linkedin.com/jobs/view/4365911289/
+CONTENT:
+Jobs via Dice
+
+Data Scientist - Agentic AI Systems
+
+Greenwood Village, CO · 19 hours ago · 32 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+RESPONSIBILITIES:
+
+Kforce is seeking a Data Scientist to support a major telecommunications client on a renewable contract basis in Greenwood Village, CO.
+
+Summary:
+
+This role focuses on building agentic AI systems to solve complex operational and network-related problems using metadata, telemetry, and advanced analytics. The position is fully remote and highly hands-on, working closely with platform and data engineering teams.
+
+Key Tasks:
+
+
+ Design and develop agentic AI and LLM-based solutions to detect, explain, and resolve anomalies
+ Build statistical and machine learning models using metadata and telemetry data
+ Analyze system behavior (e.g., latency spikes, performance degradation) and identify root causes
+ Gather, prepare, and analyze data independently using internal tools and pipelines
+ Collaborate with data engineers and platform teams to operationalize solutions
+ Translate analytical findings into clear, actionable explanations
+
+
+REQUIREMENTS:
+
+
+ Strong background in machine learning and statistical data science
+ Experience building solutions in Python (primary language)
+ Data engineering skills (ability to source, clean, and prepare data independently)
+ Experience with agentic systems and/or LLM-based workflows
+ Familiarity with AWS (even at a basic level)
+ Proficiency in Bash
+ Experience with at least one additional programming language beyond Python
+
+
+Nice-to-Have Qualifications:
+
+
+ Networking or telecommunications domain experience
+ Experience working with large-scale telemetry or monitoring data
+
+
+The pay range is the lowest to highest compensation we reasonably in good faith believe we would pay at posting for this role. We may ultimately pay more or les
+--- JOB END ---
+
+--- JOB START 31 ---
+FILENAME: 31_Lensa_AI EngineeringData Scientist -.json
+COMPANY: Lensa
+TITLE: AI Engineering/Data Scientist - Summer 2027 Internship
+AI Engineering/Data Scientist - Summer 2027 Internship with verification
+LINK: https://www.linkedin.com/jobs/view/4366276129/
+CONTENT:
+Lensa
+
+AI Engineering/Data Scientist - Summer 2027 Internship 
+
+Houston, TX · 21 hours ago · 9 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$29.25/hr - $48/hr
+On-site
+Internship
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Lensa is a career site that helps job seekers find great jobs in the US. We are not a staffing firm or agency. Lensa does not hire directly for these jobs, but promotes jobs on LinkedIn on behalf of its direct clients, recruitment ad agencies, and marketing partners. Lensa partners with DirectEmployers to promote this job for PwC. Clicking "Apply Now" or "Read more" on Lensa redirects you to the job board/employer site. Any information collected there is subject to their terms and privacy notice.
+
+Specialty/Competency: Data Science
+
+Time Type: Full time
+
+Travel Requirements: Up to 80%
+
+At PwC, our people in data and analytics engineering focus on leveraging advanced technologies and techniques to design and develop robust data solutions for clients. They play a crucial role in transforming raw data into actionable insights, enabling informed decision-making and driving business growth.
+
+Those in data science and machine learning engineering at PwC will focus on leveraging advanced analytics and machine learning techniques to extract insights from large datasets and drive data-driven decision making. You will work on developing predictive models, conducting statistical analysis, and creating data visualisations to solve complex business problems.
+
+Driven by curiosity, you are a reliable, contributing member of a team. In our fast-paced environment, you will have the chance to work on a variety of assignments, each presenting varying challenges and scope. Every experience is an opportunity to learn and grow. You are encouraged to ask questions, take initiative, and produce quality work that adds value for our clients and contributes to our team's succ
+--- JOB END ---
+
+--- JOB START 32 ---
+FILENAME: 32_Lensa_AI EngineeringData Scientist -.json
+COMPANY: Lensa
+TITLE: AI Engineering/Data Scientist - Summer 2027 Internship
+AI Engineering/Data Scientist - Summer 2027 Internship with verification
+LINK: https://www.linkedin.com/jobs/view/4366266363/
+CONTENT:
+Lensa
+
+AI Engineering/Data Scientist - Summer 2027 Internship 
+
+Chicago, IL · 21 hours ago · 16 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$29.25/hr - $48/hr
+On-site
+Internship
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Lensa is a career site that helps job seekers find great jobs in the US. We are not a staffing firm or agency. Lensa does not hire directly for these jobs, but promotes jobs on LinkedIn on behalf of its direct clients, recruitment ad agencies, and marketing partners. Lensa partners with DirectEmployers to promote this job for PwC. Clicking "Apply Now" or "Read more" on Lensa redirects you to the job board/employer site. Any information collected there is subject to their terms and privacy notice.
+
+Specialty/Competency: Data Science
+
+Time Type: Full time
+
+Travel Requirements: Up to 80%
+
+At PwC, our people in data and analytics engineering focus on leveraging advanced technologies and techniques to design and develop robust data solutions for clients. They play a crucial role in transforming raw data into actionable insights, enabling informed decision-making and driving business growth.
+
+Those in data science and machine learning engineering at PwC will focus on leveraging advanced analytics and machine learning techniques to extract insights from large datasets and drive data-driven decision making. You will work on developing predictive models, conducting statistical analysis, and creating data visualisations to solve complex business problems.
+
+Driven by curiosity, you are a reliable, contributing member of a team. In our fast-paced environment, you will have the chance to work on a variety of assignments, each presenting varying challenges and scope. Every experience is an opportunity to learn and grow. You are encouraged to ask questions, take initiative, and produce quality work that adds value for our clients and contributes to our team's suc
+--- JOB END ---
+
+--- JOB START 33 ---
+FILENAME: 33_The Applied Research Laborator_Data Scientist  Machine Learni.json
+COMPANY: The Applied Research Laboratory at Penn State University
+TITLE: Data Scientist / Machine Learning Engineer
+Data Scientist / Machine Learning Engineer
+LINK: https://www.linkedin.com/jobs/view/4322645609/
+CONTENT:
+The Applied Research Laboratory at Penn State University
+
+Data Scientist / Machine Learning Engineer
+
+University Park, PA · Reposted 5 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$76.7K/yr - $129.5K/yr
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+POSITION SPECIFICS
+
+We are seeking highly motivated Data Science/Machine Learning Research and Development Engineers to join our Computational Intelligence and Visualization Application Department of the Applied Research Laboratory (ARL) at Penn State. You will assist in providing customers with state-of-the-art visualization and decision support. The primary focus will be researching and developing feasible algorithmic solutions to our sponsor’s complex problems given large sets of multivariate data. Located in either State College, PA or Reston, VA
+
+ARL is an authorized DoD SkillBridge partner and welcomes all transitioning military members to apply.
+
+You will:
+
+Design and implement machine learning systems, models, and schemes
+Research and apply state-of-the-art machine learning prototypes to sponsor specific domains
+Search and select appropriate data sets before performing data collection and data modeling
+Visualize data for deeper insights
+Generate and present technical research reports and briefings
+Perform statistical analysis in support of pattern of life and anomaly detection
+Perform data fusion and correlation
+Build high quality software prototypes integrated with our various research and pre-production software environments
+Collaborate with other ARL staff and sponsors
+
+Additional responsibilities of higher levels includes:
+
+Supervise the work of lower level staff and undergraduate student
+Perform tasks of a larger scope and lead specific tasks within the project scope
+
+Required skills/knowledge includes: 
+
+Data science/algorithm development
+Data science / Machine Learning lan
+--- JOB END ---
+
+--- JOB START 34 ---
+FILENAME: 34_Bioscope AI_Data Scientist AI Quality  Eva.json
+COMPANY: Bioscope AI
+TITLE: Data Scientist (AI Quality & Evaluation)
+Data Scientist (AI Quality & Evaluation)
+LINK: https://www.linkedin.com/jobs/view/4361667501/
+CONTENT:
+Bioscope AI
+
+Data Scientist (AI Quality & Evaluation)
+
+Boston, MA · Reposted 5 days ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+About The Role
+
+We're looking for a Data Scientist to own the quality, reliability, and trustworthiness of our clinical AI outputs. You'll build the systems that ensure our AI "knows what it doesn't know" — developing evaluation frameworks, calibrated confidence scoring, and automated quality assurance that physicians can actually trust.
+
+What You'll Do
+
+
+Design and implement automated evaluation pipelines that assess AI output quality, accuracy, and safety at scale
+Develop uncertainty quantification systems where confidence scores meaningfully correlate with accuracy
+Build comprehensive evaluation frameworks combining automated assessment with clinician-validated test cases
+Implement feedback loops that continuously improve model outputs based on validation signals
+Establish scalable quality gates that catch errors before they reach end users
+Contribute to model alignment and fine-tuning efforts
+
+
+Qualifications
+
+Required
+
+
+Strong foundation in deep learning frameworks (PyTorch) and LLM architectures
+Experience with model evaluation, benchmarking, and quality metrics
+Proficiency in Python and modern ML development tools
+Strong statistical foundations
+Ability to read, implement, and extend research papers
+Excellent communication skills
+
+
+Preferred
+
+
+Master's degree in Computer Science, Machine Learning, Statistics, or related quantitative field (PhD preferred)
+Publications in top ML/AI venues (NeurIPS, ICML, ICLR, ACL)
+Experience with RLHF, DPO, or preference optimization techniques
+Background in healthcare AI or regulated industries
+Experience building evaluation systems for production LLM applications
+
+
+… more
+
+Set alert for similar jobs
+
+Data Scientist, Boston, Massachusetts, United
+--- JOB END ---
+

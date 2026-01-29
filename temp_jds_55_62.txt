@@ -1,0 +1,463 @@
+--- JOB START 55 ---
+FILENAME: 55_Cognizant_AI EngineerAI Engineer with ve.json
+COMPANY: Cognizant
+TITLE: AI Engineer
+AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366531480/
+CONTENT:
+Cognizant
+
+AI Engineer 
+
+Plano, TX · 2 hours ago · 60 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$65K/yr
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Tarun and others in your network
+
+Show all
+About the job
+
+Job Title: AI Engineer
+
+Team: AI&A
+
+Position Overview
+
+Cognizant is seeking a highly skilled and innovative AI Engineer to join our AI & Data Science team. The ideal candidate will have exposure in Python, and SQL and will be responsible for data exploration and AI development. This role involves designing and developing scalable AI solutions and data pipelines for structured, semi-structured, and unstructured data, enabling advanced analytics and intelligent automation across the organization.
+
+Key Responsibilities
+
+
+ Build, train, and deploy machine learning and deep learning models, including Generative AI (e.g., LLMs, diffusion models) and Agentic AI solutions.
+ Perform data exploration, feature engineering, and statistical analysis to support model development.
+ Ingest, process, and analyze structured (e.g., relational databases), semi-structured (e.g., JSON, XML), and unstructured data (e.g., text, images, logs) from diverse sources using Python, SQL
+ Collaborate with data scientists, engineers, and business stakeholders to understand requirements and deliver impactful AI solutions.
+ Develop and maintain technical documentation, data dictionaries, and model cards.
+ Monitor, troubleshoot, and optimize AI models and data workflows for performance and scalability.
+ Ensure compliance with data governance, security, and privacy policies.
+ Stay current with the latest advancements in AI, Generative AI, and Agentic AI technologies.
+ Familiarity with MLOps practices
+
+
+Required Skills & Qualifications
+
+
+ A bachelor's or master's degree in computer science, data science, artificial intelligence, or a related discipline
+ A portfolio of 
+--- JOB END ---
+
+--- JOB START 56 ---
+FILENAME: 56_Kforce Inc_Python AI EngineerPython AI En.json
+COMPANY: Kforce Inc
+TITLE: Python AI Engineer
+Python AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366942211/
+CONTENT:
+Kforce Inc
+
+Python AI Engineer 
+
+Wilmington, DE · 45 minutes ago · 48 applicants
+
+Promoted by hirer · No response insights available yet
+
+$55/hr - $65/hr
+On-site
+Contract
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+School alumni from Missouri State University
+
+Show all
+About the job
+
+Responsibilities
+
+Kforce's client is hiring multiple Python AI Scrum Teams in Wilmington, DE (outside Philly) and in Columbus, OH. This is a posting for Junior Role - if intermediate or senior/lead, please still apply to this post. This is an opportunity for fulltime employment with client. Responsibilities:
+
+
+ Build foundational Python skills and contribute to development tasks under guidance
+ Learning, execution, reliability
+ Individual tasks and features
+ Writes clean Python code with guidance; debugs basic issues
+
+
+Requirements
+
+
+ 3-5 years of experience
+ ML coursework, APIs, cloud exposure
+
+
+The pay range is the lowest to highest compensation we reasonably in good faith believe we would pay at posting for this role. We may ultimately pay more or less than this range. Employee pay is based on factors like relevant education, qualifications, certifications, experience, skills, seniority, location, performance, union contract and business needs. This range may be modified in the future.
+
+We offer comprehensive benefits including medical/dental/vision insurance, HSA, FSA, 401(k), and life, disability & ADD insurance to eligible employees. Salaried personnel receive paid time off. Hourly employees are not eligible for paid time off unless required by law. Hourly employees on a Service Contract Act project are eligible for paid sick leave.
+
+Note: Pay is not considered compensation until it is earned, vested and determinable. The amount and availability of any compensation remains in Kforce's sole discretion unless and until paid and may be modified in its discretion consistent with the law.
+
+This j
+--- JOB END ---
+
+--- JOB START 57 ---
+FILENAME: 57_Pragmatike_AIML Engineer Entry PositionAI.json
+COMPANY: Pragmatike
+TITLE: AI/ML Engineer (Entry Position)
+AI/ML Engineer (Entry Position)
+LINK: https://www.linkedin.com/jobs/view/4366922038/
+CONTENT:
+Pragmatike
+
+AI/ML Engineer (Entry Position)
+
+Cambridge, MA · 2 hours ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Location: Cambridge, MA (Eastern Time / UTC -4) Relocation package available 
+
+Relocation package: Available
+
+Start date: ASAP
+
+Languages: English (required)
+
+About The Role
+
+Pragmatike is hiring on behalf of a fast-growing AI startup recognized as a Top 10 GenAI company by GTM Capital, founded by MIT CSAIL researchers.
+
+We are looking for an AI/ML Engineer (Entry Position) to join a growing AI engineering team building and deploying real-world AI systems used by Fortune 500 customers. You will work closely with senior AI, ML, and platform engineers on the development, optimization, and deployment of machine learning models in production environments.
+
+This role is intended for engineers with early professional experience who already have hands-on exposure to applied machine learning and want to grow quickly by working on real, production-scale AI systems.
+
+What Youll Do
+
+
+Build, train, and evaluate machine learning models in collaboration with senior engineers
+Contribute to deploying ML models into production systems
+Work with structured and unstructured datasets to support training and inference pipelines
+Improve model performance, reliability, and scalability through experimentation
+Implement and maintain ML code primarily in Python
+Monitor model behavior and assist in debugging production issues
+Participate in model iteration, validation, and performance analysis
+Collaborate with backend and platform teams to integrate AI components into products
+
+
+What Were Looking For
+
+
+Bachelors or Masters degree in Computer Science, Engineering, Mathematics, or a related field
+2+ years of professional experience working on AI, ML, or data-driven systems (industry, research, or applied internships)
+Excellent 
+--- JOB END ---
+
+--- JOB START 58 ---
+FILENAME: 58_MAI Agents_Machine Learning Engineer New .json
+COMPANY: MAI Agents
+TITLE: Machine Learning Engineer (New Grad)
+Machine Learning Engineer (New Grad)
+LINK: https://www.linkedin.com/jobs/view/4366916517/
+CONTENT:
+MAI Agents
+
+Machine Learning Engineer (New Grad)
+
+Mountain View, CA · 2 hours ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+$90K/yr - $140K/yr
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Haipeng Zheng
+
+• 3rd
+
+Quant Researcher / Data Scientist
+
+Recently hired
+
+Message
+About the job
+
+About Us
+
+At MAI (pronounced “my”), we're on a mission to democratize advanced advertising technology. We believe that cutting-edge marketing tools, once exclusive to large enterprises with massive budgets, should be accessible to everyone. Our platform uses AI agents to automate and optimize performance marketing, empowering small and mid-sized businesses to scale their ad spend profitably without the need for an agency or endless hours of manual campaign management.
+
+Founded by ad platform veterans from Google and Instacart, we've successfully raised a $25 million Seed funding round led by Kleiner Perkins to accelerate our growth. This capital will be used to expand our product and engineering teams, bringing our vision of intelligent, autonomous marketing to life. Our AI agents have already proven their value, helping clients drive 40% more sales and managing millions in monthly Google Ads spend. Our client waitlist is growing by the day and we couldn’t be more excited about building the future of growth marketing.
+
+Why Join Now
+
+While traditional software has a clear playbook, building the infrastructure for autonomous, intelligent agents is a new frontier—and we're writing the manual.
+
+As a New Grad Machine Learning Engineer at MAI, you won't just be writing code; you'll contribute to helping architect the entire ecosystem where our AI agents live, learn, and operate. You will have a unique opportunity to apply your deep research expertise to real-world, high-impact problems.
+
+This is a rare opportunity to build a truly AI-native product from the ground up an
+--- JOB END ---
+
+--- JOB START 59 ---
+FILENAME: 59_Kastech Software Solutions Gro_Python Developer  AIML Enginee.json
+COMPANY: Kastech Software Solutions Group
+TITLE: Python Developer + AI/ML Engineer
+Python Developer + AI/ML Engineer
+LINK: https://www.linkedin.com/jobs/view/4366538425/
+CONTENT:
+Kastech Software Solutions Group
+
+Python Developer + AI/ML Engineer
+
+Houston, TX · 12 minutes ago · 6 applicants
+
+Company review time is typically 1 week
+
+On-site
+Contract
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Python Developer + AI/ML Engineer - Hybrid
+
+Location: Plano, TX or Alpharetta, GA (1-2 days onsite per week)
+
+Duration: 12 months (until 12/31/2026)
+
+Visa: USC,GC,H4EAD,TN
+
+
+
+
+Interview Process
+
+• 1st-round virtual with hiring manager
+
+• 2nd-round virtual with team
+
+• Offer
+
+
+
+
+Must Have Main Skills:
+
+Python Development
+
+Develop Rest API’s using Fast API
+
+Integrate AI Agents
+
+Agentic workflows with Langchain/Langgraph
+
+Model Deployment
+
+Application Deployment (Docker/Kubernetes)
+
+LLM Pipeline (RAG)
+
+Cloud experience (preferably Azure)
+
+ 
+
+Nice to Have:
+
+Databricks
+
+Big Data (Spark)
+
+ 
+
+Job Description:
+
+Our client is looking for AI/ML Engineers to support critical projects in their CDO.
+
+ 
+
+Required Skills
+
+ • Python & AI/ML Frameworks: Demonstrated expertise in Python and at least one major AI/ML framework.
+
+• API Development: Hands-on experience developing RESTful APIs using FastAPI, with a solid understanding of web API architecture principles.
+
+• Database Management: Strong proficiency in designing, integrating, and managing multiple databases (e.g., PostgreSQL, MongoDB).
+
+• Big Data & Distributed Computing: Experience working with big data processing frameworks such as Spark and Delta Lake for scalable data processing.
+
+• Databricks: Hands-on experience with Databricks for collaborative data engineering and machine learning workflows.
+
+• AI Agent Integration: Proven expertise in integrating and orchestrating AI agents, large language models (LLMs), or multi-agent systems.
+
+• LLM Pipeline Experience: Direct experience designing, building, and optimizing LLM pipelines, including data ingestion, pre-processing, prompt engineering, fine-tuning, and deployment.
+
+• AI Workflow To
+--- JOB END ---
+
+--- JOB START 60 ---
+FILENAME: 60_Signify Technology_machine learning engineermachi.json
+COMPANY: Signify Technology
+TITLE: machine learning engineer
+machine learning engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366514803/
+CONTENT:
+Signify Technology
+
+machine learning engineer 
+
+San Francisco, CA · 2 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$180K/yr - $225K/yr
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Job title: ML Engineer
+
+Job type: Perm
+
+Salary: $180,000- $225,000
+
+Role Location: San francisco CA
+
+The company: Robotics automation
+
+Role And Responsibilities
+
+Job requirements:
+
+Benefits
+
+Accessibility Statement:
+
+Read and apply for this role in the way that works for you by using our Recite Me assistive technology tool. Click the circle at the bottom right side of the screen and select your preferences.
+
+We make an active choice to be inclusive towards everyone every day.? Please let us know if you require any accessibility adjustments through the application or interview process.
+
+Our Commitment To Diversity, Equity, And Inclusion
+
+Signify’s mission is to empower every person, regardless of their background or?circumstances, with an equitable chance to achieve the careers?they deserve. Building a diverse future, one placement at a?time. Check out our DE&I page here
+… more
+
+Set alert for similar jobs
+
+Machine Learning Engineer, San Francisco, California, United States
+
+Off
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+129
+
+total
+
+129
+
+in the past day
+
+Candidate seniority level
+
+88% Entry level candidates
+
+5% Senior level candidates
+
+1% Manager level candidates
+
+Candidate education level
+
+93
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+5
+
+%
+
+have a Bachelor's Degree
+
+
+2
+
+%
+
+have a Doctor of Philosophy
+Exclusive Job Seeker Insights about Signify Technology
+Powered by Bing
+
+Company focus areas
+
+• Global Expansion: Signify Technology is focused on expanding its global presence with offices in London, Los Angeles, and Austin, aiming to grow its market share in the US and othe
+--- JOB END ---
+

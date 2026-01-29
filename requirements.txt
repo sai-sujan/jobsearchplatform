@@ -1,0 +1,58 @@
+# Job Applications Automation - Dependencies
+# Python 3.9+ required
+
+# ============================================
+# INSTALLATION INSTRUCTIONS FOR M2 MAC:
+# ============================================
+# 1. Create virtual environment:
+#    python3 -m venv venv && source venv/bin/activate
+#
+# 2. Install PyTorch for Apple Silicon:
+#    pip install torch torchvision torchaudio
+#
+# 3. Install all dependencies:
+#    pip install -r requirements.txt
+#
+# 4. Install Playwright browsers:
+#    playwright install chromium
+#
+# 5. Download model (first run will auto-download, or manually):
+#    python -c "from airllm import AutoModel; AutoModel.from_pretrained('google/gemma-2-2b-it')"
+# ============================================
+
+# Browser automation
+playwright>=1.41.0
+
+# Data handling and Excel output
+pandas>=2.1.4
+openpyxl>=3.1.2
+
+# Environment configuration
+python-dotenv>=1.0.0
+
+# HTTP requests
+requests>=2.31.0
+
+# AirLLM for local LLM inference on M2 Mac (memory efficient)
+airllm>=2.8.0
+
+# Transformers and tokenizers (required by AirLLM)
+transformers>=4.36.0
+accelerate>=0.25.0
+safetensors>=0.4.0
+
+# For Apple Silicon MPS acceleration
+# torch is required but should be installed separately for M2:
+# pip install torch torchvision torchaudio
+
+# Hugging Face Hub for model downloads
+huggingface-hub>=0.20.0
+
+# Date parsing
+python-dateutil>=2.8.2
+
+# Type hints support
+typing-extensions>=4.9.0
+
+# Tokenization
+sentencepiece>=0.1.99

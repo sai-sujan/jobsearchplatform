@@ -1,0 +1,58 @@
+{
+    "ats_score": 89,
+    "location": "San Francisco, CA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Engineered a self-correcting RAG system using Python and LangChain, significantly improving accuracy in complex document interpretation tasks.",
+        "\\item Constructed a hybrid retrieval pipeline combining dense embeddings and BM25, ensuring precise data extraction from unstructured sources.",
+        "\\item Developed an automated evaluation pipeline to measure accuracy and faithfulness of AI-generated clinical/document summaries.",
+        "\\item Optimized structured data extraction workflows, reducing processing overhead by \\sim80\\% through efficient batching techniques.",
+        "\\item Designed and implemented robust feature pipelines for anomaly detection, handling missing data and ensuring logic correctness.",
+        "\\item Deployed containerized ML models on AWS, enabling reliable and auditable AI systems for high-stakes verification tasks."
+    ]
+}

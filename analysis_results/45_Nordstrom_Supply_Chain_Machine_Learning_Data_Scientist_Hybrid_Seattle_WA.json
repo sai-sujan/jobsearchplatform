@@ -1,0 +1,61 @@
+{
+    "ats_score": 85,
+    "location": "Seattle, WA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Developed ML-based anomaly detection system for MFA workflows using TensorFlow, reducing redundant verification prompts by 25% and improving supply chain security coverage.",
+        "\\item Conducted exploratory data analysis on 30,000+ customer records to identify key features that improved predictive model performance for demand forecasting.",
+        "\\item Built end-to-end credit card default prediction pipeline using Docker and CI/CD, achieving 87% model accuracy on transaction data applicable to supply chain fraud detection.",
+        "\\item Implemented data validation and preprocessing pipelines for ML workflows, reducing manual data preparation effort for large-scale supply chain datasets.",
+        "\\item Containerized and deployed production ML solutions using Docker and AWS (Lambda, S3, EC2), ensuring scalable pipelines for inventory optimization and demand forecasting.",
+        "\\item Built CI/CD pipeline using GitHub Actions for automated model retraining and deployment to AWS, ensuring reliable and repeatable releases for supply chain ML systems."
+    ],
+    "meta_job_title": "Supply Chain Machine Learning Data Scientist - Hybrid - Seattle, WA",
+    "meta_company": "Nordstrom",
+    "meta_link": ""
+}

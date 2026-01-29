@@ -1,0 +1,61 @@
+{
+    "ats_score": 98,
+    "location": "San Jose, CA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in multi-agent workflows.",
+        "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for agentic reasoning.",
+        "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring reliable performance of autonomous agents.",
+        "\\item Introduced batched query extraction using Python and SQL, reducing LLM calls by ~80% per query and enabling efficient orchestration of agent tasks.",
+        "\\item Designed an ML-based anomaly detection system for workflows, reducing redundant prompts by 25%, improving agent efficiency and user experience.",
+        "\\item Containerized and deployed scalable AI agent solutions using Docker and AWS, ensuring robust pipelines for collaborative agent systems."
+    ],
+    "meta_job_title": "Intern, Machine Learning Engineer",
+    "meta_company": "Samsung Electronics",
+    "meta_link": "https://www.linkedin.com/jobs/view/4366242621/"
+}

@@ -1,0 +1,112 @@
+Company: Deepwatch
+Title: Threat Responder
+Threat Responder with verification
+Link: https://www.linkedin.com/jobs/view/4355679398/
+Posted: Recent
+Location: 
+
+============================================================
+
+Deepwatch
+
+Threat Responder 
+
+Tampa, FL · 6 minutes ago · 4 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$160K/yr
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Lizette Colombani 
+
+• 3rd+
+
+Payroll Accountant
+
+Recently hired
+
+Follow
+About the job
+
+Come join Deepwatch’s team of world-class cybersecurity professionals and the brightest minds in the industry. If you're ready to challenge yourself with work that matters, then this is the place for you. We're redefining cybersecurity as one of the fastest growing companies in the U.S. – and we have a blast doing it!
+
+Who We Are
+
+Deepwatch is the leader in managed security services, protecting organizations from ever-increasing cyber threats 24/7/365. Powered by Deepwatch’s cloud-based security operations platform, Deepwatch provides the industry’s fastest, most comprehensive detection and automated response to cyber threats together with tailored guidance from dedicated experts to mitigate risk and measurably improve security posture. Hundreds of organizations, from Fortune 100 to mid-sized enterprises, trust Deepwatch to protect their business.
+
+Our core values drive everything we do at Deepwatch, including our approach to tackling tough cyber challenges. We seek out tenacious individuals who are passionate about solving complex problems and protecting our customers. At Deepwatch, every decision, process, and hire is made with a focus on improving our cybersecurity solutions and delivering an exceptional experience for our customers. By embracing our values, we create a culture of excellence that is dedicated to empowering our team members to explore their potential, expand their skill sets, and achieve their career aspirations, which is supported by our unique annual professional development benefit.
+
+Deepwatch recognition includes:
+
+
+2025, 2024, 2023, 2022 and 2021 Great Place to Work® Certified
+2024 Military Times Best for Vets Employers
+2024 US Department of Labor Hire Vets Gold Award
+2024 Forbes' America's Best Startup Employers
+2024 Cyber Defense Magazine, Global Infosec Awards 
+2023 and 2022 Fortress Cybersecurity Award
+2023 $180M Series C investment from Springcoast Capital Partners, Splunk Ventures, and Vista Credit Partners of Vista Equity Partners
+2022 Cybersecurity Excellence Award for MDR
+
+
+Threat Responder
+
+Reporting directly to the Manager, Adversary Response & Threat Hunting, the Threat Responder will work within the Incident Response processes, engage with outside IR (Incident Response) firms, and internal customers. The Threat Responder will be a primary response analyst during IR engagements, utilizing a myriad of EDR tools. They will support the response efforts of the IR team and squad as necessary.
+
+In this role, you’ll get to:
+
+
+Provide Incident Response support and perform investigations in customer environments
+Conduct malware analysis and reporting 
+Conduct research based threat hunting initiatives 
+Validate suspicious events and incidents by using open-source and proprietary intelligence sources
+Report and document incidents in a case management system
+Document new tools and techniques and disseminate them to the rest of the team
+Keep up-to-date with information security news, techniques, and trends
+Escalate any gaps in log collection or reporting
+Provide support and collaboration with internal teams to produce content regarding new threats, techniques, and information 
+Lead customers through the incident response lifecycle 
+
+
+To be successful in this role, you’ll need to:
+
+
+Be experienced in Digital Forensics
+Be experienced with Incident Handling and Response
+Possess experience in Endpoint Detection and Response Tools such as SentinelOne, Defender and Crowdstrike
+Demonstrate a strong ability to communicate with and present to customers
+Possess experience in leveraging common IR frameworks (e.g. PICERL, NIST)
+Possess experience in SOAR, Ticketing Systems and Threat Intelligence platforms
+Possess experience in SIEM platforms 
+Have an understanding of attacker methodology including the tactics, techniques, and procedures
+
+
+ITAR Compliance
+
+This position will have access to customer data and as such is subject to International Traffic in Arms Regulations (ITAR). Upon application, candidates will be asked to confirm that they are a U.S. Person as defined by the following:
+
+
+A citizen of the U.S.;
+A lawful permanent resident of the United States; 
+A person admitted to the United States as a refugee; or
+A person that has been granted asylum by the United States government.
+
+
+The intent of this requirement is not to verify employment eligibility overall, but to ensure compliance with import/export regulations. If you do not meet these requirements, we encourage you to apply for other open roles at Deepwatch. This information will be verified upon offer of employment.
+
+Statutory Pay Disclosure 
+
+The anticipated salar

@@ -1,0 +1,144 @@
+Company: Vultr
+Title: Junior Infrastructure Production Engineer
+Junior Infrastructure Production Engineer with verification
+Link: https://www.linkedin.com/jobs/view/4366215719/
+Posted: Recent
+Location: 
+
+============================================================
+
+Vultr
+
+Junior Infrastructure Production Engineer 
+
+United States · 54 minutes ago · 41 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$60K/yr - $75K/yr
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Recent Production Engineer hires at Vultr
+
+Show all
+About the job
+
+Who We Are
+
+Vultr is on a mission to make high-performance cloud infrastructure easy to use, affordable, and locally accessible for enterprises and AI innovators around the world. With 32 global cloud data center locations, Vultr is trusted by hundreds of thousands of active customers across 185 countries for its flexible, scalable, global Cloud Compute, Cloud GPU, Bare Metal, and Cloud Storage solutions. In December 2024 Vultr announced an equity financing at a $3.5 billion valuation. Founded by David Aninowsky and self-funded for over a decade, Vultr has grown to become the world’s largest privately-held cloud infrastructure company.
+
+Join Vultr
+
+Vultr is seeking a highly skilled Infrastructure Production Engineer to help drive operational excellence and foster a culture of continuous learning. The ideal candidate is eager to grow in a fast-paced, high-growth technology environment and thrives on solving complex challenges. In this highly visible role, you’ll play a key part in operationalizing Vultr’s production hardware and improving our global cloud platforms. This is a unique opportunity to make a lasting impact on both our team and the future of cloud infrastructure.
+
+What to expect:
+
+
+Work with the latest GPU hardware from NVIDIA and AMD
+Validate and test systems for onboarding and RMA validation
+Work with our SA team for knowledge transfer to teach others how to manage and troubleshoot our infrastructure
+Work with SE teams to understand our testing and validation to improve customer experience
+Define and provide feedback on testing and validation automation
+Remediate automation issues through code changes
+Engage and learn from other engineers to help improve our infrastructure management
+Understand and document customer use cases that can be used as part of testing and validation
+
+
+Our new team member will need: 
+
+
+High attention to detail
+Vocal about improving and driving change
+Able to self-lead learning on the fly
+Entry-level knowledge of Linux and KVM virtualization
+Ability to read code in Python and PHP and make small tweaks
+Experience working with PXE, networking, and bare metal systems
+
+
+Compensation
+
+$60,000 - $75,000
+
+This salary can vary based on location, years of experience, background and skill set.
+
+Inclusion & Privacy
+
+We are an equal opportunity employer and are committed to creating an inclusive environment for all employees. We welcome applications from individuals of all backgrounds and experiences, and we prohibit discrimination based on race, color, religion, sex, sexual orientation, gender identity, national origin, age, disability, veteran status, or any other protected status under applicable laws. Vultr will consider qualified applicants with arrest or conviction records in accordance with applicable laws and will not conduct a background check until after an offer of employment has been extended and accepted.
+
+We also take your privacy seriously. We handle personal information responsibly and follow applicable laws, including U.S. privacy rules and India’s Digital Personal Data Protection Act, 2023. Your data is used only for legitimate business purposes and is protected with proper security measures.
+
+Where allowed by law, applicants may request details about the data we collect, access or delete their information, withdraw consent for its use, and opt out of nonessential communications. For more details, please see our Privacy Policy.
+
+
+… more
+
+Set alert for similar jobs
+
+Production Engineer, United States
+
+Off
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+41
+
+total
+
+41
+
+in the past day
+
+Candidate seniority level
+
+80% Entry level candidates
+
+10% Senior level candidates
+
+Candidate education level
+
+63
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+34
+
+%
+
+have a Bachelor's Degree
+
+
+3
+
+%
+
+have a High School Diploma
+Exclusive Job Seeker Insights about Vultr
+Powered by Bing
+
+Company focus areas
+
+• Expansion of Data Centers: The Constant Company plans to construct a new Ohio data center to expand U.S. operations and meet enterprise demand. This project includes a 50% Data Center Tax Exemption for 10 years and will add 20 new jobs.
+
+...more
+
+Sources: ohiotechnews.com +1 more
+
+Hiring & headcount
+
+Significant growth in engineering: The 'Engineering' department has seen an 850% increase in job openings over the past year, indicating a major focus on expanding technical capabilities and product development. Expansion in IT: The 'Information Technology' department has experienced a 1000% increase in job openings over the 

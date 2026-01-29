@@ -1,0 +1,102 @@
+Company: CodaMetrix
+Title: Machine Learning Engineer I
+Machine Learning Engineer I
+Link: https://www.linkedin.com/jobs/view/4365559635/
+Posted: Recent
+Location: 
+
+============================================================
+
+CodaMetrix
+
+Machine Learning Engineer I
+
+Boston, MA · 3 days ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Recent Machine Learning Engineer I hires at CodaMetrix
+
+Show all
+About the job
+
+CodaMetrix is revolutionizing Revenue Cycle Management with its AI-powered autonomous coding solution, a multi-specialty AI-platform that translates clinical information into accurate sets of medical codes. CodaMetrix’s autonomous coding drives efficiency under fee-for-service and value-based care models and supports improved patient care. We are passionate about getting physicians and healthcare providers away from the keyboard and back to clinical care.
+
+Job Description:
+
+At CodaMetrix, the machine learning (ML) and AI team is responsible for the invention, analysis, and deployment of new ML techniques using healthcare data to improve administrative and clinical medicine.
+
+We are looking for an ML Engineer I to join our machine learning team and play a pivotal role in translating proof-of-concept ideas to scalable solutions. You will work with a multidisciplinary team of engineers, data scientists, academicians to gather requirements and understand performance criteria to deliver solutions that optimize operational efficiency, and drive innovation in the healthcare industry. The Machine Learning Engineer I reports to the Director of MLEN.
+
+Key Responsibilities:
+
+
+Establish processes for data and modeling lifecycle through managing the transitions from proof-of-concept to production. 
+Collaborate with machine learning, engineering, and product development teams, for deployment of new machine learning techniques and follow deployments, tracking issues, and successes. 
+Ability to quickly adapt to dynamic requirements in terms of programming, system design and solutioning
+Work on data preprocessing, feature engineering, and model evaluation to ensure robust and accurate predictive models. 
+Produce technical documentation, software, and supporting test code
+Participate in all team activities, including agile ceremonies and reviews of other engineers designs and code
+
+
+Qualifications:
+
+
+Bachelor's degree in Computer Science, Machine Learning, or a related field
+Proficiency in Python, data manipulation libraries (Pandas, Numpy), deep learning frameworks (MLFlow, PyTorch with focus on Large Language Models)
+Understanding of natural language processing, relevant machine learning subfields
+Foundational grasp of Distributed computing, scalable data transformation, and event-based processing using Spark, preferably using the Databricks platform
+Knowledge of SQL and NoSQL Databases
+Proficiency in working within a Linux ecosystem and experience with Docker
+Effective verbal and written communication skills with both management and peers
+
+
+Beneficial Experience:
+
+
+Experience working in a startup / fast paced environment
+Experience with cloud platforms (e.g., AWS, Databricks) for model deployment and scaling
+Statistical background and/or exposure to ML techniques and programming
+Familiarity with healthcare regulations and privacy requirements (e.g., HIPAA). 
+Experience working with healthcare data and knowledge of US healthcare systems
+Previous experience with data visualization tools and reporting. 
+
+
+What CodaMetrix can offer you:
+
+Learn more about our full-time employee benefits and how we take care of our team.
+
+
+Health Insurance: We cover 80% of the cost of medical and dental insurance and offer vision insurance
+Retirement: We offer a 401(k) plan that eligible employees can contribute to one month after their first day
+Flexibility: We have a generous Paid Time Off policy, which is managed but not limited, so you can take the time you need to relax and rejuvenate
+Learning: All new hires complete our 7-week Onboarding Program where they learn about our company and each of our departments through live sessions hosted by a variety of our leaders
+Development: We provide annual performance evaluations and prioritize working with employees on what their individual growth looks like
+Recognition: We recognize the outstanding achievements of our team through annual company awards where employees have the opportunity to nominate their peers
+Office Location: A modern open plan workspace located in the bustling Back Bay neighborhood of Boston
+Additional Employer Paid Benefits: We offer employer-paid life insurance and short-term and long-term disability insurance
+
+
+Background Check Notice
+
+All candidates will be required to complete a background check upon acceptance of a job offer.
+
+Equal Employment Opportunity
+
+Our company, as well as our products, are made better because we embrace diverse skills, perspectives, and ideas. CodaMetrix is an Equal Employment Opportunity Employer and all qualified applicants will receive consideration for employment.
+
+Don’t meet every requirement?

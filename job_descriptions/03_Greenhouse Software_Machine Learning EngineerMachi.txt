@@ -1,0 +1,90 @@
+Company: Greenhouse Software
+Title: Machine Learning Engineer
+Machine Learning Engineer with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4355962792/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Greenhouse Software
+
+Machine Learning Engineer 
+
+United States · 14 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$141K/yr - $176.8K/yr
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Our mission at Greenhouse is to make every company great at hiring – so we go to great lengths to hire great people because we believe that they’re the foundation of our success. At Greenhouse, you’ll join a team that collaborates purposefully, fosters inclusivity, and communicates with transparency and accountability so we can help companies measurably improve the way they hire.
+
+Join us to do the best work of your career, solving meaningful problems with remarkable teams.
+
+Greenhouse is looking for a Machine Learning Engineer to join our team!
+
+In this role, you'll work with our team to develop machine learning models that enhance Greenhouse products like resume parsing/anonymization, hiring, sourcing, and predictive analytics. Additionally, we serve to support other product engineering teams on their journey of implementing more machine learning capabilities. You'll collaborate with data science, product, and engineering teams to deploy, monitor, and maintain these models, allowing you to refine your skills and contribute to key projects.
+
+Who Will Love This Job
+
+
+A deep learning practitioner – you are eager to unlock the potential of deep learning for various applications
+A generalist – you have experience and the ability to perform a wide variety of software engineering tasks, which are necessary to develop, deploy, and monitor a new software application. You have experience working on whole applications mainly in Python but welcome the opportunity to use Ruby or Typescript as needed
+A collaborator – you are able to work with multiple teams to find the best way to use data to provide value to customers and will do everything needed to make that happen
+An entrepreneur – someone whose values align with our vision on how A.I. can assist in the hiring process
+
+
+
+What You’ll Do
+
+
+
+Own well-scoped ML components or models: You will take ownership of specific components, executing on defined problems with guidance
+Train and deploy models using established patterns, and ship models to production following existing tooling and standards
+Monitor and debug models with help from senior engineers, and work to improve model performance incrementally
+Implement AI governance, privacy, and security requirements as defined
+Collaborate within the team and with partner functions, while communicating progress, risks, and blockers clearly
+
+
+
+You should have
+
+
+
+Degree or recent experience relating to Machine Learning
+Familiarity with implementing safe, ethical, and compliant ML systems (familiarity with ISO 42001/NIST AI RMF and the associated common controls)
+Experience deploying, monitoring, and improving ML models at a technology company
+A strong grasp of Python
+Experience training and experimenting with deep learning models as well as serving them in production
+Experience with transformers and other HuggingFace libraries
+Experience building and consuming APIs
+An ability to build consensus while creating space for others
+Excellent prioritization and time management skills
+Experience with NLP and large language models, a plus
+Experience with machine learning models which are not deep learning (e.g. decision trees), a plus
+Experience using Docker and AWS (SageMaker endpoints, SageMaker notebooks, S3, IAM), a plus
+Your own unique talents! Your background has given you a unique perspective and set of transferable skills that aren't always in alignment with a given role - but those are qualities we value at Greenhouse. If you don't meet 100% of the qualifications outlined above, we still strongly encourage you to apply
+
+
+
+Applicants must be currently authorized to work in the United States on a full-time basis.
+
+If you are based in California, we encourage you to read this important information for California residents linked here.
+
+The national pay range for this role is $141,000 - $176,750. Individual compensation will be commensurate with the candidate's experience and qualifications. Certain roles may be eligible for additional compensation, including stock option awards, bonuses, and merit increases. Additionally, certain roles have the opportunity to receive sales commissions that are based on the terms of the sales commission plan applicable to the role.
+
+Greenhouse provides a variety of benefits to employees, including medical, dental, and vision insurance, basic life insurance, mental health resources, financial wellness benefits, and a fully paid parental leave program. For US-based employees, we offer short-term and long-term disability coverage, a 401(k) plan and company match. U.S. based employees also receive, per calendar year, up to 14 scheduled paid holidays and up to 80 hours of paid sick leave. No

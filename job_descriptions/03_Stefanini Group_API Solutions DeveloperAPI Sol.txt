@@ -1,0 +1,154 @@
+Company: Stefanini Group
+Title: API Solutions Developer
+API Solutions Developer [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4366210821/
+Posted: 29 minutes ago
+Within the past 24 hours
+Location: 
+Premium Indicators: job-card-container__footer-item--highlighted
+
+============================================================
+
+Stefanini Group
+
+API Solutions Developer
+
+Dover, DE · 29 minutes ago · 1 person clicked apply
+
+Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Details:
+
+Stefanini Group is hiring!
+
+Exciting opportunity awaits, let us help you get started!
+
+Click Apply now or you may call Vipul Bhardwaj at +1 (248) 263-8630 or email at vipul.bhardwaj@stefanini.com for faster processing!
+
+Project Summary
+
+The API Developer will build and maintain the data services that power the dashboard, ensuring reliable, scalable access to curated datasets and enabling timely updates and future expansion.
+
+Purpose and objectives
+
+
+Design and implement secure, documented APIs that deliver aggregated dashboard datasets to the Web Developer.
+Implement consistent business rules described in the data considerations, including enrollment scope, exclusion rules, and suppression for counts 
+
+
+Data domains to support
+
+
+APIs must support all data domains within department's public reporting database. 
+
+
+Handling known data gaps and inconsistencies
+
+
+Provide a data availability endpoint so the UI can communicate limitations by Local Education Agency (LEA) and metric, aligned to the documented missing data lists.
+Partner with department staff to ensure all data elements needed are available 
+
+
+API Design Requirements
+
+
+REST or GraphQL, with preference determined by department standards, with OpenAPI documentation required for all endpoints.
+Versioning strategy, including backward compatible changes for the Web Developer.
+Standard query parameters
+Domain, metric, year, as of date.
+Geography: city, county, state, district, school
+3. LEA type: traditional public, charter, vo tech, as categorized. 
+Standard response structure
+Metadata: dataset name, as of date, refresh cadence, suppression policy, and calculation notes.
+Data payload: categories, counts, percents, suppressed indicators, denominator values where applicable.
+Caching headers and server-side caching for common queries.
+
+
+Details:
+
+Security and governance
+
+
+Public read only access pattern with protection against abuse:
+API gateway and rate limiting.
+Logging and monitoring.
+No PII exposure. Only aggregated values with suppression.
+Align to Department and Data Management Office (DMO) security standards for hosting and operations.
+
+
+Data pipeline and refresh
+
+
+Define extract and transform processes with DMO, including data validations needed for:
+Verified address for City of Wilmington.
+LEA code mappings for attendance and tardy codes.
+Refresh cadence
+Support snapshot-based refresh where stated in the document that data will not be continuously updated.
+Provide clear run logs and publish last refresh timestamps. 
+Automated tests for calculations and suppression rules.
+
+
+Deliverables
+
+
+API implementation deployed to the agreed environment.
+Open API specification and developer portal documentation.
+Data dictionary and metric definition catalog aligned to UI needs.
+Data availability and gap reporting endpoints aligned to the documented considerations.
+Operational runbook for refresh, monitoring, incident response, and onboarding new metrics.
+
+
+Acceptance criteria
+
+
+API responses match documented business rules and suppression.
+Performance supports dashboard use with reasonable response times under load.
+Security controls implemented and validated.
+Documentation enables the Web Developer to implement the UI without additional reverse engineering.
+DMO review and sign off on governance, definitions, and operational readiness.
+
+
+Listed salary ranges may vary based on experience, qualifications, and local market. Also, some positions may include bonuses or other incentives
+
+About Stefanini Group
+
+The Stefanini Group is a global provider of offshore, onshore and near shore outsourcing, IT digital consulting, systems integration, application and strategic staffing services to Fortune 1000 enterprises around the world. Our presence is in countries like Americas, Europe, Africa and Asia, and more than 400 clients across a broad spectrum of markets, including financial services, manufacturing, telecommunications, chemical services, technology, public sector, and utilities. Stefanini is a CMM level 5, IT consulting, company with global presence. We are CMM Level 5 company.
+
+
+… more
+
+Set alert for similar jobs
+
+Solutions Developer, Dover, Delaware, United States
+
+Off
+Based on LinkedIn data. Excludes subsidiaries.
+
+1
+
+Candidate
+
+We’re waiting on more data to deliver Competitive intelligence
+
+Once there are 3 or more candidates for this job, we will show how you compare to the competition.
+
+Exclusive Job Seeker Insights about Stefanini Group
+Powered by Bing
+
+Company focus areas
+
+• Digital Transformation: Support organizations in their digital transformation journeys and in achieving operational excellence. Stefanini offers a wide range of solutions with a co-creative approach and a constant focus o

@@ -1,0 +1,220 @@
+Company: Gensyn
+Title: Applied Machine Learning Researcher
+Applied Machine Learning Researcher with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4323674922/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Gensyn
+
+Applied Machine Learning Researcher 
+
+United States · Reposted 2 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Machine intelligence will soon take over humanity’s role in knowledge-keeping and creation. What started in the mid-1990s as the gradual off-loading of knowledge and decision making to search engines will be rapidly replaced by vast neural networks - with all knowledge compressed into their artificial neurons. Unlike organic life, machine intelligence, built within silicon, needs protocols to coordinate and grow. And, like nature, these protocols should be open, permissionless, and neutral. Starting with compute hardware, the Gensyn protocol networks together the core resources required for machine intelligence to flourish alongside human intelligence.
+
+The Role
+
+
+Contribute to novel research by designing and building massive scale deep learning systems focusing on modularity, composability, verifiability, and continual learning
+
+
+Responsibilities
+
+
+Pursue novel research - building scalable, distributed models over uniquely decentralised and heterogeneous infrastructure
+Partner with both researchers and production engineers to design and run novel experiments, taking research from theory all the way to production
+Own and maintain experimental frameworks and test benchmarks for ML research in uniquely high-scale and decentralised settings
+Follow best practices - build in the open with a keen focus on designing, testing, and documenting your code
+
+
+Competencies
+
+Must have
+
+
+Strong background in applied machine learning / engineering
+Hands-on experience with distributed model training
+Comfortable working in an applied research environment - with extremely high autonomy and unpredictable timelines
+Highly self-motivated with excellent verbal and written communication skills
+
+
+Preferred
+
+
+Experience building highly performant, distributed systems
+Demonstrated background with novel research in machine learning
+
+
+Nice to have
+
+
+Strong public presence
+Experience working in a startup environment
+
+
+Compensation / Benefits
+
+
+Competitive salary + share of equity and token pool
+Fully remote work - we currently hire between the West Coast (PT) and Central Europe (CET) time zones
+Visa sponsorship - available for those who would like to relocate to the US after being hired
+3-4x all expenses paid company retreats around the world, per year
+Whatever equipment you need
+Paid sick leave and flexible vacation
+Company-sponsored health, vision, and dental insurance - including spouse/dependents [🇺🇸 only]
+
+
+Our Principles
+
+Autonomy & Independence
+
+
+Don’t ask for permission - we have a constraint culture, not a permission culture.
+Claim ownership of any work stream and set its goals/deadlines, rather than waiting to be assigned work or relying on job specs.
+Push & pull context on your work rather than waiting for information from others and assuming people know what you’re doing.
+Communicate to be understood rather than pushing out information and expecting others to work to understand it.
+Stay a small team - misalignment and politics scale super-linearly with team size. Small protocol teams rival much larger traditional teams.
+
+
+Rejection of mediocrity & high performance
+
+
+Give direct feedback to everyone immediately - rather than avoiding unpopularity, expecting things to improve naturally, or trading short-term pain for extreme long-term pain.
+Embrace an extreme learning rate - rather than assuming limits to your ability / knowledge.
+Don’t quit - push to the final outcome, despite any barriers.
+Be anti-fragile - balance short-term risk for long-term outcomes.
+Reject waste - guard the company’s time, rather than wasting it in meetings without clear purpose/focus, or bikeshedding.
+… more
+
+Benefits found in job post
+
+Dental insurance
+
+Set alert for similar jobs
+
+Machine Learning Researcher, United States
+
+Off
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+934
+
+total
+
+82
+
+in the past day
+
+Candidate seniority level
+
+63% Entry level candidates
+
+24% Senior level candidates
+
+1% CXO level candidates
+
+1% Director level candidates
+
+Candidate education level
+
+34
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+26
+
+%
+
+have a Master of Science
+
+
+20
+
+%
+
+have a Doctor of Philosophy
+
+
+20
+
+%
+
+have other degrees
+Exclusive Job Seeker Insights about Gensyn
+Powered by Bing
+
+The latest hiring trend
+
+53
+
+Total employees
+
+194%
+
+Company-wide
+
+2 year growth
+
+Jan 2024
+May 2024
+Sep 2024
+Jan 2025
+May 2025
+Sep 2025
+Jan 2026
+0
+25
+50
+75
+
+Median employee tenure: 0.8 years
+
+Show Premium Insights
+About the company
+
+Gensyn
+
+7,471 followers
+
+Follow
+
+Software Development
+
+ • 
+
+11-50 employees
+
+ • 
+
+53 on LinkedIn
+
+The network for machine intelligence
+
+Interested in working with us in the future?
+
+Priv

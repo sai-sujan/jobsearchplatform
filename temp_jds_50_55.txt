@@ -1,0 +1,283 @@
+--- JOB START 50 ---
+FILENAME: 50_Phaxis_Generative AI EngineerGenerati.json
+COMPANY: Phaxis
+TITLE: Generative AI Engineer
+Generative AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366792562/
+CONTENT:
+Phaxis
+
+Generative AI Engineer 
+
+Nashville, TN · 1 hour ago · Over 100 applicants
+
+Promoted by hirer · No response insights available yet
+
+$65/hr - $70/hr
+On-site
+Contract
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+
+3 month contract to hire
+Hourly rate is $65.00 to $70.00 per hour
+Salary is 120k to 130k + bonus
+
+Lead the end-to-end design and delivery of enterprise Generative AI solutions leveraging Microsoft's AI ecosystem, including Copilot, Copilot Studio, and Azure-based AI services.
+
+Partner directly with customers and business stakeholders to run GenAI discovery workshops, identify high-value use cases, and translate business challenges into scalable AI solution architectures.
+
+Define GenAI strategies, roadmaps, and technical blueprints, producing clear solution proposals, architecture diagrams, and executive-level documentation to support delivery.
+
+Architect secure, production-ready GenAI platforms, including LLM orchestration, prompt design, data grounding, monitoring, and cost-optimization strategies.
+
+Design and enable Copilot and Copilot Studio solutions, establishing development standards, reusable components, and governance guardrails for enterprise adoption.
+
+Serve as the GenAI technical lead, guiding engineering teams, overseeing design reviews, and ensuring responsible AI practices, security, and operational readiness across deployments.
+
+
+… more
+
+Set alert for similar jobs
+
+Generative AI Engineer, Nashville, Tennessee, United States
+
+Off
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+108
+
+Applicants
+
+108
+
+Applicants in the past day
+
+Applicant seniority level
+
+67% Entry level people applied for this job
+
+28% Senior level people applied for this job
+
+Applicant education level
+
+72
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+26
+
+%
+
+have a Bachelor's Degree
+
+
+1
+
+%
+
+have a Master of Business Administration
+
+
+1
+
+
+--- JOB END ---
+
+--- JOB START 51 ---
+FILENAME: 51_BCG X_AI Engineer United States - BC.json
+COMPANY: BCG X
+TITLE: AI Engineer, United States - BCG X
+AI Engineer, United States - BCG X with verification
+LINK: https://www.linkedin.com/jobs/view/4324364634/
+CONTENT:
+BCG X
+
+AI Engineer, United States - BCG X 
+
+Los Angeles, CA · Reposted 7 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$110K/yr - $145K/yr
+Part-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Locations: Boston | New York | Brooklyn | Chicago | Miami | Dallas | San Francisco | Seattle | Manhattan Beach | Pittsburgh | Los Angeles
+
+Who We Are
+
+Boston Consulting Group partners with leaders in business and society to tackle their most important challenges and capture their greatest opportunities. BCG was the pioneer in business strategy when it was founded in 1963. Today, we help clients with total transformation-inspiring complex change, enabling organizations to grow, building competitive advantage, and driving bottom-line impact.
+
+To succeed, organizations must blend digital and human capabilities. Our diverse, global teams bring deep industry and functional expertise and a range of perspectives to spark change. BCG delivers solutions through leading-edge management consulting along with technology and design, corporate and digital ventures—and business purpose. We work in a uniquely collaborative model across the firm and throughout all levels of the client organization, generating results that allow our clients to thrive.
+
+We Are BCG X
+
+We’re a diverse team of more than 3,000 tech experts united by a drive to make a difference. Working across industries and disciplines, we combine our experience and expertise to tackle the biggest challenges faced by society today. We go beyond what was once thought possible, creating new and innovative solutions to the world’s most complex problems. Leveraging BCG’s global network and partnerships with leading organizations, BCG X provides a stable ecosystem for talent to build game-changing businesses, products, and services from the ground up, all while growing their career. Together, we strive to create solut
+--- JOB END ---
+
+--- JOB START 52 ---
+FILENAME: 52_Scale AI_Machine Learning Engineer Publ.json
+COMPANY: Scale AI
+TITLE: Machine Learning Engineer, Public Sector
+Machine Learning Engineer, Public Sector with verification
+LINK: https://www.linkedin.com/jobs/view/4343811998/
+CONTENT:
+Scale AI
+
+Machine Learning Engineer, Public Sector 
+
+New York City Metropolitan Area · Reposted 8 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Prasad Reddy and others in your network
+
+Show all
+About the job
+
+The goal of a Machine Learning Engineer at Scale is to leverage techniques in the fields of generative AI, computer vision, reinforcement learning, and agentic AI to improve Scale's products and customer experience in production environments. Our machine learning engineers take advantage of robust internal infrastructure and unique access to massive datasets to deliver improvements to our customers.
+
+Our Public Sector Machine Learning team is focused on deploying cutting-edge models to mission-critical government systems through products like Donovan and Thunderforge. Our work spans multiple modalities, with a strong focus on both large language models and computer vision. On the LLM side, we are developing agentic systems that help solve complex operational and planning challenges for government partners. This includes building agent frameworks that integrate with custom retrieval pipelines and production APIs, as well as evaluation tools to benchmark and refine agent behavior. We're also advancing research in areas like reinforcement learning for agentic LLMs, with successful deployment into real-world operational environments. On the computer vision front, we're training advanced models to increase labeling throughput and automate perception tasks. Our efforts include building large-scale fine-tuning pipelines, training models across multiple modalities, and developing generalizable vision foundation models to support a wide range of defense applications.
+
+You will:
+
+
+Take state of the art models developed internally and from the community, use them in production to
+--- JOB END ---
+
+--- JOB START 53 ---
+FILENAME: 53_Capital One_Machine Learning EngineerMachi.json
+COMPANY: Capital One
+TITLE: Machine Learning Engineer
+Machine Learning Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366796081/
+CONTENT:
+Capital One
+
+Machine Learning Engineer 
+
+McLean, VA · 1 hour ago · 91 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+School alumni from Missouri State University
+
+Show all
+About the job
+
+As a Capital One Machine Learning Engineer (MLE), you'll be part of an Agile team dedicated to productionizing machine learning applications and systems at scale. You’ll participate in the detailed technical design, development, and implementation of machine learning applications using existing and emerging technology platforms. You’ll focus on machine learning architectural design, develop and review model and application code, and ensure high availability and performance of our machine learning applications. You'll have the opportunity to continuously learn and apply the latest innovations and best practices in machine learning engineering.
+
+What you’ll do in the role: 
+
+The MLE role overlaps with many disciplines, such as Ops, Modeling, and Data Engineering. In this role, you'll be expected to perform many ML engineering activities, including one or more of the following:
+
+
+Design, build, and/or deliver ML models and components that solve real-world business problems, while working in collaboration with the Product and Data Science teams. 
+Inform your ML infrastructure decisions using your understanding of ML modeling techniques and issues, including choice of model, data, and feature selection, model training, hyperparameter tuning, dimensionality, bias/variance, and validation). 
+Solve complex problems by writing and testing application code, developing and validating ML models, and automating tests and deployment. 
+Collaborate as part of a cross-functional Agile team to create and enhance software that enables state-of-the-art big data and ML applications. 
+Retrain, maintain, and monitor models in production. 
+Le
+--- JOB END ---
+
+--- JOB START 54 ---
+FILENAME: 54_Capital One_Machine Learning EngineerMachi.json
+COMPANY: Capital One
+TITLE: Machine Learning Engineer
+Machine Learning Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366777780/
+CONTENT:
+Capital One
+
+Machine Learning Engineer 
+
+Richmond, VA · 1 hour ago · 61 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+School alumni from Missouri State University
+
+Show all
+About the job
+
+As a Capital One Machine Learning Engineer (MLE), you'll be part of an Agile team dedicated to productionizing machine learning applications and systems at scale. You’ll participate in the detailed technical design, development, and implementation of machine learning applications using existing and emerging technology platforms. You’ll focus on machine learning architectural design, develop and review model and application code, and ensure high availability and performance of our machine learning applications. You'll have the opportunity to continuously learn and apply the latest innovations and best practices in machine learning engineering.
+
+What you’ll do in the role: 
+
+The MLE role overlaps with many disciplines, such as Ops, Modeling, and Data Engineering. In this role, you'll be expected to perform many ML engineering activities, including one or more of the following:
+
+
+Design, build, and/or deliver ML models and components that solve real-world business problems, while working in collaboration with the Product and Data Science teams. 
+Inform your ML infrastructure decisions using your understanding of ML modeling techniques and issues, including choice of model, data, and feature selection, model training, hyperparameter tuning, dimensionality, bias/variance, and validation). 
+Solve complex problems by writing and testing application code, developing and validating ML models, and automating tests and deployment. 
+Collaborate as part of a cross-functional Agile team to create and enhance software that enables state-of-the-art big data and ML applications. 
+Retrain, maintain, and monitor models in production. 
+
+--- JOB END ---
+

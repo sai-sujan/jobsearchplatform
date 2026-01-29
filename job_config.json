@@ -1,0 +1,32 @@
+{
+  "ats_score": 65,
+  "location": "Alpharetta, GA, USA",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["PyTorch", "TensorFlow", "Scikit-learn"],
+    "LLM & Generative AI": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "RAG Systems",
+      "LLMs (Mistral, LLaMA)",
+      "LoRA",
+      "QLoRA"
+    ],
+    "Backend & APIs": ["FastAPI"],
+    "Testing & Quality": ["Unit Testing", "Integration Testing"],
+    "MLOps & Monitoring": ["MLflow", "Model Evaluation Pipelines"],
+    "DevOps & CI/CD": ["Docker", "CI/CD Pipelines"],
+    "Cloud & Infrastructure": ["AWS"],
+    "Version Control & Collaboration": ["Git", "GitHub"]
+  },
+  "points": [
+    "\\item Designed, built, and maintained production-grade Python services integrating LLM-powered RAG systems, delivering end-to-end features from implementation through deployment.",
+    "\\item Developed clean, well-structured backend components using FastAPI, emphasizing maintainability, clear interfaces, and extensibility in production environments.",
+    "\\item Implemented evaluation and monitoring workflows for LLM-based systems, including LLM-as-Judge pipelines, to support continuous quality and performance improvement.",
+    "\\item Wrote and maintained unit and integration tests for AI-enabled services, reducing regression risk and improving overall system reliability.",
+    "\\item Containerized applications using Docker and supported CI/CD-driven deployments to cloud infrastructure, contributing to reliable and repeatable release processes.",
+    "\\item Collaborated closely with cross-functional engineering teams and participated in code reviews, adhering to modern software engineering best practices and Agile workflows."
+  ]
+}

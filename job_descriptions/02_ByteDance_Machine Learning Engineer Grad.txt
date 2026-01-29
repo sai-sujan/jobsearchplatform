@@ -1,0 +1,90 @@
+Company: ByteDance
+Title: Machine Learning Engineer Graduate (TikTok E-Commerce - Conversational AI)-2026 Start (BS/MS)
+Machine Learning Engineer Graduate (TikTok E-Commerce - Conversational AI)-2026 Start (BS/MS) with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4303503800/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+ByteDance
+
+Machine Learning Engineer Graduate (TikTok E-Commerce - Conversational AI)-2026 Start (BS/MS) 
+
+San Jose, CA · Reposted 8 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$118.7K/yr - $187.2K/yr
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+School alumni from Missouri State University and others in your network
+
+Show all
+About the job
+
+Responsibilities
+
+Team Introduction:
+
+Our team is responsible for developing next-generation chatbot and machine translation solutions to improve the TikTok Shopping experience across the world. We are currently looking for talented engineers that have a deep understanding of natural language processing and machine learning, especially ones with solid skills and experience of large language models, machine translation, and conversational AI.
+
+We are looking for talented individuals to join our team in 2026. As a graduate, you will get unparalleled opportunities for you to kickstart your career, pursue bold ideas and explore limitless growth opportunities. Co-create a future driven by your inspiration with ByteDance
+
+Successful candidates must be able to commit to an onboarding date by end of year 2026. Please state your availability and graduation date clearly in your resume.
+
+Candidates can apply to a maximum of two positions and will be considered for jobs in the order you apply. The application limit is applicable to ByteDance and its affiliates' jobs globally. Applications will be reviewed on a rolling basis - we encourage you to apply early.
+
+Responsibilities:
+
+
+ You will be responsible for developing and optimizing the intelligent customer service of TikTok shopping. This role will work closely with our product and operation teams to understand the intentions of our users, design solutions of experience excellence, and convey these solutions to our users conversationally, with the support of cutting-edge LLMs technology. You will have the chance to develop NLP models (like text classification, machine reading, summarization) and prediction models (like question prediction and chatbot action prediction) to achieve the above goals.
+ You will be responsible for developing and optimizing the machine translation service of TikTok shopping to better support cross-region product listing, buyer-seller communication, and commenting. You will have the chance to develop machine translation models for the conversational environment and text generation models from multi-modality inputs.
+ You will be responsible for developing and optimizing the multi-modal AIGC model for product copywriting, including product title, selling points, description and live broadcast script creation etc. You will have the chance to apply cutting edge AIGC models to save human effort and improve business performance.
+
+
+
+Qualifications
+
+Minimum Qualifications:
+
+
+Bachelor degree or above with majors in computer science, computer engineering, statistics, applied mathematics, data science or other related disciplines with 0-1 year of work experience
+ Large language models, natural language generation, machine translation, question answering, machine reading, information extraction, text mining and classification etc.
+ Familiar with at least one computer programming language, including but not limited to go/python/Java.
+ Experience of big data development, including but not limited to hive, spark
+
+
+
+Preferred Qualifications:
+
+
+ Work experience in e-commerce or the Internet industry
+ Practical experience in NLP (dialogue system, machine translation, nlp-related projects in IR/Ads system, etc.)
+ Candidates who have published high-quality papers are preferred, including but not limited to ACL, EMNLP, COLING, AAAI, IEEE TASLP, etc.
+
+
+
+Job Information
+
+【For Pay Transparency】Compensation Description (Annually)
+
+The base salary range for this position in the selected city is $118657 - $187200 annually.
+
+Compensation may vary outside of this range depending on a number of factors, including a candidate’s qualifications, skills, competencies and experience, and location. Base pay is one part of the Total Package that is provided to compensate and recognize employees for their work, and this role may be eligible for additional discretionary bonuses/incentives, and restricted stock units.
+
+Benefits may vary depending on the nature of employment and the country work location. Employees have day one access to medical, dental, and vision insurance, a 401(k) savings plan with company match, paid parental leave, short-term and long-term disability coverage, life insurance, wellbeing benefits, among others. Employees also receive 10 paid holidays per year, 10 paid sick days per year and 17 days of Paid Personal Time (prorated upon hire with increasing accruals by tenure).
+
+The Company reserves the right to modify or change these benefits programs at any time, with or without not

@@ -1,0 +1,61 @@
+{
+    "ats_score": 90,
+    "location": "San Jose, CA (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving reliability of automated documentation and troubleshooting workflows.",
+        "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of information for AI-assisted DevSecOps.",
+        "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring secure and compliant code generation.",
+        "\\item Introduced batched query extraction using Python and SQL, reducing LLM calls by ~80% per query and enabling efficient log analysis.",
+        "\\item Designed an ML-based anomaly detection system for pipelines, reducing redundant prompts by 25%, improving security coverage and automated risk assessment.",
+        "\\item Containerized and deployed scalable AI automation tools using Docker and AWS, ensuring robust integration with CI/CD pipelines."
+    ],
+    "meta_job_title": "AI Engineer",
+    "meta_company": "Uptime Crew",
+    "meta_link": "https://www.linkedin.com/jobs/view/4366184895/"
+}

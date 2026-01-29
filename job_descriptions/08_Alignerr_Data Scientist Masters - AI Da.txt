@@ -1,0 +1,191 @@
+Company: Alignerr
+Title: Data Scientist (Masters) - AI Data Trainer
+Data Scientist (Masters) - AI Data Trainer
+Link: https://www.linkedin.com/jobs/view/4366111265/
+Posted: Recent
+Location: 
+
+============================================================
+
+Alignerr
+
+Data Scientist (Masters) - AI Data Trainer
+
+Dallas, TX · 1 day ago · 51 people clicked apply
+
+Responses managed off LinkedIn
+
+$40/hr - $80/hr
+Remote
+Contract
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Location: Remote
+
+
+About The Job
+
+At Alignerr, we partner with the world’s leading AI research teams and labs to build and train cutting-edge AI models.
+
+You’ll challenge advanced language models on topics like machine learning theory, statistical inference, neural network architectures, and data engineering pipelines—documenting every failure mode so we can harden model reasoning.
+
+Organization: Alignerr Position: Data Scientist (Masters) - AI Data Trainer Type: Hourly Contract Compensation: $40–$80 /hour Location: Remote Commitment: 10–40 hours/week
+
+What You’ll Do
+
+
+ Develop Complex Problems: Design advanced data science challenges across domains like hyperparameter optimization, Bayesian inference, cross-validation strategies, and dimensionality reduction.
+ Author Ground-Truth Solutions: Create rigorous, step-by-step technical solutions including Python/R scripts, SQL queries, and mathematical derivations that serve as "golden responses."
+ Technical Auditing: Evaluate AI-generated code (using libraries like Scikit-Learn, PyTorch, or TensorFlow), data visualizations, and statistical summaries for technical accuracy and efficiency.
+ Refine Reasoning: Identify logical fallacies in AI reasoning—such as data leakage, overfitting, or improper handling of imbalanced datasets—and provide structured feedback to improve the model's "thinking" process.
+
+
+Requirements
+
+
+ Advanced Degree: Masters (pursuing or completed) or PhD in Data Science, Statistics, Computer Science, or a quantitative field with a heavy emphasis on data analysis.
+ Domain Expertise: Strong foundational knowledge in core areas such as supervised/unsupervised learning, deep learning, big data technologies (Spark/Hadoop), or NLP.
+ Analytical Writing: The ability to communicate highly technical algorithmic concepts and statistical results clearly and concisely in written form.
+ Attention to Detail: High level of precision when checking code syntax, mathematical notation, and the validity of statistical conclusions.
+ No AI experience required
+
+
+Preferred
+
+
+ Prior experience with data annotation, data quality, or evaluation systems
+ Proficiency in production-level data science workflows (e.g., MLOps, CI/CD for models).
+
+
+Why Join Us
+
+
+ Excellent compensation with location-independent flexibility.
+ Direct engagement with industry-leading LLMs.
+ Contractor advantages: high agency, agility, and international reach.
+ More opportunities for contracting renewals.
+
+
+Application Process (Takes 15-20 min)
+
+
+ Submit your resume
+ Complete a short screening
+ Project matching and onboarding
+
+
+PS: Our team reviews applications daily. Please complete your AI interview and application steps to be considered for this opportunity.
+… more
+
+Set alert for similar jobs
+
+Data Scientist, Dallas, Texas, United States
+
+Off
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+51
+
+total
+
+51
+
+in the past day
+
+Candidate seniority level
+
+63% Entry level candidates
+
+33% Senior level candidates
+
+Candidate education level
+
+88
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+9
+
+%
+
+have a Bachelor's Degree
+
+
+2
+
+%
+
+have a Doctor of Philosophy
+
+
+1
+
+%
+
+have other degrees
+Exclusive Job Seeker Insights about Alignerr
+Powered by Bing
+
+Company focus areas
+
+• Connecting Freelancers with AI Training Projects: Alignerr focuses on connecting freelancers with AI training projects, offering flexible work opportunities and competitive pay in the growing AI industry.
+
+...more
+
+Sources: rebas.co +1 more
+
+Hiring & headcount
+
+Rapid expansion in Engineering: The 'Engineering' department has seen a 64% increase in headcount over the past year, indicating a significant focus on technological development and innovation. Growth in Information Technology: The 'Information Technology' department has experienced a 67% increase in headcount, suggesting a strong emphasis on IT infrastructure and digital transformation. Significant increase in Arts and Design: The 'Arts and Design' department has grown by 165%, pointing to new initiatives in creative projects and design-focused endeavors. Expansion in Research: The 'Research' department has seen a 65% increase in headcount, highlighting a substantial investment in research and development activities.
+… more
+
+The latest hiring trend
+
+2,227
+
+Total employees
+
+1165%
+
+Company-wide
+
+2 year growth
+
+0%
+
+Engineering
+
+2 year growth
+
+Jan 2024
+May 2024
+Sep 2024
+Jan 2025
+May 2025
+Sep 2025
+Jan 2026
+0
+1000
+2000
+3000
+
+Median employee tenure: 0.9 years
+
+Competitors
+
+Alignerr is a significant player in the AI training platform market, offering flexible, high-earning opportunities for freelancers and subject matter experts. It collabora

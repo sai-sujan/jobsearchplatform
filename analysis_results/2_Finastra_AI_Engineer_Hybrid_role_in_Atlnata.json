@@ -1,0 +1,65 @@
+{
+    "ai_ats_score": 92,
+    "score_justification": "Excellent match; JD focuses on AI Agents, RAG, and Text-to-SQL, which are key strengths in candidate's resume.",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "missing_core_skills": [],
+    "resume_strengths": [
+        "Self-correcting RAG experience",
+        "Hybrid Retrieval workflows",
+        "Text-to-SQL knowledge"
+    ],
+    "gaps_and_improvements": [
+        "Emphasize any specific Vector DB scaling experience"
+    ],
+    "suggested_resume_point_1": "Engineered autonomous AI agents for financial workflows using LangChain, automating complex decision-making processes.",
+    "suggested_resume_point_2": "Developed robust text-to-SQL interfaces enabling natural language querying of enterprise databases.",
+    "recruiter_verdict": "YES",
+    "recruiter_verdict_reason": "Candidate's experience with RAG, Agents, and Hybrid Retrieval is a near-perfect match for this role.",
+    "sponsorship_possible": "Unknown",
+    "sponsorship_evidence": "Not mentioned"
+}

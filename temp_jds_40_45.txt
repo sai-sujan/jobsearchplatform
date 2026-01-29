@@ -1,0 +1,334 @@
+--- JOB START 40 ---
+FILENAME: 40_Discernis_ML  AI Engineer LLM and NLP Sy.json
+COMPANY: Discernis
+TITLE: ML / AI Engineer (LLM and NLP Systems)
+ML / AI Engineer (LLM and NLP Systems)
+LINK: https://www.linkedin.com/jobs/view/4366383015/
+CONTENT:
+Discernis
+
+ML / AI Engineer (LLM and NLP Systems)
+
+United States · 2 hours ago · Over 100 applicants
+
+Promoted by hirer · No response insights available yet
+
+Remote
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+About Discernis
+
+Discernis builds AI systems that help legal teams understand massive document sets faster and more accurately. Our platform combines large language models, structured extraction, and advanced retrieval to deliver defensible, cited insights across complex matters. We work with law firms and enterprise legal teams where accuracy, explainability, and security are non negotiable.
+
+
+
+
+The Role
+
+You will lead the design and evolution of the AI systems at the core of our product. This includes LLM orchestration, retrieval pipelines, and structured information extraction over large scale legal document corpora.
+
+
+
+
+What You Will Do
+
+Design and productionize LLM powered pipelines for document analysis, entity extraction, issue identification, and insight generation
+Advance our multi step retrieval and reasoning workflows over large, heterogeneous document collections
+Own integrations across multiple model providers and self hosted inference infrastructure
+Optimize inference performance, latency, and cost across hosted and self managed model deployments
+Develop and refine prompts and structured outputs for complex legal and investigative use cases
+Improve hybrid search quality across semantic embeddings and traditional full text retrieval
+Build evaluation and benchmarking frameworks to continuously raise model quality and reliability
+
+
+
+
+What You Bring
+
+3+ years building production ML or NLP systems
+Deep experience working with modern LLM APIs and orchestration patterns
+Hands on experience with self hosted model serving such as vLLM, TGI, or similar
+Strong Python skills and comfort with concurrent or distributed processing
+Experience with vector search and embedding pi
+--- JOB END ---
+
+--- JOB START 41 ---
+FILENAME: 41_TEKsystems_Azure AI Engineer W2 Only  No .json
+COMPANY: TEKsystems
+TITLE: Azure AI Engineer (W2 Only / No C2C) (Local Candidates Only)
+Azure AI Engineer (W2 Only / No C2C) (Local Candidates Only) with verification
+LINK: https://www.linkedin.com/jobs/view/4365441510/
+CONTENT:
+TEKsystems
+
+Azure AI Engineer (W2 Only / No C2C) (Local Candidates Only) 
+
+Jersey City, NJ · 4 days ago · 78 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$70/hr - $85/hr
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+School alumni from Missouri State University
+
+Show all
+About the job
+
+Job Description Azure AI Engineer 
+
+We are seeing a highly skilled Azure AI Engineer to join our innovative team. The ideal candidate will be responsible for developing and deploying intelligent AI solutions using VS Code and Azure AI Studio. You will integrate AI powered solutions across multiple channels like Web applications etc.
+
+ Key Responsibilities
+
+
+Design, develop and deploy intelligent conversational AI solutions using Azure AI technologies.
+Utilize VS code and AI studio for model development, testing and deployment.
+Collaborate with cross functional teams to gather requirements, design conversational flows and implement scalable solutions.
+Monitor and optimize AI model performance,ensuring reliability abd accuracy.
+Develop resuable compoinents and pipelines in Azure AI Foundry for rapid solution deployment.
+Ensure adherence to data privacy and security standards within all AI implementations.
+
+
+
+ Technical Skills And Qualifications
+
+
+BS or MS in Computer Science, Engineering or related fields
+Proven experience working with Azure AI services (eg. Azure OpenAI, Azure Bot service, Cognitive services)
+Strong understanding of NLPs, LLMs and RESTful API integration.
+Familiarity wih Microsoft Copilot, Github Copilot, Azure AI Services, including practical experience with Azure Machine Learning and Azure Open AI
+Proven experience with AI/ML model evaluation, deep understanding of machine learning algorithms and data processing techniques
+Expertise in designing MLOps pipelines, encompassing model registry security, secure model deployment,and runtime secur
+--- JOB END ---
+
+--- JOB START 42 ---
+FILENAME: 42_Virginia Transformer Corp_AI EngineerAI Engineer with ve.json
+COMPANY: Virginia Transformer Corp
+TITLE: AI Engineer
+AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4350886304/
+CONTENT:
+Virginia Transformer Corp
+
+AI Engineer 
+
+Roanoke, VA · Reposted 6 days ago · Over 100 applicants
+
+Promoted by hirer · Actively reviewing applicants
+
+On-site
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Brief Description
+
+On the heels of achieving 3X growth, Virginia Transformer is hiring to do it again!
+
+We’re strategically building our team for the next 3X growth cycle — a phase that is both intense and incredibly rewarding. We’re highly selective about who joins us, because this journey isn’t for everyone.
+
+If you have the drive, grit, and expertise to perform at a high level — and you want to grow your career 3X alongside the Company’s growth — we’d love to talk.
+
+Apply below and let’s start the conversation.
+
+Who We Are
+
+Virginia Transformer is the largest U.S.-owned producer of power transformers in North America, and we’ve been able to grow the past 50-plus years through an unwavering focus on delivering for our customers. We’re more than 5,400 people strong and are known throughout the industry for being an engineering company that makes premium quality transformers in the shortest lead times.
+
+As a privately held, organically growing company, we thrive on nimbleness, innovation, and tenacity.
+
+Join Our Team
+
+If you love the thrill of securing the U.S. electric grid, enabling all manufacturing in the country, and the energy of a fast-moving train — this is the place for you. We train hard, grow together, and lead with purpose. Every transformer we build is custom, every challenge unique, and every team member essential.
+
+We’re looking for those ready to lead, fueled by commitment, and driven by impact. We are growing so fast that all our available roles are not yet posted, so let us know if you are interested and we will follow-up.
+
+Job Title: AI Engineer
+
+Company: Virginia Transformer Corporation
+
+Location: Roanoke, VA or approved company location
+
+Job Type: Full-Time
+
+Post
+--- JOB END ---
+
+--- JOB START 43 ---
+FILENAME: 43_Innova Solutions_Gen AI EngineerGen AI Engineer.json
+COMPANY: Innova Solutions
+TITLE: Gen AI Engineer
+Gen AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366047909/
+CONTENT:
+Innova Solutions
+
+Gen AI Engineer 
+
+St Louis, MO · Reposted 9 minutes ago · 15 applicants
+
+Promoted by hirer · No response insights available yet
+
+$75/hr - $80/hr
+On-site
+Contract
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Julie Rising
+
+• 3rd
+
+Program Manager
+
+School alum from Missouri State University
+
+Message
+About the job
+
+A client of Innova Solutions is immediately hiring for a Gen AI Engineer.
+
+Position type: Full-time, Contract on w2
+
+Duration: 12-month contract with possibility of extension
+
+Location: St. Louis Missouri and Charlotte NC (3 days Hybrid on-site role)
+
+As a Gen AI Engineer, You Will
+
+
+Design, develop, and optimize GenAI-powered applications and agents using frameworks such as LangChain, LangGraph, and ADK.
+Build and enhance LLM-based workflows, tools, and automation pipelines, ensuring high accuracy, reliability, and efficiency. 
+
+
+Day-to-Day Responsibilities
+
+
+Apply advanced prompt engineering techniques to improve model outputs, reduce hallucinations, and optimize system behavior.
+Develop, deploy, and maintain GenAI agents capable of task orchestration, memory handling, retrieval, and tool execution.
+Integrate GenAI systems with enterprise platforms using MCP (Model Context Protocol) and A2A (Agent-to-Agent) communication models.
+
+
+The ideal candidate will have:
+
+
+Prompt Engineering
+LangGraph, LangChain, ADK
+MCP, A2A
+Building GenAI Agents
+GenAI Evaluations
+
+
+Required Skills & Qualifications
+
+
+Ability to design, test, and refine prompts to optimize LLM responses for accuracy, relevance, and consistency.
+Hands-on experience with LangChain, LangGraph, and ADK for building and orchestrating GenAI workflows and agents.
+Knowledge of MCP (Model Context Protocol) and A2A (Agent-to-Agent communication) for integrating and coordinating AI systems.
+Strong understanding of building, deploying, and maintaining GenAI agents for automation and intelligent decision-mak
+--- JOB END ---
+
+--- JOB START 44 ---
+FILENAME: 44_Tata Consultancy Services_Gen AI EngineerGen AI Engineer.json
+COMPANY: Tata Consultancy Services
+TITLE: Gen AI Engineer
+Gen AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4362096964/
+CONTENT:
+Tata Consultancy Services
+
+Gen AI Engineer 
+
+Frederick, MD · 6 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$100K/yr - $115K/yr
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Prasanna Rao and others in your network
+
+Show all
+About the job
+
+Job Description
+
+Job description:
+
+We are seeking an AI Engineer specializing in Generative AI and Agentic AI systems. This role focuses on designing, developing, and operationalizing intelligent AI agents, Large Language Model (LLM)-based applications, Retrieval-Augmented Generation (RAG) systems, and autonomous multi-agent workflows.
+
+Key Responsibilities
+
+
+ GenAI Development & LLM Engineering
+ Build and deploy LLM-based applications leveraging frameworks like LangChain.
+ Develop RAG pipelines using vector databases for enterprise knowledge retrieval.
+ Develop data pipelines to create structured and unstructured datasets for LLM and agent workflows.
+ Optimize prompts, system instructions, and memory architectures for robust, domain-specific reasoning.
+ Evaluate model performance—accuracy, hallucination mitigation, latency, and safety compliance.
+ Agentic AI Design & Autonomous Workflow Engineering
+ Implement agentic systems capable of planning, reasoning, tool usage, and multi-step decision-making.
+ Build multi-agent ecosystems (task agents, planning agents, critic agents, evaluation agents) to automate complex workflows.
+ Integrate agents with APIs, enterprise systems, and external tools to create end-to-end autonomous solutions.
+ Ensure agent alignment with Responsible AI principles—traceability, guardrails, human oversight.
+ AI Systems Integration & Deployment
+ Build scalable microservices and APIs for GenAI and agentic components.
+ Deploy models and agents using Azure ML or Kubernetes-based stacks.
+ Collaboration & Influence
+ Engage with business and product stakeholders to con
+--- JOB END ---
+

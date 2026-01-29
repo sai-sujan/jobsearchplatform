@@ -1,0 +1,88 @@
+Company: iHeartMedia
+Title: Software Engineer Level 1
+Software Engineer Level 1 with verification
+Link: https://www.linkedin.com/jobs/view/4366225338/
+Posted: Recent
+Location: 
+
+============================================================
+
+iHeartMedia
+
+Software Engineer Level 1 
+
+New York, United States · 1 hour ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+School alumni from Missouri State University and others in your network
+
+Show all
+About the job
+
+iHeartMedia
+
+Current employees and contingent workers click here to apply and search by the Job Posting Title.
+
+The audio revolution is here – and iHeart is leading it! iHeartMedia, the number one audio company in America, reaches 90% of Americans every month -- a monthly audience that’s twice the size of any other audio company – almost three times the size of the largest TV network – and almost 4 times the size of the largest ad-supported music streaming service. In fact, we have:
+
+
+More #1 rated markets than the next two largest radio companies combined;
+We’re the largest podcast publisher, with more monthly downloads than the second- and third-largest podcast publishers combined. Podcasting, the fastest-growing new media, today has more monthly users than streaming music services or Netflix;
+iHeart is the home of many of the country’s most popular and trusted on-air personalities and podcast influencers, who build important connections with hundreds of communities across America;
+We create and produce some of the most popular and well-known branded live music events in America, including the iHeartRadio Music Festival, the iHeartRadio Music Awards, the iHeartCountry Festival, iHeartRadio Fiesta Latina and the iHeartRadio Jingle Ball Tour;
+iHeartRadio is the #1 streaming radio digital service in America;
+Our social media footprint is 7 times larger than the next largest audio service; and
+We have the only complete audio ad technology stack in the industry for all forms of audio, from on demand to broadcast radio, digital streaming radio and podcasting, which bring data, targeting and attribution to all forms of audio at an unparalleled scale. As a result, we’re able to combine our strong leadership position in audience reach, usage and ad tech with powerful tools and insights for our sales organizations to help them build success for their clients at a more efficient cost than any other option. 
+
+
+
+Because we reach almost every community in America, we’re committed to providing a range of programming that reflects the diversity of the many communities we serve – and our company reflects that same kind of diversity. Our company values stress collaboration, curiosity, welcoming dissent, accepting mistakes in the pursuit of new ideas, and respect for everyone.
+
+Only one company in America has the #1 position in everything audio: iHeartMedia!
+
+If you’re excited about this role but don’t feel your experience aligns perfectly with the job description, we encourage you to apply anyway. At iHeartMedia we are dedicated to building a diverse, inclusive, and authentic workplace and are looking for teammates passionate about what we do!
+
+What We Need:
+
+We are looking for a motivated Software Engineer to join our engineering team. This role is ideal for someone eager to learn, grow, and contribute to real-world projects in a collaborative, fast-paced environment. You will work closely with senior engineers and your manager to design, build, and debug software systems while developing full stack skills across backend, frontend, and data technologies.
+
+You'll have the opportunity to work on impactful, modern software systems that power marketing and technology solutions, consistent mentorship from experienced engineers with room for growth, a collaborative and supportive team culture where your contributions matter, and a flexible and dynamic work environment that encourages innovation and learning.
+
+This role is a great fit for someone early in their career who is passionate about technology, eager to learn, and excited to grow into a well-rounded full stack engineer.
+
+What You'll Do:
+
+
+Contribute to the design, development, and testing of software components and features under the guidance of senior engineers.
+Collaborate with your team to troubleshoot, debug, and resolve issues using centralized logging and monitoring tools.
+Write clean, maintainable, and testable code across multiple layers of the stack.
+Learn and apply best practices in Agile software development, including code reviews, unit testing, and CI/CD processes.
+Work with engineers and product teams to design SQL queries and analyze data effectively.
+Document processes, designs, and learnings to help build a strong engineering knowledge base.
+
+
+
+What You'll Need:
+
+Technologies You May Work With (Experience with all of these is not required—interest and willingness to learn is key):
+
+
+Languages: Python, Golang, Java, JavaScript
+Frameworks & Frontend: React or modern frontend frameworks
+Databases: SQL, Neo4j (Cypher queries)
+Messaging & Streaming: Apache Ka

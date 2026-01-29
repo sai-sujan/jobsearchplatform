@@ -1,0 +1,79 @@
+Company: Machinify
+Title: Data Scientist | Clinical AI
+Data Scientist | Clinical AI with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4365108126/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Machinify
+
+Data Scientist | Clinical AI 
+
+Palo Alto, CA · 5 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Todd F. 
+
+• 3rd
+
+Sr. Product Designer with experience in the entertainment, consumer electronics, and healthcare spaces.
+
+School alum from Missouri State University
+
+Message
+About the job
+
+Machinify is a leading healthcare intelligence company with expertise across the payment continuum, delivering unmatched value, transparency, and efficiency to health plan clients across the country. Deployed by over 60 health plans, including many of the top 20, and representing more than 160 million lives, Machinify brings together a fully configurable and content-rich, AI-powered platform along with best-in-class expertise. We’re constantly reimagining what’s possible in our industry, creating disruptively simple, powerfully clear ways to maximize financial outcomes and drive down healthcare costs.
+
+Machinify builds machine learning models for some of the largest health plans in the country to identify nearly $1B in erroneous healthcare payments. Our customers receive tens of millions of claims each year, many of which are billed with mistakes or fraud. Our production models detect and stop those errors on a daily basis, resulting in measurable healthcare savings that significantly outperform industry standards. Machinify has already had a huge impact as a small company, and we are growing quickly!
+
+We are hiring a Data Scientist to help advance our AI system for clinical criteria evaluation. This role sits at the intersection of medical policy interpretation, data science, and applied ML/LLM evaluation. You will translate policy requirements into correct, testable code (SQL and Python), and you will build the measurement and quality systems that continuously improve an AI pipeline that extracts structured clinical signals from medical records.
+
+What You'll Do
+
+
+ Translate medical policy into executable logic - Read and interpret medical policies and clinical criteria (e.g., lab thresholds, temporal windows, trend logic, exclusions).
+ Convert requirements into correct, maintainable SQL and Python implementations (e.g., creatinine-based AKI rules, bilirubin thresholds, troponin dynamics, ABG-derived criteria).
+ Design rule representations that are composable and auditable (clear inputs, outputs, assumptions, edge cases).
+ Prompt engineering and system parameter tuning for AI configuration that extracts clinical information from medical records.
+ Build robust clinical feature pipelines
+ Create and maintain pipelines that compute clinical features from extracted signals (labs, vitals, flowsheets, notes-derived facts).
+ Handle tricky realities: missing timestamps, multiple measurement sources, unit normalization, deduplication, conflicting values, provenance tracking.
+ Own measurement, evaluation, and continuous quality improvement
+ Define and instrument accuracy metrics for the AI system that extracts data from medical records
+ Build gold datasets, sampling strategies, and review workflows with clinical/operations partners.
+ Perform error analysis, identify root causes (retrieval failures, OCR issues, extraction ambiguity, policy interpretation gaps), and drive improvements.
+ Establish engineering frameworks and tooling
+ Create reusable tooling for policy-to-code translation: templates, test harnesses, validation suites, regression checks, and monitoring dashboards.
+ Improve infrastructure for large-scale runs: orchestration, logging, lineage, versioning, and reproducibility.
+ Implement guardrails and QA gates so policy logic changes are safe, traceable, and measurable.
+ Partner deeply with domain experts
+ Work with clinicians, policy specialists, and operations to clarify ambiguous requirements and ensure implementations reflect real-world intent.
+ Produce clear documentation that explains what the code is doing and why, with examples and edge-case handling.
+
+
+What You'll Bring
+
+
+ Strong SQL and Python engineering skills - Ability to translate nuanced requirements into correct SQL (CTEs, window functions, joins at scale, performance tuning) and production-quality Python. - Experience building testable pipelines, not just ad hoc analysis.
+ Experience operationalizing rules + models - Track record of implementing complex business/clinical logic and deploying it reliably. - Comfort working with imperfect, messy, high-volume datasets.
+ Evaluation/Metric mindset - Experience designing metrics, building ground truth, running experiments, and improving system quality through structured iteration. - Ability to connect technical quality measures to business outcomes (e.g., accuracy vs reviewer burden vs downstream decisions).
+ Systems thinking and rigor - You build frameworks that make other engineers/scientists faster: shared librari

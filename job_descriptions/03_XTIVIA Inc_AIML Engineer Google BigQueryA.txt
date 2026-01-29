@@ -1,0 +1,105 @@
+Company: XTIVIA, Inc.
+Title: AI/ML Engineer (Google BigQuery)
+AI/ML Engineer (Google BigQuery) with verification
+Link: https://www.linkedin.com/jobs/view/4355951976/
+Posted: Recent
+Location: 
+
+============================================================
+
+XTIVIA, Inc.
+
+AI/ML Engineer (Google BigQuery) 
+
+United States · 44 minutes ago · 45 people clicked apply
+
+Responses managed off LinkedIn
+
+$90/hr
+Remote
+Contract
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Job Type
+
+Contract
+
+Description
+
+XTIVIA - AI/ML Engineer (Google BigQuery)
+
+Work Location: Remote
+
+Duration: 3 Months (Initial contract/SOW, with potential for extension)
+
+How you will make a difference
+
+XTIVIA is seeking a Google BigQuery AI/ML Engineer to help design and build next-generation, AI-enabled analytics capabilities on top of Google BigQuery. This role will focus on developing natural-language query agents, forecasting solutions, and AI-powered insights that are securely embedded into enterprise collaboration tools such as Microsoft Teams.
+
+Key Responsibilities
+
+
+Design and implement natural language query agents that translate user questions into optimized BigQuery SQL.
+Build and operationalize Gemini-powered AI workflows for analytics, summarization, and forecasting.
+Develop time-series forecasting models using BigQuery ML and integrate results with Gemini for explainability.
+Implement governance, access control, and auditability for AI-driven data access.
+Integrate AI capabilities into Microsoft Teams for seamless user adoption.
+Collaborate with data engineering, security, and business teams to ensure scalable and secure solutions.
+Optimize query performance, cost controls, and data reliability in BigQuery.
+
+
+Requirements
+
+What you bring to your new team
+
+
+Strong experience with Google BigQuery and SQL at enterprise scale.
+Hands-on experience with BigQuery ML or similar forecasting/statistical modeling frameworks.
+Experience working with LLMs (Gemini, Vertex AI, or equivalent) in enterprise settings.
+Knowledge of natural language to SQL patterns and retrieval-augmented generation (RAG).
+Experience integrating data or AI services into collaboration tools (Teams, Slack, or similar).
+Strong understanding of data security, RBAC, and enterprise governance.
+
+
+How you add even MORE value
+
+
+Experience with Vertex AI and model orchestration.
+Background in retail, supply chain, or enterprise analytics.
+Familiarity with prompt engineering, AI observability, and usage analytics.
+Experience designing internal productivity tools or analytics platforms.
+
+
+Get to know XTIVIA
+
+XTIVIA is an innovative B2B technology enterprise solutions company committed to providing integrated technology solutions and services, delivering measurable results as a trusted industry thought leader for 30 years.
+
+Our services include managed services and business solutions, like DevOps, CRM, and ITSM; database support and management; application solutions, including mobile apps; ERP solutions for GovCon and the private sector; and platform integration, with APIs as well as digital experience CMS solutions.
+
+If you can imagine the business outcome, XTIVIA can create it with technology.
+
+XTIVIA has offices in Colorado, New York, New Jersey, Texas, and Virginia.
+
+xtivia.com
+
+How we take care of our team members
+
+For XTIVIA to recruit—and retain—the most experienced and talented people, XTIVIA offers a highly competitive and comprehensive benefits package. Our employees are our corporate family, so benefits extend beyond our employees to include their families. We provide affordable medical, dental, and vision benefits. Other benefits include a 401(k) plan with match, company-paid disability and life insurance, voluntary life insurance options, an Employee Assistance Program (EAP), identity and fraud protection, recognition and wellness programs. To promote a healthy work-life balance, XTIVIA offers team members flexible paid time off and remote and flexible work options, enabling you to spend time with family and recharge as needed without worrying about accruals. In addition, we encourage ongoing career development by offering paid training and certification opportunities. Our benefits are designed and focused around our culture and core values, treating people the way we would like to be treated. XTIVIA has been certified four years in a row as a great place to work.
+
+This position has an expected pay range of $90-$110 per hour.
+
+Your compensation is based on your skills and experience -- talk with your recruiter to learn more.
+
+What We Promise
+
+At XTIVIA, we are committed to providing an environment of mutual respect where equal employment opportunities are available to all applicants and team members without regard to race, color, religion, age, sex, national origin, disability status, genetics, military and veteran status, sexual orientation, gender identity or expression, marital status, parental status, and any other characteristic protected by applicable laws. XTIVIA believes that diversity and inclusion among our team members are critical to our success as a global company, and we seek to recruit, develop and retain the most talented people from a div

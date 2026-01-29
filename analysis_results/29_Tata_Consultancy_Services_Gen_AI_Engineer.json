@@ -1,0 +1,58 @@
+{
+    "ats_score": 93,
+    "location": "Frederick, MD",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Developed autonomous agentic workflows using self-correcting RAG and LangChain, enabling multi-step reasoning and planning.",
+        "\\item Built multi-agent-ready components including LLM-as-Judge (Critic/Evaluation Agent) to automate quality oversight.",
+        "\\item Implemented hybrid retrieval pipelines to serve as the long-term memory for intelligent agents, ensuring context retention.",
+        "\\item Designed scalable microservices for AI logic (batched extraction), optimizing latency for real-time agent interactions.",
+        "\\item Engineered hallucination mitigation strategies through rigorous evaluation benchmarks, aligning with Responsible AI principles.",
+        "\\item Deployed robust AI solutions on cloud infrastructure, supporting the operationalization of complex agent ecosystems."
+    ]
+}

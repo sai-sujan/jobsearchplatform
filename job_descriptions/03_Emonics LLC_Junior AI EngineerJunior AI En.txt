@@ -1,0 +1,203 @@
+Company: Emonics LLC
+Title: Junior AI Engineer
+Junior AI Engineer [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4366009794/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Emonics LLC
+
+Junior AI Engineer
+
+Philadelphia, PA · 1 hour ago · 89 applicants
+
+Promoted by hirer · No response insights available yet
+
+On-site
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Job description
+
+ About the role
+
+ We are hiring an Entry Level AI Engineer to help build and deploy practical AI solutions. You will work with structured and unstructured data, train and evaluate models, and help integrate AI into real applications.
+
+ 
+
+ What you will do
+
+ • Support development of AI models for classification, recommendation, forecasting, or NLP tasks
+
+ • Prepare datasets, perform feature engineering, and run experiments
+
+ • Evaluate model performance and help improve accuracy, latency, and robustness
+
+ • Assist with deploying models into production environments (APIs, batch jobs, pipelines)
+
+ • Collaborate with software engineers, data engineers, and product teams
+
+ 
+
+ What you are looking for
+
+ • Bachelor’s or Master’s degree in CS, Data Science, AI/ML, Statistics, or related field
+
+ • Strong Python foundation
+
+ • Familiarity with ML basics (supervised/unsupervised learning, evaluation metrics)
+
+ • Experience with common libraries (NumPy, pandas, scikit-learn)
+
+ • Clear communication and curiosity
+
+ 
+
+ Nice to have
+
+ • Exposure to deep learning (PyTorch or TensorFlow)
+
+ • Understanding of model deployment (FastAPI/Flask, Docker)
+
+ • Cloud fundamentals (AWS/GCP/Azure) and basic MLOps concepts
+
+… more
+
+Featured benefits
+
+Dental insurance, Vision insurance, Medical insurance, Child care support
+
+This job alert is on
+
+Artificial Intelligence Engineer, Philadelphia, Pennsylvania, United States
+
+On
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+89
+
+Applicants
+
+89
+
+Applicants in the past day
+
+Applicant seniority level
+
+89% Entry level people applied for this job
+
+4% Senior level people applied for this job
+
+Applicant education level
+
+89
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+10
+
+%
+
+have a Bachelor's Degree
+
+
+1
+
+%
+
+have a High School Diploma
+Exclusive Job Seeker Insights about Emonics LLC
+Powered by Bing
+
+Company focus areas
+
+• Expansion of IT Staffing Services: Emonics aims to expand its IT staffing and consulting services across various industries nationwide, providing both permanent and temporary employment solutions.
+
+...more
+
+Sources: myvisajobs.com +1 more
+
+Hiring & headcount
+
+Downsizing across multiple functions: The company has experienced a significant reduction in headcount across various departments, with notable decreases in 'Human Resources' (-11%), 'Information Technology' (-20%), and 'Engineering' (-16%), indicating a potential restructuring or cost-cutting initiative. Stable or slightly growing departments: Despite overall downsizing, some departments like 'Research' (5%), 'Healthcare Services' (21%), and 'Administrative' (40%) have shown growth, suggesting these areas might be focal points for new initiatives or investments. Significant reduction in job openings: The drastic decrease in job openings across most functions, including 'Engineering' (-96%) and 'Operations' (-92%), points to a hiring freeze or a strategic shift in workforce planning. Potential focus on core operations: The slight increase in 'Operations' headcount (3%) and the presence of job openings in this function suggest a potential focus on maintaining or optimizing core operational capabilities.
+… more
+
+The latest hiring trend
+
+922
+
+Total employees
+
+21%
+
+Company-wide
+
+2 year growth
+
+0%
+
+Operations
+
+2 year growth
+
+Jan 2024
+May 2024
+Sep 2024
+Jan 2025
+May 2025
+Sep 2025
+Jan 2026
+0
+500
+1000
+1500
+
+Median employee tenure: 2.8 years
+
+Competitors
+
+Emonics operates in the IT recruitment and staff augmentation industry, facing competition from numerous companies. The competitive landscape is characterized by a high number of active competitors, including both funded and unfunded companies. Key competitors like TEKsystems, Motion Recruitment, and S.i. Systems offer similar services, focusing on providing skilled IT professionals to meet the dynamic needs of businesses. Emonics differentiates itself by targeting entry-level professionals and maintaining a strong presence in multiple US locations.
+… more
+
+Sources: tracxn.com
+
+Show Premium Insights
+About the company
+
+Emonics LLC
+
+204,290 followers
+
+Following
+
+Staffing and Recruiting
+
+ • 
+
+1001-5000 employees
+
+ • 
+
+860 on LinkedIn
+
+Emonics LLC connects you with the right talent at the right time. We assist our clients in reinventing innovation, optimizing operations, and reshaping perceptions so they can remain at the forefront in our rapidly changing world. By working with these collective goals in mind, we're making a difference in people's lives.
+
+We provide a vast array of services within a variety of industries. Our personalized services include Software Development, Information Technology, Healthcare Consulting, Technology Consul

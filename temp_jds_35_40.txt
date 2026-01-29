@@ -1,0 +1,271 @@
+--- JOB START 35 ---
+FILENAME: 35_Machinify_Data Scientist  Clinical AIDat.json
+COMPANY: Machinify
+TITLE: Data Scientist | Clinical AI
+Data Scientist | Clinical AI with verification
+LINK: https://www.linkedin.com/jobs/view/4365108126/
+CONTENT:
+Machinify
+
+Data Scientist | Clinical AI 
+
+Palo Alto, CA · 6 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Todd F. 
+
+• 3rd
+
+Sr. Product Designer with experience in the entertainment, consumer electronics, and healthcare spaces.
+
+School alum from Missouri State University
+
+Message
+About the job
+
+Machinify is a leading healthcare intelligence company with expertise across the payment continuum, delivering unmatched value, transparency, and efficiency to health plan clients across the country. Deployed by over 60 health plans, including many of the top 20, and representing more than 160 million lives, Machinify brings together a fully configurable and content-rich, AI-powered platform along with best-in-class expertise. We’re constantly reimagining what’s possible in our industry, creating disruptively simple, powerfully clear ways to maximize financial outcomes and drive down healthcare costs.
+
+Machinify builds machine learning models for some of the largest health plans in the country to identify nearly $1B in erroneous healthcare payments. Our customers receive tens of millions of claims each year, many of which are billed with mistakes or fraud. Our production models detect and stop those errors on a daily basis, resulting in measurable healthcare savings that significantly outperform industry standards. Machinify has already had a huge impact as a small company, and we are growing quickly!
+
+We are hiring a Data Scientist to help advance our AI system for clinical criteria evaluation. This role sits at the intersection of medical policy interpretation, data science, and applied ML/LLM evaluation. You will translate policy requirements into correct, testable code (SQL and Python), and you will build the measurement and quality systems that continuously improve an AI pipeline 
+--- JOB END ---
+
+--- JOB START 36 ---
+FILENAME: 36_Alignerr_Data Scientist Masters - AI Da.json
+COMPANY: Alignerr
+TITLE: Data Scientist (Masters) - AI Data Trainer
+Data Scientist (Masters) - AI Data Trainer
+LINK: https://www.linkedin.com/jobs/view/4366106344/
+CONTENT:
+Alignerr
+
+Data Scientist (Masters) - AI Data Trainer
+
+United States · 1 day ago · 46 people clicked apply
+
+Responses managed off LinkedIn
+
+$40/hr - $80/hr
+Remote
+Contract
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Location: Remote
+
+
+About The Job
+
+At Alignerr, we partner with the world’s leading AI research teams and labs to build and train cutting-edge AI models.
+
+You’ll challenge advanced language models on topics like machine learning theory, statistical inference, neural network architectures, and data engineering pipelines—documenting every failure mode so we can harden model reasoning.
+
+Organization: Alignerr Position: Data Scientist (Masters) - AI Data Trainer Type: Hourly Contract Compensation: $40–$80 /hour Location: Remote Commitment: 10–40 hours/week
+
+What You’ll Do
+
+
+ Develop Complex Problems: Design advanced data science challenges across domains like hyperparameter optimization, Bayesian inference, cross-validation strategies, and dimensionality reduction.
+ Author Ground-Truth Solutions: Create rigorous, step-by-step technical solutions including Python/R scripts, SQL queries, and mathematical derivations that serve as "golden responses."
+ Technical Auditing: Evaluate AI-generated code (using libraries like Scikit-Learn, PyTorch, or TensorFlow), data visualizations, and statistical summaries for technical accuracy and efficiency.
+ Refine Reasoning: Identify logical fallacies in AI reasoning—such as data leakage, overfitting, or improper handling of imbalanced datasets—and provide structured feedback to improve the model's "thinking" process.
+
+
+Requirements
+
+
+ Advanced Degree: Masters (pursuing or completed) or PhD in Data Science, Statistics, Computer Science, or a quantitative field with a heavy emphasis on data analysis.
+ Domain Expertise: Strong foundational knowledge in core areas such as supervised/unsupervised learning, deep learning, big data technologies (Spark/Hadoop), or
+--- JOB END ---
+
+--- JOB START 37 ---
+FILENAME: 37_Alignerr_Data Scientist Masters - AI Da.json
+COMPANY: Alignerr
+TITLE: Data Scientist (Masters) - AI Data Trainer
+Data Scientist (Masters) - AI Data Trainer
+LINK: https://www.linkedin.com/jobs/view/4365799369/
+CONTENT:
+Alignerr
+
+Data Scientist (Masters) - AI Data Trainer
+
+Boston, MA · 1 day ago · 57 people clicked apply
+
+Responses managed off LinkedIn
+
+$40/hr - $80/hr
+Remote
+Contract
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Location: Remote
+
+
+About The Job
+
+At Alignerr, we partner with the world’s leading AI research teams and labs to build and train cutting-edge AI models.
+
+You’ll challenge advanced language models on topics like machine learning theory, statistical inference, neural network architectures, and data engineering pipelines—documenting every failure mode so we can harden model reasoning.
+
+Organization: Alignerr Position: Data Scientist (Masters) - AI Data Trainer Type: Hourly Contract Compensation: $40–$80 /hour Location: Remote Commitment: 10–40 hours/week
+
+What You’ll Do
+
+
+ Develop Complex Problems: Design advanced data science challenges across domains like hyperparameter optimization, Bayesian inference, cross-validation strategies, and dimensionality reduction.
+ Author Ground-Truth Solutions: Create rigorous, step-by-step technical solutions including Python/R scripts, SQL queries, and mathematical derivations that serve as "golden responses."
+ Technical Auditing: Evaluate AI-generated code (using libraries like Scikit-Learn, PyTorch, or TensorFlow), data visualizations, and statistical summaries for technical accuracy and efficiency.
+ Refine Reasoning: Identify logical fallacies in AI reasoning—such as data leakage, overfitting, or improper handling of imbalanced datasets—and provide structured feedback to improve the model's "thinking" process.
+
+
+Requirements
+
+
+ Advanced Degree: Masters (pursuing or completed) or PhD in Data Science, Statistics, Computer Science, or a quantitative field with a heavy emphasis on data analysis.
+ Domain Expertise: Strong foundational knowledge in core areas such as supervised/unsupervised learning, deep learning, big data technologies (Spark/Hadoop), or NL
+--- JOB END ---
+
+--- JOB START 38 ---
+FILENAME: 38_UnlearnAI_Clinical Data ScientistClinica.json
+COMPANY: Unlearn.AI
+TITLE: Clinical Data Scientist
+Clinical Data Scientist with verification
+LINK: https://www.linkedin.com/jobs/view/4321353982/
+CONTENT:
+Unlearn.AI
+
+Clinical Data Scientist 
+
+San Francisco, CA · 3 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Our Mission and Vision
+
+Unlearn exists to transform clinical development by making every trial smarter. We harness data, AI, and digital twins to enable faster, more robust studies that bring life-saving treatments to patients faster. This mission drives everything we do as we partner with biopharmaceutical companies to redesign how clinical trials are planned, run, and analyzed.
+
+We are defining the future of clinical development with unmatched scientific credibility, replacing uncertainty with AI-powered precision so decisions are clearer and trials are stronger. We don’t just disrupt the pharmaceutical industry, we create lasting change.
+
+We believe AI will define the future of medicine, and we are committed to building that future responsibly, rigorously, and in close collaboration with our partners in clinical development.
+
+About Our Team
+
+We come from a variety of backgrounds ranging from machine learning to marketing—but regardless of where we come from, Unlearners share some common traits:
+
+
+Unlearners are ambitious; we aren’t intimidated by big, challenging goals.
+Unlearners are disciplined experimenters; we break down our big goals into smaller chunks and meet as often as necessary to track our velocity and iterate quickly.
+Unlearners are gritty; we never give up, setbacks just make us try harder.
+Unlearners are receptive to new ideas; in fact, we hate being stuck with the status quo
+Unlearners are storytellers; sharing information with each other and with the world is super important, too important to be boring. And, last but not least,
+Unlearners are team-oriented; we put the mission first, the company second, the team third, and individuals last.
+
+
+Headquartered in San F
+--- JOB END ---
+
+--- JOB START 39 ---
+FILENAME: 39_Alignerr_Data Scientist Masters - AI Da.json
+COMPANY: Alignerr
+TITLE: Data Scientist (Masters) - AI Data Trainer
+Data Scientist (Masters) - AI Data Trainer
+LINK: https://www.linkedin.com/jobs/view/4366111265/
+CONTENT:
+Alignerr
+
+Data Scientist (Masters) - AI Data Trainer
+
+Dallas, TX · 1 day ago · 52 people clicked apply
+
+Responses managed off LinkedIn
+
+$40/hr - $80/hr
+Remote
+Contract
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Location: Remote
+
+
+About The Job
+
+At Alignerr, we partner with the world’s leading AI research teams and labs to build and train cutting-edge AI models.
+
+You’ll challenge advanced language models on topics like machine learning theory, statistical inference, neural network architectures, and data engineering pipelines—documenting every failure mode so we can harden model reasoning.
+
+Organization: Alignerr Position: Data Scientist (Masters) - AI Data Trainer Type: Hourly Contract Compensation: $40–$80 /hour Location: Remote Commitment: 10–40 hours/week
+
+What You’ll Do
+
+
+ Develop Complex Problems: Design advanced data science challenges across domains like hyperparameter optimization, Bayesian inference, cross-validation strategies, and dimensionality reduction.
+ Author Ground-Truth Solutions: Create rigorous, step-by-step technical solutions including Python/R scripts, SQL queries, and mathematical derivations that serve as "golden responses."
+ Technical Auditing: Evaluate AI-generated code (using libraries like Scikit-Learn, PyTorch, or TensorFlow), data visualizations, and statistical summaries for technical accuracy and efficiency.
+ Refine Reasoning: Identify logical fallacies in AI reasoning—such as data leakage, overfitting, or improper handling of imbalanced datasets—and provide structured feedback to improve the model's "thinking" process.
+
+
+Requirements
+
+
+ Advanced Degree: Masters (pursuing or completed) or PhD in Data Science, Statistics, Computer Science, or a quantitative field with a heavy emphasis on data analysis.
+ Domain Expertise: Strong foundational knowledge in core areas such as supervised/unsupervised learning, deep learning, big data technologies (Spark/Hadoop), or NL
+--- JOB END ---
+

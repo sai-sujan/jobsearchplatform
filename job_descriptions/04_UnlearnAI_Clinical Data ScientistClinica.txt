@@ -1,0 +1,97 @@
+Company: Unlearn.AI
+Title: Clinical Data Scientist
+Clinical Data Scientist with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4321353982/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Unlearn.AI
+
+Clinical Data Scientist 
+
+San Francisco, CA · 3 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Our Mission and Vision
+
+Unlearn exists to transform clinical development by making every trial smarter. We harness data, AI, and digital twins to enable faster, more robust studies that bring life-saving treatments to patients faster. This mission drives everything we do as we partner with biopharmaceutical companies to redesign how clinical trials are planned, run, and analyzed.
+
+We are defining the future of clinical development with unmatched scientific credibility, replacing uncertainty with AI-powered precision so decisions are clearer and trials are stronger. We don’t just disrupt the pharmaceutical industry, we create lasting change.
+
+We believe AI will define the future of medicine, and we are committed to building that future responsibly, rigorously, and in close collaboration with our partners in clinical development.
+
+About Our Team
+
+We come from a variety of backgrounds ranging from machine learning to marketing—but regardless of where we come from, Unlearners share some common traits:
+
+
+Unlearners are ambitious; we aren’t intimidated by big, challenging goals.
+Unlearners are disciplined experimenters; we break down our big goals into smaller chunks and meet as often as necessary to track our velocity and iterate quickly.
+Unlearners are gritty; we never give up, setbacks just make us try harder.
+Unlearners are receptive to new ideas; in fact, we hate being stuck with the status quo
+Unlearners are storytellers; sharing information with each other and with the world is super important, too important to be boring. And, last but not least,
+Unlearners are team-oriented; we put the mission first, the company second, the team third, and individuals last.
+
+
+Headquartered in San Francisco, Unlearn was founded in 2017 by a team of world-class machine learning scientists. We have raised venture capital from top tier investors such as Altimeter, Insight Partners, Radical Ventures, 8VC, DCVC, and DCVC Bio, and completed our $50 million Series C in January 2024.
+
+If our purpose and culture resonate with you, we invite you to apply.
+
+Clinical Data Scientist. Clinical Data Scientists at Unlearn build world-class data products that underpin advances in machine learning for clinical research. Working in close collaboration with machine learning scientists, engineers, clinical scientists, and product partners, they transform complex clinical data into high-quality, well-understood datasets tailored for modeling and other downstream applications. The role spans multiple disease areas and data sources, requiring strong software practices, careful data curation, and the ability to quickly develop clinical domain expertise. In addition to internal development, Clinical Data Scientists often work in forward-deployed settings, partnering directly with clients to ensure Unlearn’s solutions are appropriately tailored to real-world study designs.
+
+Responsibilities Include
+
+
+Transform clinical trial, observational, and electronic health record data into high-quality, well-structured datasets.
+Analyze longitudinal clinical datasets, developing a strong understanding of outcome measures, biomarkers, and other variables commonly used in clinical research across multiple disease areas.
+Collaborate closely with cross-functional teams of data scientists, machine learning scientists, engineers, and clinicians to design, build, and maintain robust data products grounded in sound data organization, domain knowledge, and careful analysis.
+Communicate technical findings, data characteristics, and limitations clearly and effectively to both internal partners and external collaborators, including in forward-deployed, client-facing settings.
+
+
+Minimum Requirements
+
+
+BS or advanced degree in Bioinformatics, Computer Science, Psychology, Public Health, or related discipline.
+2+ years of experience wrangling data from disparate sources, data cleaning, and harmonizing datasets for analysis.
+Experience working with complex or nuanced datasets.
+Fluency in Python and its essential data science tools (numpy, pandas).
+Demonstrated experience in collaborative software development.
+Experience with clinical datasets in applied machine learning applications.
+Experience working in multidisciplinary teams that include scientists, engineers, and product management.
+
+
+Bonus Points For
+
+
+Prior experience in forward-deployed, client-facing settings.
+Experience in clinical/healthcare data.
+
+
+Benefits & Perks
+
+The following benefits and perks are for full time roles only. 
+
+
+Generous equity participation
+100% company-covered medical, dental, & vision insurance plans
+401k plan with matching
+Flexible PTO plus company holidays
+Annual company-wide break December 24 through Januar

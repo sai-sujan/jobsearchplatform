@@ -1,0 +1,61 @@
+{
+    "ats_score": 84,
+    "location": "Annapolis Junction, MD (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Built YOLO-based object detection system for National ID authentication, achieving robust counterfeit hologram detection with MiDaS depth estimation and GAN-generated synthetic samples.",
+        "\\item Optimized security-critical computer vision pipeline by eliminating redundant processing, reducing per-card verification time from 7 minutes to 3 minutes while maintaining high accuracy.",
+        "\\item Developed ML-based anomaly detection system for MFA workflows using TensorFlow, reducing redundant verification prompts by 25% while maintaining strict security requirements.",
+        "\\item Applied transfer learning to fine-tune pre-trained models on limited secure datasets, achieving reliable performance across varied authentication scenarios.",
+        "\\item Containerized and deployed production ML solutions using Docker and AWS, ensuring scalable and secure pipelines for identity verification and anomaly detection systems.",
+        "\\item Implemented LLM-as-Judge evaluation pipeline to assess model reliability across hundreds of examples, ensuring production-ready performance for security-sensitive applications."
+    ],
+    "meta_job_title": "AI/ML Engineer I",
+    "meta_company": "Reflexive Concepts",
+    "meta_link": ""
+}

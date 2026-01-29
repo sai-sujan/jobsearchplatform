@@ -1,0 +1,22 @@
+{
+  "ats_score": 85,
+  "location": "San Francisco, CA (Open to Relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL", "JavaScript"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"],
+    "LLM & NLP Tools": ["LangChain", "LangGraph", "OpenAI API", "RAG Systems", "Ollama"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, EC2)", "Docker", "CI/CD Pipelines"],
+    "Databases & Data Engineering": ["PostgreSQL", "MongoDB", "FAISS", "Milvus"],
+    "Data Visualization": ["Matplotlib", "Plotly", "Streamlit"],
+    "Web & DevOps": ["FastAPI", "Docker", "GitHub Actions"],
+    "ML Concepts & Specializations": ["NLP", "Computer Vision", "Deep Learning", "LLMs"]
+  },
+  "points": [
+    "\\item Designed and deployed production-ready LLM applications using OpenAI and custom fine-tuned models.",
+    "\\item Built scalable RAG pipelines integrating vector databases (FAISS, Milvus) with LangChain for document QA.",
+    "\\item Developed automated evaluation frameworks using LLM-as-Judge to measure response quality and faithfulness.",
+    "\\item Optimized inference pipelines achieving 80\\% reduction in API costs through intelligent caching and batching.",
+    "\\item Implemented CI/CD workflows with GitHub Actions for automated model training and deployment to AWS.",
+    "\\item Led cross-functional collaboration to deliver AI solutions that improved user engagement by 25\\%."
+  ]
+}

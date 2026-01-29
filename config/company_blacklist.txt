@@ -1,0 +1,69 @@
+# Company Blacklist - Staffing/Consulting Companies
+# Add one keyword per line (case-insensitive matching)
+# Companies containing these keywords will be filtered out
+
+# Staffing agencies
+staffing
+recruiting
+recruiters
+recruitment
+
+# Consulting firms (generic)
+consulting
+consultants
+consultancy
+
+# IT Services keywords
+solutions
+services
+technologies
+tech solutions
+it services
+
+# Talent/HR agencies
+talent
+talent acquisition
+hr solutions
+workforce
+
+# Outsourcing
+outsourcing
+offshore
+nearshore
+
+# NOTE: Removed major IT companies (Infosys, Wipro, TCS, Cognizant, HCL, Tech Mahindra)
+# as they are legitimate good companies
+
+# Global services
+global services
+global solutions
+worldwide services
+
+# Specific staffing companies to avoid
+cybercoders
+dice
+robert half
+kelly services
+manpower
+adecco
+randstad
+apex systems
+teksystems
+insight global
+kforce
+modis
+experis
+aerotek
+collabera
+revature
+smoothstack
+
+# Contract-focused
+contract
+contractors
+contracting
+
+# Body shops
+body shop
+staff augmentation
+augmentation

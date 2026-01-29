@@ -1,0 +1,86 @@
+Company: Digital Asset Management.com
+Title: Associate Developer, PS (Drupal Fullstack Developer)
+Associate Developer, PS (Drupal Fullstack Developer) [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4365867243/
+Posted: 17 minutes ago
+Within the past 24 hours
+Location: 
+Premium Indicators: job-card-container__footer-item--highlighted
+
+============================================================
+
+Digital Asset Management.com
+
+Associate Developer, PS (Drupal Fullstack Developer)
+
+United States · 19 minutes ago · 4 people clicked apply
+
+Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+New
+
+Associate Developer, PS (Drupal Fullstack Developer)
+
+Pune or Delhi/NCR Remote
+
+About Acquia
+
+Acquia empowers the world’s most ambitious brands to create digital customer experiences that matter. With open source Drupal at its core, the Acquia Digital Experience Platform (DXP) enables marketers, developers, and IT operations teams at thousands of global organizations to rapidly compose and deploy digital products and services that engage customers, enhance conversions, and help businesses stand out. Headquartered in the U.S., Acquia is a Great Place to Work-CertifiedTM company in India, is listed as one of the world’s top software companies by The Software Report, and is positioned as a market leader by the analyst community. We are Acquia. We are building for the future and we want you to be a part of it!
+
+About The Team
+
+You will be joining a high-energy delivery team dedicated to building world-class digital experiences for Acquia’s global clients. As an Associate Developer, you aren’t just a "coder"—you are a foundational part of a pod that includes Senior Technical Architects and Project Managers. You’ll have the unique opportunity to be mentored by some of the most influential contributors in the Drupal community while working at the intersection of Open Source and Artificial Intelligence.
+
+Our team is at the forefront of the AI-integrated web, leveraging the Drupal AI module ecosystem and Acquia’s AI Assist to build smarter, more intuitive applications. You will help implement cutting-edge features across all industries. We value curiosity and a "growth mindset" as we explore how AI can accelerate our development and enhance the experience for our customers.
+
+About The Role
+
+Your mission is to turn architectural designs into functional, high-performing code while embracing the next generation of intelligent web development. As an Associate Developer, you will focus on the hands-on development of Drupal sites, leveraging a modern stack that follows industry standards, Acquia best practices, and the emerging Drupal AI ecosystem.
+
+This role is designed for someone who has mastered the fundamentals and is ready to professionalize their workflow within the Acquia ecosystem. You will not only build traditional web components but also implement AI-augmented features—such as semantic search, automated content categorization, and dynamic personalization—that define the future of Digital Experience Platforms (DXP).
+
+Responsibilities
+
+
+Participate in all aspects of the software development life-cycle, turning functional and design requirements into working application components that meet specifications and follow Acquia best practices.
+Interface with diverse teams to define the scope and roadmap for demonstrations and implementation.
+Active contributions to all UI / UX decisions and implementations.
+Ability to understand business requirements and turn them into functional and aesthetic design components.
+Develop features with enhanced user experience and optimize the front-end architecture for the best performance.
+Responsible for writing efficient, accessible, and quality code using IDEs in areas of expertise (e.g. PHP, JS) that aligns with industry/community best practices and standards.
+Document, communicate, and help the team, acting as a better team player.
+Report on blockers and collaborate with team members to reach resolution.
+Participate in customer meetings and workshops.
+Estimate the amount of work required to deliver requirements, and track time and expenses using project and organizational standards.
+Accountable for active contributions to front-end architecture decisions and front-end development for web applications.
+Break down a problem into discrete, actionable items; identify risks; and note assumptions.
+Be transparent with delivery team(s) and manager, and communicate clearly on a daily basis to report status, blockers, etc.
+Capable of leading development efforts across customer and/or partner teams of small to medium-sized efforts.
+
+
+Requirements & Expertise
+
+Technical Skills
+
+
+Total 1-3 years of experience as a Fullstack developer 
+Expert in HTML, CSS, Javascript, and jQuery.
+Uses technologies such as Git, Composer, Drush, Virtual Environments, Continuous Integration Tools, etc. to implement customer builds.
+Familiar with all aspects of Drupal Site Building and standard configuration management strategies / workflow.
+Writes quality code using IDEs in area of expertise (e.g. PHP, JS) that aligns with industry / community best practices and standards.
+Experience working with Drupal themes, preprocessors, and twig templates.
+Understanding of Drupal and using Drupal Tools such as Drush an

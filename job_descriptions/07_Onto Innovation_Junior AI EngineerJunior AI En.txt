@@ -1,0 +1,84 @@
+Company: Onto Innovation
+Title: Junior AI Engineer
+Junior AI Engineer with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4310894054/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Onto Innovation
+
+Junior AI Engineer 
+
+Wilmington, MA · Reposted 5 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$72.1K/yr - $108.1K/yr
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Onto Innovation is a leader in process control, combining global scale with an expanded portfolio of leading-edge technologies that include: 3D metrology spanning the chip from nanometer-scale transistors to micron-level die-interconnects; macro defect inspection of wafers and packages; metal interconnect composition; factory analytics; and lithography for advanced semiconductor packaging. Our breadth of offerings across the entire semiconductor value chain helps our customers solve their most difficult yield, device performance, quality, and reliability issues. Onto Innovation strives to optimize customers’ critical path of progress by making them smarter, faster and more efficient.
+
+Job Summary & Responsibilities
+
+Junior AI Engineer
+
+Team: You’ll partner closely with our AI Lead Engineer and collaborate with field/service engineers who support our inspection & metrology tools across fabs.
+
+Goal: Build practical AI helpers that speed up tasks from recipe setup and troubleshooting to fleet management analytics and expert guidance from internal knowledge.
+
+About Us
+
+Onto Innovation is a worldwide leader in the design, development, manufacture and support of defect inspection, advanced packaging lithography, process control metrology, and data analysis systems and software used by semiconductor device manufacturers worldwide. Onto Innovation provides a full-fab solution through its families of proprietary products that provide critical yield-enhancing information and real time process control responses, enabling microelectronic device manufacturers to drive down the costs and time to market of their products. The Company’s expanding portfolio of equipment and software solutions is used in both the wafer processing and final manufacturing of ICs, and in adjacent markets such as FPD, and LED manufacturing.
+
+What you’ll do
+
+
+ Prototype AI assistants & agents for field workflows: guided recipe setup, log triage, playbook lookups, parts/alarms advice, and fleet-wide health checks.
+ Build retrieval systems (RAG): ingest manuals, specs, ticket notes, recipes, logs, and best-practice docs; design chunking, embeddings, and indexing; tune prompts and retrieval for accuracy/latency.
+ Connect AI to our tools and data: stand up MCP servers (Model Context Protocol) and other connectors to safely expose internal systems (document stores, MES, issue trackers, telemetry APIs) to LLMs.
+ Fine-tune or adapt models (e.g., LoRA/QLoRA) for domain terms, error codes, and tool-specific intents when retrieval alone isn’t enough.
+ Evaluate and harden: set up offline & online evals for groundedness/relevance; add guardrails, observability, and traceability; write runbooks.
+ Ship small apps: package prototypes behind simple APIs or lightweight UIs that field engineers can use (web chat, Slack/Teams bots, or CLI).
+ Data plumbing: parse messy PDFs/images/CSVs; normalize schemas for recipes, events, alarms, SPC/trace data.
+ Computer Vision – understanding, defect detection, segmentation, or SEM/optical imaging.
+ Work like an engineer: write readable Python/TypeScript, tests, and docs; use Git; participate in code reviews; iterate fast with the AI lead and domain SMEs.
+
+
+Minimum Qualifications
+
+
+ BS in CS/EE/CE/ME (or equivalent experience).
+ Python proficiency (data wrangling, APIs, packaging); comfort on Linux and with Git.
+ Built at least one LLM app using a framework such as LangChain, LlamaIndex, or Semantic Kernel.
+ Hands-on with vector search (e.g., FAISS/Weaviate/Milvus) and embeddings; understands chunking, metadata, and hybrid search basics.
+ Familiarity with RAG and prompt engineering; can measure quality (groundedness/relevance) and reduce hallucinations.
+ Basic backend skills (REST/JSON, auth, environment secrets); experience containerizing with Docker.
+ Comfortable reading technical manuals/logs and collaborating with non-software teammates.
+
+
+Nice to haves
+
+
+ Worked with agent frameworks (LangGraph, AutoGen, CrewAI) or implemented tool-calling/plan-execute loops.
+ Built or configured MCP servers to connect LLMs to internal data/tools.
+ Experience parsing complex docs (e.g., Unstructured, GROBID) and handling images/figures from manuals.
+ Exposure to semiconductor equipment or factory systems (SECS/GEM, EDA/Interface A, MES, SPC); familiarity with KLA/AMAT/TEL/ASML tool ecosystems.
+ Time-series and log analysis (Pandas, SQL, TimescaleDB/InfluxDB), wafer map/vision background, or simple CV.
+ Model adaptation experience (LoRA/QLoRA, PEFT) and experiment tracking (MLflow/W&B).
+ LLM observability/evals (Ragas, TruLens, LangSmith), basic security/PII handling, and role-based access.
+ Cloud familiarity (AWS/Azure/GCP) and 

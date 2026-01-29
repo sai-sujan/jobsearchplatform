@@ -1,0 +1,58 @@
+{
+    "ats_score": 90,
+    "location": "University Park, PA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Designed and implemented an ML-based anomaly detection system, performing statistical analysis to identify irregularities in secure workflows.",
+        "\\item Built hybrid retrieval pipelines utilizing data fusion techniques (Dense + BM25), correlating information from diverse sources.",
+        "\\item Engineered batched query extraction systems, optimizing data collection and processing for high-volume multivariate datasets.",
+        "\\item Developed self-correcting RAG systems to enhance decision support, providing accurate and visualized insights from complex data.",
+        "\\item Created LLM-as-Judge evaluation pipelines to assess algorithmic performance, ensuring high fidelity in research prototypes.",
+        "\\item Collaborated with staff to integrate high-quality software prototypes into pre-production environments, supporting pattern-of-life analysis."
+    ]
+}

@@ -1,0 +1,118 @@
+Company: WeAssist.io
+Title: Internal - AI Engineer
+Internal - AI Engineer
+Link: https://www.linkedin.com/jobs/view/4366332463/
+Posted: Recent
+Location: 
+
+============================================================
+
+WeAssist.io
+
+Internal - AI Engineer
+
+San Diego, CA · 8 hours ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Hiring: Full-time - AI Engineer - Remote
+
+🌟 About us, WeAssist, the hiring team 💡
+
+🌍 Led by a Founder Who Cares – Reef Colman built WeAssist to empower individuals and create meaningful opportunities that support families.
+
+⚡ Fast & Purposeful Recruiting – We move quickly but prioritize long-term fit, stability, and growth over just filling roles.
+
+🌎 Connecting Global Talent – With 100+ outsourced professionals and growing, we link top talent worldwide with thriving US businesses.
+
+❤️ Giving Back Matters – From building schools to feeding the homeless, we believe true success means making a difference.
+
+🤝 An Inclusive & Thriving Culture – Your skills and unique gifts matter. We create an environment where outsourced professionals don’t just work—they grow.
+
+⚒️ Key Responsibilities of the AI Engineer 📝
+
+⚙️ Workflow Automation & Integration
+
+🤖 AI-Powered Development
+
+📊 Data & Reporting Systems
+
+🛠 DevOps & Monitoring
+
+🤝 Collaboration & Documentation
+
+⚒️ Key Qualifications Of The AI Engineer 📝
+
+➡️ 2+ years of experience with workflow automation platforms (n8n, Make.com, Zapier, Power Automate)
+
+➡️ Strong knowledge of API integration principles (REST, OAuth 2.0, webhooks, JSON)
+
+➡️ Experience automating across tools like Microsoft 365, Google Workspace, Slack/Teams, and CRMs.
+
+➡️ Familiarity with AI/LLM APIs (OpenAI, Claude, ElevenLabs, transcription/voice tools)
+
+➡️ Strong analytical and troubleshooting skills, with a proactive approach to reliability
+
+➡️ Excellent communication skills to explain technical concepts clearly to non-technical stakeholders
+
+➡️ Strong organizational skills and ability to map and optimize workflows end-to-end.
+
+Additional Information
+
+📢 Why Are We Hiring AI Engineers?
+
+We are growing fast — and we’re looking for AI Engineers to join our team. With rising demand from clients and internal projects, we need innovators who can design, build, and optimize AI-driven systems that keep businesses running smarter.
+
+This isn’t just about coding. It’s about building scalable workflows, creating AI-powered solutions, and applying automation to solve real-world problems across industries. If you thrive on making systems efficient, intelligent, and impactful, we want to hear from you. 🚀
+
+Responsibilities Of The AI Engineer
+
+Your responsibilities include:
+
+
+⚙️ Workflow Automation & Integration
+Design, implement, and optimize automations using tools like n8n, Make.com, and Zapier
+Build reliable integrations across Microsoft 365, Google Workspace, Slack/Teams, WhatsApp, CRMs, and more
+Ensure automations are error-resilient, scalable, and proactively monitored with smart error handling and notifications
+🤖 AI-Powered Development
+Develop AI-driven workflows such as transcription pipelines, chatbots, meeting assistants, and voice-to-form solutions
+Leverage APIs like OpenAI, Claude, ElevenLabs, and Read AI to deliver intelligent user experiences
+Fine-tune, prompt, and optimize large language models (LLMs) for task-specific use cases (e.g., summarization, classification, Q&A)
+Design and deploy AI assistants, recommendation systems, and intelligent search tools that improve user experience
+📊 Data & Reporting Systems
+Create and maintain data dashboards and automated reporting pipelines using AirTable, Google Data Studio, HubSpot, and Sheets/Excel
+Ensure data accuracy and visibility across teams and projects
+🛠 DevOps & Monitoring
+Deploy and manage AI models in production environments with continuous monitoring and performance tuning
+Establish A/B testing and evaluation frameworks for AI-driven features
+Ensure cost optimization when running models and automations on cloud platforms
+🤝 Collaboration & Documentation
+Partner with stakeholders to understand needs, map workflows, and translate requirements into technical solutions
+Document workflows, integrations, and automations to ensure transparency, scalability, and easy maintenance
+
+
+🔎 Specializations We’re Hiring For:
+While all roles require a strong foundation in AI + automation, we are actively hiring for engineers who bring depth in these areas:
+👥 AI Engineer – Recruiting Focus
+Build tools for sourcing, screening, and candidate-matching to power full-cycle recruiting workflows
+Automate resume parsing, outreach sequences, and candidate communication
+Create AI-driven dashboards to track recruiting pipelines and hiring KPIs
+📣 AI Engineer – Marketing Focus
+Develop automations for content repurposing, campaign optimization, and AI-driven analytics
+Build chatbots and assistants to support lead engagement and funnel nurturing
+Automate SEO research, social scheduling, and reporting pipelines for faster execution
+🤝 AI Engineer – Client Success Focus
+Design AI solutions to monitor Outsourced Professionals’ performan

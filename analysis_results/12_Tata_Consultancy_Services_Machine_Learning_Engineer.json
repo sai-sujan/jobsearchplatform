@@ -1,0 +1,58 @@
+{
+    "ats_score": 81,
+    "location": "Frederick, MD",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Designed robust evaluation pipelines (LLM-as-Judge) to assess model performance, a methodology transferable to evaluating VLA models.",
+        "\\item Built hybrid retrieval workflows combining signals, analogous to fusing multi-modal data for perception tasks.",
+        "\\item Implemented anomaly detection systems for verification, demonstrating strong capability in identifying out-of-distribution events.",
+        "\\item Optimized inference pipelines through batched processing, essential for efficient real-time robotic perception.",
+        "\\item Deployed Python-based solutions on AWS, supporting the infrastructure needed for cloud-based robot learning workflows.",
+        "\\item Collaborated with cross-functional teams to validate model reliability in production settings, ensuring safety and accuracy."
+    ]
+}

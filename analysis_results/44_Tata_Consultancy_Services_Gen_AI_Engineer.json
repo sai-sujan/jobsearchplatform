@@ -1,0 +1,61 @@
+{
+    "ats_score": 94,
+    "location": "Frederick, MD (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, enabling autonomous multi-step decision making and reliable information retrieval.",
+        "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for enterprise knowledge bases.",
+        "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring responsible AI compliance.",
+        "\\item Introduced batched query extraction using Python and SQL, reducing LLM calls by ~80% per query and enabling efficient scaling of agentic workflows.",
+        "\\item Designed an ML-based anomaly detection system for workflows, reducing redundant prompts by 25%, demonstrating capability in optimizing autonomous agent ecosystems.",
+        "\\item Containerized and deployed scalable AI microservices using Docker and Azure, ensuring robust pipelines for production GenAI applications."
+    ],
+    "meta_job_title": "Gen AI Engineer",
+    "meta_company": "Tata Consultancy Services",
+    "meta_link": "https://www.linkedin.com/jobs/view/4362096964/"
+}

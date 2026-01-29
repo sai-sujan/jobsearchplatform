@@ -1,0 +1,222 @@
+Company: Alcimed
+Title: Applied AI/ML Engineer - Healthcare & Pharma
+Applied AI/ML Engineer - Healthcare & Pharma with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4365088557/
+Posted: Recent
+Location: 
+Premium Indicators: promoted; badge:actively reviewing applicants
+
+============================================================
+
+Alcimed
+
+Applied AI/ML Engineer - Healthcare & Pharma 
+
+Princeton, NJ · 6 days ago · Over 100 applicants
+
+Promoted by hirer · Actively reviewing applicants
+
+On-site
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Are you passionate about data and have an entrepreneurial spirit?
+
+
+
+
+Since 1993, Alcimed has been exploring and developing uncharted territories, growing to over 200 people across 7 offices in Europe, the USA and Asia. At our core, we help our industry clients innovate and develop new markets in the Lifesciences sectors, with a very impact-oriented and grounded approach.
+
+
+
+
+Building on this foundation, in 2024, Alcimed successfully launched Nautilus.ai, its Digital & AI activity dedicated to the design & development of function-specific, bespoke, ethical, and secure digital & AI tools. 
+
+
+
+
+At Nautilus.ai, we help Lifesciences industry players leverage data; harness and ethically apply state-of-the-art digital and AI technologies to build solutions which serve, and foster human added value - thereby enhancing their positive impact on healthcare systems and patients.
+
+
+
+
+Your missions
+
+As an AI/ML Engineer, you will work at the crossroads of healthcare innovation, artificial intelligence, and consulting. Embedded in lean, agile project teams, you will co-develop enterprise-grade AI-powered digital solutions directly within our clients’ ecosystems.
+
+
+
+
+Your main responsibilities include:
+
+Translate healthcare and pharma business needs (R&D, medical affairs, commercial, etc.) into robust AI and ML solution designs with the most appropriate approach depending on client constraints and requirements: security, cost, performance, reliability and explainability
+Build and optimize data pipelines, fine-tuning strategies, and evaluation frameworks for domain-specific use cases
+Design, develop, and deploy AI-powered features leveraging LLMs, agentic AI systems, and modern ML techniques 
+Collaborate closely with software engineers to integrate AI components into fully featured applications
+Act as a technical referent on AI topics within project teams and contribute to internal best practices
+Maintain direct interaction with clients throughout the project lifecycle, in an agile, product-oriented consulting approach
+
+
+
+
+The real plus of your mission? You are in direct contact with our customers to help them move forward and shape the world of tomorrow.
+
+
+
+
+Your profile
+
+Master’s degree or PhD in Computer Science, Data Science, AI, Biomedical Engineering, or a related field
+1–3 years of hands-on experience building AI / ML systems, ideally in healthcare, life sciences, or regulated industries
+Strong proficiency in Python and modern ML / AI tooling
+Practical experience with LLMs, including at least one of:
+RAG architectures
+Fine-tuning techniques
+Model evaluation and benchmarking
+Agentic AI systems or MCP servers, using modern frameworks (e.g. LangChain, LlamaIndex, AutoGen, CrewAI or similar)
+Familiarity with open-source LLM ecosystems is a strong plus
+Ability to work in lean teams, take ownership, and make technical decisions
+Strong interest in healthcare, pharma, and applying AI to real-world impact
+Comfortable in client-facing environments, able to explain complex AI concepts to non-technical stakeholders
+Curious, entrepreneurial mindset, with a strong appetite for innovation and teamwork
+
+
+
+
+Key skills:
+
+ LLMs, Agentic AI, RAG, Fine-tuning, Python, Applied AI, Healthcare AI, Life Sciences, LangChain, LlamaIndex, MLOps, Consulting, Product Development
+
+
+
+
+Full-time permanent contract to be filled as soon as possible
+
+
+
+
+Work authorization in the US is necessary
+
+… more
+
+Requirements added by the job poster
+
+• Working in an onsite setting
+
+Set alert for similar jobs
+
+Artificial Intelligence Engineer, Princeton, New Jersey, United States
+
+Off
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+855
+
+Applicants
+
+53
+
+Applicants in the past day
+
+Applicant seniority level
+
+79% Entry level people applied for this job
+
+10% Senior level people applied for this job
+
+1% Manager level people applied for this job
+
+Applicant education level
+
+52
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+31
+
+%
+
+have a Master of Science
+
+
+6
+
+%
+
+have a Doctor of Philosophy
+
+
+11
+
+%
+
+have other degrees
+Exclusive Job Seeker Insights about Alcimed
+Powered by Bing
+
+The latest hiring trend
+
+240
+
+Total employees
+
+1%
+
+Company-wide
+
+2 year growth
+
+50%
+
+Consulting
+
+2 year growth
+
+Jan 2024
+May 2024
+Sep 2024
+Jan 2025
+May 2025
+Sep 2025
+Jan 2026
+0
+200
+400
+
+Median employee tenure: 3.9 years
+
+Show Premium Insights
+About the company
+
+Alcimed
+
+79,773 followers
+
+Follow
+
+Business Consulting and Services
+
+ • 
+
+201-500 employees
+
+ • 
+
+240 on LinkedIn
+
+Founded in 1993, Alcimed is an Innovation and New Business consulting firm specialized in sectors driven by innovation : life sciences (biotech, healthcare, food), energy, e

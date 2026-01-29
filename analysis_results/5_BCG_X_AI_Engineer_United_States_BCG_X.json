@@ -1,0 +1,68 @@
+{
+    "ai_ats_score": 88,
+    "score_justification": "Strong match with GenAI/LLM consulting role; experience with RAG and Deployment aligns well.",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "missing_core_skills": [
+        "Client-facing Consulting Experience"
+    ],
+    "resume_strengths": [
+        "RAG Architecture",
+        "AWS Deployment",
+        "LLM-as-Judge Evaluation"
+    ],
+    "gaps_and_improvements": [
+        "Highlight specific consulting impacts",
+        "Quantify business outcomes more clearly"
+    ],
+    "suggested_resume_point_1": "Collaborated with cross-functional teams to deliver scalable GenAI solutions, improving client operational efficiency by 20%.",
+    "suggested_resume_point_2": "Designed production-grade LLM pipelines on AWS, ensuring 99.9% availability for enterprise consulting deliverables.",
+    "recruiter_verdict": "YES",
+    "recruiter_verdict_reason": "Candidate has strong relevant experience in GenAI/LLMs and production deployment, fitting the BCG X profile well.",
+    "sponsorship_possible": "Unknown",
+    "sponsorship_evidence": "Not mentioned"
+}

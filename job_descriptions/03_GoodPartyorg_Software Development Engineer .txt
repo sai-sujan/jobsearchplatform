@@ -1,0 +1,93 @@
+Company: GoodParty.org
+Title: Software Development Engineer, AI
+Software Development Engineer, AI [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4362532317/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+GoodParty.org
+
+Software Development Engineer, AI
+
+United States · 4 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$105K/yr - $140K/yr
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Recent Software Engineer hires at GoodParty.org
+
+Show all
+About the job
+
+Early Career Software Development Engineer, AI
+
+We're using AI to transform democracy, and this job description got a little help from it too! Join GoodParty.org with your fresh ideas as a new-to-the-industry engineer who wants to build AI-powered tools that empower everyday people—not career politicians—to run for office and win. You’ll help scale a platform already transforming democracy from the ground up.
+
+About GoodParty.org:
+
+GoodParty.org is on a mission to make people matter more than money in our democracy by empowering Independent candidates to run, win, and serve. Our AI-powered platform provides free tools to Independent candidates to run their campaigns, connect with voters, and serve their communities effectively.
+
+A majority of eligible voters, including more than half of Millennials and Gen Z, say that neither Republicans nor Democrats represent them, GoodParty.org is the solution. In 2024 we empowered 3,444 Independent candidate wins across 48 states from all across the ideological spectrum. The main things the elected officials we empower have in common is that they prioritize people over parties and community over corporate interests. In 2024, 40.3 million votes (26% of all voters) cast a ballot for our candidate users. We’re not a political party, we’re a platform and a movement to democratize democracy.
+
+Founded by serial entrepreneur Farhad Mohit ($1B+ in exits, including Flipagram/TikTok and Shopzilla), GoodParty.org is building solutions so we can have a truly representative democracy where society’s biggest problems are solved.
+
+What you’ll do:
+
+
+Assist in the design implementation of human-in-the-loop AI applications that leverage large language models (LLMs), vector databases, and Retrieval-Augmented Generation (RAG) techniques. 
+Build your skills with React, NextJS, DataBricks, Python, and Postgres to enhance our existing open-source products on AWS. 
+Rapidly learn new domains and apply AI and machine learning methods to enhance campaign and civic technology products. 
+Conduct structured experimentation to diagnose problems, validate solutions, and communicate findings effectively. 
+Evaluate emerging AI frameworks and tools (including MCP and agentic systems) for integration into production environments. 
+
+
+Who we’re looking for:
+
+
+You’re up for the audacious challenge of driving money out of politics and democratizing democracy. 
+You’re a computer scientist or engineer with strong technical training and 1-3 years of experience who loves solving logic and data problems in new ways. 
+Demonstrated passion for LLM integration in web, mobile, and backend systems, prompt engineering, RAG workflows, and agentic AI systems. We’ll be asking to see your portfolio of projects!
+Practical experience as an intern or junior engineer using scrum and github and cloud infrastructure as the lifeblood of all you do. 
+Committed to responsible and ethical AI development, with awareness of model limitations, bias, and performance considerations. 
+Effective collaborator who can work cross-functionally and communicate with both technical and non-technical audiences. 
+
+
+Bonus if:
+
+
+You’ve demonstrated domain expertise by achievement of a relevant secondary degree. 
+You’ve built or scaled AI functions in prior roles. 
+You’ve spent time as a full stack developer in a prior role with React, NextJS, DataBricks, Python, and Postgres to enhance our existing open-source products on AWS. 
+You have prior experience as a contributor to an open-source project
+You’ve worked in student government, civic tech, political campaigns, or democracy-focused initiatives and understand the unique challenges of this space. 
+You’ve helped organize grass roots efforts or movements as a volunteer
+You want to help make people matter more than money in politics
+
+
+Why you should work at GoodParty.org:
+
+
+Join a passionate team with diverse political views focused on one mission. Our values are: People First. Direct, Open, and Honest. Empowered Ownership. Iterate for Impact. Fun Is Fuel. 
+We’re a Public Benefit Corporation that prioritizes social impact over profit
+Innovative Bitcoin denominated deferred bonus plan, allowing you to have the amazing upside of being in a startup while working on a truly meaningful mission
+Work where and how you like, on a fully remote team spread across the country
+Join a passionate team with diverse political views focused on one mission
+100% coverage of health, dental, and vision benefits for you and your dependents
+We encourage you to take time off to recharge and have an unlimited PTO (sick and vacation) 

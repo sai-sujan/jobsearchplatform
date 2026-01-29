@@ -1,0 +1,304 @@
+Company: Bioscope AI
+Title: Data Scientist (AI Quality & Evaluation)
+Data Scientist (AI Quality & Evaluation)
+Link: https://www.linkedin.com/jobs/view/4361667501/
+Posted: 4 days ago
+Location: 
+
+============================================================
+
+Bioscope AI
+
+Data Scientist (AI Quality & Evaluation)
+
+Boston, MA · Reposted 4 days ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+About The Role
+
+We're looking for a Data Scientist to own the quality, reliability, and trustworthiness of our clinical AI outputs. You'll build the systems that ensure our AI "knows what it doesn't know" — developing evaluation frameworks, calibrated confidence scoring, and automated quality assurance that physicians can actually trust.
+
+What You'll Do
+
+
+Design and implement automated evaluation pipelines that assess AI output quality, accuracy, and safety at scale
+Develop uncertainty quantification systems where confidence scores meaningfully correlate with accuracy
+Build comprehensive evaluation frameworks combining automated assessment with clinician-validated test cases
+Implement feedback loops that continuously improve model outputs based on validation signals
+Establish scalable quality gates that catch errors before they reach end users
+Contribute to model alignment and fine-tuning efforts
+
+
+Qualifications
+
+Required
+
+
+Strong foundation in deep learning frameworks (PyTorch) and LLM architectures
+Experience with model evaluation, benchmarking, and quality metrics
+Proficiency in Python and modern ML development tools
+Strong statistical foundations
+Ability to read, implement, and extend research papers
+Excellent communication skills
+
+
+Preferred
+
+
+Master's degree in Computer Science, Machine Learning, Statistics, or related quantitative field (PhD preferred)
+Publications in top ML/AI venues (NeurIPS, ICML, ICLR, ACL)
+Experience with RLHF, DPO, or preference optimization techniques
+Background in healthcare AI or regulated industries
+Experience building evaluation systems for production LLM applications
+
+
+… more
+
+This job alert is on
+
+Data Scientist, Boston, Massachusetts, United States
+
+On
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+525
+
+total
+
+29
+
+in the past day
+
+Candidate seniority level
+
+72% Entry level candidates
+
+13% Senior level candidates
+
+Candidate education level
+
+43
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+34
+
+%
+
+have a Master of Science
+
+
+7
+
+%
+
+have a Doctor of Philosophy
+
+
+16
+
+%
+
+have other degrees
+
+There’s not enough quality data on this company just yet
+
+Once there are 30 complete member profiles from this company, we’ll be able to show you the company’s growth and hiring trends
+
+About the company
+
+Bioscope AI
+
+5,096 followers
+
+Follow
+
+Technology, Information and Internet
+
+ • 
+
+11-50 employees
+
+ • 
+
+28 on LinkedIn
+
+Bioscope AI is a cloud-based, per-patient subscription service for primary care physicians, especially those in concierge or functional medicine practices. It integrates with their EMR to serve as an artificially intelligent consultant that can collaborate with the physician to optimize patient care. The first year of the service includes whole genome sequencing (WGS), so Bioscope AI can help physicians deliver truly personalized, precision care. 
+… more
+
+Interested in working with us in the future?
+
+Privately share your profile with our recruiters – you’ll be noted as expressing interest for up to a year and be notified about jobs and updates. Learn more
+
+I’m interested
+More jobs
+
+AI/ML Engineer
+
+Aptino, Inc.
+
+Texas, United States (On-site)
+
+Posted on January 27, 2026, 8:33 AM
+2 hours ago
+
+ · 
+
+ Easy Apply
+
+Software Development Engineer Intern
+
+Vicino, Inc.
+
+United States (Remote)
+
+You’d be a top applicant
+
+Posted on January 26, 2026, 10:17 PM
+12 hours ago
+
+ · 
+
+ Easy Apply
+
+AI Engineer, Entry Level
+
+Emonics LLC
+
+San Diego, CA (On-site)
+
+4 benefits
+
+Posted on January 27, 2026, 8:37 AM
+2 hours ago
+
+ · 
+
+ Easy Apply
+
+AI Engineer
+
+Uptime Crew
+
+San Jose, CA (Hybrid)
+
+$110K/yr - $150K/yr
+
+ • 
+
+Medical, Vision, Dental, 401(k)
+
+Posted on January 26, 2026, 11:48 AM
+22 hours ago
+
+Junior AI Engineer
+
+Emonics LLC
+
+Philadelphia, PA (On-site)
+
+4 benefits
+
+Posted on January 27, 2026, 8:39 AM
+2 hours ago
+
+ · 
+
+ Easy Apply
+
+Applied AI Engineer
+
+Atomicwork
+
+San Francisco Bay Area (On-site)
+
+Posted on January 27, 2026, 7:35 AM
+3 hours ago
+
+ · 
+
+ Easy Apply
+
+Full Stack Software Engineer
+
+Mainstay
+
+United States (Remote)
+
+$120K/yr - $140K/yr
+
+ • 
+
+7 benefits
+
+Posted on January 27, 2026, 9:48 AM
+52 minutes ago
+
+ · 
+
+ Easy Apply
+
+Python Developer, Entry Level
+
+Emonics LLC
+
+New York, United States (On-site)
+
+Posted on January 27, 2026, 8:29 AM
+2 hours ago
+
+ · 
+
+ Easy Apply
+
+Machine Learning Engineer
+
+ITR Group
+
+Minneapolis, MN (On-site)
+
+$125/hr - $150/hr
+
+ • 
+
+4 benefits
+
+Posted on January 26, 2026, 9:40 AM
+1 day ago
+
+ · 
+
+ Easy Apply
+
+Software Engineer (Early Career) (Verified job)
+Software Engineer (Early Career) 
+
+That Recruitment Company
+
+United States (Remote)
+
+$105K/yr - $140K/yr
+
+Actively reviewing applicants
+
+Posted on January 2

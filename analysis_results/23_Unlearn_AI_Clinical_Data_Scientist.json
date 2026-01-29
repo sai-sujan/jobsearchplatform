@@ -1,0 +1,58 @@
+{
+    "ats_score": 88,
+    "location": "San Francisco, CA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Implemented self-correcting RAG systems to interpret and extract insights from complex protocol documents, accelerating robust study design.",
+        "\\item Built hybrid retrieval pipelines utilizing dense embeddings to identify relevant clinical signals from unstructured data sources.",
+        "\\item Engineered anomaly detection systems for data validation, ensuring the integrity of high-stakes datasets used in precision modeling.",
+        "\\item Developed automated evaluation workflows (LLM-as-Judge) to assess the quality of generative outputs in scientific contexts.",
+        "\\item Designed efficient batched query extraction processes, optimizing the handling of large-scale clinical trial data.",
+        "\\item Collaborated with cross-functional teams to deploy reproducible ML solutions, aligning with the rigorous standards of clinical development."
+    ]
+}

@@ -1,0 +1,202 @@
+\documentclass[9pt]{article}
+
+\usepackage[a4paper,margin=1cm]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{fontawesome5}
+\usepackage{paracol}
+
+% ---------- GLOBAL SETTINGS ----------
+\setlength{\parindent}{0pt}
+\setstretch{0.95} % tighter overall line spacing
+\pagestyle{empty}
+\fontsize{8.5}{10.5}\selectfont % reduced by 0.5pt
+
+\setlist[itemize]{
+  leftmargin=1.2em,
+  itemsep=2pt,
+  topsep=2pt,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+\definecolor{sectionblue}{RGB}{60,120,180}
+
+\titleformat{\section}
+  {\fontsize{11}{12.5}\selectfont\bfseries\color{sectionblue}} % reduced by 0.5pt
+  {}
+  {0em}
+  {}
+  [\color{sectionblue}\titlerule]
+
+\titlespacing{\section}{0pt}{5pt}{4pt}
+
+\setlength{\columnsep}{1.2em}
+
+\begin{document}
+
+%==================== HEADER ====================
+
+\noindent
+\begin{minipage}[t]{0.32\textwidth}
+\vspace{2em}
+{\fontsize{22.5}{25.5}\selectfont \textbf{SUJAN}\\[1ex]  % reduce space between lines
+\textbf{DORA}}\\[0.6em]  % spacing after DORA
+{\fontsize{11.5}{13.5}\selectfont\textbf{AI Engineer}}  % aligned left under name
+\end{minipage}
+\hfill
+\hfill
+\begin{minipage}[t]{0.68\textwidth}
+
+\section{Professional Summary}
+AI/ML Engineer with 2 years of hands-on experience delivering production-ready AI solutions, with a focus on LLM- and RAG-based document QA systems. Improved document QA accuracy by 20\%, reduced MFA verification load by 25\%, and streamlined ID authentication pipelines. Recent graduate with strong proficiency in Python, PyTorch, TensorFlow, OpenCV, and AWS, and a solid foundation in LLMs, RAG systems, model evaluation, and end-to-end ML workflows.
+\end{minipage}
+
+\vspace{0.6em}
+
+%==================== TWO COLUMN BODY ====================
+
+\columnratio{0.31}
+\begin{paracol}{2}
+
+%==================== LEFT COLUMN ====================
+\begin{spacing}{1}
+\section{Contact}
+\vspace{0.3em}
+\faMapMarker\ Springfield, MO, USA\\
+\faPhone\ +1 (940) 843-0811\\
+\faEnvelope\ \href{mailto:sujanworkofficial@gmail.com}{sujanworkofficial@gmail.com}\\
+\faLinkedin\ \href{https://www.linkedin.com/in/sujan-dora-6110a4190}{linkedin.com/in/sujan-dora}
+
+\faGithub\ \href{https://github.com/sai-sujan}{github.com/sujandora}\\
+\faGlobe\ \href{https://sai-sujan.github.io/My-portfolio/}{My-portfolio}
+\end{spacing}
+\vspace{0.4em}
+
+\section*{TECHNICAL SKILLS}
+\vspace{0.3em}
+\textbf{Programming Languages}
+\begin{itemize}[leftmargin=2em]
+  \item Python
+  \item SQL
+\end{itemize}
+
+\textbf{ML Frameworks \& Libraries}
+\begin{itemize}[leftmargin=2em]
+  \item TensorFlow
+  \item PyTorch
+  \item Scikit-learn
+  \item Hugging Face Transformers
+\end{itemize}
+
+\textbf{LLM \& NLP Tools}
+\begin{itemize}[leftmargin=2em]
+  \item LangChain
+  \item LangSmith
+  \item LlamaIndex
+  \item Multi-Agents
+  \item Finetuning (LoRA, QLoRA)
+  \item OpenAI, Ollama
+  \item RAG Systems
+\end{itemize}
+
+\textbf{ML Specializations}
+\begin{itemize}[leftmargin=2em]
+  \item Deep Learning
+  \item Computer Vision
+  \item Anomaly Detection
+\end{itemize}
+
+\textbf{MLOps \& Deployment}
+\begin{itemize}[leftmargin=2em]
+  \item MLflow
+  \item Git, GitHub Actions
+  \item CI/CD Pipelines
+  \item Model Deployment
+\end{itemize}
+
+\textbf{Cloud \& Infrastructure}
+\begin{itemize}[leftmargin=2em]
+  \item AWS
+  \item Azure
+\end{itemize}
+
+\textbf{Databases \& AI Infrastructure}
+\begin{itemize}[leftmargin=2em]
+  \item PostgreSQL, MySQL, MongoDB
+  \item Weaviate
+  \item FAISS
+  \item ChromaDB
+\end{itemize}
+
+\textbf{Web \& DevOps}
+\begin{itemize}[leftmargin=2em]
+  \item FastAPI
+  \item Docker Containerization
+\end{itemize}
+
+\switchcolumn
+
+%==================== RIGHT COLUMN ====================
+
+\section{Education}
+\textbf{Missouri State University}  \hfill {Dec-2025}\\ 
+Master of Science in Computer Science — Data Science \hfill {GPA: 3.63}\\
+
+\vspace{0em}
+
+\section{Work Experience}
+
+\textbf{AI/ML Engineer} \hfill {Jul 2023 -- Dec 2023}\\
+{Grootan Technologies \hfill Chennai, India}
+\begin{itemize}
+\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA.
+  \item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents.
+  \item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability.
+  \item Introduced batched query extraction, reducing LLM calls by ~80\% per query and enabling faster, reliable production inference.
+  \item Designed an ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25\%, improving user experience while maintaining security coverage.
+  
+\end{itemize}
+
+\vspace{0.3em}
+
+\textbf{AI/ML Intern} \hfill {Sep 2022 -- Jul 2023}\\
+{Grootan Technologies \hfill Chennai, India}
+\begin{itemize}
+ \item Built a National ID authentication system for detecting counterfeit holograms using YOLO object detection, MiDaS depth estimation, and GAN-generated synthetic samples to improve robustness.
+  \item Optimized the hologram verification pipeline by eliminating redundant processing, reducing per-card detection time from 7 minutes to 3 minutes.
+  \item Applied transfer learning to fine-tune pre-trained models for limited datasets, achieving reliable counterfeit detection across varied hologram designs.
+  \item Containerized and deployed solutions using Docker and AWS, ensuring scalable production-ready pipelines for anomaly detection and identity verification.
+\end{itemize}
+
+\vspace{0.3em}
+
+\textbf{Data Science Intern} \hfill {Nov 2021 -- Mar 2022}\\
+{iNeuron.ai \hfill Bengaluru, India}
+\begin{itemize}
+  \item Developed an end-to-end credit card default prediction project using Docker, CircleCI, and Heroku, achieving 92\% model accuracy on simulated customer transactions.
+  \item Built a CI/CD pipeline to deploy predictive models to AWS production, enabling real-time predictions.
+  \item Conducted exploratory data analysis on 30,000+ customer records to identify key features that improved model performance.
+
+\end{itemize}
+
+\vspace{0.5em}
+
+\section*{Personal Projects}
+\vspace{0.2em}
+\begin{itemize}
+\small
+\item  \textbf{BioMedical Research Assistant – Multi-Agent LLM System} \\
+Fine-tuned Llama-3.1-8B on PubMedQA using QLoRA (4-bit) and built a CrewAI-based multi-agent biomedical QA pipeline with PubMed retrieval and a Streamlit interface.
+
+\vspace{4pt}
+
+\item \textbf{SafeSpace 2.0 – AI Mental Health Therapist}\\ Built an empathetic AI mental-health agent with crisis detection and therapist recommendations using LangGraph/REAct, deployed via Streamlit and Twilio WhatsApp with real-time API integrations.
+
+\end{itemize}
+\end{paracol}
+
+\end{document}

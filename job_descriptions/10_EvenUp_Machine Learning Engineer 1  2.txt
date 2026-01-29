@@ -1,0 +1,87 @@
+Company: EvenUp
+Title: Machine Learning Engineer 1 & 2 - Systems
+Machine Learning Engineer 1 & 2 - Systems with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4361929967/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+EvenUp
+
+Machine Learning Engineer 1 & 2 - Systems 
+
+San Francisco, CA · 5 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$126K/yr - $218K/yr
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Recent Machine Learning Engineer hires at EvenUp
+
+Show all
+About the job
+
+EvenUp is on a mission to close the justice gap using technology and AI. We empower personal injury lawyers and victims to get the justice they deserve. Our products enable law firms to secure faster settlements, higher payouts, and better outcomes for victims injured through no fault of their own in vehicle collisions, accidents, natural disasters, and more.
+
+We are one of the fastest-growing vertical SaaS companies in history, and we are just getting started. EvenUp is backed by top VCs, including Bessemer Venture Partners, Bain Capital Ventures, SignalFire, and Lightspeed. We are looking to expand our team with talented, driven, and collaborative individuals who seek to have a lasting impact. Learn more at www.evenuplaw.com.
+
+We are looking for a curious, impact-driven early career Data Scientist / Machine Learning Engineer to join our AI R&D team. You’ll develop and deploy models that power Piai™, our proprietary claims-intelligence platform, with a focus on machine learning, natural-language processing, and generative AI. Working alongside senior ML engineers, data scientists, and legal subject-matter experts, you’ll turn raw legal and medical data into production-ready models that directly improve justice for personal-injury clients.
+
+What you’ll do:
+
+
+Model research & prototyping – Explore, implement, and benchmark ML/NLP/generative-AI methods (e.g., LLM fine-tuning, retrieval-augmented generation, document understanding). 
+Data preparation & feature engineering – Clean, annotate, and transform structured and unstructured case data; build reusable datasets and data loaders. 
+Experimentation workflow – Design experiments, run A/B tests, analyze results, and communicate findings to the wider product and engineering teams. 
+Productionization – Help integrate models into our microservices architecture; collaborate with MLOps engineers on packaging, testing, monitoring, and scaling. 
+Cross-functional collaboration – Pair with product managers, legal analysts, and software engineers to translate pain points into ML solutions and measurable product improvements. 
+Continuous learning – Stay current with research in LLMs, representation learning, and prompt engineering; share insights through internal talks and docs. 
+
+
+What we look for: 
+
+
+Education: Ph.D., M.S. or B.S. in Computer Science, Machine Learning, Data Science, Statistics, Computational Linguistics, or a closely related field
+Core expertise:
+Solid grounding in machine-learning fundamentals (supervised & unsupervised learning, evaluation metrics, overfitting/regularization). 
+Hands-on experience with NLP or generative-AI techniques (e.g., transformers, embeddings, sequence-to-sequence models, LLMs). 
+Technical stack:
+Proficiency in Python and ML/NLP libraries such as PyTorch, TensorFlow, Hugging Face, spaCy, or similar. 
+Familiarity with SQL and basic data-engineering concepts (ETL, versioned datasets, notebooks). 
+Nice-to-have: exposure to cloud platforms (AWS/GCP), experiment-tracking tools (Weights & Biases, MLflow), or containerized deployment (Docker/Kubernetes). 
+Mindset & people skills:
+Eagerness to learn from senior teammates and iterate quickly in a fast-moving startup. 
+Clear, concise communication—both written and verbal. 
+Strong analytical thinking and a bias toward shipping pragmatic, high-impact solutions. 
+
+Location: Hybrid – We have offices in San Francisco and Toronto
+
+Notice to Candidates:
+
+EvenUp has been made aware of fraudulent job postings and unaffiliated third parties posing as our recruiting team – please know that we have no affiliation or connection to these situations. We only post open roles on our career page (evenuplaw.com/careers) or reputable job boards like our official LinkedIn or Indeed pages, and all official EvenUp recruitment emails will come from the domains @evenuplaw.com, @evenup.ai, @ext-evenuplaw.com, no-reply@ashbyhq.com or no‑reply@canditech.io email addresses.
+
+To ensure fairness and proper consideration, we do not accept resumes or expressions of interest via email or social media messages. If you’re interested in a role, please submit your application directly through our careers page.
+
+If you receive communication from someone you believe is impersonating EvenUp, please report it to us at talent-ops-team@evenuplaw.com. Examples of fraudulent domains include “careers-evenuplaw.com” and “careers-evenuplaws.com”.
+
+Benefits & Perks:
+
+As part of our total rewards package, we offer attractive benefits and perks to our employees, including:
+
+
+Choice of medical, dental, and vision insurance plans for you a

@@ -1,0 +1,90 @@
+Company: Lensa
+Title: AI Engineer Intern
+AI Engineer Intern with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4366270281/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Lensa
+
+AI Engineer Intern 
+
+Denver, CO · 16 hours ago · 17 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$29/hr - $50/hr
+On-site
+Internship
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Lensa is a career site that helps job seekers find great jobs in the US. We are not a staffing firm or agency. Lensa does not hire directly for these jobs, but promotes jobs on LinkedIn on behalf of its direct clients, recruitment ad agencies, and marketing partners. Lensa partners with DirectEmployers to promote this job for Teradata. Clicking "Apply Now" or "Read more" on Lensa redirects you to the job board/employer site. Any information collected there is subject to their terms and privacy notice.
+
+Our Company
+
+At Teradata, we believe that people thrive when empowered with better information. That's why we built the most complete cloud analytics and data platform for AI. By delivering harmonized data, trusted AI, and faster innovation, we uplift and empower our customers-and our customers' customers-to make better, more confident decisions. The world's top companies across every major industry trust Teradata to improve business performance, enrich customer experiences, and fully integrate data across the enterprise.
+
+Our Internship Program
+
+Our Internship Program Our summer internship program lasts 10-12 weeks beginning in May/June and ending in August/September. We offer a fast-paced, flexible, fun environment where you will have the opportunity to work on meaningful projects and face new challenges every day.
+
+What You'll Do
+
+You will work on Projects Including:
+
+As an Agentic AI Engineer intern at Teradata, you'll build cutting-edge intelligent agents that transform how users explore data, derive insights, and automate workflows across industries such as healthcare, finance, and telecommunications.
+
+You Will
+
+
+Design and write high-performing and scalable software for training models. 
+Craft and implement techniques to improve the performance and results of our training cycles, both on the SFT and the RL. 
+Supporting agent management, evaluating open-source frameworks, and implementing logical data models and memory support. 
+Contributing to low-code/no-code agent construction and the integration of external data sources for complex use cases. 
+
+
+Who You'll Work With
+
+Join Forces with the Best. Collaborate with a talented team of AI architects, ML engineers, and domain experts in Silicon Valley, all working together to advance the future of enterprise AI. Work closely with infrastructure teams to scale AI workloads globally. This is a rare opportunity to shape cutting-edge AI capabilities within a dynamic, data-driven company, where innovation thrives, and your ideas help define the next generation of data interaction.
+
+What Makes You a Qualified Candidate
+
+
+Pursuing a Bachelor's, Master's, or PhD degree in Computer Science, Electrical Engineering, or a related field. 
+Expert in ML and fine-tuning large language models. 
+Proficiency in Python and related ML frameworks such as JAX, Pytorch, and XLA/MLIR. 
+Familiar with state-of-the-art techniques for preparing AI training data. 
+
+
+What You Will Bring
+
+
+Experience with post-training the models to reach SOTA-level performance. 
+Familiar with designing and implementing large-scale model training frameworks. 
+Collaborating with pre-training, reasoning, data, multimodal, applied, and product efforts to push the frontiers of model capability. 
+
+
+Pay Rate: $29.00 - $44.00 - $50.00 Hourly
+
+Why We Think You'll Love Teradata
+
+We prioritize a people-first culture because we know our people are at the very heart of our success. We embrace a flexible work model because we trust our people to make decisions about how, when, and where they work. We focus on well-being because we care about our people and their ability to thrive both personally and professionally. We are committed to actively working to foster an inclusive environment that celebrates people for all of who they are.
+
+Teradata is proud to be an equal opportunity employer. We do not discriminate based upon race, color, ancestry, religion, creed, sex (including pregnancy, childbirth, breastfeeding, or related conditions), national origin, sexual orientation, age, citizenship, marital status, disability, medical condition, genetic information, gender identity or expression, military and veteran status, or any other legally protected status. We welcome and encourage individuals from all backgrounds to apply and join our team, bringing their unique perspectives and experiences to help us innovate and grow.
+
+Pay Rate: 0.0000 - 0.0000 - 0.0000 Hourly
+
+Starting pay for the successful applicant will depend on geographic location, internal equity, job-related knowledge, skills, and candidate experience. Sales roles will be eligible for commission payments tied to quota achievement. All other permanent roles will be eligible for one o

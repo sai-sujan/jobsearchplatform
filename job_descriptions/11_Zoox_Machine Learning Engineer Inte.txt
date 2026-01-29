@@ -1,0 +1,80 @@
+Company: Zoox
+Title: Machine Learning Engineer Intern, Perception
+Machine Learning Engineer Intern, Perception with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4336865392/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Zoox
+
+Machine Learning Engineer Intern, Perception 
+
+Foster City, CA · Reposted 5 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$5,500/month - $9,500/month
+Hybrid
+Internship
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Hassan Kaous 
+
+• 3rd
+
+Software Engineer at Zoox
+
+School alum from Missouri State University
+
+Message
+
+Meet the hiring team
+
+Samson Timoner 
+
+• 3rd
+
+Building & shipping products in Computer Vision
+
+Message
+About the job
+
+Zoox’s internship program provides hands-on experiences with state of the art technology, mentorship from some of the industry's brightest minds, and the opportunity to play a part in our success. Internships at Zoox are reserved for those who demonstrate outstanding academic performance, activities outside their course work, aptitude, curiosity, and a passion for Zoox's mission.
+
+Perception at Zoox is the "Retina of Zoox" — the system responsible for understanding the world around the autonomous vehicle.
+
+As an MLE intern working on Perception, you may be assigned to one of the following teams:
+
+On the Offline Driving Intelligence team, you will develop advanced multimodal large language models that enhance scenario understanding and driving. You'll develop and fine-tune models with driving data, ensuring models can efficiently identify hazards, interpret driving restrictions, drive and answer questions about the scenario. Working alongside world-class engineers and researchers, you'll leverage premium sensor data and cutting-edge infrastructure to validate your algorithms in real-world conditions, directly impacting productivity, safety and the capability of Zoox's autonomous system.
+
+On the Perception Attributes team, you will collect and generate datasets for specialized vehicle classification and semantic enrichment, design and frame machine learning problems for real-world autonomous driving scenarios and train and evaluate state-of-the-art machine learning models with a focus on computer vision. You will also collaborate with engineers to deploy models for real-time inference on our vehicles, and contribute to improving our vehicle's ability to recognize and respond to emergency vehicles, school buses, construction vehicles, and other specialized road actors.
+
+On the Perception Scene Understanding team, you will develop advanced ML models that perceive our vehicle's surroundings to identify hazards and driving restrictions. You will utilize vision-language models for detecting rare events and ensuring safe driving in these situations. You'll work with state-of-the-art machine learning models that operate in real-time on our robotaxi platform with minimal latency. Collaborating with world-class engineers and researchers across sensors, planning, and other teams, you'll have access to premium sensor data and cutting-edge infrastructure to validate your algorithms in real-world conditions.
+
+On the Occupancy and Rare Events team, you will develop multimodal foundation models that serve as the common backbone for on-vehicle perception, enhancing the system's ability to detect long-tail events and generalize to new geofences. In this role, you will develop effective tokenization techniques for Vision, Lidar, and Radar modalities, leverage LLM techniques to align token embeddings across modalities into a common feature space supporting various 3D tasks (detection, segmentation, tracking, feature matching, dense depth), You'll collaborate with top-notch engineers across PCP, MLInfra, and Offboard Driving Intelligence teams, utilizing Zoox's large-scale dataset to train and evaluate models that directly impact the autonomous system's real-world performance.
+
+On the perception optimization team, you will build optimized inference pipelines for on-bot algorithms. A major focus of optimization is ML models, with techniques such as quantization, pruning, and advanced transformer optimizations such as token pruning, merging and layer pruning being used to deploy large models into the bot to operate at real time. In this role, you will experiment with optimizing SOTA large ML models to make them fit into on-bot compute, including both post-training optimization (e.g. quantization) as well as architectural approaches (e.g. token merging).
+
+Requirements
+
+
+Currently working towards a B.S., M.S., Ph.D., or advanced degree in a relevant engineering program
+Must be returning to school to continue your education upon completing this internship
+Good academic standing
+Able to commit to a 12-week internship beginning in May or June of 2026.
+At least one previous industry internship, co-op, or project completed in a relevant area
+Ability to relocate to the Bay Area, California or Boston for the duration of the internship
+Interns at Zoox may not use any proprietary information they are working on as part of their thesis, any published work with their university, or 

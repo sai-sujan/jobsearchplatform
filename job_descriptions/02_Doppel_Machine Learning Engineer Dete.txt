@@ -1,0 +1,151 @@
+Company: Doppel
+Title: Machine Learning Engineer, Detection
+Machine Learning Engineer, Detection [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4366277294/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Doppel
+
+Machine Learning Engineer, Detection
+
+New York, United States · 15 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Recent Machine Learning Engineer hires at Doppel
+
+Show all
+About the job
+
+Why Join Doppel
+
+Doppel is built to outsmart one of the great threats AI presents: mass-manufactured social engineering. Countless scams, deepfakes, and other social engineering attacks are surging across every digital channel: websites, social media, ads, encrypted messaging apps, mobile, and more. Our mission is simple but bold: make the internet a safer place by outsmarting the world’s fastest-evolving digital threats.
+
+Backed by a16z and Bessemer and trusted by some of the world’s most recognized brands (OpenAI, United Airlines, Coinbase, etc.), Doppel is growing fast. If you’re driven to solve real-world problems with bold technology, we’d love to meet you.
+
+What We're Building
+
+We're building the AI-native social engineering defense platform.
+
+This means we're designing scalable systems that monitor billions of domains, social media accounts, apps, dark web forums, etc., and leverage AI agents to identify and neutralize digital threats.
+
+What We're Looking For
+
+We’re looking for a machine learning engineer to help build and scale the models and systems that power Doppel’s detection systems. Check out our blog post on how we set up our ML platform. As an MLE at Doppel, you will
+
+
+Design, train, and deploy models for both batch and real-time inference that identify malicious or infringing content across diverse data sources.
+Partner closely with the Detection and Infrastructure teams to ensure our ML systems scale with the volume of web data we ingest
+Work on problems that range from NLP and embeddings to similarity search, classification, and anomaly detection
+Collaborate directly with customers and internal stakeholders to translate real-world threats into production ML systems
+
+
+You May Be a Fit If You
+
+
+Have experience building and deploying ML systems in production environments
+Are comfortable working with large-scale datasets and distributed data processing frameworks
+Understand the trade-offs between research-quality models and production-ready systems
+Are excited about solving real-world problems where the adversary is constantly evolving
+
+
+What We Offer
+
+🚀 A mission-driven culture with low ego, high ownership, deep customer obsession, and exceptional talent density
+
+🍽️ Free lunch and dinner in the office
+
+🌴 Flexible PTO
+
+✈️ Quarterly team offsites
+
+Join Doppel
+
+Doppel is the first platform built to dismantle digital deception at scale. We scan over 150 billion entities daily and deploy continuously adaptive AI SOC agents, paired with expert human analysts, to uncover and disrupt the infrastructure behind phishing, impersonation, and online fraud before attacks can spread. Our Threat Grid turns every customer signal into shared intelligence, making each disruption smarter, faster, and more effective.
+
+We’re not just another cybersecurity company. We’re defining the future of social engineering defense, where trust is protected, and deception becomes unprofitable. Backed by top-tier investors and trusted by some of the world’s most recognized brands, Doppel is growing fast. If you’re driven to solve real-world problems with bold technology, we’d love to meet you.
+… more
+
+This job alert is on
+
+Machine Learning Engineer, New York, United States
+
+On
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+468
+
+total
+
+468
+
+in the past day
+
+Candidate seniority level
+
+87% Entry level candidates
+
+9% Senior level candidates
+
+Candidate education level
+
+91
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+5
+
+%
+
+have a Bachelor's Degree
+
+
+3
+
+%
+
+have a Doctor of Philosophy
+
+
+1
+
+%
+
+have other degrees
+Exclusive Job Seeker Insights about Doppel
+Powered by Bing
+
+Company focus areas
+
+• Expansion of AI-driven social engineering defense: Doppel aims to enhance its AI-driven social engineering defense platform to protect against AI-powered impersonation, phishing, fraud, and social engineering attacks.
+
+...more
+
+Sources: finance.yahoo.com +1 more
+
+Hiring & headcount
+
+Significant growth in sales: The 'Sales' department has seen a 145% increase in employee count over the past year, indicating a major initiative to boost sales capabilities and market reach. Expansion in engineering: The 'Engineering' department has experienced a 74% increase in headcount, suggesting a strong focus on product development and technological advancements. Increase in human resources: The 'Human Resources' department has grown by 700%, highlighting a substantial investment in talent acquisition and employee management. Overall headcount growth: The company's total employee count has increased b

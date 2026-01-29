@@ -1,0 +1,103 @@
+Company: Inadev
+Title: Jr Full Stack Developer (Python/React.js)
+Jr Full Stack Developer (Python/React.js)
+Link: https://www.linkedin.com/jobs/view/4366191966/
+Posted: Recent
+Location: 
+
+============================================================
+
+Inadev
+
+Jr Full Stack Developer (Python/React.js)
+
+Reston, VA · 30 minutes ago · 25 people clicked apply
+
+Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Description
+
+
+TO BE CONSIDERED, CANDIDATES MUST BE U.S. CITIZENS AND LOCATED IN THE CONTINENTAL UNITED STATES AND BE WILLING TO WORK DURING EASTERN TIME ZONE HOURS*****
+ CANDIDATES LOCAL TO THE DC/MD/VA METRO AREA ARE PREFERRED AND WILL RECEIVE PREFERENCE BUT THIS POSITION HAS THE ABILITY TO BE 100% REMOTE *****
+
+
+Formed in 2011, Inadev is focused on its founding principle to build innovative customer-centric solutions incredibly fast, secure, and at scale. We deliver world-class digital experiences to some of the largest federal agencies and commercial companies. Our technical expertise and innovations are comprised of codeless automation, identity intelligence, immersive technology, artificial intelligence/machine learning (AI/ML), virtualization, and digital transformation.
+
+Position Description
+
+We are seeking a skilled Jr Full Stack Developer to design, build, and deploy scalable web applications. The ideal candidate has strong hands-on experience with Python, React.js, PostgreSQL (AWS RDS), as well as familiarity with NoSQL databases and core AWS services like S3, EC2 and Lambda. Experience working in Agile environments with JIRA, strong communication skills, and the ability to collaborate effectively with technical and non-technical stakeholders are essential.
+
+Responsibilites
+
+
+Works primarily as a junior software developer and brings experience using tools and frameworks to develop solutions that meet client requirements.
+As part of a cross-functional Agile team, the Developer coordinates with team members to follow best practices, plan work, and communicate with the client on progress.
+Design, Develop and implement Python based enterprise solutions to meet client requirements.
+Support quality development practices, including test driven development.
+Actively participate in improving the code base by performing code reviews.
+Contribute technical input to user stories and effort estimation.
+Participate and contribute to all agile ceremonies/events.
+Work closely with the team to ensure that technical user stories and acceptance criteria are accurately captured.
+Contribute to documentation of system design and procedures.
+Working knowledge of object-oriented principles, design patterns, microservices-based architectures, and database design concepts.
+Communicate effectively with technical team members and support team in translating business requirements into technical solutions.
+Experience working as part of a team delivering cloud-based, continuously deployed solutions.
+Experience working in an onsite client technical consulting environment preferred.
+Experience working within Agile Frameworks, such as Scrum or Kanban.
+Self-motivated and self-managing. 
+Ability to provide task-level estimates.
+
+
+Physical Demands
+
+
+Reasonable accommodations may be made to enable individuals with disabilities to perform the essential functions
+
+
+Inadev Corporation does not discriminate against qualified individuals based on their status as protected veterans or individuals with disabilities and prohibits discrimination against all individuals based on their race, color, religion, sex, sexual orientation/gender identity, or national origin.
+
+Requirements
+
+NON-TECHNICAL REQUIREMENTS:
+
+
+Must be a U.S. Citizen.
+Must be willing to work on Eastern Standard Business hours.
+Candidates must currently reside in the continental United States.
+Must have the ability to pass a 7-year background check and obtain/maintain a U.S. Government Clearance.
+Participate in Coding Challenges on an as needed basis.
+Strong communication and presentation skills.
+Must be able to prioritize and self-start.
+Must be adaptable/flexible as priorities shift.
+Must be enthusiastic and have passion for learning and constant improvement.
+Must be open to collaboration, feedback and client asks.
+Must enjoy working with a vibrant team of outgoing personalities.
+
+
+Mandatory Requirements/Skills
+
+
+Bachelor’s degree in computer science, Engineering or a related field and 3+ years of hands-on Python software/application development experience.
+Must have hands-on back-end development experience with Python.
+Hands-on experience developing front-end components using React.js.
+Must have hands-on experience working with SQL and/or NoSQL database (For example Postgres, MongoDB, DynamoDB, etc.)
+Familiarity with the most common Amazon Web Services (S3, EC2, SQS, Lambda, RDS).
+Experience working within Agile Frameworks, such as Scrum or Kanban.
+Experience working using JIRA.
+Ability to provide task-level estimates for assigned work.
+Excellent communication skills to collaborate with team members and contribute to translating business requirements into technical solutions, including generating effective visu

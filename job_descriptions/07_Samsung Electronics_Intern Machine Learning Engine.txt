@@ -1,0 +1,101 @@
+Company: Samsung Electronics
+Title: Intern, Machine Learning Engineer
+Intern, Machine Learning Engineer [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4366242621/
+Posted: 16 hours ago
+Within the past 24 hours
+Location: 
+Premium Indicators: job-card-container__footer-item--highlighted
+
+============================================================
+
+Samsung Electronics
+
+Intern, Machine Learning Engineer
+
+San Jose, CA · 16 hours ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+$28/hr - $62/hr
+On-site
+Internship
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Gaurav and others in your network
+
+Show all
+About the job
+
+Please Note:
+
+To provide the best candidate experience amidst our high application volumes, each candidate is limited to 10 applications across all open jobs within a 6-month period.
+
+Advancing the World's Technology Together
+
+Our technology solutions power the tools you use every day--including smartphones, electric vehicles, hyperscale data centers, IoT devices, and so much more. Here, you'll have an opportunity to be part of a global leader whose innovative designs are pushing the boundaries of what's possible and powering the future.
+
+We believe innovation and growth are driven by an inclusive culture and a diverse workforce. We're dedicated to empowering people to be their true selves. Together, we're building a better tomorrow for our employees, customers, partners, and communities.
+
+What You'll Learn
+
+
+Project Overview: This project focuses on developing innovative LLM models and building robust, modular agent pipelines that combine planning, retrieval-augmented reasoning (hybrid RAG), tool-use orchestration, and multi-agent collaboration.
+Skills You'll Learn:
+Deep understanding of agentic AI framework
+Hands-on algorithm and system development
+Collaborative develop skills
+
+What You'll Do
+
+Samsung DSA has launched a new AI initiative to build the foundational capabilities for practical, agentic AI systems. The AI Innovation team is the driving force behind this vision, leading innovation at the intersection of machine learning and system engineering to develop and operate our next-generation Agentic AI framework. We aim to enable LLMs to autonomously plan, retrieve information, coordinate with tools, and execute multi-step workflows across our internal knowledge ecosystem. We are actively seeking talented Machine Learning Engineers specializing in building next-generation AI/ML solutions.
+
+Location: Daily onsite presence at our San Jose headquarters in alignment with our Flexible Work policy
+
+Reports to: Director, AI/ML Software Engineering
+
+The intern will contribute to design, prototype, and evaluate new agentic mechanisms—such as self-reflection loops, verifiers, memory modules, and multi-agent task decomposition—that strengthen both short- and long-horizon reasoning. Potential topics include, but not limited to:
+
+
+Model Development: Development of customized VLM models tailored to specific agent requirements.
+Agentic AI Workflow Prototype (MVP): A functioning agent pipeline capable of task planning, tool-use, and hybrid RAG-based reasoning.
+Integration with Internal Tools & Services: Extensions demonstrating agent interaction with microservices, search/retrieval systems, or multi-agent components.
+Benchmarking & Evaluation Suite: A compact set of metrics and experiments evaluating task completion, retrieval accuracy, and reasoning robustness.
+Technical Report & Recommendations: A concise write-up summarizing findings, design insights, and proposed next steps for production deployment.
+Complete other responsibilities as assigned.
+
+
+What You Bring
+
+
+Pursuing Ph.D. in Computer Science, Computer Engineering, Machine Learning, Artificial Intelligence, or a closely related field
+Must have at least 1 academic quarter/semester remaining
+Strong Python programming skills
+Familiarity with machine learning frameworks (e.g., PyTorch)
+Ability to translate research ideas into working prototypes
+Experience in one or more of the following is a bonus: LLM/VLM related publications in top-tier conferences (ICML, NeurIPS, ICLR, CVPR, etc.)
+You're inclusive, adapting your style to the situation and diverse global norms of our people.
+An avid learner, you approach challenges with curiosity and resilience, seeking data to help build understanding.
+You're collaborative, building relationships, humbly offering support and openly welcoming approaches.
+Innovative and creative, you proactively explore new ideas and adapt quickly to change.
+
+
+What We Offer
+
+The pay range below is for all roles at this level across all US locations and functions. Individual pay rates depend on a number of factors—including the role's function and location, as well as the individual's knowledge, skills, experience, education, and training.
+
+This is in addition to our diverse package of benefits centered around the wellbeing of our employees and their loved ones. In addition to the usual Medical/Dental/Vision, our inclusive rewards plan empowers our people to care for their whole selves. An investment in your future is an investment in ours.
+
+Relocation Support Live 50+ miles away from your new office? No worries! We'll provide a stipend to help support your move.
+
+Housing Stipend

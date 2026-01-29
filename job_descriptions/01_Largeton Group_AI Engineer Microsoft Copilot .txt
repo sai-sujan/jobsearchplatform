@@ -1,0 +1,282 @@
+Company: Largeton Group
+Title: AI Engineer (Microsoft Copilot Studio)
+AI Engineer (Microsoft Copilot Studio)
+Link: https://www.linkedin.com/jobs/view/4366189678/
+Posted: Recent
+Location: 
+
+============================================================
+
+Largeton Group
+
+AI Engineer (Microsoft Copilot Studio)
+
+United States · 27 minutes ago · 59 applicants
+
+No response insights available yet
+
+$50/yr - $55/yr
+Remote
+Contract
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+AI Engineer – Microsoft Copilot Studio - Remote
+
+
+ Build and configure GenAI solutions using Microsoft Copilot Studio (prompts, topics, flows, connectors)
+ Design and test prompt logic and AI interaction patterns
+ Integrate Copilot Studio with Azure OpenAI and external APIs
+ Support RAG-style workflows, connecting AI to structured/unstructured data sources
+ Develop and maintain Power Automate flows for AI-driven processes
+ Write simple Python or PowerShell scripts for automation, testing, and data preparation
+ Collaborate with senior engineers to enhance AI workflows and integrations
+ Participate in testing, debugging, documentation, and process improvements
+ Join technical and client sessions as required
+ Deliver hands-on engineering support for GenAI and Copilot initiatives
+ Help improve reusable AI components, prompts, and accelerators
+ Contribute to internal standards for AI quality, performance, and usability
+ Expand AI engineering skills through real-world, production-focused projects
+
+
+Required Experience/Skills
+
+
+ 2+ years in software development, automation, or platform engineering
+ Hands-on experience with Microsoft Copilot Studio (required)
+ Experience building/supporting GenAI applications or AI-driven workflows
+ Strong with Power Platform, especially Power Automate
+ Working knowledge of Azure services (Azure OpenAI, Functions, Logic Apps, App Services, Storage)
+ REST API integration experience
+ Basic coding/scripting ability (Python or PowerShell)
+ Understanding of data flows, authentication, and cloud security basics
+ Strong problem-solving skills and technical curiosity
+
+
+Nice To Have
+
+
+ Power Platform certifications (PL-100, PL-200, PL-400)
+ Experience with Dataverse
+ Exposure to RAG patterns, embeddings, vector databases
+ Familiarity with Git, CI/CD, DevOps practices
+ Experience with proofs of concept or internal AI tools
+… more
+
+This job alert is on
+
+Artificial Intelligence Engineer, United States
+
+On
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+59
+
+Applicants
+
+59
+
+Applicants in the past day
+
+Applicant seniority level
+
+71% Entry level people applied for this job
+
+25% Senior level people applied for this job
+
+Applicant education level
+
+71
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+27
+
+%
+
+have a Bachelor's Degree
+
+
+2
+
+%
+
+have a Master of Business Administration
+Exclusive Job Seeker Insights about Largeton Group
+Powered by Bing
+
+The latest hiring trend
+
+115
+
+Total employees
+
+4%
+
+Company-wide
+
+2 year growth
+
+0%
+
+Engineering
+
+2 year growth
+
+Jan 2024
+May 2024
+Sep 2024
+Jan 2025
+May 2025
+Sep 2025
+Jan 2026
+0
+100
+200
+
+Median employee tenure: 2.5 years
+
+Show Premium Insights
+About the company
+
+Largeton Group
+
+106,251 followers
+
+Following
+
+Information Services
+
+ • 
+
+51-200 employees
+
+ • 
+
+115 on LinkedIn
+
+Largeton Group is a delivery engine for large staffing firms. Since 2015, we’ve supported global staffing leaders by owning execution—sourcing, screening, and delivering talent against high-volume and niche requirements. We work behind the scenes so you win the client. Built for speed, compliance, and consistency, Largeton operates as an extension of your recruiting team for enterprise and Fortune-level hiring. If execution matters, we’re the partner you rely on.
+… more
+
+Interested in working with us in the future?
+
+Privately share your profile with our recruiters – you’ll be noted as expressing interest for up to a year and be notified about jobs and updates. Learn more
+
+I’m interested
+More jobs
+
+Artificial Intelligence Engineer (Verified job)
+Artificial Intelligence Engineer 
+
+Fractal
+
+United States (Remote)
+
+$120K/yr - $145K/yr
+
+ • 
+
+Medical, Vision, Dental, 401(k)
+
+Actively reviewing applicants
+
+Posted on January 5, 2026, 2:03 PM
+2 weeks ago
+
+ · 
+
+ Easy Apply
+
+Generative AI Engineer
+
+Vora Agency LLC
+
+United States (Remote)
+
+$5,000/month - $7,000/month
+
+You’d be a top applicant
+
+Posted on December 29, 2025, 4:00 AM
+1 month ago
+
+Artificial Intelligence Engineer (Verified job)
+Artificial Intelligence Engineer 
+
+Healthcasts
+
+United States (Remote)
+
+8 benefits
+
+Actively reviewing applicants
+
+Posted on January 5, 2026, 11:34 AM
+3 weeks ago
+
+ · 
+
+ Easy Apply
+
+Generative AI Engineer
+
+undisclosed
+
+United States (Remote)
+
+$195K/yr
+
+ • 
+
+11 benefits
+
+Posted on January 17, 2026, 9:28 PM
+1 week ago
+
+ · 
+
+ Easy Apply
+
+Artificial Intelligence Engineer
+
+Mercor
+
+United States (Remote)
+
+$14/hr - $14/hr
+
+1 company alumni works here
+
+Posted on January 10, 2026, 12:55 PM
+2 weeks ago
+
+AI Systems Engineer (Verified job)
+AI Systems Engineer 
+
+Wrapbook
+
+United States (Remote)
+
+$130K/yr - $211.5K/yr
+
+ • 
+
+401(k) benefit
+
+1 school alumni works here
+
+Posted on January

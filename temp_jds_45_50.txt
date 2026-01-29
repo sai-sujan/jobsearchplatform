@@ -1,0 +1,361 @@
+--- JOB START 45 ---
+FILENAME: 45_Onto Innovation_Junior AI EngineerJunior AI En.json
+COMPANY: Onto Innovation
+TITLE: Junior AI Engineer
+Junior AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4310894054/
+CONTENT:
+Onto Innovation
+
+Junior AI Engineer 
+
+Wilmington, MA · Reposted 5 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$72.1K/yr - $108.1K/yr
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Onto Innovation is a leader in process control, combining global scale with an expanded portfolio of leading-edge technologies that include: 3D metrology spanning the chip from nanometer-scale transistors to micron-level die-interconnects; macro defect inspection of wafers and packages; metal interconnect composition; factory analytics; and lithography for advanced semiconductor packaging. Our breadth of offerings across the entire semiconductor value chain helps our customers solve their most difficult yield, device performance, quality, and reliability issues. Onto Innovation strives to optimize customers’ critical path of progress by making them smarter, faster and more efficient.
+
+Job Summary & Responsibilities
+
+Junior AI Engineer
+
+Team: You’ll partner closely with our AI Lead Engineer and collaborate with field/service engineers who support our inspection & metrology tools across fabs.
+
+Goal: Build practical AI helpers that speed up tasks from recipe setup and troubleshooting to fleet management analytics and expert guidance from internal knowledge.
+
+About Us
+
+Onto Innovation is a worldwide leader in the design, development, manufacture and support of defect inspection, advanced packaging lithography, process control metrology, and data analysis systems and software used by semiconductor device manufacturers worldwide. Onto Innovation provides a full-fab solution through its families of proprietary products that provide critical yield-enhancing information and real time process control responses, enabling microelectronic device manufacturers to drive down the costs and time to market of their products. The Company’s expanding portfolio of equipment a
+--- JOB END ---
+
+--- JOB START 46 ---
+FILENAME: 46_Uptime Crew_AI EngineerAI Engineer.json
+COMPANY: Uptime Crew
+TITLE: AI Engineer
+AI Engineer
+LINK: https://www.linkedin.com/jobs/view/4366184895/
+CONTENT:
+Uptime Crew
+
+AI Engineer
+
+San Jose, CA · 1 day ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$110K/yr - $150K/yr
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Artificial Intelligence Engineers (50+ openings | Entry Level)
+
+
+
+
+Job Type: Full-time
+
+Level: Entry Level
+
+Pay: $110,000+
+
+U.S. Work Authorization Required (No Visa Sponsorship) Locations
+
+Mountain View, CA
+San Diego, CA
+NY, NY
+Atlanta, GA
+
+
+
+
+Join the Crew that keeps the future online
+
+
+
+
+What you will do on the job
+
+Drive the adoption of AI-assisted DevSecOps practices, using large language models and automation tools to accelerate secure containerization of legacy applications while maintaining security compliance.
+Develop and maintain AI-enhanced CI/CD pipelines that automatically generate security policies, container configurations, and infrastructure-as-code templates based on application requirements and best practices.
+Use AI coding assistants for implementation, refactoring, and documentation while following team guidelinesGenerate unit and integration tests, improve coverage, and reduce defects.
+Speed up PRs with AI-assisted reviews, summaries, and risk notes.
+Query logs and docs with AI to troubleshoot issues and unblock work.
+Partner with product, design, security, and compliance to ship increments that meet fintech standards.
+
+
+
+
+Minimum qualifications
+
+Bachelor’s degree.
+Strong fundamentals in data structures, algorithms, and web or backend basics.
+Ability to learn quickly and work in an Agile team.
+Legally authorized to work in the United States without employer sponsorship.
+
+
+
+
+Benefits and compensation
+
+Salary (including on-the-job-training): $110,000+ per year
+Health insurance including medical, vision, and dental
+Employee Stock Purchase Plan (ESPP)
+Matching 401(k)
+Up to 15 days PTO and 14 Paid Holidays
+Get a week off at the end of the year to unplug from work, re
+--- JOB END ---
+
+--- JOB START 47 ---
+FILENAME: 47_Converzi_Artificial Intelligence Engine.json
+COMPANY: Converzi
+TITLE: Artificial Intelligence Engineer
+Artificial Intelligence Engineer
+LINK: https://www.linkedin.com/jobs/view/4366048813/
+CONTENT:
+Converzi
+
+Artificial Intelligence Engineer
+
+Washington DC-Baltimore Area · 20 minutes ago · 14 applicants
+
+No response insights available yet
+
+Hybrid
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Location: Remote (US preferred)
+
+Type: Early-stage, builder role
+
+Comp: Equity-heavy (cash-light). Real ownership for the right person.
+
+The one-liner
+
+We’re building self-optimizing websites: AI agents that test, learn, and update a site to improve visibility + conversions, then prove the lift with real data.
+
+
+
+
+What you’ll build (the core product)
+
+You’ll own the engine that makes Converzi real:
+
+1) The “analyze → recommend → ship → verify” loop
+Crawl/scan websites and detect issues + opportunities (technical SEO, content structure, speed/CWV, UX conversion blockers)
+Turn findings into clear prioritized actions (not a 200-item audit nobody reads)
+Generate fixes + variants (copy, page sections, FAQs, internal linking, schema, page speed quick wins)
+2) Safe shipping (the moat)
+Build an approval workflow: preview → approve → publish → rollback
+Ship changes safely without breaking sites (audit log, versioning, rollback, guardrails)
+Connectors/integrations (ideally):
+WordPress (plugin)
+Shopify (app)
+“headless / custom site” via script or API
+3) Experimentation + learning
+A/B testing / multivariate testing for key page elements (headline, CTA, layout blocks)
+Event tracking + clean measurement (conversions, form submits, calls, bookings, purchases)
+Results interpretation that’s simple and honest (no fake confidence)
+4) Reporting that proves results
+Dashboards that show before/after impact (rankings/visibility + conversions)
+Automated “what changed + what happened” summaries for non-technical customers
+Integrations with tools like GA4, Search Console, tag managers, etc.
+What success looks like (first 90 days)
+Weeks 1–2: working crawler + data ingestion + usable “quick wins” report on real sites
+
+--- JOB END ---
+
+--- JOB START 48 ---
+FILENAME: 48_The Judge Group_AI Engineer 1116377AI Engineer.json
+COMPANY: The Judge Group
+TITLE: AI Engineer (1116377)
+AI Engineer (1116377) with verification
+LINK: https://www.linkedin.com/jobs/view/4366058532/
+CONTENT:
+The Judge Group
+
+AI Engineer (1116377) 
+
+Irving, TX · 41 minutes ago · 63 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$140K/yr - $150K/yr
+On-site
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Location:  Irving, TX
+
+Salary:  $140,000.00 USD Annually - $150,000.00 USD Annually
+
+Description
+
+AI Engineer – Generative AI & LLM Development
+
+Location: Irving, TX or Edison, NJ or Tampa, FL
+
+Employment: Fulltime
+
+Job Description
+
+We are seeking a highly skilled Python/AI Engineer with strong hands-on experience in API development, AI workflows, and modern Generative AI technologies. The ideal candidate will have practical experience building AI-enabled applications, working with LLMs, and implementing prompt engineering and RAG-based architectures.
+
+This role involves designing, developing, deploying, and maintaining AI models and workflows in production environments while staying current with advancements in the Generative AI ecosystem.
+
+Must-Have Technical & Functional Skills
+
+
+Strong hands‑on experience with Python.
+Proven experience building APIs using FastAPI or Flask.
+Experience in data processing and AI-enabled workflows using Python.
+Working knowledge of LLMs, Prompt Engineering, RAG architectures, and Agentic AI.
+Basic understanding of Hybrid Prompting techniques.
+Experience with Generative AI tools such as LangChain, Hugging Face, LlamaIndex, etc.
+
+
+Good To Have Skills
+
+
+Experience working with Gemini LLM.
+Hands-on experience with ML frameworks such as PyTorch, TensorFlow, or Keras.
+Experience with Natural Language Processing (NLP).
+Knowledge of model deployment and containerization (Docker).
+Experience with version control systems such as Git.
+Awareness of AI compliance, data privacy, and responsible AI principles.
+
+
+Roles & Responsibilities
+
+
+Develop and optimize AI workflows and automation pipelines.
+Perform prompt engineering, evaluation, and improvemen
+--- JOB END ---
+
+--- JOB START 49 ---
+FILENAME: 49_Brooksource_Junior AI EngineerJunior AI En.json
+COMPANY: Brooksource
+TITLE: Junior AI Engineer
+Junior AI Engineer with verification
+LINK: https://www.linkedin.com/jobs/view/4366505735/
+CONTENT:
+Brooksource
+
+Junior AI Engineer 
+
+Charlotte, NC · 1 hour ago · Over 100 applicants
+
+Promoted by hirer · No response insights available yet
+
+$32/hr - $34/hr
+Hybrid
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Logan LaPlant 
+
+• 2nd
+
+Bringing Creative Solutions to Tech & Engineering Challenges
+
+School alum from Missouri State University
+
+Connect
+
+Meet the hiring team
+
+MacK Goodwin 
+
+• 3rd
+
+IT & Engineering Professional Recruiter | Program Coordinator 
+
+Job poster
+
+Message
+About the job
+
+Junior AI Engineer - Enterprise Contact Center 
+
+Location: Charlotte, NC – Hybrid (3x per week onsite in Uptown Charlotte Office)
+
+Experience Level: 0-1 Years
+
+Work Authorization: We are unable to provide sponsorship currently.
+
+
+
+
+Brooksource's Fortune 200 digital banking partner is looking for Junior AI Engineers to support AI-driven initiatives across their enterprise contact center. The team builds and maintains intelligent systems that enhance the agent experience, streamline workflows, and power emerging AI-assisted capabilities. This team works across agent-facing tools, backend services, LLM-powered applications, in-house models, web extensions, and API development to support real-time and post-call operations.
+
+
+
+
+As the organization expands, we are adding a Junior AI Engineer to support new AI projects, model development, backend engineering, and cloud-based services. This role offers the opportunity to learn from highly experienced engineers, work in an Agile environment, and contribute to next-generation agent-assist capabilities.
+
+
+
+
+What You’ll Do 
+
+Contribute to AI-driven projects within the C3 Space, supporting agent-focused applications including call summaries, AgentAssist tools, and AI-driven extensions.
+Collaborate with senior engineers on Python-based development, including multithreading, backend logic, and model-driven workflows.
+Assist in developing, maintaining, a
+--- JOB END ---
+

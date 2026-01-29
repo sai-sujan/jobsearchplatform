@@ -1,0 +1,187 @@
+Company: Scowtt
+Title: Machine Learning Engineer I
+Machine Learning Engineer I [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4355797539/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Scowtt
+
+Machine Learning Engineer I
+
+Seattle, WA · 1 day ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$100K/yr - $150K/yr
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+About Scowtt
+
+Scowtt is an early-stage startup transforming the way businesses convert leads into customers through AI/ML marketing optimization and fully autonomous sales experiences. By integrating CRM, web signals, and product interaction data into a real-time conversion model, we help businesses turn interest into action—immediately. We’re growing fast, and onboarding new customers quickly and cleanly is core to our success.
+
+About The Role
+
+We are looking for a motivated, entry-level Machine Learning Engineer to help build, train, and deploy ML models that power our Marketing AI and AI Sales Agent products. This role is ideal for new graduates or early-career engineers who want hands-on experience working on real ML systems in a fast-paced, collaborative startup environment.
+
+What You’ll Do
+
+
+Assist in training, evaluating, and deploying ML models
+Work with structured and behavioral data used in marketing and sales systems
+Help automate and maintain data and ML pipelines
+Collaborate with engineers to integrate ML models into AI agents
+Debug, optimize, and improve model and pipeline performance
+Learn how ML systems operate in real production environments (cloud, monitoring, iteration)
+
+
+Qualifications
+
+Must Have
+
+
+Bachelor’s degree in Computer Science, ML, Data Science, or equivalent
+1-3 years of experience in data structures, algorithms
+1-3 years of experience with machine learning concepts and workflows
+1-3 years of experience in coding using Python with demonstrated strong coding skills
+
+
+Should Have
+
+
+Exposure to ML frameworks through coursework, projects, or internships
+Curiosity, ownership mindset, and eagerness to learn
+
+
+Nice to Have
+
+
+Hands-on project or internship experience with real datasets
+Exposure to cloud platforms (GCP or AWS)
+Familiarity with tools like BigQuery, notebooks, or basic data pipelines
+
+
+What Success Looks Like
+
+
+You contribute to shipping ML models with guidance
+You learn to debug data and model issues
+You steadily increase independence and ownership
+You build strong foundations in applied ML engineering
+
+
+Pay Range And Compensation Package
+
+Based on the level hired at, the cash compensation for this role ranges between $100,000 to $150,000. Selected candidate/s will be eligible for standard benefits and startup equity.
+
+Equal Opportunity & E-Verify Employer
+
+Scowtt is an Equal Opportunity Employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, age, disability, or veteran status. We are committed to providing a workplace free of discrimination and harassment.
+
+This employer participates in E-Verify and will provide the federal government with your Form I-9 information to confirm that you are authorized to work in the U.S. For more information, please visit www.e-verify.gov.
+… more
+
+This job alert is on
+
+Machine Learning Engineer, Seattle, Washington, United States
+
+On
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+1628
+
+total
+
+1628
+
+in the past day
+
+Candidate seniority level
+
+82% Entry level candidates
+
+8% Senior level candidates
+
+Candidate education level
+
+88
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+8
+
+%
+
+have a Bachelor's Degree
+
+
+2
+
+%
+
+have a Master of Business Administration
+
+
+2
+
+%
+
+have other degrees
+
+There’s not enough quality data on this company just yet
+
+Once there are 30 complete member profiles from this company, we’ll be able to show you the company’s growth and hiring trends
+
+About the company
+
+Scowtt
+
+3,077 followers
+
+Follow
+
+Technology, Information and Internet
+
+ • 
+
+11-50 employees
+
+ • 
+
+11 on LinkedIn
+
+We started Scowtt to help businesses convert more leads using AI/ML. Our platform boosts ROAS by turning untapped CRM leads into customers.
+
+AI Marketing predicts value and purchase intent using 50+ signals, feeding real-time data to Google/Meta bidders.
+AI Sales uses GenAI agents to engage every lead, surfacing and converting missed sales.
+
+Results: +59% ROAS on Search, +80% on PMax/Meta. Clients are scaling—and we’re just getting started.
+
+What sets Scowtt apart is our distinct, full-service approach. Rather than merely serving as a co-pilot, we seamlessly integrate with your existing CRM, site analytics, and product catalog. The AI agent engages with prospective customers around the clock, ensuring comprehensive and effective sales conversion. For non-ready prospects, we route them to human appointments when necessary.
+
+Our commitment is simple: to boost sales while reducing acquisition costs.
+… more
+
+Interested in working with us in the future?
+
+Privately share

@@ -1,0 +1,161 @@
+Company: Turing
+Title: Senior Staff Engineer (Machine Learning) - 45391
+Senior Staff Engineer (Machine Learning) - 45391 with verification
+Link: https://www.linkedin.com/jobs/view/4366207202/
+Posted: Recent
+Location: 
+
+============================================================
+
+Turing
+
+Senior Staff Engineer (Machine Learning) - 45391 
+
+United States · 49 minutes ago · 9 applicants
+
+Promoted by hirer · No response insights available yet
+
+Remote
+Contract
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Recent Software Engineer hires at Turing
+
+Show all
+About the job
+
+About Turing:
+
+Based in San Francisco, California, Turing is the world’s leading research accelerator for frontier AI labs and a trusted partner for global enterprises deploying advanced AI systems. Turing supports customers in two ways: first, by accelerating frontier research with high-quality data, advanced training pipelines, plus top AI researchers who specialize in coding, reasoning, STEM, multilinguality, multimodality, and agents; and second, by applying that expertise to help enterprises transform AI from proof of concept into proprietary intelligence with systems that perform reliably, deliver measurable impact, and drive lasting results on the P&L
+
+
+
+
+Role Overview:
+
+Turing is seeking a hands-on Machine Learning Senior Staff Engineer to lead cross-functional teams building and deploying cutting-edge LLM and ML systems. In this role, you’ll drive the full lifecycle of AI development — from research and large-scale model training to production deployment — while mentoring top engineers and collaborating closely with research and infrastructure leaders.
+
+
+
+
+You’ll combine technical depth in deep learning and MLOps with leadership in execution and strategy, ensuring that Turing’s AI initiatives deliver reliable, high-performance systems that translate research breakthroughs into measurable business impact.
+
+
+
+
+This position is ideal for leaders who are still comfortable coding, optimizing large-scale training pipelines, building collab notebooks that break the models and navigating the intersection of research, engineering, and product delivery.
+
+
+
+
+Roles & Responsibilities:
+
+Lead and mentor a cross-functional team of ML engineers, data scientists, and MLOps professionals.
+Oversee the full lifecycle of LLM and ML projects — from data collection to training, evaluation, and deployment.
+Collaborate with Research, Product, and Infrastructure teams to define goals, milestones, and success metrics.
+Provide technical direction on large-scale model training, fine-tuning, and distributed systems design.
+Implement best practices in MLOps, model governance, experiment tracking, and CI/CD for ML.
+Manage compute resources, budgets, and ensure compliance with data security and responsible AI standards.
+Communicate progress, risks, and results to stakeholders and executives effectively.
+Overlap of 6 hours with PST time zone is mandatory.
+
+
+
+
+Required Skills & Qualifications:
+
+Strong background in Machine Learning, NLP, and modern deep learning architectures (Transformers, LLMs).
+Hands-on experience with frameworks such as PyTorch, TensorFlow, Hugging Face, or DeepSpeed
+Hands-on experience in Docker for Production deployment.
+Proven experience managing teams delivering ML/LLM models in production environments.
+Knowledge of distributed training, GPU/TPU optimization, and cloud platforms (AWS, GCP, Azure).
+Familiarity with MLOps tools like MLflow, Kubeflow, or Vertex AI for scalable ML pipelines.
+Excellent leadership, communication, and cross-functional collaboration skills.
+Bachelor’s or Master’s in Computer Science, Engineering, or related field (PhD preferred).
+
+
+
+
+Nice to Have:
+
+Experience building Agentic applications
+Experience training or fine-tuning foundation models.
+Contributions to open-source ML or LLM frameworks.
+Understanding of Responsible AI, bias mitigation, and model interpretability.
+
+
+
+
+Perks of Freelancing With Turing:
+
+Work in a fully remote environment
+Opportunity to work on cutting-edge AI projects with leading LLM companies
+
+
+
+
+Offer Details:
+
+Commitments Required: At least 4 hours per day and minimum 20 hours per week with overlap of 4 hours with PST
+Employment type: Contractor assignment (no medical/paid leave)
+Duration of contract: 2 months; [expected start date is next week]
+Timezone : US PST ( 6 hours overlap required 12pm PST to 6pm PST)
+
+
+
+
+Evaluation Process (approximately 120 mins):
+
+Two rounds of interviews (60 min technical + 60 min technical & cultural discussion)
+
+
+
+
+After applying, you will receive an email with a login link. Please use that link to access the portal and complete your profile.
+
+
+
+
+Know amazing talent? Refer them at turing.com/referrals, and earn money from your network.
+
+
+
+
+If you are interested in a software engineer role, please apply here.
+
+… more
+
+Set alert for similar jobs
+
+Software Engineer, United States
+
+Off
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+9
+
+Applicants
+
+9
+
+Applicants in the past day
+
+Applicant seniority level
+
+78% Entry level people applied for this job
+
+11% Senior level people applied for this job
+
+App

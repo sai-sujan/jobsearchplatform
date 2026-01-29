@@ -1,0 +1,92 @@
+Company: Aircall
+Title: AI Engineer
+AI Engineer with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4327778039/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Aircall
+
+AI Engineer 
+
+Seattle, WA · Reposted 6 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$140K/yr - $220K/yr
+Hybrid
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Cade and others in your network
+
+Show all
+About the job
+
+Aircall is a unicorn AI-powered customer communications platform used by 22,000+ companies worldwide to drive revenue, faster resolutions, and scale. We’re redefining what a customer communications platform can be—by combining voice, SMS, WhatsApp, and AI into one seamless workspace.
+
+Our momentum comes from a simple but powerful idea: help every customer-facing team work smarter, not harder. Aircall’s AI Voice Agent automates routine calls, AI Assist streamlines post-call tasks, and AI Assist Pro delivers real-time guidance that helps people do their best work. The result—companies grow revenue, deliver faster resolutions, and scale service.
+
+We’ve built a product customers love and a business that scales fast. Aircall operates in nine global offices (Paris, New York, San Francisco, Sydney, Madrid, London, Berlin, Seattle, and Mexico City), and is backed by world-class investors. Our teams are shipping AI innovation faster than ever and expanding across new product lines and markets.
+
+At Aircall, you’ll join a company in motion—ambitious, profitable, and product-driven—where impact is visible, decisions are fast, and growth is real.
+
+How We Work at Aircall:  At Aircall, we believe in customer obsession, continuous learning, and delivering extraordinary outcomes. We value open collaboration, taking ownership, and making smart, informed decisions with speed and precision. If you thrive in a fast-paced, team-driven environment where curiosity, trust, and impact matter, you'll fit right in
+
+As an AI Engineer for the Integrations team, you will be responsible to design, develop, and optimize scalable, high-performance cloud-based solutions. In this role, you will work across the entire software development lifecycle, contributing to architecture, coding, testing, and deployment while ensuring high-quality and reliable deliverables. You’ll collaborate closely with cross-functional teams to translate requirements into technical solutions. This position offers the chance to solve challenging technical problems, mentor junior engineers, and make a meaningful impact on the design, development, deployment, and operation of world-class software and features that add customer value.
+
+Key Responsibilities
+
+
+Own key responsibilities in the design, architecture, and end-to-end delivery of AI-driven modules.
+Propose innovative solutions by staying ahead of AI landscape trends and emerging technologies.
+Participate in requirements analysis to help with providing the right technical and business solutions for our customers.
+Have key responsibilities within the design, architecture, and end-to-end delivery of your development.
+Write clean scalable code and test and deploy applications and systems.
+Revise, update, refactor, and debug code.
+Participate in code reviews to ensure code quality and share knowledge.
+Be part of an engineering organization delivering high quality, secure, voice solutions to Aircall clients.
+Involvement in product and platform performance optimization and live site monitoring.
+Participate in an on-call rotation to respond to critical system issues and ensure continuous system reliability.
+Security is at the forefront of your mind in everything that you do.
+
+
+Qualifications
+
+
+AI experience is a must for this position: Strong knowledge of LLMs and hands-on experience building with them - including usage, prompting and model integration.
+Proven understanding and direct experience with Agentic AI systems, including designing, developing, and deploying AI Agents and MCP prototype/servers.
+Familiarity with AI frameworks (e.g., LangChain, LlamaIndex, AutoGen) and modern AI architectures such as RAG, vector databases, reranking, and performance optimization.
+At least 1 year of experience in back-end development using Python, TypeScript/Node.js, or Java, with a focus on security, scalability, availability, and performance.
+Full-stack development experience is a strong plus.
+Nice to have: Ideally you will have worked with AWS in a production environment and understand how to design for, deploy on and get the best out of, the environment and services provided by Amazon.
+
+
+$140,000 - $220,000 a year
+
+This is not including equity and other benefits. The actual salary offered will carefully consider a wide range of factors, including your skills, qualifications, and experience.
+
+Why join us?
+
+🚀 Key moment to join Aircall in terms of growth and opportunities
+
+💆‍♀️ Our people matter, work-life balance is important at Aircall
+
+📚 Fast-learning environment, entrepreneurial and strong team spirit
+
+🌍 45+ Nationalities: cosmopolite & multi-cultural mindset
+
+💵 Comp

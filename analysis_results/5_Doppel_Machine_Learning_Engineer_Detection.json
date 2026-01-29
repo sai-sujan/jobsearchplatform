@@ -1,0 +1,58 @@
+{
+    "ats_score": 90,
+    "location": "New York, United States",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Developed an ML-based anomaly detection system for MFA workflows, reducing verification load by 25\\%\u2014directly applicable to detecting malicious patterns.",
+        "\\item Engineered a self-correcting RAG system using LangChain, enhancing the system's ability to interpret complex data signals accurately.",
+        "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25, ensuring high-recall retrieval for detection logic.",
+        "\\item Implemented an LLM-as-Judge evaluation pipeline to rigorously assess model outputs, ensuring high precision in automated decisions.",
+        "\\item Designed batched query extraction pipelines to handle high-volume data streams efficiently, critical for real-time detection systems.",
+        "\\item Deployed Python-based detection models using Docker and AWS, ensuring scalable and secure production operations."
+    ]
+}

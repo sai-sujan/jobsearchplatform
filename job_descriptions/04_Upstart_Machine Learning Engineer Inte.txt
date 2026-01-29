@@ -1,0 +1,90 @@
+Company: Upstart
+Title: Machine Learning Engineer Intern
+Machine Learning Engineer Intern with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4347051914/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Upstart
+
+Machine Learning Engineer Intern 
+
+United States · Reposted 1 day ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+$141K/yr - $150K/yr
+Remote
+Internship
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Taylor Claussen 
+
+• 3rd
+
+Instructional Designer at Upstart
+
+School alum from Missouri State University
+
+Message
+About the job
+
+About Upstart
+
+At Upstart, we’re united by a mission that matters: to radically reduce the cost and complexity of borrowing for all Americans. Every day, we bring creativity, experimentation, and advanced AI to reshape access to credit, helping millions move forward financially with clarity and confidence.
+
+As the leading AI lending marketplace, we partner with banks and credit unions to expand access to affordable credit through technology that’s both radically intelligent and deeply human. Our platform runs over one million predictions per borrower using more than 1,800 signals, powering smarter, fairer decisions for millions of customers. But the numbers only hint at the impact. Every idea, every voice, and every contribution moves us closer to a world where credit never stands between people and their financial progress.
+
+We’re proudly digital-first, giving most Upstarters the flexibility to do their best work from wherever they thrive, alongside teammates across 80+ cities in the US and Canada. Digital-first doesn’t mean distant. We’re intentional about in-person connection through team onsites, planning sessions, and moments that spark creativity and trust. And whether you choose to work primarily from home or collaborate in-person from one of our offices in Columbus, Austin, the Bay Area, or New York City (opening Summer 2026), you’ll have the support to work in the way that works best for you.
+
+If you’re energized by tackling meaningful problems, excited to innovate with purpose, and motivated by work that truly matters, we’d love to hear from you.
+
+The Team
+
+Machine Learning is at the heart of Upstart’s business model, our models are the product. Our team includes research scientists, data scientists, and machine learning engineers who build and improve production models and the systems around them across the funnel: underwriting and pricing, fraud detection, performance marketing, loan servicing and fair lending/explainability. We tackle high‑impact problems, from underwriting and pricing to monitoring and fairness, where creativity, rigor, and strong engineering directly move the business.
+
+The Role
+
+As a Machine Learning Engineering Intern at Upstart, you’ll build tools and production‑grade code that make our models better and our researchers faster (think MLE: {Code} → {Better Code}). You will implement algorithmic improvements that boost predictive power, training efficiency, or serving latency; design reliable data/feature pipelines; and automate repeatable workflows that reduce time from research to deployment and monitoring. You’ll receive mentorship from experienced ML practitioners and collaborate closely with ML scientists to deliver solutions to real‑world engineering problems.
+
+How you’ll make an impact:
+
+
+Deliver projects that improve model performance, efficiency, latency or reliability.
+Write production-grade code, i.e. tested, reviewed and scalable Python.
+Communicate findings clearly to get buy-in for recommended next steps. Work with your mentor toalign stakeholders, and drive next steps.
+
+
+Minimum Qualifications
+
+
+Strong academic credentials with an ongoing bachelor’s or master’s degree in computer science, physics, machine learning, or other quantitative areas of study. We require that you are on track to graduate by the summer of 2027 (our internship program is not open to first- and second-year undergraduates). 
+Programming skills in Python.
+Proficiency across machine learning, numerical computing, and software engineering fundamentals. Foundations in probability and statistics.
+Strong sense of intellectual curiosity, humility, drive and teamwork, as well as communication skills.
+
+
+Preferred Qualifications
+
+
+PhD studies or post-doctoral research in computer science, physics, machine learning, or other another quantitative field. If you are a PhD student, we require that you are on track to graduate by the summer of 2027. 
+Experience building models and conducting statistical or quantitative research.
+Experience building ML tooling or solving real‑world ML engineering problems in industry (e.g., data pipelines, evaluation frameworks, training/serving), such as through prior internships. 
+
+
+Position location This role is available in the following locations: Remote
+
+Travel requirements As a digital first company, the majority of your work can be accomplished remotely. The majority of our employees can live and work anywhere in the U.S or Canada (outside of Quebec) but are expected to spend high quality time in-person collaborat

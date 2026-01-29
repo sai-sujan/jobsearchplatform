@@ -1,0 +1,174 @@
+Company: EduTrend
+Title: Backend Development Intern – EduTrend
+Backend Development Intern – EduTrend
+Link: https://www.linkedin.com/jobs/view/4366205433/
+Posted: Recent
+Location: 
+
+============================================================
+
+EduTrend
+
+Backend Development Intern – EduTrend
+
+New York City Metropolitan Area · 2 hours ago · 88 applicants
+
+Promoted by hirer · Company review time is typically 1 week
+
+Remote
+Internship
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+About Us
+
+EduTrend is a remote-first edtech startup building a behavioral tracking and analytics platform for students with special needs. With development underway and a beta launch planned for Fall 2025, we’re seeking backend development interns who are ready to build reliable APIs, work with real data models, and ship production-quality features.
+
+
+
+
+What We’re Building
+
+EduTrend enables schools and specialists to collect, track, and analyze behavioral data for early intervention and support planning. Backend interns will focus on the systems that power data integrity, performance, and scalability across our web and mobile clients.
+
+
+
+
+Intern Responsibilities
+
+Build and maintain backend services using Node.js and TypeScript
+Design and implement GraphQL schemas, queries, and mutations
+Model, store, and query data using MongoDB
+Implement authentication, authorization, and role-based access control
+Use Redis or other caching strategies to improve performance
+Collaborate with frontend developers to support end-to-end user flows
+Write and maintain unit and integration tests
+Contribute to CI/CD pipelines, debugging, and production readiness
+
+
+
+
+Required Skills
+
+Proficiency in JavaScript or TypeScript
+Experience building backend services with Node.js
+Experience designing and implementing GraphQL APIs
+Experience working with MongoDB or other NoSQL databases
+Familiarity with Redis or backend caching strategies
+Experience writing backend tests (unit and/or integration)
+Exposure to Docker and CI/CD workflows
+Strong understanding of API design, data modeling, and backend architecture
+Familiarity with Git and collaborative workflows
+Clear communication and ability to work async in a remote team
+
+
+
+
+What You’ll Gain
+
+Experience working on a real product preparing for beta launch, with features used by educators in real classroom environments
+An understanding of how backend systems support product requirements, permissions, and user roles in an applied setting
+Exposure to collaborative software development in a remote-first startup, including planning, reviews, and async communication
+Opportunities to take ownership of scoped backend tasks and see them through from design to release
+Experience working alongside frontend, design, and product teams in a full-stack environment
+Insight into how engineering decisions are made in an early-stage startup, including tradeoffs between speed, quality, and scalability
+Constructive feedback and mentorship aimed at improving code quality, system thinking, and professional engineering practices
+Portfolio-ready contributions that reflect real-world product development rather than academic exercises
+
+
+
+
+Join Us
+
+If you’re a back-end developer or development-focused student who cares deeply about building reliable, secure, and scalable systems that support real users, we want to hear from you! Due to being a start-up with a limited budget, this internship would be unpaid. In return, you’ll work on a real product, with real users, contributing to production back-end features, APIs, and data flows that are actively used in classrooms while producing meaningful portfolio work that reflects real-world industry practice and helps improve outcomes for students with special needs.
+
+… more
+
+Set alert for similar jobs
+
+Development Intern, New York City Metropolitan Area
+
+Off
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+88
+
+Applicants
+
+88
+
+Applicants in the past day
+
+Applicant seniority level
+
+58% Entry level people applied for this job
+
+17% Senior level people applied for this job
+
+2% CXO level people applied for this job
+
+Applicant education level
+
+56
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+41
+
+%
+
+have a Bachelor's Degree
+
+
+2
+
+%
+
+have a High School Diploma
+
+
+1
+
+%
+
+have other degrees
+
+There’s not enough quality data on this company just yet
+
+Once there are 30 complete member profiles from this company, we’ll be able to show you the company’s growth and hiring trends
+
+About the company
+
+EduTrend
+
+2,641 followers
+
+Follow
+
+Education
+
+ • 
+
+1 employee
+
+ • 
+
+11 on LinkedIn
+
+EduTrend is a real-time behavior tracking and analytics platform purpose-built for special education classrooms. In schools supporting students with autism, Down syndrome, cerebral palsy, and other complex needs, educators rely on behavior data to guide interventions. But too often, this data is collected on paper, delayed, or reviewed only after problems escalate.
+
+EduTrend replaces outdated systems with a secure digital platform that empowers educators to log, track, and analyze behavior events as they happen. Using current behavior tracking methodolog

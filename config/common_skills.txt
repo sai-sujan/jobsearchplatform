@@ -1,0 +1,189 @@
+# Common IT/AI/ML Skills Dictionary
+# This file contains skills commonly found in job descriptions
+
+# Programming Languages
+Python
+Java
+JavaScript
+TypeScript
+C++
+C#
+Go
+Rust
+R
+Scala
+Julia
+MATLAB
+Shell
+Bash
+
+# ML/AI Frameworks & Libraries
+PyTorch
+TensorFlow
+Keras
+scikit-learn
+XGBoost
+LightGBM
+Hugging Face
+Transformers
+spaCy
+NLTK
+OpenCV
+YOLO
+FastAPI
+Flask
+Django
+
+# ML/AI Concepts
+Machine Learning
+Deep Learning
+Natural Language Processing
+NLP
+Computer Vision
+Large Language Models
+LLM
+Generative AI
+Reinforcement Learning
+Transfer Learning
+Fine-tuning
+Model Training
+Model Deployment
+Neural Networks
+CNN
+RNN
+LSTM
+Transformer
+Attention Mechanism
+RAG
+Retrieval Augmented Generation
+Prompt Engineering
+Few-shot Learning
+Zero-shot Learning
+
+# Data Science & Analytics
+Data Analysis
+Statistical Analysis
+A/B Testing
+Hypothesis Testing
+Data Visualization
+Exploratory Data Analysis
+Feature Engineering
+Data Preprocessing
+Data Cleaning
+ETL
+Data Pipeline
+
+# Data Tools & Libraries
+Pandas
+NumPy
+Matplotlib
+Seaborn
+Plotly
+Jupyter
+SQL
+PostgreSQL
+MySQL
+MongoDB
+Redis
+Elasticsearch
+Apache Spark
+PySpark
+Hadoop
+Kafka
+Airflow
+dbt
+
+# Cloud & DevOps
+AWS
+Azure
+Google Cloud
+GCP
+Docker
+Kubernetes
+K8s
+CI/CD
+Jenkins
+GitLab CI
+GitHub Actions
+Terraform
+Ansible
+MLOps
+Model Monitoring
+Model Versioning
+
+# Version Control & Collaboration
+Git
+GitHub
+GitLab
+Bitbucket
+Jira
+Confluence
+
+# Web Development (for full-stack AI roles)
+React
+Node.js
+Express
+REST API
+GraphQL
+HTML
+CSS
+FastAPI
+Streamlit
+Gradio
+
+# Big Data & Distributed Computing
+Spark
+Hadoop
+Hive
+Presto
+Databricks
+Snowflake
+BigQuery
+
+# Specialized AI Tools
+LangChain
+LlamaIndex
+Pinecone
+Weaviate
+ChromaDB
+FAISS
+Weights & Biases
+MLflow
+TensorBoard
+Optuna
+Ray
+
+# Research & Academic
+Research
+Publications
+Papers
+Arxiv
+Conference
+NeurIPS
+ICML
+CVPR
+ACL
+EMNLP
+
+# Soft Skills (often mentioned)
+Problem Solving
+Communication
+Collaboration
+Team Player
+Agile
+Scrum
+Leadership
+Mentoring
+
+# Business & Domain
+Product Development
+User Experience
+UX
+Metrics
+KPIs
+Business Intelligence
+Analytics
+Optimization
+Scalability
+Performance
+Production

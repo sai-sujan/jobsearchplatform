@@ -1,0 +1,186 @@
+Company: Twine
+Title: AI Engineer - Contract
+AI Engineer - Contract with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4351204347/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Twine
+
+AI Engineer - Contract 
+
+United States · Reposted 15 hours ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Contract
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+This role focuses on developing an AI-driven agent to automate lead qualification and appointment scheduling for a sales team. The project requires designing and implementing a system that ingests leads from multiple sources, evaluates their quality based on defined criteria such as industry, company size, urgency, and budget, and assigns a lead score (hot, warm, or cold). The agent will automate follow-up actions, including sending personalized emails, proposing meeting times, updating CRM records, and notifying the sales team. The system should continuously learn from conversion outcomes to refine its communication and scoring strategies. You will collaborate closely with a business project lead who will provide detailed business logic, use cases, and oversee project delivery. The ideal candidate will have a strong background in building production-ready AI solutions, automation workflows, and API integrations.
+
+Deliverables
+
+
+ Design and develop an AI agent for automated lead intake, scoring, and appointment setting
+ Integrate the agent with various lead sources and CRM systems
+ Implement automated communication workflows based on lead scores
+ Develop a feedback loop for continuous learning and optimization of lead conversion strategies
+ Collaborate with the business project lead to align technical solutions with business requirements
+ Ensure the solution is robust, scalable, and production-ready
+
+
+Requirements
+
+
+ Proven experience in building and deploying AI-powered automation solutions
+ Strong proficiency in Python or similar programming languages
+ Expertise in API development and integration with third-party platforms (e.g., CRMs, email services)
+ Familiarity with machine learning techniques for lead scoring and process optimization
+ Experience with workflow automation tools and frameworks
+ Ability to design systems that are reliable, maintainable, and secure
+ Excellent problem-solving and communication skills
+ Availability for ongoing collaboration on a long-term project
+ Experience working with sales or customer operations processes is a plus
+
+
+About Twine
+
+Twine is a leading freelance marketplace connecting top freelancers, consultants, and contractors with companies needing creative and tech expertise. Trusted by Fortune 500 companies and innovative startups alike, Twine enables companies to scale their teams globally.
+
+Our Mission
+
+Twine's mission is to empower creators and businesses to thrive in an AI-driven, freelance-first world.
+… more
+
+Set alert for similar jobs
+
+Artificial Intelligence Engineer, United States
+
+Off
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+815
+
+total
+
+135
+
+in the past day
+
+Candidate seniority level
+
+69% Entry level candidates
+
+23% Senior level candidates
+
+Candidate education level
+
+50
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+16
+
+%
+
+have a Master of Science
+
+
+14
+
+%
+
+have a Bachelor's Degree
+
+
+20
+
+%
+
+have other degrees
+Exclusive Job Seeker Insights about Twine
+Powered by Bing
+
+The latest hiring trend
+
+152
+
+Total employees
+
+134%
+
+Company-wide
+
+2 year growth
+
+100%
+
+Engineering
+
+2 year growth
+
+Jan 2024
+May 2024
+Sep 2024
+Jan 2025
+May 2025
+Sep 2025
+Jan 2026
+0
+100
+200
+
+Median employee tenure: 1.4 years
+
+Show Premium Insights
+About the company
+
+Twine
+
+369,719 followers
+
+Follow
+
+Software Development
+
+ • 
+
+2-10 employees
+
+ • 
+
+152 on LinkedIn
+
+Twine is home to a network of over 750k+ freelance experts and 50k+ clients across 195 countries. We connect talented people with flexible work and help businesses find the perfect expert for any project - big or small.
+
+For Businesses & Clients:
+Tired of endlessly searching for the right talent? We’ve got you covered. Twine makes it easy to find and hire freelance experts in tech, creative, AI and more. From software developers and graphic designers to animators and content creators. Our global network means you can hire the one-in-a-million expert remotely or locally. 
+
+Ready to hire? Head to www.twine.net
+
+For Freelancers, creators and consultants:
+Ready to take control of your career and say goodbye to the 9-5? Join our community and discover top-tier projects from clients all over the world. Build your free portfolio and find work that truly inspires you. Forget the endless job boards; we're here to help you do what you love.
+
+Ready to get started? Head to www.twine.net/freelancers
+
+For AI Companies
+Need high-quality, human-powered data to train your AI? Our diverse global network of contributors is ready to help. From voice recordings and video datasets to AI model rating experts and annotators, we can get you the custom audio-visual datasets or the AI training expertise

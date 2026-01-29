@@ -1,0 +1,410 @@
+Company: Diligent Tec, Inc
+Title: Data Engineer (Machine Learning)
+Data Engineer (Machine Learning) [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4366167754/
+Posted: 2 hours ago
+Within the past 24 hours
+Location: 
+Premium Indicators: job-card-container__footer-item--highlighted
+
+============================================================
+
+Diligent Tec, Inc
+
+Data Engineer (Machine Learning)
+
+Austin, TX · 2 hours ago · Over 100 people clicked apply
+
+Responses managed off LinkedIn
+
+Remote
+Contract
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Role: Data Engineer (Machine Learning)
+
+Location: 100% Remote
+
+Duration: Long Term Contract (2+ years)
+
+
+
+Role Overview
+
+
+
+The team builds data and machine learning services for advertiser sellers, helping them optimize ad budgets and campaign goals by recommending the right inventory, keywords, budgets, and bids, and continuously improving campaign performance. This is a high-growth area with strong business impact and involves working with massive datasets and applied data science techniques.
+
+
+
+Key Responsibilities
+
+
+
+
+
+
+
+Collaborate with Applied Researchers, Engineers, Analytics, and cross-functional teams to deliver end-to-end production-ready solutions
+
+
+
+
+
+Design and implement scalable data pipelines to collect, process, and analyze large datasets
+
+
+
+
+
+Integrate and deploy ML models into production systems
+
+
+
+
+
+Perform deep data analysis to identify trends, interpret experimentation, and size opportunities in the advertising domain
+
+
+
+
+
+Translate complex datasets into clear, actionable recommendations for both technical and non-technical stakeholders
+
+
+
+
+
+Build dashboards to monitor system and business performance
+
+
+
+
+
+
+
+Must-Have Skills
+
+
+
+
+
+
+
+Building data pipelines and dashboards
+
+
+
+
+
+Implementing and deploying ML models
+
+
+
+
+
+Strong dataset analysis and ability to provide actionable insights
+
+
+
+
+
+Excellent communication skills and ability to work with business partners across all levels
+
+
+
+
+
+Active participation in team discussions and solutioning
+
+
+
+
+
+
+
+Requirements
+
+
+
+
+
+
+
+BS/MS in Computer Science or equivalent experience
+
+
+
+
+
+Experience with big data tools: Spark, Hadoop
+
+
+
+
+
+Strong knowledge of databases: SQL, NoSQL
+
+
+
+
+
+Good understanding of machine learning applications
+
+
+
+
+
+Strong programming skills: SQL, Python, Scala, or Java
+
+
+
+
+
+Experience solving data science problems and deploying models into production for evaluation
+
+
+
+
+
+Strong analytical skills in large dataset analysis, data mining, segmentation
+
+
+
+
+
+Data visualization experience (Tableau/Kibana) is a plus
+
+… more
+
+Set alert for similar jobs
+
+Data Engineer, Austin, Texas, United States
+
+Off
+See how you compare to others who clicked apply
+Based on LinkedIn data. Excludes subsidiaries.
+Candidates who clicked apply
+
+325
+
+total
+
+325
+
+in the past day
+
+Candidate seniority level
+
+59% Entry level candidates
+
+39% Senior level candidates
+
+Candidate education level
+
+72
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+27
+
+%
+
+have a Bachelor's Degree
+
+
+1
+
+%
+
+have a Master of Business Administration
+
+There’s not enough quality data on this company just yet
+
+Once there are 30 complete member profiles from this company, we’ll be able to show you the company’s growth and hiring trends
+
+About the company
+
+Diligent Tec, Inc
+
+27,693 followers
+
+Follow
+
+IT Services and IT Consulting
+
+ • 
+
+11-50 employees
+
+ • 
+
+28 on LinkedIn
+
+Interested in working with us in the future?
+
+Privately share your profile with our recruiters – you’ll be noted as expressing interest for up to a year and be notified about jobs and updates. Learn more
+
+I’m interested
+More jobs
+
+Data Scientist (Verified job)
+Data Scientist 
+
+Blankfactor
+
+United States (Remote)
+
+4 benefits
+
+Posted on January 23, 2026, 12:25 PM
+3 days ago
+
+ · 
+
+ Easy Apply
+
+AI Engineer
+
+kadence
+
+United States (Remote)
+
+$150K/yr - $170K/yr
+
+Actively reviewing applicants
+
+Posted on January 23, 2026, 4:30 PM
+2 days ago
+
+ · 
+
+ Easy Apply
+
+Machine Learning Engineer - Insurance AI (Verified job)
+Machine Learning Engineer - Insurance AI 
+
+Nearmap
+
+Carlsbad, CA (Remote)
+
+Medical benefit
+
+Posted on January 22, 2026, 4:59 PM
+3 days ago
+
+ · 
+
+ Easy Apply
+
+AI/ML Engineer (Verified job)
+AI/ML Engineer 
+
+Prosum
+
+United States (Remote)
+
+$75/hr - $90.60/hr
+
+ • 
+
+10 benefits
+
+Actively reviewing applicants
+
+Posted on January 20, 2026, 3:58 PM
+5 days ago
+
+ · 
+
+ Easy Apply
+
+Machine Learning Scientist (Verified job)
+Machine Learning Scientist 
+
+ Wave Mobile Money Inc
+
+Canada, NC (Remote)
+
+$222.7K/yr
+
+ • 
+
+Medical benefit
+
+Posted on January 23, 2026, 9:52 AM
+3 days ago
+
+Python Data Engineer (Verified job)
+Python Data Engineer 
+
+iMerit Technology
+
+United States (Remote)
+
+Actively reviewing applicants
+
+Posted on January 22, 2026, 1:10 PM
+3 days ago
+
+ · 
+
+ Easy Apply
+
+AI/ML Engineer - W2 Contract
+
+Trident Consulting
+
+Mountain View, CA (Remote)
+
+$50/hr - $55/hr
+
+Actively reviewing applicants
+
+Posted on January 26, 2026, 8:59 AM
+3 hours ago
+
+ · 
+
+ Easy Apply
+
+Junior Software Engineer
+
+Consertus
+
+Orange County, CA (Remote)
+
+Posted on January 26, 2026, 12:11 PM
+48 minutes ago
+
+Machine Learning/AI Contractor
+
+eTeam
+
+Louisville, KY (Remote)
+
+$50/hr - $60/hr
+
+1 school alumni works here
+
+Posted on January 26, 2026, 11:36 AM
+1 hour ago
+
+ · 
+
+ Easy Apply
+
+Data Engineer (Verified jo

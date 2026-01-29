@@ -1,0 +1,61 @@
+{
+    "ats_score": 85,
+    "location": "Chicago, IL (Open to relocate)",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "TensorFlow",
+            "PyTorch",
+            "Scikit-learn",
+            "Hugging Face Transformers"
+        ],
+        "LLM & NLP Tools": [
+            "LangChain",
+            "LangSmith",
+            "LlamaIndex",
+            "Multi-Agents",
+            "Finetuning (LoRA, QLoRA)",
+            "OpenAI, Ollama",
+            "RAG Systems"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Computer Vision",
+            "Anomaly Detection"
+        ],
+        "MLOps & Deployment": [
+            "MLflow",
+            "Git, GitHub Actions",
+            "CI/CD Pipelines",
+            "Model Deployment"
+        ],
+        "Cloud & Infrastructure": [
+            "AWS",
+            "Azure"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL, MySQL, MongoDB",
+            "Weaviate",
+            "FAISS",
+            "ChromaDB"
+        ],
+        "Web & DevOps": [
+            "FastAPI,React",
+            "Docker Containerization"
+        ]
+    },
+    "points": [
+        "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in data-driven insights.",
+        "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for client solutions.",
+        "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring reliable analytical outputs.",
+        "\\item Introduced batched query extraction using Python and SQL, reducing processing overhead by ~80% per query and enabling efficient handling of large datasets.",
+        "\\item Designed an ML-based anomaly detection system for workflows, reducing redundant prompts by 25%, demonstrating capability in solving complex business problems.",
+        "\\item Containerized and deployed scalable ML models using Docker and AWS, ensuring robust pipelines for data science applications."
+    ],
+    "meta_job_title": "AI Engineering/Data Scientist - Summer 2027 Internship",
+    "meta_company": "Lensa",
+    "meta_link": "https://www.linkedin.com/jobs/view/4366266363/"
+}

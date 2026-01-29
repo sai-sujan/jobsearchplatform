@@ -1,0 +1,206 @@
+Company: Emonics LLC
+Title: Machine Learning Engineer, Entry Level
+Machine Learning Engineer, Entry Level [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4365998807/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Emonics LLC
+
+Machine Learning Engineer, Entry Level
+
+Boston, MA · 4 hours ago · Over 100 applicants
+
+Promoted by hirer · No response insights available yet
+
+On-site
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+Job description
+
+ About the role
+
+ We are hiring a Machine Learning Engineer to help design, build, and deploy ML solutions. This role focuses on turning models into reliable systems and collaborating with engineering teams to operationalize ML.
+
+ 
+
+ What you will do
+
+ • Develop and train ML models with reproducible pipelines
+
+ • Build data preprocessing workflows and feature generation
+
+ • Deploy models to production and monitor performance
+
+ • Work with stakeholders to define success metrics and test outcomes
+
+ • Document experiments and contribute to best practices
+
+ 
+
+ What you are looking for
+
+ • Degree in CS, Data Science, Engineering, or related field
+
+ • Strong Python, data handling (pandas), and ML fundamentals
+
+ • Familiarity with scikit-learn and basic model evaluation
+
+ • Understanding of software engineering basics (Git, testing, modular code)
+
+ 
+
+ Nice to have
+
+ • PyTorch or TensorFlow
+
+ • Experience with ML pipelines, Airflow, or workflow orchestration
+
+ • Exposure to CI/CD, Docker, and cloud services
+
+… more
+
+Set alert for similar jobs
+
+Machine Learning Engineer, Boston, Massachusetts, United States
+
+Off
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+392
+
+Applicants
+
+392
+
+Applicants in the past day
+
+Applicant seniority level
+
+86% Entry level people applied for this job
+
+7% Senior level people applied for this job
+
+1% Manager level people applied for this job
+
+Applicant education level
+
+89
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+8
+
+%
+
+have a Bachelor's Degree
+
+
+2
+
+%
+
+have a Doctor of Philosophy
+
+
+1
+
+%
+
+have other degrees
+Exclusive Job Seeker Insights about Emonics LLC
+Powered by Bing
+
+Company focus areas
+
+• Expansion of IT Staffing Services: Emonics aims to expand its IT staffing and consulting services across various industries nationwide, providing both permanent and temporary employment solutions.
+
+...more
+
+Sources: myvisajobs.com +1 more
+
+Hiring & headcount
+
+Downsizing across multiple functions: The company has experienced a significant reduction in headcount across various departments, with notable decreases in 'Human Resources' (-11%), 'Information Technology' (-20%), and 'Engineering' (-16%), indicating a potential restructuring or cost-cutting initiative. Stable or slightly growing departments: Despite overall downsizing, some departments like 'Research' (5%), 'Healthcare Services' (21%), and 'Administrative' (40%) have shown growth, suggesting these areas might be focal points for new initiatives or investments. Significant reduction in job openings: The drastic decrease in job openings across most functions, including 'Engineering' (-96%) and 'Operations' (-92%), points to a hiring freeze or a strategic shift in workforce planning. Potential focus on core operations: The slight increase in 'Operations' headcount (3%) and the presence of job openings in this function suggest a potential focus on maintaining or optimizing core operational capabilities.
+… more
+
+The latest hiring trend
+
+922
+
+Total employees
+
+21%
+
+Company-wide
+
+2 year growth
+
+0%
+
+Consulting
+
+2 year growth
+
+Jan 2024
+May 2024
+Sep 2024
+Jan 2025
+May 2025
+Sep 2025
+Jan 2026
+0
+500
+1000
+1500
+
+Median employee tenure: 2.8 years
+
+Competitors
+
+Emonics operates in the IT recruitment and staff augmentation industry, facing competition from numerous companies. The competitive landscape is characterized by a high number of active competitors, including both funded and unfunded companies. Key competitors like TEKsystems, Motion Recruitment, and S.i. Systems offer similar services, focusing on providing skilled IT professionals to meet the dynamic needs of businesses. Emonics differentiates itself by targeting entry-level professionals and maintaining a strong presence in multiple US locations.
+… more
+
+Sources: tracxn.com
+
+Show Premium Insights
+About the company
+
+Emonics LLC
+
+204,510 followers
+
+Following
+
+Staffing and Recruiting
+
+ • 
+
+1001-5000 employees
+
+ • 
+
+860 on LinkedIn
+
+Emonics LLC connects you with the right talent at the right time. We assist our clients in reinventing innovation, optimizing operations, and reshaping perceptions so they can remain at the forefront in our rapidly changing world. By working with these collective goals in mind, we're making a difference in people's lives.
+
+We provide a vast array of services within a variety of industries. Our personalized services include Software Development, Information Technology, Healthcare Consulting, Technology Consulting, Staff Augmentation, Management Consulting, BPO/KPO/RPO, and B.P. Assurance. These services are provided within a diverse range of industries. These industries include Banking and Financial Service

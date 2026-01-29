@@ -1,0 +1,207 @@
+Company: Banavo.AI
+Title: AI Engineer
+AI Engineer [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4362050653/
+Posted: Recent
+Location: 
+Premium Indicators: promoted; badge:actively reviewing applicants
+
+============================================================
+
+Banavo.AI
+
+AI Engineer
+
+United States · 6 days ago · Over 100 applicants
+
+Promoted by hirer · Actively reviewing applicants
+
+Remote
+Full-time
+Easy Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+About the job
+
+AI Engineer (Banavo)
+
+
+
+
+What you’ll do
+
+
+
+
+	•	Take high-level goals and ambiguous requirements, break them into a clear plan, drive execution end-to-end with minimal oversight, and proactively communicate progress, risks, and tradeoffs (written and verbal) across engineering, product, and stakeholders.
+
+	•	Use AI (ChatGPT/Co-Pilot/Perplexity/AI-native IDEs/Google, etc.) extensively and naturally to research, design, develop, and test solutions to meet business and product goals.
+
+	•	Build and ship AI-powered features: agentic workflows, RAG, tool-calling assistants, deterministic AI-to-SQL, and reliability guardrails/evals.
+
+	•	Develop and maintain Python/FastAPI services (including async/streaming endpoints where needed).
+
+	•	Build and operate retrieval/data layers for AI (chunking, embeddings, indexing, reranking, caching) across structured + unstructured sources.
+
+	•	Collaborate with product and data teams to deliver user-facing AI workflows and internal platform capabilities.
+
+	•	Improve operability: logging, metrics, alerting, runbooks, and incident response hygiene.
+
+
+
+
+Tech stack you’ll work with
+
+
+
+
+	•	AI/LLM: LLM APIs, tool/function calling, RAG/embeddings, prompt/versioning, evals/guardrails
+
+	•	Backend: Python, FastAPI
+
+	•	Data/Retrieval: S3, Athena/Trino, vector/graph retrieval, caching patterns
+
+	•	Cloud/Platform: AWS, EKS, Docker, ECR
+
+	•	GitOps: FluxCD (HelmRelease, Kustomize)
+
+	•	IaC: Terraform
+
+	•	Observability: structured logging, metrics/tracing fundamentals
+
+
+
+
+Required qualifications (tools/frameworks)
+
+
+
+
+	•	Python with FastAPI for building and operating production AI services (async + streaming where needed).
+
+	•	LLM application engineering: agentic workflows, tool calling, RAG, and grounding against business data.
+
+	•	Multi-agent orchestration best practices: tool interfaces/contracts, planning vs execution separation, error handling, retries/timeouts, state management, and deterministic output formats.
+
+	•	Evals/reliability: measuring quality, reducing hallucinations, and optimizing latency/cost with versioned prompts.
+
+	•	Docker: building and shipping images; working with registries and runtime configuration.
+
+	•	Production ownership: ability to debug across app + data layers using logs/metrics and improve reliability over time.
+
+	•	Experience building multi-tenant SaaS patterns (tenant isolation, RBAC, per-tenant config, auditability) and security best practices (secrets hygiene, safe data access boundaries).
+
+
+
+
+Preferred qualifications
+
+
+
+
+	•	AWS and EKS experience shipping and operating production services.
+
+	•	Kubernetes fundamentals: Deployments/Services/Ingress, requests/limits, probes, HPA/PDB, and hands-on debugging with kubectl.
+
+	•	FluxCD GitOps workflows: sources, reconciliation, dependencies, HelmRelease/Kustomizations, drift management.
+
+	•	Terraform: modules, environments/workspaces, remote state, and building/operating cloud infrastructure.
+
+	•	AI-to-SQL and analytics agent experience (safe, deterministic query generation; schema grounding).
+
+… more
+
+This job alert is on
+
+Artificial Intelligence Engineer, United States
+
+On
+See how you compare to other applicants
+Based on LinkedIn data. Excludes subsidiaries.
+Applicants for this job
+
+1869
+
+Applicants
+
+125
+
+Applicants in the past day
+
+Applicant seniority level
+
+73% Entry level people applied for this job
+
+15% Senior level people applied for this job
+
+Applicant education level
+
+42
+
+%
+
+have a Master's Degree (Similar to you)
+
+
+28
+
+%
+
+have a Master of Science
+
+
+9
+
+%
+
+have a Bachelor's Degree
+
+
+21
+
+%
+
+have other degrees
+
+There’s not enough quality data on this company just yet
+
+Once there are 30 complete member profiles from this company, we’ll be able to show you the company’s growth and hiring trends
+
+About the company
+
+Banavo.AI
+
+3,979 followers
+
+Follow
+
+Technology, Information and Media
+
+ • 
+
+11-50 employees
+
+ • 
+
+14 on LinkedIn
+
+Rooted in the Sanskrit-origin word "बनावो" (banaavo) – meaning “to make”, Banavo.AI enables Agentic Commerce for retailers and brands through a powerful Agent OS platform that implements Seller AI Agents and other AI Agents to automate commerce workflows.
+
+Powered by autonomous AI agents and agentic workflows, Banavo.AI transforms how businesses drive sales, marketing, and revenue growth. Through conversational interfaces and dynamic automation, it eliminates friction—enabling AI and human teams to work together seamlessly, continuously optimizing conversions and accelerating business outcomes.
+… more
+
+Interested in working with us in the future?
+
+Privately share your profile with our recruiters – you’ll be noted as expressing interest for up to a year and be notified about jobs and updates. Learn more
+
+I’m interested
+More jobs
+
+Arti

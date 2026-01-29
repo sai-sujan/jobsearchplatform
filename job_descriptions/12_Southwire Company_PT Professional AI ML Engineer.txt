@@ -1,0 +1,73 @@
+Company: Southwire Company
+Title: PT Professional, AI ML Engineer.
+PT Professional, AI ML Engineer. with verification [PREMIUM]
+Link: https://www.linkedin.com/jobs/view/4343446051/
+Posted: Recent
+Location: 
+Premium Indicators: promoted
+
+============================================================
+
+Southwire Company
+
+PT Professional, AI ML Engineer. 
+
+Carrollton, GA · Reposted 3 days ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+On-site
+Part-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Chris Von Behren
+
+• 3rd
+
+Contractor Solutions Professional at Southwire 
+
+School alum from Missouri State University
+
+Message
+About the job
+
+A leader in technology and innovation, Southwire Company, LLC is one of North America’s largest wire and cable producers. Southwire and its subsidiaries manufacture building wire and cable, utility products, metal-clad cable, portable and electronic cord products, OEM wire products and engineered products. In addition, Southwire supplies assembled products, contractor equipment, electrical components, hand tools and jobsite power and lighting solutions. The company also offers digital solutions including contractor planning and utility grid resiliency as well as field services including cable testing, rejuvenation and replacement to support our customers as a value-add partner. We are proud to offer competitive compensation, employee benefits, tuition reimbursement and unlimited growth opportunities. Our more than seven decades of progressive growth can be attributed to our determination to developing innovative systems and solutions, exercising environmental stewardship and enhancing the well-being of the communities in which we work and live. How will you power what’s possible?
+
+Long Description
+
+A part-time AI/ML engineer designs, builds, and deploys machine learning systems with flexible hours. Responsibilities include using deep learning, NLP, LLM/RAG, computer vision, chatbots, RestAPI integrations, and robotics to improve business results and support innovation. This role involves collaborating with a multidisciplinary team to advance the company's AI strategy and develop early-stage solutions. This position offers an opportunity to leverage new AI trends and make practical impacts and produce business outcomes.
+
+Essential Duties And Responsibilities
+
+
+Data Preparation and Analysis: Using Python and other programming languages/tools, will be Collecting, cleaning, preprocessing, and transforming large datasets to ensure quality and relevance for model training.
+Model Development and Optimization: Using Python and other programming languages/tools, will be designing, building, training, and testing, ML models. Deploy these models in production environment. Utilize algorithms using frameworks like TensorFlow, Keras, etc.
+System Integration: Collaborating with cross functional teams to integrate AI/ML models into existing applications and APIs including RestAPIs. using deep learning, neuro-linguistic programming (NLP), LLM/RAG, computer vision, chatbots, RestAPI integrations, and robotics will be able to solve business challenges.
+Deployment and Monitoring: Assisting in the deployment, monitoring, and maintenance of models in production environments (often cloud-based platforms like Google Cloud and Azure).
+Experimentation and Documentation: Running AI system experiments, analyzing results, documenting findings, and refining models based on performance metrics.
+Collaboration and Communication: Working with cross-functional teams and stakeholders to understand business problems and communicate technical concepts and results effectively to both technical and non-technical audiences. Involved in multiple project technical support activities.
+Staying Current: Keeping abreast of the latest AI/ML trends, tools, and best practices, including generative AI and MLOps.
+
+
+Long Description
+
+Qualifications And Experience
+
+
+A bachelor's degree in computer science, statistics, mathematics, or a related field is typically required, with a master's degree often preferred.
+Area of study / expertise: Strong proficiency in programming languages such as Python (including libraries like pandas, NumPy, and scikit-learn etc) and SQL. Experience with other languages like R or Java is a plus.
+ Strong foundation in mathematics and statistics (probability, linear algebra, algorithms); experience with ML frameworks and libraries (TensorFlow, PyTorch, Keras, Scikit-learn; Clear understanding of MLOps practices and the full ML lifecycle
+ AI/ML Expertise: Solid understanding of machine learning models and deep learning architectures (e.g., neural networks, decision trees) and familiarity with frameworks like TensorFlow, PyTorch, and Keras.
+ Familiarity with cloud computing platforms (e.g., Google Cloud, Azure) for model deployment and scaling
+ Certifications: Visualization Focus, ML or Generative AI Focus, Cloud and scaling focus (Gemini, Vertex AI preferably)
+ Strong problem-solving and analytical skills; effective time management and self-discipline (crucial for part-time, flexible roles); excellent communication and collaboration skills; curiosity and a desire for continuous l

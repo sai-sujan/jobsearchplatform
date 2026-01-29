@@ -1,0 +1,121 @@
+/* Add these to JobSidebar.css or append */
+
+.tech-stack-merger {
+    display: flex;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.stack-column {
+    flex: 1;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.stack-column.suggested {
+    border-color: #90cdf4;
+    background: #ebf8ff;
+}
+
+.stack-column.final {
+    border-color: #68d391;
+    background: #f0fff4;
+}
+
+.stack-column h4 {
+    margin: 0 0 12px 0;
+    font-size: 0.95rem;
+    color: #2d3748;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.helper-text {
+    font-size: 0.75rem;
+    color: #718096;
+    font-weight: normal;
+}
+
+.stack-category {
+    margin-bottom: 15px;
+}
+
+.stack-category h5 {
+    margin: 0 0 6px 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4a5568;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skill-chip {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.skill-chip .icon {
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+/* Suggested Chips */
+.skill-chip.suggested {
+    background: white;
+    color: #2b6cb0;
+    border-color: #bee3f8;
+}
+
+.skill-chip.suggested:hover {
+    background: #bee3f8;
+    transform: translateY(-1px);
+}
+
+/* Final Chips */
+.skill-chip.final {
+    background: white;
+    color: #2f855a;
+    border-color: #c6f6d5;
+}
+
+.skill-chip.final:hover {
+    background: #c6f6d5;
+    color: #c53030;
+    /* Red on hover to indicate delete */
+    border-color: #feb2b2;
+}
+
+.skill-chip.final:hover .icon {
+    content: "×";
+}
+
+.stack-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reset-btn {
+    font-size: 0.8rem;
+    color: #718096;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -1,0 +1,102 @@
+Company: AMD
+Title: Software Developer, BI
+Software Developer, BI
+Link: https://www.linkedin.com/jobs/view/4366180299/
+Posted: Recent
+Location: 
+
+============================================================
+
+AMD
+
+Software Developer, BI
+
+United States · 9 minutes ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Navin and others in your network
+
+Show all
+About the job
+
+About The Company
+
+At AMD, our mission is to build exceptional products that accelerate next-generation computing experiences, encompassing artificial intelligence, data centers, personal computers, gaming, and embedded systems. We are driven by a culture of innovation and collaboration, constantly pushing the boundaries of technology to solve some of the world's most pressing challenges. Our commitment to execution excellence is complemented by a humble, inclusive, and diverse work environment that values different perspectives. Join us as we shape the future of AI and beyond, offering opportunities to advance your career while contributing to groundbreaking developments in technology.
+
+About The Role
+
+We are seeking a motivated Business Intelligence Software Developer to join our team. In this role, you will support the development of data models, reports, and automation solutions that drive insights across the organization. Your responsibilities will include building and maintaining Power BI reports and dashboards, developing data models, and integrating various data sources such as SharePoint Online and SQL databases. This position offers an excellent opportunity for someone with foundational experience in Power BI, SQL, and Python to grow into a broader analytics engineering and Power Platform skillset. You will work closely with senior team members to design scalable BI solutions, optimize data structures, and support key reporting initiatives, ensuring data accuracy and adherence to governance standards.
+
+Qualifications
+
+Bachelor's degree in Information Management, Computer Science, Mathematics, Statistics, or equivalent experience
+Experience in BI development, data analytics, or related technical roles
+Hands-on experience with Power BI, including DAX and Power Query
+Understanding of data modeling concepts such as star schema, relationships, and measures
+Practical experience with SharePoint Online lists, including creation and calculated columns
+Proficiency with SQL and familiarity with SQL Server
+Basic to intermediate Python scripting skills
+Strong troubleshooting skills for data issues and problem-solving processes
+Excellent communication skills and ability to collaborate with technical and non-technical stakeholders
+Exposure to Power Platform tools such as Power Automate or Power Apps is a plus
+Familiarity with version control tools like Git
+Knowledge of BI governance, workspace management, or deployment pipelines
+Ability to handle multiple tasks and adapt to changing priorities
+Curious, motivated, and eager to learn new tools and technologies
+Attention to detail with a focus on producing accurate and reliable outputs
+
+Responsibilities
+
+Build and maintain Power BI reports, dashboards, and datasets to support business needs
+Develop DAX measures, calculated columns, and optimized data models within Power BI
+Create and enhance Power Query (M) transformations and ETL logic to ensure data quality and consistency
+Assist in building and maintaining Power BI semantic models for efficient data analysis
+Create, configure, and maintain SharePoint Online lists, including calculated columns and data structures
+Integrate SharePoint Online lists and other data sources into Power BI for comprehensive reporting
+Write and maintain SQL queries, stored procedures, and functions to support reporting requirements
+Provide basic SQL Server administration and troubleshooting support as needed
+Utilize Python scripting for data manipulation, automation, or analytics tasks
+Collaborate with business stakeholders to understand reporting requirements and translate them into technical solutions
+Ensure data accuracy, documentation, and compliance with governance standards
+Participate in continuous improvement of BI solutions and workflows
+
+Benefits
+
+Competitive salary and comprehensive health benefits
+Opportunities for professional development and career growth
+Inclusive and collaborative work environment
+Flexible remote work options
+Access to cutting-edge tools and technologies
+Supportive team culture that encourages innovation and learning
+
+Equal Opportunity
+
+AMD is an equal opportunity employer. We consider all applicants without regard to age, ancestry, color, marital status, medical condition, mental or physical disability, national origin, race, religion, political or third-party affiliation, sex, pregnancy, sexual orientation, gender identity, military or veteran status, or any other characteristic protected by law.
+
+… more
+
+Featured benefits
+
+Medical insurance, Vision insurance, Dental insurance, 401(k)
+
+Set alert for similar jobs
+
+Software Engineer, United States
+
+Off
+See how yo

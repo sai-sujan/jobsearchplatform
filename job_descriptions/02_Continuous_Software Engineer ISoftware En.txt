@@ -1,0 +1,128 @@
+Company: Continuous
+Title: Software Engineer I
+Software Engineer I with verification
+Link: https://www.linkedin.com/jobs/view/4321519429/
+Posted: Recent
+Location: 
+
+============================================================
+
+Continuous
+
+Software Engineer I 
+
+United States · 24 minutes ago · Over 100 people clicked apply
+
+Promoted by hirer · Responses managed off LinkedIn
+
+Remote
+Full-time
+Apply
+Save
+Use AI to assess how you fit
+
+Show match details
+
+Create cover letter
+
+Help me stand out
+
+People you can reach out to
+
+Adam Salonen 
+
+• 3rd+
+
+Software Developer - Permission Assist
+
+Recently hired
+
+Message
+About the job
+
+Our Mission – Why We Need You
+
+As a Software Engineer I at Continuous, your mission is to help build and maintain reliable, scalable, and secure software that powers automation for financial institutions. You will contribute high-quality code, leverage modern AI-assisted development practices, and support rapid delivery of customer-facing features. This role is foundational to our engineering organization — ensuring our products remain robust while we innovate faster and smarter.
+
+Objectives – The Problems You’ll Solve
+
+
+Deliver production-ready software that meets business, customer, and security requirements.
+Increase engineering velocity through effective use of AI tooling and strong development practices.
+Maintain and improve code quality, testing coverage, and system reliability.
+Collaborate across Engineering, Product, QA, and Support to deliver integrated solutions.
+Reduce defects and operational friction through proactive testing, debugging, and documentation.
+
+
+How You’ll Get There
+
+In your first Month:
+
+
+Ramp up on Continuous’ products, architecture, and development standards.
+Set up local development environments, CI/CD workflows, and AI coding assistants.
+Review existing codebases, documentation, and testing strategies.
+Begin contributing small, well-scoped code changes with guidance from senior engineers.
+
+
+In Your First 3 Months
+
+
+Deliver end-to-end features or enhancements using a combination of various technologies including: React/TypeScript, .NET, C#, ASP.net, or Python.
+Write clean, testable, and well-documented code aligned with team standards.
+Actively participate in code reviews and incorporate feedback.
+Use AI-assisted development tools to improve speed and quality of delivery.
+Collaborate with QA on testing, bug verification, and release readiness.
+
+
+In Your First 6 Months
+
+
+Own moderately complex features within a designated product area.
+Contribute to architectural discussions and technical design reviews.
+Improve test coverage through unit and integration tests.
+Assist Customer Support as an escalation point for technical issues.
+Proactively identify opportunities to improve codebase performance, reliability, or maintainability.
+
+
+At 9 Months
+
+
+Consistently deliver high-quality features with minimal supervision.
+Contribute to learning discussions with peers on effective AI tooling usage and development best practices.
+Lead small technical initiatives or refactors that improve team efficiency.
+Demonstrate strong ownership of code quality, testing, and documentation.
+Be a trusted contributor in planning, estimation, and execution of engineering work.
+
+
+Competencies – We’re Looking For Competency In One or More of These
+
+Modern Frontend Engineering – Hands-on experience building applications with React, JavaScript, or TypeScript, including modern patterns, hooks, state management, and performance optimization.
+
+Backend Engineering with .NET – Practical experience using C#, ASP.NET, .NET frameworks, Python or LINQ. Following back-end best practices and SOLID principles in production systems.
+
+AI-Assisted Development – Demonstrated use of AI coding assistants (e.g., GitHub Copilot, ChatGPT, Claude) to accelerate development, improve quality, and enhance problem-solving.
+
+Software Architecture Fundamentals – Understanding of common design patterns and how to implement scalable, maintainable systems.
+
+Testing & Quality Mindset – Experience writing unit and integration tests using tools such as Jest and React Testing Library, with a focus on reducing defects.
+
+Version Control & Delivery – Proficiency with Git workflows, collaborative branching strategies, and CI/CD pipelines.
+
+Debugging & Performance Profiling – Ability to troubleshoot complex issues and optimize application performance.
+
+What’s in it for you?
+
+
+The opportunity to grow as an engineer in a modern, AI-forward development environment.
+Real ownership over meaningful product features used by financial institutions.
+Exposure to scalable, production-grade systems and cloud-based architectures.
+A collaborative, remote-first culture that values learning and mentorship.
+The ability to influence how engineering teams adopt and scale AI-assisted workflows.
+
+
+How We Work – Our Core Values
+
+Be Kind – We are kind and helpful. We care and act with empathy. We take care of ourselves, each other, and our customers. We understand boundaries. We believe clear is kind. We exhibit healthy behaviors and are self-aware.
+
+Be Authentic – We are genuine. We are real. No pretenses. We know ourselves and celebrate our differences of thoughts, ideas, and skill
