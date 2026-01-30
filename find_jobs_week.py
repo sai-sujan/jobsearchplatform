@@ -121,7 +121,7 @@ def main():
 
     # Load existing jobs
     existing_df = load_existing_master()
-    existing_urls = set(existing_df['Link'].tolist()) if not existing_df.empty else set()
+    existing_urls = set(existing_df['Job_Link'].dropna().tolist()) if not existing_df.empty and 'Job_Link' in existing_df.columns else set()
 
     # Initialize components
     chrome_path = os.getenv("CHROME_PATH", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
