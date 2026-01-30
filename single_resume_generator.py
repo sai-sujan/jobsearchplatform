@@ -62,8 +62,8 @@ class SingleResumeGenerator:
         # Pattern matches: \faMapMarker\ Springfield, MO, USA\\
         pattern = r'(\\faMapMarker\\ )Springfield, MO, USA(\\\\)'
 
-        # Clean up the location - remove (Open to Relocate) since it's not in this template
-        clean_location = location.replace('(Open to relocate)', '').replace('(Open to Relocate)', '').strip()
+        # Clean up the location - preserve (Open to Relocate)
+        clean_location = location.strip()
 
         replacement = f'\\1{clean_location}\\2'
         return re.sub(pattern, replacement, content)

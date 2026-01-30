@@ -12,7 +12,7 @@ const FIXED_TECH_STACK_CONST = {
     "Web & DevOps": ["FastAPI", "Docker Containerization"]
 }
 
-const JobSidebar = ({ job, onClose, onStatusChange }) => {
+const JobSidebar = ({ job, onClose, onStatusChange, onNext, onPrev, hasNext, hasPrev }) => {
     const [expandedSections, setExpandedSections] = useState({
         jobDescription: false,
         analysis: false,
@@ -63,7 +63,10 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
         const atsScore = data.ats_score || data.ai_ats_score || 'N/A'
 
         // Handle location
-        const location = data.location || job.Location || ''
+        let location = data.location || job.Location || ''
+        if (location && !location.toLowerCase().includes('relocate')) {
+            location += ' (Open to Relocate)'
+        }
 
         // Handle tech stack
         const techStack = data.tech_stack || {}
@@ -86,6 +89,11 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
 
     // Initialize editedData when job changes
     useEffect(() => {
+        // Reset PDF state on new job
+        setPdfUrl(null)
+        setGenerateError('')
+        setSaveMessage('')
+
         // Parse analysis data from job
         let jobAnalysisData = null
         try {
@@ -104,7 +112,10 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
         const normalize = (data) => {
             if (!data) return { location: job.Location || '', tech_stack: {}, suggested_tech_stack: {}, points: [], ats_score: 'N/A' }
             const atsScore = data.ats_score || data.ai_ats_score || 'N/A'
-            const location = data.location || job.Location || ''
+            let location = data.location || job.Location || ''
+            if (location && !location.toLowerCase().includes('relocate')) {
+                location += ' (Open to Relocate)'
+            }
             let techStack = data.tech_stack || {}
             let suggestedTechStack = data.suggested_tech_stack || {}
             let points = []
@@ -334,7 +345,28 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
                 <div className="sidebar" onClick={e => e.stopPropagation()}>
                     <div className="sidebar-header">
                         <div>
-                            <h2 className="sidebar-title">{job.Title}</h2>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <h2 className="sidebar-title">{job.Title}</h2>
+                                <div className="nav-buttons">
+                                    <button
+                                        onClick={onPrev}
+                                        disabled={!hasPrev}
+                                        style={{ opacity: hasPrev ? 1 : 0.3, cursor: hasPrev ? 'pointer' : 'default', border: 'none', background: 'none', fontSize: '1.2rem' }}
+                                        title="Previous Job"
+                                    >
+                                        ⬅️
+                                    </button>
+                                    <button
+                                        onClick={onNext}
+                                        disabled={!hasNext}
+                                        style={{ opacity: hasNext ? 1 : 0.3, cursor: hasNext ? 'pointer' : 'default', border: 'none', background: 'none', fontSize: '1.2rem' }}
+                                        title="Next Job"
+                                    >
+                                        ➡️
+                                    </button>
+                                </div>
+                            </div>
+
                             <h3 className="sidebar-company">
                                 {job.Company}
                                 <a href={job.Link} target="_blank" rel="noopener noreferrer" className="job-link-icon" title="View Job Post">

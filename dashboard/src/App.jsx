@@ -277,6 +277,27 @@ function App() {
     }
   })
 
+  // Handle sidebar navigation
+  const handleNextJob = () => {
+    if (!selectedJob) return
+    const currentIndex = filteredJobs.findIndex(j => j._rowIndex === selectedJob._rowIndex)
+    if (currentIndex !== -1 && currentIndex < filteredJobs.length - 1) {
+      setSelectedJob(filteredJobs[currentIndex + 1])
+    }
+  }
+
+  const handlePrevJob = () => {
+    if (!selectedJob) return
+    const currentIndex = filteredJobs.findIndex(j => j._rowIndex === selectedJob._rowIndex)
+    if (currentIndex > 0) {
+      setSelectedJob(filteredJobs[currentIndex - 1])
+    }
+  }
+
+  const selectedJobIndex = selectedJob ? filteredJobs.findIndex(j => j._rowIndex === selectedJob._rowIndex) : -1
+  const hasNext = selectedJobIndex !== -1 && selectedJobIndex < filteredJobs.length - 1
+  const hasPrev = selectedJobIndex > 0
+
   return (
     <div className="app">
       <header className="header">
@@ -518,6 +539,10 @@ function App() {
           job={selectedJob}
           onClose={handleCloseSidebar}
           onStatusChange={handleStatusChange}
+          onNext={handleNextJob}
+          onPrev={handlePrevJob}
+          hasNext={hasNext}
+          hasPrev={hasPrev}
         />
       )}
     </div>
