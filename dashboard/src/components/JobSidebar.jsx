@@ -149,6 +149,7 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
 
     const handleEdit = () => {
         setEditMode(true)
+        setJsonMode(false) // Reset JSON mode
         // Auto-expand editable sections
         setExpandedSections(prev => ({
             ...prev,
@@ -161,10 +162,45 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
     const handleCancel = () => {
         setEditedData(originalData)
         setEditMode(false)
+        setJsonMode(false)
         setSaveMessage('')
+        setJsonError('')
+    }
+
+    const handleJsonToggle = () => {
+        if (!jsonMode) {
+            // Enter JSON mode: Serialize current edited data
+            setJsonText(JSON.stringify(editedData, null, 2))
+            setJsonError('')
+        } else {
+            // Exit JSON mode: Parse back to object
+            try {
+                const parsed = JSON.parse(jsonText)
+                setEditedData(parsed)
+                setJsonError('')
+            } catch (e) {
+                setJsonError('Invalid JSON: ' + e.message)
+                return // Prevent toggle if invalid
+            }
+        }
+        setJsonMode(!jsonMode)
     }
 
     const handleSave = async () => {
+        let dataToSave = editedData
+
+        // If in JSON mode, try to parse first
+        if (jsonMode) {
+            try {
+                dataToSave = JSON.parse(jsonText)
+                setEditedData(dataToSave) // Sync back to state
+                setJsonError('')
+            } catch (e) {
+                setJsonError('Cannot Save: Invalid JSON')
+                return
+            }
+        }
+
         setSaving(true)
         setSaveMessage('')
 
@@ -177,10 +213,10 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     row_index: rowIndex,
-                    location: editedData.location,
-                    tech_stack: editedData.tech_stack,
-                    suggested_tech_stack: editedData.suggested_tech_stack,
-                    points: editedData.points
+                    location: dataToSave.location,
+                    tech_stack: dataToSave.tech_stack,
+                    suggested_tech_stack: dataToSave.suggested_tech_stack,
+                    points: dataToSave.points
                 })
             })
 
@@ -377,240 +413,294 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
                             </div>
                         </div>
 
-                        {/* Location Section */}
-                        <div className="detail-section">
-                            <div
-                                className="section-header"
-                                onClick={() => toggleSection('location')}
-                            >
-                                <h3>Location</h3>
-                                <span className={`arrow ${expandedSections.location ? 'expanded' : ''}`}>▼</span>
-                            </div>
-                            <div className={`section-content ${expandedSections.location ? 'expanded' : ''}`}>
-                                {editMode ? (
-                                    <input
-                                        type="text"
-                                        className="edit-input"
-                                        value={editedData.location}
-                                        onChange={(e) => setEditedData(prev => ({
-                                            ...prev,
-                                            location: e.target.value
-                                        }))}
-                                    />
-                                ) : (
-                                    <p>{editedData.location}</p>
+
+
+                        {/* JSON Editor Mode */}
+                        {editMode && jsonMode && (
+                            <div className="json-editor-container" style={{ marginTop: '20px' }}>
+                                <div style={{ marginBottom: '8px', fontSize: '0.85rem', color: '#718096' }}>
+                                    Directly edit the raw JSON data. Be careful with brackets!
+                                </div>
+                                <textarea
+                                    className="json-textarea"
+                                    value={jsonText}
+                                    onChange={(e) => setJsonText(e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        height: '400px',
+                                        fontFamily: 'monospace',
+                                        fontSize: '0.9rem',
+                                        padding: '12px',
+                                        borderRadius: '8px',
+                                        border: '1px solid #e2e8f0',
+                                        background: '#2d3748',
+                                        color: '#e2e8f0',
+                                        resize: 'vertical'
+                                    }}
+                                />
+                                {jsonError && (
+                                    <div style={{ color: '#e53e3e', fontSize: '0.85rem', marginTop: '8px', fontWeight: 'bold' }}>
+                                        ⚠️ {jsonError}
+                                    </div>
                                 )}
                             </div>
-                        </div>
+                        )}
 
-                        {/* Tech Stack Section */}
-                        <div className="detail-section">
-                            <div
-                                className="section-header"
-                                onClick={() => toggleSection('techStack')}
-                            >
-                                <h3>Tech Stack</h3>
-                                <span className={`arrow ${expandedSections.techStack ? 'expanded' : ''}`}>▼</span>
-                            </div>
-                            <div className={`section-content ${expandedSections.techStack ? 'expanded' : ''}`}>
-                                {editMode ? (
-                                    <div className="tech-stack-merger">
-                                        {/* Intro Text */}
-                                        <div style={{ marginBottom: '16px', fontSize: '0.9rem', color: '#666' }}>
-                                            Select skills from <strong>Suggested</strong> (Blue) to add to <strong>Your Stack</strong> (Green).
-                                        </div>
+                        {/* Standard Sections (Hide in JSON Mode) */}
+                        {(!editMode || !jsonMode) && (
+                            <>
+                                {/* Location Section */}
+                                <div className="detail-section">
+                                    <div
+                                        className="section-header"
+                                        onClick={() => toggleSection('location')}
+                                    >
+                                        <h3>Location</h3>
+                                        <span className={`arrow ${expandedSections.location ? 'expanded' : ''}`}>▼</span>
+                                    </div>
+                                    <div className={`section-content ${expandedSections.location ? 'expanded' : ''}`}>
+                                        {editMode ? (
+                                            <input
+                                                type="text"
+                                                className="edit-input"
+                                                value={editedData.location}
+                                                onChange={(e) => setEditedData(prev => ({
+                                                    ...prev,
+                                                    location: e.target.value
+                                                }))}
+                                            />
+                                        ) : (
+                                            <p>{editedData.location}</p>
+                                        )}
+                                    </div>
+                                </div>
 
-                                        {/* Compute Union of Categories to ensure we show everything */}
-                                        {(() => {
-                                            const myCategories = Object.keys(editedData.tech_stack || {})
-                                            const suggestedCategories = originalData && originalData.suggested_tech_stack ? Object.keys(originalData.suggested_tech_stack) : []
-                                            const allCategories = [...new Set([...myCategories, ...suggestedCategories])]
+                                {/* Tech Stack Section */}
+                                <div className="detail-section">
+                                    <div
+                                        className="section-header"
+                                        onClick={() => toggleSection('techStack')}
+                                    >
+                                        <h3>Tech Stack</h3>
+                                        <span className={`arrow ${expandedSections.techStack ? 'expanded' : ''}`}>▼</span>
+                                    </div>
+                                    <div className={`section-content ${expandedSections.techStack ? 'expanded' : ''}`}>
+                                        {editMode ? (
+                                            <div className="tech-stack-merger">
+                                                {/* Intro Text */}
+                                                <div style={{ marginBottom: '16px', fontSize: '0.9rem', color: '#666' }}>
+                                                    Select skills from <strong>Suggested</strong> (Blue) to add to <strong>Your Stack</strong> (Green).
+                                                </div>
 
-                                            return allCategories.map(category => {
-                                                const finalSkills = (editedData.tech_stack && editedData.tech_stack[category]) || []
-                                                const suggestedSkills = originalData && originalData.suggested_tech_stack ? (originalData.suggested_tech_stack[category] || []) : []
+                                                {/* Compute Union of Categories to ensure we show everything */}
+                                                {(() => {
+                                                    const myCategories = Object.keys(editedData.tech_stack || {})
+                                                    const suggestedCategories = originalData && originalData.suggested_tech_stack ? Object.keys(originalData.suggested_tech_stack) : []
+                                                    const allCategories = [...new Set([...myCategories, ...suggestedCategories])]
 
-                                                // Skip if both are empty (rare)
-                                                if (finalSkills.length === 0 && suggestedSkills.length === 0) return null
+                                                    return allCategories.map(category => {
+                                                        const finalSkills = (editedData.tech_stack && editedData.tech_stack[category]) || []
+                                                        const suggestedSkills = originalData && originalData.suggested_tech_stack ? (originalData.suggested_tech_stack[category] || []) : []
+
+                                                        // Skip if both are empty (rare)
+                                                        if (finalSkills.length === 0 && suggestedSkills.length === 0) return null
 
 
-                                                // Provide function to add manual skill
-                                                const handleManualAdd = (e) => {
-                                                    if (e.key === 'Enter') {
-                                                        const val = e.target.value.trim()
-                                                        if (val && !finalSkills.includes(val)) {
-                                                            const newSkills = [...finalSkills, val]
-                                                            setEditedData(prev => ({
-                                                                ...prev,
-                                                                tech_stack: { ...prev.tech_stack, [category]: newSkills }
-                                                            }))
-                                                            e.target.value = ''
+                                                        // Provide function to add manual skill
+                                                        const handleManualAdd = (e) => {
+                                                            if (e.key === 'Enter') {
+                                                                const val = e.target.value.trim()
+                                                                if (val && !finalSkills.includes(val)) {
+                                                                    const newSkills = [...finalSkills, val]
+                                                                    setEditedData(prev => ({
+                                                                        ...prev,
+                                                                        tech_stack: { ...prev.tech_stack, [category]: newSkills }
+                                                                    }))
+                                                                    e.target.value = ''
+                                                                }
+                                                            }
                                                         }
-                                                    }
-                                                }
 
-                                                return (
-                                                    <div key={category} className="merge-category-block" style={{ marginBottom: '24px', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '16px' }}>
-                                                        <h4 style={{ margin: '0 0 12px 0', fontSize: '1rem', color: '#2d3748' }}>{category}</h4>
+                                                        return (
+                                                            <div key={category} className="merge-category-block" style={{ marginBottom: '24px', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '16px' }}>
+                                                                <h4 style={{ margin: '0 0 12px 0', fontSize: '1rem', color: '#2d3748' }}>{category}</h4>
 
-                                                        {/* Suggested (Source) */}
-                                                        <div className="merge-row" style={{ marginBottom: '12px' }}>
-                                                            <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#4299e1', fontWeight: 'bold', marginBottom: '6px' }}>Suggested</div>
-                                                            <div className="tech-skills">
-                                                                {suggestedSkills.length > 0 ? suggestedSkills.map(skill => {
-                                                                    const isAdded = finalSkills.includes(skill)
-                                                                    return (
-                                                                        <button
-                                                                            key={skill}
-                                                                            className={`skill-chip suggested ${isAdded ? 'added' : ''}`}
-                                                                            disabled={isAdded}
-                                                                            onClick={() => {
-                                                                                if (!isAdded) {
-                                                                                    const newSkills = [...finalSkills, skill]
+                                                                {/* Suggested (Source) */}
+                                                                <div className="merge-row" style={{ marginBottom: '12px' }}>
+                                                                    <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#4299e1', fontWeight: 'bold', marginBottom: '6px' }}>Suggested</div>
+                                                                    <div className="tech-skills">
+                                                                        {suggestedSkills.length > 0 ? suggestedSkills.map(skill => {
+                                                                            const isAdded = finalSkills.includes(skill)
+                                                                            return (
+                                                                                <button
+                                                                                    key={skill}
+                                                                                    className={`skill-chip suggested ${isAdded ? 'added' : ''}`}
+                                                                                    disabled={isAdded}
+                                                                                    onClick={() => {
+                                                                                        if (!isAdded) {
+                                                                                            const newSkills = [...finalSkills, skill]
+                                                                                            setEditedData(prev => ({
+                                                                                                ...prev,
+                                                                                                tech_stack: { ...prev.tech_stack, [category]: newSkills }
+                                                                                            }))
+                                                                                        }
+                                                                                    }}
+                                                                                    style={{
+                                                                                        background: isAdded ? '#edf2f7' : '#ebf8ff',
+                                                                                        color: isAdded ? '#a0aec0' : '#2b6cb0',
+                                                                                        border: isAdded ? '1px solid #e2e8f0' : '1px solid #bee3f8',
+                                                                                        borderRadius: '20px',
+                                                                                        padding: '4px 10px',
+                                                                                        fontSize: '0.85rem',
+                                                                                        cursor: isAdded ? 'default' : 'pointer',
+                                                                                        marginRight: '6px',
+                                                                                        marginBottom: '6px',
+                                                                                        opacity: isAdded ? 0.7 : 1
+                                                                                    }}
+                                                                                >
+                                                                                    {skill} {isAdded ? '✓' : <span style={{ fontWeight: 'bold' }}>+</span>}
+                                                                                </button>
+                                                                            )
+                                                                        }) : <span style={{ color: '#a0aec0', fontStyle: 'italic', fontSize: '0.85rem' }}>None available</span>}
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Final (Target) */}
+                                                                <div className="merge-row">
+                                                                    <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#48bb78', fontWeight: 'bold', marginBottom: '6px' }}>Yours (Final)</div>
+                                                                    <div className="tech-skills">
+                                                                        {finalSkills.map(skill => (
+                                                                            <button
+                                                                                key={skill}
+                                                                                className="skill-chip final"
+                                                                                onClick={() => {
+                                                                                    const newSkills = finalSkills.filter(s => s !== skill)
                                                                                     setEditedData(prev => ({
                                                                                         ...prev,
                                                                                         tech_stack: { ...prev.tech_stack, [category]: newSkills }
                                                                                     }))
-                                                                                }
-                                                                            }}
+                                                                                }}
+                                                                                style={{
+                                                                                    background: '#f0fff4',
+                                                                                    color: '#2f855a',
+                                                                                    border: '1px solid #c6f6d5',
+                                                                                    borderRadius: '20px',
+                                                                                    padding: '4px 10px',
+                                                                                    fontSize: '0.85rem',
+                                                                                    cursor: 'pointer',
+                                                                                    marginRight: '6px',
+                                                                                    marginBottom: '6px'
+                                                                                }}
+                                                                            >
+                                                                                {skill} <span style={{ fontWeight: 'bold' }}>×</span>
+                                                                            </button>
+                                                                        ))}
+
+                                                                        {/* Manual Add Input */}
+                                                                        <input
+                                                                            type="text"
+                                                                            placeholder="+ Add Custom"
+                                                                            onKeyDown={handleManualAdd}
                                                                             style={{
-                                                                                background: isAdded ? '#edf2f7' : '#ebf8ff',
-                                                                                color: isAdded ? '#a0aec0' : '#2b6cb0',
-                                                                                border: isAdded ? '1px solid #e2e8f0' : '1px solid #bee3f8',
-                                                                                borderRadius: '20px',
+                                                                                background: 'transparent',
+                                                                                border: '1px dashed #cbd5e0',
+                                                                                borderRadius: '16px',
                                                                                 padding: '4px 10px',
                                                                                 fontSize: '0.85rem',
-                                                                                cursor: isAdded ? 'default' : 'pointer',
-                                                                                marginRight: '6px',
-                                                                                marginBottom: '6px',
-                                                                                opacity: isAdded ? 0.7 : 1
+                                                                                width: '100px',
+                                                                                outline: 'none',
+                                                                                color: '#4a5568'
                                                                             }}
-                                                                        >
-                                                                            {skill} {isAdded ? '✓' : <span style={{ fontWeight: 'bold' }}>+</span>}
-                                                                        </button>
-                                                                    )
-                                                                }) : <span style={{ color: '#a0aec0', fontStyle: 'italic', fontSize: '0.85rem' }}>None available</span>}
+                                                                        />
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-
-                                                        {/* Final (Target) */}
-                                                        <div className="merge-row">
-                                                            <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#48bb78', fontWeight: 'bold', marginBottom: '6px' }}>Yours (Final)</div>
-                                                            <div className="tech-skills">
-                                                                {finalSkills.map(skill => (
-                                                                    <button
-                                                                        key={skill}
-                                                                        className="skill-chip final"
-                                                                        onClick={() => {
-                                                                            const newSkills = finalSkills.filter(s => s !== skill)
-                                                                            setEditedData(prev => ({
-                                                                                ...prev,
-                                                                                tech_stack: { ...prev.tech_stack, [category]: newSkills }
-                                                                            }))
-                                                                        }}
-                                                                        style={{
-                                                                            background: '#f0fff4',
-                                                                            color: '#2f855a',
-                                                                            border: '1px solid #c6f6d5',
-                                                                            borderRadius: '20px',
-                                                                            padding: '4px 10px',
-                                                                            fontSize: '0.85rem',
-                                                                            cursor: 'pointer',
-                                                                            marginRight: '6px',
-                                                                            marginBottom: '6px'
-                                                                        }}
-                                                                    >
-                                                                        {skill} <span style={{ fontWeight: 'bold' }}>×</span>
-                                                                    </button>
-                                                                ))}
-
-                                                                {/* Manual Add Input */}
-                                                                <input
-                                                                    type="text"
-                                                                    placeholder="+ Add Custom"
-                                                                    onKeyDown={handleManualAdd}
-                                                                    style={{
-                                                                        background: 'transparent',
-                                                                        border: '1px dashed #cbd5e0',
-                                                                        borderRadius: '16px',
-                                                                        padding: '4px 10px',
-                                                                        fontSize: '0.85rem',
-                                                                        width: '100px',
-                                                                        outline: 'none',
-                                                                        color: '#4a5568'
-                                                                    }}
-                                                                />
-                                                            </div>
+                                                        )
+                                                    })
+                                                })()}
+                                            </div>
+                                        ) : (
+                                            <div className="tech-stack-display">
+                                                {editedData.tech_stack && Object.entries(editedData.tech_stack).map(([category, skills]) => (
+                                                    <div key={category} className="tech-category">
+                                                        <h4 className="category-title">{category}</h4>
+                                                        <div className="tech-skills">
+                                                            {Array.isArray(skills) && skills.map((skill, idx) => (
+                                                                <span key={idx} className="tech-skill-tag">{skill}</span>
+                                                            ))}
                                                         </div>
                                                     </div>
-                                                )
-                                            })
-                                        })()}
-                                    </div>
-                                ) : (
-                                    <div className="tech-stack-display">
-                                        {editedData.tech_stack && Object.entries(editedData.tech_stack).map(([category, skills]) => (
-                                            <div key={category} className="tech-category">
-                                                <h4 className="category-title">{category}</h4>
-                                                <div className="tech-skills">
-                                                    {Array.isArray(skills) && skills.map((skill, idx) => (
-                                                        <span key={idx} className="tech-skill-tag">{skill}</span>
-                                                    ))}
-                                                </div>
+                                                ))}
                                             </div>
-                                        ))}
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        </div>
+                                </div>
 
-                        {/* Resume Points Section */}
-                        <div className="detail-section">
-                            <div
-                                className="section-header"
-                                onClick={() => toggleSection('points')}
-                            >
-                                <h3>Resume Points</h3>
-                                <span className={`arrow ${expandedSections.points ? 'expanded' : ''}`}>▼</span>
-                            </div>
-                            <div className={`section-content ${expandedSections.points ? 'expanded' : ''}`}>
-                                {editMode ? (
-                                    <div className="points-editor">
-                                        {editedData.points.map((point, idx) => (
-                                            <div key={idx} className="point-edit-row">
-                                                <textarea
-                                                    value={point}
-                                                    onChange={(e) => handlePointChange(idx, e.target.value)}
-                                                    className="point-textarea"
-                                                />
-                                                <button
-                                                    className="delete-point-btn"
-                                                    onClick={() => handlePointDelete(idx)}
-                                                >
-                                                    🗑️
+                                {/* Resume Points Section */}
+                                <div className="detail-section">
+                                    <div
+                                        className="section-header"
+                                        onClick={() => toggleSection('points')}
+                                    >
+                                        <h3>Resume Points</h3>
+                                        <span className={`arrow ${expandedSections.points ? 'expanded' : ''}`}>▼</span>
+                                    </div>
+                                    <div className={`section-content ${expandedSections.points ? 'expanded' : ''}`}>
+                                        {editMode ? (
+                                            <div className="points-editor">
+                                                {editedData.points.map((point, idx) => (
+                                                    <div key={idx} className="point-edit-row">
+                                                        <textarea
+                                                            value={point}
+                                                            onChange={(e) => handlePointChange(idx, e.target.value)}
+                                                            className="point-textarea"
+                                                        />
+                                                        <button
+                                                            className="delete-point-btn"
+                                                            onClick={() => handlePointDelete(idx)}
+                                                        >
+                                                            🗑️
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                                <button className="add-point-btn" onClick={handlePointAdd}>
+                                                    ➕ Add Point
                                                 </button>
                                             </div>
-                                        ))}
-                                        <button className="add-point-btn" onClick={handlePointAdd}>
-                                            ➕ Add Point
-                                        </button>
+                                        ) : (
+                                            <ul className="points-list">
+                                                {editedData.points && editedData.points.map((point, idx) => (
+                                                    <li key={idx}>
+                                                        {point.replace(/^\\item\s*/, '')}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
                                     </div>
-                                ) : (
-                                    <ul className="points-list">
-                                        {editedData.points && editedData.points.map((point, idx) => (
-                                            <li key={idx}>
-                                                {point.replace(/^\\item\s*/, '')}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </div>
-                        </div>
+                                </div>
+                            </>
+                        )}
 
                         {/* Action Buttons */}
                         <div className="sidebar-footer">
                             {editMode ? (
                                 <>
+                                    <div style={{ display: 'flex', gap: '8px', flex: 1 }}>
+                                        <button
+                                            onClick={handleJsonToggle}
+                                            style={{
+                                                background: jsonMode ? '#4a5568' : '#cbd5e0',
+                                                color: jsonMode ? '#fff' : '#4a5568',
+                                                border: 'none',
+                                                borderRadius: '6px',
+                                                padding: '8px 12px',
+                                                cursor: 'pointer',
+                                                fontSize: '0.9rem'
+                                            }}
+                                        >
+                                            {jsonMode ? 'UI Mode' : '{ } JSON'}
+                                        </button>
+                                    </div>
                                     <button className="cancel-btn" onClick={handleCancel} disabled={saving}>
                                         Cancel
                                     </button>
@@ -689,7 +779,7 @@ const JobSidebar = ({ job, onClose, onStatusChange }) => {
                         )}
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
