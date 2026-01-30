@@ -438,7 +438,28 @@ const JobSidebar = ({ job, onClose, onStatusChange, onNext, onPrev, hasNext, has
                         {/* Job Description Section */}
                         <div className="detail-section">
                             <div className="section-header" onClick={() => toggleSection('jobDescription')}>
-                                <h3>Job Description</h3>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <h3>Job Description</h3>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigator.clipboard.writeText(job['Job Description'] || "");
+                                            alert("Job Description copied!");
+                                        }}
+                                        style={{
+                                            border: 'none',
+                                            background: 'none',
+                                            cursor: 'pointer',
+                                            fontSize: '1rem',
+                                            padding: '4px',
+                                            display: 'flex',
+                                            alignItems: 'center'
+                                        }}
+                                        title="Copy Description"
+                                    >
+                                        📋
+                                    </button>
+                                </div>
                                 <span className={`arrow ${expandedSections.jobDescription ? 'expanded' : ''}`}>▼</span>
                             </div>
                             <div className={`section-content ${expandedSections.jobDescription ? 'expanded' : ''}`}>
