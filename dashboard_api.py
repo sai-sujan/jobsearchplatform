@@ -136,9 +136,12 @@ def get_jobs():
             else:
                 job['Tier'] = '🔴 Skip'
                 
-            # Compute New Status
-            status = str(job.get('Status', '')).lower()
-            if status == 'new':
+            # Compute New Status - job is NEW if it doesn't have analysis data
+            has_analysis = job.get('Analysis Data') is not None
+            analysis_file = job.get('Analysis_File', '')
+            has_analysis_file = pd.notna(analysis_file) and str(analysis_file).strip() != ''
+
+            if not has_analysis and not has_analysis_file:
                 job['New'] = '✨ NEW'
             else:
                 job['New'] = ''

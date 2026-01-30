@@ -180,13 +180,12 @@ def main():
                 verdict_reason = f"Skill Match: {skill_score}% ({match_count})"
             
             all_new_jobs.append({
-                'New': '✨ NEW',  # Mark as new
                 'Company': job.company_name,
-                'Title': job.job_title,
+                'Job_Title': job.job_title,
                 'Location': job.location,
-                'Link': job.job_link,
-                'Date Found': datetime.now().strftime("%Y-%m-%d %H:%M"),
-                'Skill Score': skill_score,
+                'Job_Link': job.job_link,
+                'Date_Added': datetime.now().strftime("%Y-%m-%d %H:%M"),
+                'Keywords_Matching_Score': skill_score,
                 'Match': match_count,
                 'Tier': tier,
                 'Matched Skills': matched_skills,
@@ -194,8 +193,8 @@ def main():
                 'Verdict': verdict,
                 'Reason': verdict_reason,
                 'Applied': 'Not Applied',
-                'Search Query': job.search_query,
-                'Job Description': job.job_description[:2000] if job.job_description else ''  # First 2000 chars
+                'Search_Query': job.search_query,
+                'Job_Description': job.job_description[:2000] if job.job_description else ''
             })
     
     scraper.close_browser()
@@ -206,12 +205,6 @@ def main():
         
         # Combine: new jobs at bottom (preserves row indices of analyzed jobs)
         if not existing_df.empty:
-            # Clear 'New' markers from existing jobs
-            if 'New' in existing_df.columns:
-                existing_df['New'] = ''
-            else:
-                existing_df['New'] = ''
-            
             combined_df = pd.concat([existing_df, new_df], ignore_index=True)
         else:
             combined_df = new_df

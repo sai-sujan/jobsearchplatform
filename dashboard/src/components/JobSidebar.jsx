@@ -69,8 +69,16 @@ const JobSidebar = ({ job, onClose, onStatusChange, onNext, onPrev, hasNext, has
         }
 
         // Handle tech stack
-        const techStack = data.tech_stack || {}
-        const suggestedTechStack = data.suggested_tech_stack || {}
+        let techStack = data.tech_stack || {}
+        let suggestedTechStack = data.suggested_tech_stack || {}
+
+        // Smart Stack Initialization (consistent with edit mode)
+        if (Object.keys(suggestedTechStack).length === 0) {
+            if (Object.keys(techStack).length > 0) {
+                suggestedTechStack = { ...techStack }
+            }
+            techStack = JSON.parse(JSON.stringify(FIXED_TECH_STACK_CONST))
+        }
 
         // Handle points (old: suggested_resume_point_1/2, new: points array)
         let points = []
@@ -126,11 +134,16 @@ const JobSidebar = ({ job, onClose, onStatusChange, onNext, onPrev, hasNext, has
                 if (data.suggested_resume_point_2) points.push(data.suggested_resume_point_2)
             }
 
-            // Heuristic for Fresh Data:
-            // If suggested_tech_stack is empty but tech_stack has items, it means this is fresh from scraper
-            // We want to show these as Suggestions (Blue) and start Final (Green) as the FIXED STACK
-            if (Object.keys(suggestedTechStack).length === 0 && Object.keys(techStack).length > 0) {
-                suggestedTechStack = { ...techStack }
+            // Smart Stack Initialization:
+            // If suggested_tech_stack is empty, this is either fresh data or a job without analysis
+            // - If tech_stack has items (from scraper), move it to suggested (Blue)
+            // - Always start user's stack (Green) with FIXED_TECH_STACK_CONST
+            if (Object.keys(suggestedTechStack).length === 0) {
+                // If there's tech_stack from analysis, use it as suggestions
+                if (Object.keys(techStack).length > 0) {
+                    suggestedTechStack = { ...techStack }
+                }
+                // Always initialize user's stack with their fixed skills
                 techStack = JSON.parse(JSON.stringify(FIXED_TECH_STACK_CONST))
             }
 

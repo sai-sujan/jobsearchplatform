@@ -29,3 +29,11 @@ resumes/*.pdf
 # App Specific (Keep master file but maybe ignore temp analysis?)
 # Keeping analysis_results as they are data
 # keeping jobs_master.xlsx as it is the DB
+
+# Browser Session
+chrome_session/
+
+# Backups
+jobs_master_backup*.xlsx
+jobs_master_dirty_backup.xlsx
+jobs_master_before_recovery.xlsx
