@@ -451,6 +451,30 @@ def download_resume(filename: str):
         content_disposition_type='inline'
     )
 
+@app.delete("/api/delete-job/{row_index}")
+def delete_job(row_index: int):
+    """Delete a job from the Excel file"""
+    try:
+        if not os.path.exists(EXCEL_FILE):
+             raise HTTPException(status_code=404, detail="Excel file not found")
+             
+        # Read Excel file
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
+        
+        if row_index < 0 or row_index >= len(df):
+            raise HTTPException(status_code=400, detail="Invalid row index")
+            
+        # Drop the row
+        df = df.drop(index=row_index)
+        
+        # Save back to Excel
+        df.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
+        
+        return {"success": True, "message": "Job deleted successfully"}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=5001)

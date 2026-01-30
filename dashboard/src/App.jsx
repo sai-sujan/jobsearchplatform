@@ -162,6 +162,21 @@ function App() {
     }
   }
 
+  // Handle job deletion
+  const handleDeleteJob = async (job) => {
+    try {
+      await axios.delete(`${API_URL}/api/delete-job/${job._rowIndex}`)
+      // Close sidebar first
+      setSidebarOpen(false)
+      setSelectedJob(null)
+      // Refresh list
+      fetchJobs()
+    } catch (err) {
+      console.error('Failed to delete job:', err)
+      alert('Failed to delete job. Please try again.')
+    }
+  }
+
   // Handle job card click to open sidebar
   const handleJobClick = (job) => {
     setSelectedJob(job)
@@ -539,6 +554,7 @@ function App() {
           job={selectedJob}
           onClose={handleCloseSidebar}
           onStatusChange={handleStatusChange}
+          onDelete={handleDeleteJob}
           onNext={handleNextJob}
           onPrev={handlePrevJob}
           hasNext={hasNext}

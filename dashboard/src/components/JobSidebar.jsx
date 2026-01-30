@@ -12,7 +12,7 @@ const FIXED_TECH_STACK_CONST = {
     "Web & DevOps": ["FastAPI", "Docker Containerization"]
 }
 
-const JobSidebar = ({ job, onClose, onStatusChange, onNext, onPrev, hasNext, hasPrev }) => {
+const JobSidebar = ({ job, onClose, onStatusChange, onDelete, onNext, onPrev, hasNext, hasPrev }) => {
     const [expandedSections, setExpandedSections] = useState({
         jobDescription: false,
         analysis: false,
@@ -776,9 +776,34 @@ const JobSidebar = ({ job, onClose, onStatusChange, onNext, onPrev, hasNext, has
                                 </>
                             ) : (
                                 <>
-                                    <button className="edit-btn" onClick={handleEdit}>
-                                        Edit Data
-                                    </button>
+                                    <div style={{ display: 'flex', gap: '8px', flex: 1 }}>
+                                        <button className="edit-btn" onClick={handleEdit}>
+                                            Edit Data
+                                        </button>
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() => {
+                                                if (window.confirm("Are you sure you want to delete this job? This cannot be undone.")) {
+                                                    onDelete(job);
+                                                }
+                                            }}
+                                            style={{
+                                                background: '#fee2e2',
+                                                color: '#ef4444',
+                                                border: '1px solid #fca5a5',
+                                                borderRadius: '6px',
+                                                padding: '8px 12px',
+                                                cursor: 'pointer',
+                                                fontSize: '0.9rem',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}
+                                            title="Delete Job"
+                                        >
+                                            🗑️
+                                        </button>
+                                    </div>
                                     <button
                                         className="generate-btn"
                                         onClick={handleGenerateResume}
