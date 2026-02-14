@@ -1,0 +1,47 @@
+{
+  "ats_score": 87,
+  "location": "Palo Alto, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "C/C++",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "Generative AI",
+      "Large Language Models",
+      "LangChain"
+    ],
+    "Cloud & Deployment": [
+      "Azure ML",
+      "GCP Vertex",
+      "AWS SageMaker",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Vector Databases"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Generative AI",
+      "NLP"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for Generative AI content generation.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for marketing AI solutions.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for enterprise campaigns.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference for text content generation systems.",
+    "\\item Built end-to-end ML pipeline using ZenML and MLflow, deploying AI models on cloud platforms with automated training and inference for scalable content velocity."
+  ]
+}

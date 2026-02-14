@@ -1,0 +1,51 @@
+{
+  "ats_score": 89,
+  "location": "Seattle, WA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "Scala",
+      "Java",
+      "C++",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "Generative AI",
+      "Large Language Models",
+      "LangChain"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Azure",
+      "Model Deployment",
+      "GPU Acceleration"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Vector Databases"
+    ],
+    "Web & DevOps": [
+      "REST APIs",
+      "Git",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Generative AI",
+      "Computer Vision",
+      "NLP"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for Generative AI services.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage for Firefly and Adobe creative applications.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for enterprise-scale AI systems.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference with GPU-accelerated pipelines.",
+    "\\item Fine-tuned Llama-3.1-8B using QLoRA on domain-specific data with 4-bit quantization, gaining hands-on experience in parameter-efficient LLM training for Adobe products."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "ats_score": 88,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "NumPy",
+      "SciPy",
+      "Pandas"
+    ],
+    "LLM & NLP Tools": [
+      "NLP",
+      "LangChain",
+      "Transformers",
+      "LLMs"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment",
+      "MLOps",
+      "CI/CD Pipelines"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "Docker",
+      "Data Pipelines"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Machine Learning",
+      "Statistical Inference",
+      "Hyperparameter Optimization",
+      "Bayesian Inference",
+      "Data Analysis"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for AI model training and evaluation, improving answer reliability by ~20% and enabling robust technical auditing of machine learning algorithms.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings with BM25 search for data science challenge development, enhancing relevance and technical accuracy in algorithm validation and model evaluation tasks.",
+    "\\item Developed LLM-as-Judge evaluation pipeline to assess faithfulness, technical correctness, and statistical validity across hundreds of data science problems, ensuring production-ready solutions with rigorous mathematical derivations.",
+    "\\item Optimized data processing pipelines through batched query extraction and hyperparameter tuning, reducing computational overhead by ~80% and enabling efficient handling of imbalanced datasets with proper cross-validation strategies.",
+    "\\item Designed ML-based anomaly detection system with attention to data leakage prevention and overfitting mitigation, reducing false positives by 25% while maintaining model generalization and production reliability.",
+    "\\item Built end-to-end ML pipeline using ZenML and MLflow, deploying a REST API on AWS Lambda with Docker for automated model training, inference, and MLOps workflow optimization with CI/CD integration."
+  ]
+}

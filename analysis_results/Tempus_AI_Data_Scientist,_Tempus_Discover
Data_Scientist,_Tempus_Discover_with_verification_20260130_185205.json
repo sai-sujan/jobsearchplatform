@@ -1,0 +1,100 @@
+{
+  "company": "Tempus AI",
+  "job_title": "Data Scientist, Tempus Discover\nData Scientist, Tempus Discover with verification",
+  "location": "Springfield,MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "NLP",
+      "Data Analysis"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MongoDB",
+      "FAISS"
+    ],
+    "Web & DevOps": [
+      "Docker Containerization",
+      "FastAPI"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving document-level QA reliability and extraction accuracy for clinical and genomic data.",
+    "\\item Built hybrid retrieval workflows combining dense embeddings and BM25 search to efficiently process structured and unstructured data for patient cohort identification.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess data quality, accuracy, and relevance across hundreds of examples, ensuring production-ready reliability.",
+    "\\item Introduced batched query extraction, reducing LLM calls by 80% and enabling scalable analytical workflows on multi-modal healthcare datasets.",
+    "\\item Containerized and deployed AI/ML solutions using Docker and AWS, ensuring reproducible and scalable pipelines for clinical ML applications.",
+    "\\item Collaborated cross-functionally with Data Science, Research, and Engineering teams to standardize data documentation, communicate technical insights, and support academic research partners."
+  ],
+  "ats_score": "N/A"
+}

@@ -1,0 +1,21 @@
+{
+  "ats_score": 91,
+  "location": "New York, NY (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["PyTorch", "TensorFlow", "Scikit-learn", "Hugging Face Transformers"],
+    "LLM & NLP Tools": ["Large Language Models", "LLMs", "OpenAI", "HuggingFace", "Transformers", "Tokenizers", "Embedding Models", "LangChain", "RAG Systems"],
+    "Cloud & Deployment": ["AWS", "Model Deployment", "Production ML", "Real-time Data Feeds"],
+    "Databases & AI Infrastructure": ["Vector Databases", "PostgreSQL", "MySQL", "FAISS", "Milvus", "Weaviate"],
+    "Web & DevOps": ["FastAPI", "Git", "CI/CD Pipelines"],
+    "ML Specializations": ["NLP", "Deep Learning", "Algorithmic Trading", "Financial AI", "Large-scale Datasets"]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B for financial literature review and quantitative research, improving answer reliability by ~20% and enabling AI-powered market analysis with vector database integration.",
+    "\\item Engineered a hybrid retrieval workflow combining dense embeddings (FAISS) with BM25 search for financial data analysis, achieving 35% improvement in relevance for large-scale dataset processing and real-time trading signal generation.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess model bias, robustness, and performance across hundreds of financial QA examples, ensuring production-ready reliability and safeguards for algorithmic trading applications.",
+    "\\item Optimized LLM inference through batched query extraction and transformer architectures, reducing API calls by ~80% and cutting inference costs by 60% while maintaining sub-second latency for real-time market data integration.",
+    "\\item Designed ML-based anomaly detection system for trading workflows with risk identification and safeguards, reducing false signals by 25% while maintaining model robustness and ensuring appropriate bias mitigation in production environments.",
+    "\\item Implemented a tool-using LLM agent (LangGraph/ReAct) with multi-channel frontends and integrated APIs for real-time financial data retrieval, enabling scalable AI-driven code generation and market opportunity identification for quant research."
+  ]
+}

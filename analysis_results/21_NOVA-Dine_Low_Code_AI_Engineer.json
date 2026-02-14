@@ -1,0 +1,21 @@
+{
+  "ats_score": 80,
+  "location": "Washington, DC (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy", "Pandas"],
+    "LLM & NLP Tools": ["LangChain", "LLMs", "NLP"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, SageMaker)", "GCP", "Azure", "Model Deployment", "MLOps", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "MongoDB"],
+    "Web & DevOps": ["FastAPI", "Git", "CI/CD Pipelines", "DevOps", "Agile", "SAFe"],
+    "ML Specializations": ["Machine Learning", "Deep Learning", "Feature Engineering", "ML Pipeline Automation", "Federal AI Solutions"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for federal AI Center of Excellence, improving predictive model accuracy by ~20% and enabling scalable AI/ML solutions for International Trade Administration workflows.",
+    "\\item Built ML pipeline automation with feature engineering and model evaluation workflows, enhancing data preprocessing efficiency and ensuring data quality, accuracy, and integrity throughout the ML lifecycle at scale.",
+    "\\item Developed evaluation framework to assess deep learning model performance, versioning, and deployment readiness across hundreds of federal use cases, ensuring production-ready reliability and compliance with federal standards.",
+    "\\item Optimized cloud-based ML pipelines through orchestration and monitoring tools, reducing processing time by ~80% and enabling faster deployment of AI solutions in development, staging, and production environments.",
+    "\\item Designed ML-based anomaly detection system for data validation in federal workflows, reducing data errors by 25% while maintaining model accuracy and improving operational efficiency using SAFe Agile methodologies.",
+    "\\item Containerized and deployed ML solutions using Docker and AWS in Government cloud platforms, enabling scalable production-ready pipelines with clear technical documentation compliant with federal AI governance standards."
+  ]
+}

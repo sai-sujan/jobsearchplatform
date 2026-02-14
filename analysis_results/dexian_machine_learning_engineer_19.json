@@ -1,0 +1,55 @@
+{
+  "ats_score": 73,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "RAG Systems",
+      "OpenAI",
+      "Ollama"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)",
+      "GCP (Vertex AI, BigQuery)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "FAISS",
+      "Milvus",
+      "Weaviate"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines"
+    ],
+    "ML Specializations": [
+      "Deep Learning"
+    ]
+  },
+  "points": [
+    "\\item Designed and implemented production ML pipelines for document analysis, improving processing accuracy by ~20% through intelligent validation workflows.",
+    "\\item Engineered a hybrid retrieval architecture combining dense embeddings (FAISS) with BM25 sparse search, achieving 35% improvement in retrieval relevance at scale.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess faithfulness, relevance, and hallucination rates across 500+ QA examples, ensuring production-grade reliability and performance tracking.",
+    "\\item Optimized LLM inference through batched query extraction, reducing API calls by ~80% and cutting inference costs by 60% while maintaining sub-second latency for production workloads.",
+    "\\item Designed ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25% while maintaining security coverage.",
+    "\\item Built end-to-end ML pipeline using ZenML and MLflow, deploying a REST API on AWS Lambda with Docker for automated training and inference."
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "ats_score": 90,
+  "location": "San Francisco, CA, USA         (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection",
+      "Fine-tuning"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B for autonomous AI agents, improving answer reliability by ~20% and enabling intelligent decision-making in marketing automation workflows.",
+    "\\item Engineered a hybrid retrieval workflow combining dense embeddings (FAISS) with BM25 search, achieving 35% improvement in relevance and scalability for AI-native applications processing millions in ad spend.",
+    "\\item Developed LLM-as-Judge evaluation pipeline to assess faithfulness, relevance, and performance across hundreds of QA examples, ensuring production-ready reliability and robust model validation for autonomous systems.",
+    "\\item Optimized LLM inference through batched query extraction and prompt engineering, reducing API calls by ~80% per query and cutting operational costs by 60% while enabling real-time agent decision-making at scale.",
+    "\\item Designed ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25% while maintaining security coverage and improving user experience in high-throughput environments.",
+    "\\item Fine-tuned Llama-3.1-8B using QLoRA on domain-specific advertising data with 4-bit quantization, gaining hands-on experience in parameter-efficient LLM training and model optimization for resource-constrained deployments."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "Agents",
+      "Multi-Agents",
+      "LoRA",
+      "QLoRA",
+      "OpenAI",
+      "Ollama",
+      "RAG Systems",
+      "Prompt Engineering"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "FAISS",
+      "Milvus",
+      "Weaviate",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Fine-tuning",
+      "LLM Applications",
+      "Autonomous Agents"
+    ]
+  }
+}

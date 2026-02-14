@@ -1,0 +1,21 @@
+{
+  "ats_score": 87,
+  "location": "Hartford, CT (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy", "Pandas"],
+    "LLM & NLP Tools": ["NLP", "LangChain", "Transformers"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, EC2)", "GCP", "Model Deployment", "Production ML", "MLOps"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "Large-scale Databases"],
+    "Web & DevOps": ["FastAPI", "Git", "GitHub", "CI/CD Pipelines", "SDLC", "Feature Engineering"],
+    "ML Specializations": ["Deep Learning", "Machine Learning", "Neural Networks", "Statistical Modeling", "Healthcare AI"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for healthcare data intelligence, improving patient outcome prediction accuracy by ~20% and enabling data-driven solutions for connected, compassionate health experiences.",
+    "\\item Built deep neural network models combining advanced ML theory with production-quality Python code for feature engineering and model optimization, enhancing healthcare analytics and delivering impactful business value across CVS Health systems.",
+    "\\item Developed evaluation pipeline to assess deep learning model performance, statistical validity, and clinical impact across hundreds of healthcare scenarios, ensuring production-ready reliability and integration with engineering teams.",
+    "\\item Optimized ML training workflows through efficient data processing pipelines and complex SQL queries on large-scale databases, reducing model training time by ~80% and enabling faster deployment of healthcare AI solutions.",
+    "\\item Designed ML-based anomaly detection system for healthcare workflows using neural network architectures, reducing false alerts by 25% while maintaining prediction accuracy and improving operational efficiency in patient care.",
+    "\\item Built end-to-end ML pipeline using ZenML and MLflow with GitHub workflows, deploying production-ready REST API on AWS Lambda with Docker for automated healthcare model training, CI/CD integration, and SDLC best practices."
+  ]
+}

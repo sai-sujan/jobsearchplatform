@@ -81,7 +81,7 @@ def analyze_batch():
 
     # 2. Load Excel
     try:
-        df = pd.read_excel(EXCEL_PATH, sheet_name='Sheet1')
+        df = pd.read_excel(EXCEL_PATH, sheet_name='All Jobs')
     except Exception as e:
         print(f"[ERROR] Could not load Excel: {e}")
         return
@@ -163,7 +163,7 @@ def analyze_batch():
     # 5. Save Excel
     if processed_count > 0:
         print(f"[INFO] Saving updates to {EXCEL_PATH}...")
-        df.to_excel(EXCEL_PATH, sheet_name='Sheet1', index=False)
+        df.to_excel(EXCEL_PATH, sheet_name='All Jobs', index=False)
         print("Done.")
     else:
         print("[INFO] No new jobs to process.")

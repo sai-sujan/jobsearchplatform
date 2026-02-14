@@ -1,0 +1,21 @@
+{
+  "ats_score": 76,
+  "location": "Fremont, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy", "Pandas"],
+    "LLM & NLP Tools": ["NLP"],
+    "Cloud & Deployment": ["AWS", "Model Deployment"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL"],
+    "Web & DevOps": ["FastAPI", "Git", "Data Processing Libraries"],
+    "ML Specializations": ["Deep Learning", "Machine Learning", "Computer Vision", "Image Analysis", "Signal Processing", "Anomaly Detection", "Pattern Recognition"]
+  },
+  "points": [
+    "\\item Implemented machine learning workflows for optical system test data analysis, improving pattern recognition accuracy by ~20% and enabling data-driven characterization of optical switching systems and OTDR modules.",
+    "\\item Built image and signal data processing pipelines for anomaly detection and failure analysis, enhancing calibration optimization and supporting real-world optical product development with machine learning-based tools.",
+    "\\item Developed evaluation framework to assess deep learning model performance for optical system monitoring and event detection, ensuring production-ready reliability through rigorous analysis methods and documentation.",
+    "\\item Optimized data processing workflows for large experimental datasets, reducing analysis time by ~80% and enabling faster insights extraction to support multi-disciplinary engineering teams in R&D environments.",
+    "\\item Designed ML-based anomaly detection system for optical system monitoring, reducing false alarms by 25% while maintaining detection accuracy and improving test optimization through data-driven analysis.",
+    "\\item Built a National ID authentication system using YOLO object detection, MiDaS depth estimation, and GAN-generated synthetic samples for robust hologram verification, demonstrating expertise in computer vision and deep learning for image analysis applications."
+  ]
+}

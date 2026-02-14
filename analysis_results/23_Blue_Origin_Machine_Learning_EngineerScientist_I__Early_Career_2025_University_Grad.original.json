@@ -1,0 +1,47 @@
+{
+    "ats_score": 88,
+    "location": "Kent, WA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "C++"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "TensorFlow",
+            "Scikit-learn",
+            "Pandas"
+        ],
+        "LLM & NLP Tools": [
+            "Generative AI",
+            "Computer Vision",
+            "Optimization"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Linux"
+        ],
+        "Databases & AI Infrastructure": [
+            "SQL",
+            "Data Pipelines"
+        ],
+        "Web & DevOps": [
+            "Git",
+            "CI/CD"
+        ],
+        "ML Specializations": [
+            "Deep Learning",
+            "Robotics",
+            "Simulation"
+        ]
+    },
+    "points": [
+        "\\item Developed innovative machine learning models to support manufacturing and engineering processes, contributing to the safety and efficiency of next-generation space vehicles.",
+        "\\item Engineered robust software solutions for data analysis and process optimization, directly impacting the reusable rocket factory operations.",
+        "\\item Collaborated with multidisciplinary teams to integrate AI capabilities into hardware testing and flight data analysis workflows.",
+        "\\item Implemented deep learning algorithms for anomaly detection in telemetry data, improving fault identification and system reliability.",
+        "\\item Designed and executed experiments to validate model performance against strict aerospace safety standards, ensuring high-reliability deployment.",
+        "\\item Optimized computational workflows and data pipelines to accelerate the iteration cycle of R&D projects, driving faster technical innovations."
+    ]
+}

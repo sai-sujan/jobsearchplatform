@@ -1,0 +1,21 @@
+{
+  "ats_score": 79,
+  "location": "El Segundo, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy"],
+    "LLM & NLP Tools": ["NLP"],
+    "Cloud & Deployment": ["AWS", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "Point Clouds", "3D Data Formats"],
+    "Web & DevOps": ["FastAPI", "Git", "Data Preprocessing", "Visualization Tools"],
+    "ML Specializations": ["Deep Learning", "Computer Vision", "3D Reconstruction", "Image Segmentation", "Depth Estimation", "Object Recognition", "Motion Tracking"]
+  },
+  "points": [
+    "\\item Implemented deep learning models using TensorFlow and PyTorch for 3D reconstruction and object recognition, improving scene understanding accuracy by ~20% and enabling AI-driven vision systems for R&D applications.",
+    "\\item Built hybrid ML workflows for 2D/3D visual data processing, enhancing feature extraction and geometric modeling for image segmentation, depth estimation, and motion tracking in production environments.",
+    "\\item Developed evaluation pipeline to assess model performance across hundreds of computer vision scenarios, ensuring production-ready reliability for deployment in multidisciplinary engineering teams with rigorous testing.",
+    "\\item Optimized deep learning training workflows through data preprocessing, augmentation, and model evaluation, reducing training time by ~80% and enabling faster deployment of vision systems for challenging 3D modeling projects.",
+    "\\item Designed ML-based anomaly detection system for 3D data validation (point clouds, meshes, depth maps), reducing data quality issues by 25% while maintaining model performance and improving visualization accuracy.",
+    "\\item Built a National ID authentication system using YOLO object detection, MiDaS depth estimation, and GAN-generated synthetic samples for robust hologram verification, demonstrating hands-on experience in computer vision and 3D image processing for security applications."
+  ]
+}

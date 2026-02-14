@@ -1,0 +1,21 @@
+{
+  "ats_score": 88,
+  "location": "Greenville, SC (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn"],
+    "LLM & NLP Tools": ["LangChain", "Large Language Models", "LLMs", "Generative AI", "Prompt Engineering", "AI Agents", "AI Orchestration"],
+    "Cloud & Deployment": ["AWS", "GCP", "Azure", "Docker", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "SQL", "NoSQL", "Vector Databases"],
+    "Web & DevOps": ["FastAPI", "REST APIs", "Git", "CI/CD Pipelines", "Microservices"],
+    "ML Specializations": ["NLP", "Deep Learning", "Agentic AI", "AI Governance", "Responsible AI"]
+  },
+  "points": [
+    "\\item Architected and deployed production-ready agentic AI systems using LangChain and LLM APIs, improving agent workflow reliability by ~20% and enabling intelligent orchestration with prompt engineering best practices and responsible AI frameworks.",
+    "\\item Engineered AI-powered applications integrating REST APIs, third-party tools, and cloud platforms (AWS, GCP, Azure), achieving 35% improvement in system performance through optimized deployment and microservices architecture.",
+    "\\item Developed evaluation and monitoring pipeline to assess AI agent performance, governance compliance, and business impact across hundreds of production scenarios, ensuring responsible AI standards and system reliability.",
+    "\\item Optimized AI orchestration workflows through prompt engineering and batched processing, reducing troubleshooting time by ~80% and cutting operational costs by 60% while maintaining production-grade performance.",
+    "\\item Designed ML-based anomaly detection system for AI system monitoring with responsible AI safeguards, reducing false alerts by 25% while maintaining governance compliance and improving operational efficiency.",
+    "\\item Implemented CI/CD pipeline with Docker and Git for automated deployment of AI-powered applications, ensuring reliable releases with well-tested code, documentation standards, and cross-functional collaboration across AI governance teams."
+  ]
+}

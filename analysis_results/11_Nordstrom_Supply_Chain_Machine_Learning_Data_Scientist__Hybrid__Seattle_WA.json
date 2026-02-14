@@ -1,48 +1,96 @@
 {
-    "ats_score": 92,
-    "location": "Seattle, WA (Hybrid)",
-    "tech_stack": {
-        "Programming Languages": [
-            "Python",
-            "SQL"
-        ],
-        "ML Frameworks & Libraries": [
-            "PyTorch",
-            "Scikit-learn",
-            "Pandas",
-            "XGBoost"
-        ],
-        "LLM & NLP Tools": [
-            "Predictive Modeling",
-            "Time Series Analysis"
-        ],
-        "Cloud & Deployment": [
-            "AWS",
-            "Docker",
-            "Kubernetes"
-        ],
-        "Databases & AI Infrastructure": [
-            "PostgreSQL",
-            "Snowflake",
-            "Spark"
-        ],
-        "Web & DevOps": [
-            "Git",
-            "Airflow",
-            "CI/CD"
-        ],
-        "ML Specializations": [
-            "Supply Chain Optimization",
-            "Demand Forecasting",
-            "Operations Research"
-        ]
-    },
-    "points": [
-        "\\item Developed and deployed scalable machine learning models for demand forecasting and inventory optimization, directly improving supply chain efficiency.",
-        "\\item Built robust data pipelines using SQL and Python to process terabytes of supply chain data, ensuring high-quality inputs for predictive modeling.",
-        "\\item Collaborated with product managers and operations teams to identify ML opportunities, translating business problems into technical solutions that drive operational cost savings.",
-        "\\item Implemented production-ready optimization algorithms for order fulfillment, reducing delivery times and enhancing customer satisfaction.",
-        "\\item Conducted exploratory data analysis and statistical modeling to uncover actionable insights, influencing strategic decisions in logistics and inventory management.",
-        "\\item Engineered comprehensive monitoring systems for deployed models, ensuring sustained performance and reliability in a dynamic retail environment."
+  "ats_score": 92,
+  "location": "Seattle, WA (Hybrid) (Open to Relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection",
+      "Supply Chain Optimization"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization",
+      "Airflow"
     ]
+  },
+  "points": [
+    "\\item Developed and deployed scalable machine learning models for demand forecasting and inventory optimization, directly improving supply chain efficiency.",
+    "\\item Built robust data pipelines using SQL and Python to process terabytes of supply chain data, ensuring high-quality inputs for predictive modeling.",
+    "\\item Collaborated with product managers and operations teams to identify ML opportunities, translating business problems into technical solutions that drive operational cost savings.",
+    "\\item Implemented production-ready optimization algorithms for order fulfillment, reducing delivery times and enhancing customer satisfaction.",
+    "\\item Conducted exploratory data analysis and statistical modeling to uncover actionable insights, influencing strategic decisions in logistics and inventory management.",
+    "\\item Engineered comprehensive monitoring systems for deployed models, ensuring sustained performance and reliability in a dynamic retail environment."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas",
+      "XGBoost"
+    ],
+    "LLM & NLP Tools": [
+      "Predictive Modeling",
+      "Time Series Analysis"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Docker",
+      "Kubernetes"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Snowflake",
+      "Spark"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "Airflow",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "Supply Chain Optimization",
+      "Demand Forecasting",
+      "Operations Research"
+    ]
+  }
 }

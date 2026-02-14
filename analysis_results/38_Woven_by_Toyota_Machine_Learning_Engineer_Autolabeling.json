@@ -1,0 +1,43 @@
+{
+  "ats_score": 81,
+  "location": "Palo Alto, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "Transformers",
+      "LangChain"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "Data Pipelines"
+    ],
+    "ML Specializations": [
+      "Computer Vision",
+      "Deep Learning",
+      "3D Vision",
+      "Autonomous Driving"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for autolabeling pipelines.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage for ML-powered autolabeling and data generation systems.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for autonomous driving autolabeling.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference for image and video data processing.",
+    "\\item Built a National ID authentication system using YOLO object detection, MiDaS depth estimation, and GAN-generated synthetic samples for 3D/4D data processing applications."
+  ]
+}

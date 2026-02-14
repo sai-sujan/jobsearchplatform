@@ -1,0 +1,113 @@
+{
+  "ats_score": 93,
+  "location": "San Francisco, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems",
+      "Multimodal AI"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B for enterprise-scale GenAI applications, improving document QA accuracy by ~20% and enabling advanced AI agents with multimodal functionality and tool-calling capabilities.",
+    "\\item Engineered hybrid retrieval architecture combining dense embeddings (FAISS) with BM25 search for frontier data applications, achieving 35% improvement in retrieval relevance for enterprise clients across cybersecurity, journalism, and genomics domains.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess faithfulness, performance, and business impact across 500+ GenAI use cases, ensuring production-ready reliability and data-driven optimization for next-generation AI experiences.",
+    "\\item Optimized enterprise LLM pipelines through batched query extraction and tool-calling agents, reducing API costs by ~80% and cutting inference latency by 60% while maintaining scalability for transformative client applications.",
+    "\\item Designed ML-based anomaly detection system, reducing false positives by 25% while maintaining threat detection coverage and improving operational efficiency in production AI deployments."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "NumPy",
+      "Pandas"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LlamaIndex",
+      "Agents",
+      "Multi-Agents",
+      "Large Language Models",
+      "OpenAI",
+      "RAG Systems",
+      "Generative AI",
+      "Tool-calling",
+      "Multimodal AI"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2)",
+      "GCP",
+      "Model Deployment",
+      "Production ML"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "FAISS",
+      "Milvus",
+      "Weaviate",
+      "Vector Databases"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Generative AI",
+      "AI Agents",
+      "Foundation Models",
+      "Enterprise AI"
+    ]
+  }
+}

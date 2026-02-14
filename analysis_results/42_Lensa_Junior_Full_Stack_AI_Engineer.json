@@ -1,0 +1,46 @@
+{
+  "ats_score": 80,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "Large Language Models",
+      "LangChain",
+      "RAG Systems"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "React",
+      "Git",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Full Stack AI"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for full-stack AI applications.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for end-to-end AI systems.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for AI-powered products.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference with FastAPI backend integration.",
+    "\\item Built end-to-end ML pipeline using MLflow, deploying REST APIs on AWS with Docker for automated training and inference in full-stack environments."
+  ]
+}

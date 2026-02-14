@@ -1,0 +1,21 @@
+{
+  "ats_score": 75,
+  "location": "Seattle, WA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy", "Pandas", "Statistical Modeling"],
+    "LLM & NLP Tools": ["NLP", "LangChain"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, EC2)", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "SQL Databases", "APIs", "Data Pipelines"],
+    "Web & DevOps": ["FastAPI", "Git", "Data Processing", "ETL"],
+    "ML Specializations": ["Machine Learning", "Deep Learning", "Demand Forecasting", "Optimization", "Predictive Analytics", "Neural Networks"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for supply chain document intelligence, improving forecasting accuracy by ~20% and enabling data-driven decision-making in demand prediction and logistics optimization.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings with BM25 search, enhancing operational efficiency and enabling robust data pipeline processing for supply chain analytics at scale.",
+    "\\item Developed ML evaluation pipeline to assess model faithfulness and performance across hundreds of supply chain scenarios, ensuring production-ready reliability and scalable predictive models for order fulfillment optimization.",
+    "\\item Optimized data processing through batched query extraction and neural network architectures, reducing computational overhead by ~80% and enabling faster, reliable forecasting for customer experience enhancement.",
+    "\\item Designed ML-based anomaly detection system for supply chain workflows, reducing redundant alerts by 25% while maintaining operational monitoring coverage and improving decision-making efficiency across logistics operations.",
+    "\\item Conducted exploratory data analysis on 30,000+ operational records to identify key supply chain features and bottlenecks, achieving 87% model accuracy on predictive tasks for demand forecasting and inventory optimization."
+  ]
+}

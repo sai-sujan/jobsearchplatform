@@ -1,49 +1,95 @@
 {
-    "ats_score": 92,
-    "location": "Remote",
-    "tech_stack": {
-        "Programming Languages": [
-            "Python",
-            "SQL"
-        ],
-        "ML Frameworks & Libraries": [
-            "PyTorch",
-            "TensorFlow",
-            "Scikit-learn",
-            "Pandas"
-        ],
-        "LLM & NLP Tools": [
-            "LangChain",
-            "LLM Evaluation",
-            "NLP",
-            "Prompt Engineering"
-        ],
-        "Cloud & Deployment": [
-            "AWS",
-            "Docker",
-            "Kubernetes"
-        ],
-        "Databases & AI Infrastructure": [
-            "PostgreSQL",
-            "Healthcare Data"
-        ],
-        "Web & DevOps": [
-            "Git",
-            "CI/CD",
-            "Monitoring Dashboards"
-        ],
-        "ML Specializations": [
-            "Deep Learning",
-            "Clinical AI",
-            "Feature Engineering"
-        ]
-    },
-    "points": [
-        "\\item Designed and implemented AI-powered clinical criteria evaluation systems, translating complex medical policies into executable Python and SQL logic.",
-        "\\item Engineered robust feature extraction pipelines to process messy clinical data, handling unit normalization and conflicting values to ensure high data integrity.",
-        "\\item Developed comprehensive measurement and evaluation frameworks for LLM-based systems, defining accuracy metrics and continuous quality improvement loops.",
-        "\\item Orchestrated regression testing and validation suites for policy-to-code translation, ensuring reliability and auditability of automated healthcare decisions.",
-        "\\item Collaborated with clinicians and domain experts to refine prompt engineering strategies, optimizing the extraction of structured clinical signals from medical records.",
-        "\\item Built and maintained monitoring dashboards to track system performance and data provenance, facilitating rapid debugging and iterative system enhancements."
+  "ats_score": 92,
+  "location": "Remote (Open to Relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
     ]
+  },
+  "points": [
+    "\\item Designed and implemented AI-powered clinical criteria evaluation systems, translating complex medical policies into executable Python and SQL logic.",
+    "\\item Engineered robust feature extraction pipelines to process messy clinical data, handling unit normalization and conflicting values to ensure high data integrity.",
+    "\\item Developed comprehensive measurement and evaluation frameworks for LLM-based systems, defining accuracy metrics and continuous quality improvement loops.",
+    "\\item Orchestrated regression testing and validation suites for policy-to-code translation, ensuring reliability and auditability of automated healthcare decisions.",
+    "\\item Collaborated with clinicians and domain experts to refine prompt engineering strategies, optimizing the extraction of structured clinical signals from medical records.",
+    "\\item Built and maintained monitoring dashboards to track system performance and data provenance, facilitating rapid debugging and iterative system enhancements."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "Pandas"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LLM Evaluation",
+      "NLP",
+      "Prompt Engineering"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Docker",
+      "Kubernetes"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Healthcare Data"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "CI/CD",
+      "Monitoring Dashboards"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Clinical AI",
+      "Feature Engineering"
+    ]
+  }
 }

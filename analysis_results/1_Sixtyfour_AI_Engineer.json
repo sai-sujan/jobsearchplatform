@@ -1,0 +1,63 @@
+{
+  "ats_score": 92,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "Agents",
+      "Multi-Agents",
+      "OpenAI",
+      "Ollama",
+      "RAG Systems",
+      "Prompt Engineering"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway, SQS, SNS, Step Functions)",
+      "Docker",
+      "ECS/EKS"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "FAISS",
+      "Milvus",
+      "Weaviate",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "Pandas"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Agentic AI",
+      "Web Scraping",
+      "Data Orchestration"
+    ]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B for enterprise-scale document intelligence, improving document QA accuracy by ~20% and enabling reliable agentic workflows with structured outputs.",
+    "\\item Engineered a hybrid retrieval architecture combining dense embeddings (FAISS) with BM25 sparse search, achieving 35% improvement in retrieval relevance and coverage for high-throughput data pipelines.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess faithfulness, relevance, and hallucination rates across 500+ QA examples, ensuring production-grade reliability with robust monitoring and observability.",
+    "\\item Optimized agentic inference through batched query extraction with tool calling and structured JSON outputs, reducing API calls by ~80% and cutting inference costs by 60% while maintaining sub-second latency for production workloads.",
+    "\\item Designed ML-based anomaly detection system for MFA workflows using resilient retry policies and circuit breakers, reducing redundant verification prompts by 25% while maintaining security coverage and fault tolerance.",
+    "\\item Implemented CI/CD pipeline with GitHub Actions to automate model retraining and deployment to AWS (S3, ECR, API Gateway), ensuring reliable and repeatable ML releases with autoscaling and cost control."
+  ]
+}

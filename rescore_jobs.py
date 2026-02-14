@@ -26,63 +26,58 @@ def rescore_all_jobs():
     print("  RE-SCORING ALL JOBS WITH UPDATED SKILLS")
     print(f"{'='*70}\n")
     
-    # Load existing jobs
-    df = pd.read_excel(MASTER_FILE, sheet_name='All Jobs')
+    # Load existing jobs (try sheet name first, fallback to first sheet)
+    try:
+        df = pd.read_excel(MASTER_FILE, sheet_name='All Jobs')
+    except:
+        df = pd.read_excel(MASTER_FILE, sheet_name=0)
     print(f"[INFO] Loaded {len(df)} existing jobs")
-    
+
     # Initialize skill matcher (loads updated skills)
     matcher = SkillMatcher()
-    
+
     # Re-score each job
     print("[INFO] Re-scoring jobs...")
+    rescored = 0
     for index, row in df.iterrows():
-        # Skip if no job description
-        if pd.isna(row.get('Job Description', '')):
+        # Skip if no job description (check both column name formats)
+        job_desc = row.get('Job_Description', row.get('Job Description', ''))
+        if pd.isna(job_desc) or not job_desc:
             continue
-        
-        # Get job details
-        job_desc = str(row.get('Job Description', ''))
-        is_premium = row.get('Tier', '').startswith('🟢') or row.get('Tier', '').startswith('🟡')
-        is_entry = 'entry' in str(row.get('Title', '')).lower() or 'junior' in str(row.get('Title', '')).lower()
-        
+
+        job_desc = str(job_desc)
+        job_title = str(row.get('Job_Title', row.get('Title', '')))
+        tier = str(row.get('Tier', ''))
+        is_premium = tier.startswith('🟢') or tier.startswith('🟡')
+        is_entry = 'entry' in job_title.lower() or 'junior' in job_title.lower()
+
         # Re-score
         score_result = matcher.score_job(job_desc, is_premium=is_premium, is_entry_level=is_entry)
-        
-        # Update row
-        df.at[index, 'Skill Score'] = score_result['final_score']
+
+        # Update row (use correct column names)
+        df.at[index, 'Keywords_Matching_Score'] = score_result['final_score']
         df.at[index, 'Match'] = score_result['match_count']
         df.at[index, 'Tier'] = score_result['tier']
         df.at[index, 'Matched Skills'] = ", ".join(score_result['matched_skills'][:10])
         df.at[index, 'Missing Skills'] = ", ".join(score_result['missing_skills'][:10])
-        
-        # Update verdict reason if it was YES
-        if df.at[index, 'Verdict'] == 'YES':
-            df.at[index, 'Reason'] = f"Skill Match: {score_result['final_score']}% ({score_result['match_count']})"
-        
+        rescored += 1
+
         if (index + 1) % 10 == 0:
             print(f"  Processed {index + 1}/{len(df)} jobs...")
     
-    print(f"[INFO] Re-scoring complete!")
-    
+    print(f"[INFO] Re-scoring complete! Rescored {rescored} jobs.")
+
     # Save updated scores
     print(f"[INFO] Saving updated scores to {MASTER_FILE}...")
-    
-    # Recreate sheets with new scores
-    with pd.ExcelWriter(MASTER_FILE, engine='openpyxl') as writer:
-        # All Jobs
-        df.to_excel(writer, sheet_name='All Jobs', index=False)
-        
-        # Top Matches (70%+, sorted by score)
-        top_matches = df[df['Skill Score'] >= 70].copy()
-        top_matches = top_matches.sort_values('Skill Score', ascending=False)
-        top_matches.to_excel(writer, sheet_name='Top Matches', index=False)
-        
-        # Applied
-        applied = df[df['Applied'] == 'Applied'].copy()
-        applied.to_excel(writer, sheet_name='Applied', index=False)
-    
-    print(f"\n[SUCCESS] Re-scored {len(df)} jobs!")
-    print(f"[INFO] Top Matches: {len(top_matches)} jobs (70%+ score)")
+
+    # Save to Excel (single sheet to preserve structure)
+    df.to_excel(MASTER_FILE, index=False, engine='openpyxl')
+
+    # Count stats
+    top_matches = len(df[df['Keywords_Matching_Score'] >= 70])
+
+    print(f"\n[SUCCESS] Re-scored {rescored} jobs!")
+    print(f"[INFO] Top Matches: {top_matches} jobs (70%+ score)")
     print(f"\n{'='*70}")
     print("  Open jobs_master.xlsx to see updated scores")
     print(f"{'='*70}\n")

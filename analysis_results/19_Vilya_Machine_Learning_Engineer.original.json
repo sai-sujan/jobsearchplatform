@@ -1,0 +1,46 @@
+{
+    "ats_score": 92,
+    "location": "Seattle, WA",
+    "tech_stack": {
+        "Programming Languages": [
+            "Python",
+            "SQL"
+        ],
+        "ML Frameworks & Libraries": [
+            "PyTorch",
+            "JAX",
+            "NumPy",
+            "SciPy",
+            "Pandas"
+        ],
+        "LLM & NLP Tools": [
+            "Computational Biology",
+            "Scientific Computing"
+        ],
+        "Cloud & Deployment": [
+            "AWS",
+            "Docker",
+            "Git"
+        ],
+        "Databases & AI Infrastructure": [
+            "PostgreSQL"
+        ],
+        "Web & DevOps": [
+            "CI/CD",
+            "Testing"
+        ],
+        "ML Specializations": [
+            "Drug Discovery",
+            "ML Pipelines",
+            "Algorithm Optimization"
+        ]
+    },
+    "points": [
+        "\\item Developed and maintained scalable infrastructure to support high-throughput machine learning workflows for computational drug discovery.",
+        "\\item Implemented and optimized advanced algorithms for data processing and model training, accelerating the identification of novel therapeutic targets.",
+        "\\item Collaborated with computational scientists to build a world-class drug discovery pipeline, integrating cutting-edge ML techniques into biological research.",
+        "\\item Enhanced the reliability and efficiency of the codebase by implementing rigorous testing and adopting modern software development practices.",
+        "\\item Deployed machine learning models to production environments using containers and cloud computing resources, ensuring secure and scalable operations.",
+        "\\item Contributed to the design of intelligent drug discovery platforms, applying scientific computing tools to solve complex biological problems."
+    ]
+}

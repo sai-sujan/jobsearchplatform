@@ -27,7 +27,7 @@ def clean_recent_run():
     
     # 1. Load Excel
     try:
-        df = pd.read_excel(EXCEL_PATH, sheet_name='Sheet1')
+        df = pd.read_excel(EXCEL_PATH, sheet_name='All Jobs')
         print(f"Loaded Excel with {len(df)} rows")
     except Exception as e:
         print(f"Error loading Excel: {e}")
@@ -58,7 +58,7 @@ def clean_recent_run():
         
         # Save back to Excel
         with pd.ExcelWriter(EXCEL_PATH, engine='openpyxl') as writer:
-            df_clean.to_excel(writer, sheet_name='Sheet1', index=False)
+            df_clean.to_excel(writer, sheet_name='All Jobs', index=False)
         print("Saved cleaned Excel.")
 
     # 3. Remove from History

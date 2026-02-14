@@ -1,0 +1,21 @@
+{
+  "ats_score": 93,
+  "location": "Atlanta, GA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn"],
+    "LLM & NLP Tools": ["LangChain", "LangGraph", "CrewAI", "Large Language Models", "LLMs", "OpenAI", "RAG Systems", "Agents", "Multi-Agents", "Prompt Engineering", "Tool-calling", "Function Calling"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, Bedrock)", "Azure", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "Vector Databases", "FAISS", "Pinecone", "ChromaDB"],
+    "Web & DevOps": ["FastAPI", "Git", "GitHub", "GitHub Actions", "CI/CD Pipelines", "Agile/Scrum"],
+    "ML Specializations": ["NLP", "Deep Learning", "Generative AI", "AI Agents", "Text-to-SQL", "Conversational AI", "Financial AI"]
+  },
+  "points": [
+    "\\item Architected and deployed enterprise-scale RAG systems using LangChain and Mistral 7B for financial services applications, improving document QA accuracy by ~20% and enabling semantic search with vector databases (FAISS, Pinecone) for open finance solutions.",
+    "\\item Engineered AI agent workflows with LangGraph and CrewAI for task automation and decision-making in financial applications, achieving 35% improvement in agentic orchestration and tool-calling patterns for 8,000+ banking customers.",
+    "\\item Developed LLM-as-Judge evaluation framework with prompt engineering optimization to assess AI agent performance, faithfulness, and business value across hundreds of financial use cases, ensuring production-ready reliability at scale.",
+    "\\item Optimized text-to-SQL and RAG pipelines through batched processing and context engineering, reducing query latency by ~80% and cutting inference costs by 60% while maintaining accuracy for natural language database applications.",
+    "\\item Designed ML-based anomaly detection system for financial AI workflows with function calling and tool use validation, reducing false positives by 25% while maintaining operational security and improving system reliability.",
+    "\\item Implemented CI/CD pipeline with GitHub Actions to automate AI agent deployment and testing on AWS/Azure, ensuring reliable releases with Agile/Scrum methodology and cross-functional collaboration for innovative financial AI applications."
+  ]
+}

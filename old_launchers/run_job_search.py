@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Main Job Search Script - Weekly Search
-This script runs comprehensive job searches for the past week.
-Run this manually or schedule it to run daily/weekly.
+Main Job Search Script - Daily Search
+This script runs comprehensive job searches for the past 24 hours.
+Run this manually or schedule it to run every 3 hours.
 """
 
 import sys
@@ -13,6 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 from job_scraper import JobScraper
 from excel_manager import ExcelManager
+from skill_matcher import SkillMatcher
 from datetime import datetime
 
 # --- CONFIGURATION ---
@@ -39,10 +40,10 @@ SEARCH_QUERIES = [
 def print_header():
     """Print fancy header."""
     print("\n" + "=" * 80)
-    print("  🔍 LINKEDIN JOB SCRAPER - WEEKLY COMPREHENSIVE SEARCH")
+    print("  🔍 LINKEDIN JOB SCRAPER - DAILY SEARCH (PAST 24 HOURS)")
     print("=" * 80)
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Time Range: Past 7 Days")
+    print(f"Time Range: Past 24 Hours")
     print(f"Target: Up to 40 jobs per query")
     print("=" * 80 + "\n")
 
@@ -69,8 +70,9 @@ def main():
         action_delay=2.0,
         max_jobs=40  # Full search: 40 jobs per query
     )
-    
+
     excel_manager = ExcelManager(MASTER_FILE)
+    skill_matcher = SkillMatcher()  # Initialize skill matcher for keyword scoring
 
     total_jobs_found = 0
     total_new_jobs = 0
@@ -88,11 +90,11 @@ def main():
             print(f"[QUERY {query_idx}/{len(SEARCH_QUERIES)}] {keywords[:70]}")
             print('='*80)
             
-            # Navigate with WEEK filter (r604800 = 7 days)
-            if scraper.navigate_to_linkedin_jobs(keywords, time_filter="r604800"):
-                
+            # Navigate with 24-HOUR filter (r86400 = 24 hours)
+            if scraper.navigate_to_linkedin_jobs(keywords, time_filter="r86400"):
+
                 # Collect job listings
-                print(f"\n[INFO] Collecting jobs from past 7 days...")
+                print(f"\n[INFO] Collecting jobs from past 24 hours...")
                 jobs = scraper.collect_job_listings(
                     existing_links=all_collected_links,
                     search_query=keywords
@@ -109,12 +111,23 @@ def main():
                         
                         try:
                             desc = scraper.get_job_description(job)
-                            
+
                             # Add to history only if we got valid description
                             if desc and len(desc) > 50:
                                 scraper.history.add(job.job_link)
                                 all_collected_links.add(job.job_link)
-                            
+
+                                # Calculate keyword matching score
+                                score_result = skill_matcher.score_job(
+                                    desc,
+                                    is_premium=getattr(job, 'is_premium', False),
+                                    is_entry_level=(getattr(job, 'role_type', '') == 'Entry-level')
+                                )
+                                job.skill_score = score_result['final_score']
+                                job.matched_skills = score_result.get('matched_skills', [])
+                                job.missing_skills = score_result.get('missing_skills', [])
+                                job.tier = score_result.get('tier', '')
+
                             scraper._safe_delay(0.8)
                             
                         except Exception as e:

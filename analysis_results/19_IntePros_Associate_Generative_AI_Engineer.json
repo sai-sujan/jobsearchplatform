@@ -1,0 +1,21 @@
+{
+  "ats_score": 92,
+  "location": "Philadelphia, PA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn"],
+    "LLM & NLP Tools": ["LangChain", "Large Language Models", "LLMs", "GPT", "Claude", "Gemini", "RAG Systems", "Prompt Engineering", "Agentic AI", "Fine-tuning"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, SageMaker, AI/ML Services)", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "Vector Databases", "FAISS", "Milvus"],
+    "Web & DevOps": ["FastAPI", "Node.js", "Git", "GitHub", "CI/CD Pipelines", "Agile"],
+    "ML Specializations": ["NLP", "Generative AI", "Deep Learning", "Document Processing", "Intelligent Automation"]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain with GPT, Claude, and Gemini LLMs for enterprise-grade document processing, improving summarization accuracy by ~20% and enabling scalable Retrieval-Augmented Generation solutions.",
+    "\\item Engineered agentic AI systems with reasoning, planning, and automated task execution capabilities using AWS AI/ML services, achieving 35% improvement in intelligent workflow automation for real-world enterprise use cases.",
+    "\\item Developed evaluation framework to assess LLM performance, RAG quality, and production reliability across hundreds of business scenarios, ensuring cost-efficient deployment with robust model governance and scalability in AWS ecosystem.",
+    "\\item Optimized Generative AI pipelines through batched query processing and vector database integration, reducing API calls by ~80% and cutting operational costs by 60% while maintaining sub-second latency for document intelligence workflows.",
+    "\\item Designed ML-based anomaly detection system for AI model behavior monitoring in production, reducing troubleshooting time by 25% through systematic performance optimization and integration testing with cross-functional teams.",
+    "\\item Implemented CI/CD pipeline with GitHub workflows to automate Gen AI model deployment and testing on AWS, ensuring reliable and repeatable releases with Agile methodology and collaboration across Program Managers and consulting partners."
+  ]
+}

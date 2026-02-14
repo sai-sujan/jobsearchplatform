@@ -48,6 +48,10 @@ function App() {
   const [roleFilter, setRoleFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all')
 
+  // Backup state
+  const [backupLoading, setBackupLoading] = useState(false)
+  const [backupMessage, setBackupMessage] = useState(null)
+
 
 
   // Fetch jobs from API
@@ -189,6 +193,21 @@ function App() {
     setTimeout(() => setSelectedJob(null), 300) // Wait for animation
   }
 
+  // Handle backup
+  const handleBackup = async () => {
+    setBackupLoading(true)
+    setBackupMessage(null)
+    try {
+      const response = await axios.post(`${API_URL}/api/backup`)
+      setBackupMessage({ type: 'success', text: response.data.message })
+      setTimeout(() => setBackupMessage(null), 5000) // Clear after 5 seconds
+    } catch (err) {
+      setBackupMessage({ type: 'error', text: 'Failed to create backup: ' + (err.response?.data?.detail || err.message) })
+    } finally {
+      setBackupLoading(false)
+    }
+  }
+
   // Get unique dates and times from jobs
   const uniqueDates = [...new Set(jobs.map(j => {
     if (j['Date Found']) {
@@ -316,11 +335,47 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>🎯 Job Search Dashboard</h1>
-        <p className="subtitle">Auto-refreshes when Excel changes</p>
-        {stats.last_updated && (
-          <p className="last-updated">Last updated: {stats.last_updated}</p>
-        )}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <div>
+            <h1>🎯 Job Search Dashboard</h1>
+            <p className="subtitle">Auto-refreshes when Excel changes</p>
+            {stats.last_updated && (
+              <p className="last-updated">Last updated: {stats.last_updated}</p>
+            )}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+            <button
+              onClick={handleBackup}
+              disabled={backupLoading}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: backupLoading ? '#9ca3af' : '#3b82f6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: backupLoading ? 'not-allowed' : 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              {backupLoading ? '⏳ Saving...' : '💾 Save Backup'}
+            </button>
+            {backupMessage && (
+              <div style={{
+                padding: '8px 12px',
+                borderRadius: '6px',
+                fontSize: '12px',
+                backgroundColor: backupMessage.type === 'success' ? '#dcfce7' : '#fee2e2',
+                color: backupMessage.type === 'success' ? '#166534' : '#991b1b'
+              }}>
+                {backupMessage.text}
+              </div>
+            )}
+          </div>
+        </div>
       </header>
 
       <div className="stats-grid">

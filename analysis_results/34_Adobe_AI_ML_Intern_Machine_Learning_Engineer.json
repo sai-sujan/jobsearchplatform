@@ -1,0 +1,54 @@
+{
+  "ats_score": 88,
+  "location": "San Jose, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "Scala",
+      "Java",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "Hugging Face",
+      "Ray",
+      "SparkML"
+    ],
+    "LLM & NLP Tools": [
+      "Large Language Models",
+      "NLP",
+      "LangChain",
+      "Agents",
+      "Prompt Engineering"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Azure",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Vector Databases"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "CI/CD",
+      "Data Pipelines"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Computer Vision",
+      "Deep Learning",
+      "Agentic AI"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for marketing and personalization systems.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for multimodal AI and autonomous agents.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for Adobe AI products.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference for predictive recommendation models.",
+    "\\item Built end-to-end ML pipeline using MLflow, deploying production models on AWS with automated training and inference for adaptive decision-making systems."
+  ]
+}

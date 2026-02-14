@@ -1,0 +1,21 @@
+{
+  "ats_score": 82,
+  "location": "San Francisco, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy", "Pandas"],
+    "LLM & NLP Tools": ["LangChain", "RAG Systems", "NLP Tools"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, EC2)", "Model Deployment"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "MongoDB"],
+    "Web & DevOps": ["FastAPI", "Git", "Data Cleaning", "Data Pipelines"],
+    "ML Specializations": ["Machine Learning", "Deep Learning", "Clinical AI", "Digital Twins", "Statistical Analysis"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for clinical document intelligence, improving answer reliability by ~20% and enabling AI-powered precision in clinical trial data analysis.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings with BM25 search, enhancing relevance and coverage for clinical data extraction and enabling faster, more robust analysis of patient information.",
+    "\\item Developed LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of clinical QA examples, ensuring production-ready reliability and rigorous validation for healthcare applications.",
+    "\\item Optimized data processing through batched query extraction, reducing computational overhead by ~80% and enabling faster, reliable clinical trial analysis with AI-powered decision support systems.",
+    "\\item Designed ML-based anomaly detection system for clinical workflows, reducing data quality issues by 25% while maintaining regulatory compliance and improving operational efficiency in clinical development.",
+    "\\item Conducted exploratory data analysis on 30,000+ clinical records to identify key biomarkers and patient features, achieving 87% model accuracy on predictive tasks for digital twin modeling and trial optimization."
+  ]
+}

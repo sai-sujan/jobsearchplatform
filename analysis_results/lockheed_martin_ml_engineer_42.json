@@ -1,0 +1,49 @@
+{
+  "ats_score": 68,
+  "location": "United States (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers",
+      "XGBoost"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "RAG Systems",
+      "OpenAI"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Anomaly Detection"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in production document-level QA systems.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enabling production-ready retrieval with enhanced relevance and coverage.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring scalable, production-ready deployment and model monitoring.",
+    "\\item Designed and implemented batched query extraction algorithms, reducing LLM calls by ~80% per query and enabling faster, reliable production inference.",
+    "\\item Designed an ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25%, strengthening security posture while improving user experience."
+  ]
+}

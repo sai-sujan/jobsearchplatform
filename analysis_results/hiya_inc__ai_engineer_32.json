@@ -1,0 +1,56 @@
+{
+  "ats_score": 78,
+  "location": "Buffalo-Niagara Falls Area (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "RAG Systems",
+      "OpenAI",
+      "Ollama",
+      "Agents",
+      "Multi-Agents",
+      "LoRA",
+      "QLoRA"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning"
+    ]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B, improving document QA accuracy by ~20% with agentic error correction and context validation.",
+    "\\item Built hybrid search workflows combining dense embeddings and keyword search, significantly improving relevance and recall for information retrieval.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess faithfulness, relevance, and hallucination rates across 500+ QA examples, enabling systematic quality assurance for LLM applications.",
+    "\\item Optimized LLM inference through batched query extraction, reducing API calls by ~80% and cutting inference costs by 60%, enabling cost-efficient deployment at scale.",
+    "\\item Designed ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25% while maintaining security coverage.",
+    "\\item Built a multi-agent research workflow using CrewAI with PubMed retrieval via Model Context Protocol, enabling interactive biomedical QA."
+  ]
+}

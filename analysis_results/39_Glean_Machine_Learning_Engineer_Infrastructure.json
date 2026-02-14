@@ -1,0 +1,54 @@
+{
+  "ats_score": 86,
+  "location": "San Francisco, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "Go",
+      "Java",
+      "C++",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "Large Language Models",
+      "RAG",
+      "LangChain",
+      "LlamaIndex",
+      "Agents"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment",
+      "Docker",
+      "CI/CD"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Vector Databases",
+      "FAISS"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "Data Pipelines",
+      "MLOps"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "RAG Systems",
+      "AI Infrastructure"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for enterprise search.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for Work AI platforms.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for AI agents at scale.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference for query understanding and document processing.",
+    "\\item Built end-to-end ML pipeline infrastructure with MLOps best practices, deploying scalable data pipelines and model serving for enterprise AI applications."
+  ]
+}

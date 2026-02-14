@@ -1,0 +1,21 @@
+{
+  "ats_score": 90,
+  "location": "Minneapolis, MN (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"],
+    "LLM & NLP Tools": ["LangChain", "LlamaIndex", "Large Language Models", "LLMs", "OpenAI", "Prompt Engineering", "Fine-tuning", "Generative AI"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, SageMaker)", "Azure", "Docker", "Model Deployment"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "Vector Databases", "FAISS"],
+    "Web & DevOps": ["FastAPI", "Git", "GitHub", "CI/CD Pipelines", "Agile"],
+    "ML Specializations": ["NLP", "Deep Learning", "Generative AI", "LLM Applications"]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B for enterprise business applications, improving document QA accuracy by ~20% and enabling scalable Gen AI solutions with prompt engineering best practices.",
+    "\\item Engineered hybrid retrieval workflows combining dense embeddings (FAISS) with BM25 search for LlamaIndex-powered applications, achieving 35% improvement in retrieval relevance for real-world business problem-solving at scale.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess model performance, faithfulness, and deployment readiness across hundreds of Gen AI test cases, ensuring production-grade reliability in cloud-based AI solutions.",
+    "\\item Optimized LLM inference through batched query extraction and fine-tuning techniques, reducing API calls by ~80% and cutting costs by 60% while maintaining sub-second latency for business-critical AI applications.",
+    "\\item Designed ML-based anomaly detection system for production workflows, reducing operational errors by 25% while maintaining system reliability and collaborating with software engineers and cloud architects on AI deployment.",
+    "\\item Fine-tuned Llama-3.1-8B using QLoRA on domain-specific business data with 4-bit quantization, gaining hands-on experience in parameter-efficient LLM training and innovative AI-powered application development for industrial use cases."
+  ]
+}

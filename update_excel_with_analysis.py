@@ -16,7 +16,7 @@ def update_excel_smart():
 
     # Load Excel
     try:
-        df = pd.read_excel(EXCEL_PATH, sheet_name='Sheet1')
+        df = pd.read_excel(EXCEL_PATH, sheet_name='All Jobs')
         print(f"[INFO] Loaded {len(df)} jobs from {EXCEL_PATH}")
     except Exception as e:
         print(f"[ERROR] Could not load Excel file: {e}")

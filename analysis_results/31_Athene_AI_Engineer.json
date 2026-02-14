@@ -1,0 +1,20 @@
+{
+  "ats_score": 91,
+  "location": "West Des Moines, IA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn"],
+    "LLM & NLP Tools": ["LangChain", "AutoGen", "LlamaIndex", "LangGraph", "Large Language Models", "Claude", "GPT-4", "RAG Systems", "Agents"],
+    "Cloud & Deployment": ["AWS (Bedrock, SageMaker, Textract)", "Docker", "CI/CD"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "Vector Databases", "FAISS"],
+    "Web & DevOps": ["React", "Node.js", "REST APIs", "Git"],
+    "ML Specializations": ["NLP", "Deep Learning", "Generative AI", "Agentic AI"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for insurance and financial services.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search with vector databases, enhancing relevance and coverage of retrieved documents for enterprise AI applications.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability and compliance with regulations.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference with AWS Bedrock and intelligent agents.",
+    "\\item Built a multi-agent research workflow using CrewAI with retrieval capabilities, enabling interactive QA and automating workflows across sales, marketing, and claims for business value."
+  ]
+}

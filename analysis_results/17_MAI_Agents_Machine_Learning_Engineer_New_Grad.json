@@ -1,46 +1,92 @@
 {
-    "ats_score": 95,
-    "location": "Springfield, MO, USA (Open to relocate)",
-    "tech_stack": {
-        "Programming Languages": [
-            "Python",
-            "SQL"
-        ],
-        "ML Frameworks & Libraries": [
-            "PyTorch",
-            "TensorFlow"
-        ],
-        "LLM & NLP Tools": [
-            "LangChain",
-            "Autonomous Agents",
-            "AdTech",
-            "Generative AI"
-        ],
-        "Cloud & Deployment": [
-            "AWS",
-            "Docker",
-            "Kubernetes"
-        ],
-        "Databases & AI Infrastructure": [
-            "PostgreSQL",
-            "Vector Databases"
-        ],
-        "Web & DevOps": [
-            "FastAPI",
-            "CI/CD"
-        ],
-        "ML Specializations": [
-            "Deep Learning",
-            "Agentic Workflows",
-            "Performance Marketing"
-        ]
-    },
-    "points": [
-        "\\item Architected and implemented key components of an autonomous AI agent ecosystem, enabling the automation of complex performance marketing workflows.",
-        "\\item Applied deep research expertise to solve real-world problems in ad technology, optimizing campaign management algorithms for profitability and scale.",
-        "\\item Engineered scalable AI infrastructure to support the lifecycle of intelligent agents, from training and learning to operational execution.",
-        "\\item Collaborated with a focused team of engineers to build an AI-native product from the ground up, contributing to architectural decisions and system design.",
-        "\\item Developed and deployed robust AI models that drove a 40% increase in client sales, managing millions in monthly ad spend with high reliability.",
-        "\\item Integrated advanced LLM capabilities into agentic workflows, enhancing the decision-making autonomy of marketing automation tools."
+  "ats_score": 95,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems",
+      "Autonomous Agents"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment",
+      "Kubernetes"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
     ]
+  },
+  "points": [
+    "\\item Architected and implemented key components of an autonomous AI agent ecosystem, enabling the automation of complex performance marketing workflows.",
+    "\\item Applied deep research expertise to solve real-world problems, optimizing campaign management algorithms for profitability and scale.",
+    "\\item Engineered scalable AI infrastructure to support the lifecycle of intelligent agents, from training and learning to operational execution.",
+    "\\item Collaborated with a focused team of engineers to build an AI-native product from the ground up, contributing to architectural decisions and system design.",
+    "\\item Integrated advanced LLM capabilities into agentic workflows, enhancing the decision-making autonomy of marketing automation tools."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "Autonomous Agents",
+      "AdTech",
+      "Generative AI"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Docker",
+      "Kubernetes"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Vector Databases"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Agentic Workflows",
+      "Performance Marketing"
+    ]
+  }
 }

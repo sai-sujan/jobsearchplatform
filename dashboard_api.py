@@ -50,7 +50,7 @@ def cleanup_duplicates():
 
         removed = original_count - len(df_clean)
         if removed > 0:
-            df_clean.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
+            df_clean.to_excel(EXCEL_FILE, sheet_name='All Jobs', index=False)
             print(f"[CLEANUP] Removed {removed} duplicate jobs. Now: {len(df_clean)} unique jobs.")
         else:
             print(f"[CLEANUP] No duplicates found. {len(df_clean)} jobs.")
@@ -98,7 +98,7 @@ def get_jobs():
             
             # Load analysis data from file if available
             analysis_path = job.get('Analysis_File')
-            if pd.notna(analysis_path) and isinstance(analysis_path, str) and os.path.exists(analysis_path):
+            if pd.notna(analysis_path) and isinstance(analysis_path, str) and analysis_path and os.path.exists(analysis_path):
                 try:
                     with open(analysis_path, 'r') as f:
                         analysis_data = json.load(f)
@@ -174,7 +174,7 @@ def get_jobs():
         # Calculate statistics
         total_jobs = len(jobs)
         yes_jobs = len([j for j in jobs if j.get('Verdict') == 'YES'])
-        good_matches = len([j for j in jobs if j.get('Keywords_Matching_Score', 0) >= 70])
+        good_matches = len([j for j in jobs if 70 <= j.get('Keywords_Matching_Score', 0) < 90])
         perfect_matches = len([j for j in jobs if j.get('Keywords_Matching_Score', 0) >= 90])
         
         return {
@@ -281,7 +281,7 @@ def update_status(request: UpdateStatusRequest):
         df.at[request.row_index, 'Status'] = request.status
 
         # Save back to Excel
-        df.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
+        df.to_excel(EXCEL_FILE, sheet_name='All Jobs', index=False)
         
         return {"success": True, "message": "Status updated successfully"}
         
@@ -391,10 +391,12 @@ def generate_resume(request: GenerateResumeRequest):
         
         # Determine PDF filename with timestamp versioning
         from datetime import datetime
-        safe_company = request.company_name.replace(' ', '_').replace('/', '_')
+        import re
+        # Match the same sanitization as single_resume_generator.py
+        safe_company = re.sub(r'[^\w\s-]', '', request.company_name).replace(' ', '_')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         pdf_filename = f"SujanDora_resume_{safe_company}_v{timestamp}.pdf"
-        
+
         # The script generates without timestamp, so we need to rename it
         original_pdf = Path('resumes') / f"SujanDora_resume_{safe_company}.pdf"
         versioned_pdf = Path('resumes') / pdf_filename
@@ -420,7 +422,7 @@ def generate_resume(request: GenerateResumeRequest):
             # Append new version (latest first)
             df.at[request.row_index, 'Resume Path'] = f"{versioned_pdf}; {current_path}"
 
-        df.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
+        df.to_excel(EXCEL_FILE, sheet_name='All Jobs', index=False)
         
         # Return success with PDF URL
         return {
@@ -468,10 +470,59 @@ def delete_job(row_index: int):
         df = df.drop(index=row_index)
         
         # Save back to Excel
-        df.to_excel(EXCEL_FILE, sheet_name='Sheet1', index=False)
+        df.to_excel(EXCEL_FILE, sheet_name='All Jobs', index=False)
         
         return {"success": True, "message": "Job deleted successfully"}
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/backup")
+def create_backup():
+    """Create a manual backup of the Excel file"""
+    try:
+        if not os.path.exists(EXCEL_FILE):
+            raise HTTPException(status_code=404, detail="Excel file not found")
+
+        # Create backups directory
+        backup_dir = Path("backups")
+        backup_dir.mkdir(exist_ok=True)
+
+        # Create timestamped backup
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_filename = f"jobs_master_manual_backup_{timestamp}.xlsx"
+        backup_path = backup_dir / backup_filename
+
+        # Copy the file
+        shutil.copy2(EXCEL_FILE, backup_path)
+
+        # Get list of all backups
+        backups = sorted(backup_dir.glob("jobs_master_*.xlsx"), reverse=True)
+        backup_list = [{"name": b.name, "size": b.stat().st_size, "created": datetime.fromtimestamp(b.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")} for b in backups[:10]]
+
+        return {
+            "success": True,
+            "message": f"Backup created: {backup_filename}",
+            "backup_path": str(backup_path),
+            "backups": backup_list
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/backups")
+def list_backups():
+    """List all available backups"""
+    try:
+        backup_dir = Path("backups")
+        if not backup_dir.exists():
+            return {"backups": []}
+
+        backups = sorted(backup_dir.glob("jobs_master_*.xlsx"), reverse=True)
+        backup_list = [{"name": b.name, "size": b.stat().st_size, "created": datetime.fromtimestamp(b.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")} for b in backups]
+
+        return {"backups": backup_list}
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

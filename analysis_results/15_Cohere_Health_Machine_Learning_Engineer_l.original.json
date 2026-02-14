@@ -1,0 +1,55 @@
+{
+  "ats_score": 89,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "Large Language Models",
+      "LLMs",
+      "Fine-tuning",
+      "SLMs",
+      "Context-engineering",
+      "Prompt Engineering"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment",
+      "Production ML"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "Healthcare Data Systems"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Git",
+      "MLOps",
+      "Feature Engineering"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Clinical ML",
+      "Healthcare AI",
+      "Statistical Analysis"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for healthcare document intelligence, improving clinical finding extraction accuracy by ~20% and enabling reliable automation of administrative clinical practices.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings with BM25 search for structured and unstructured healthcare data, enhancing relevance and coverage for production clinical ML models at scale.",
+    "\\item Developed LLM-as-Judge evaluation pipeline with rigorous experimental design to assess model faithfulness, clinical accuracy, and performance across hundreds of healthcare QA examples, ensuring production-ready reliability and scientific best practices.",
+    "\\item Optimized clinical ML inference through batched query extraction and context-engineering LLMs, reducing processing time by ~80% and enabling faster, scalable deployment of language models for healthcare automation.",
+    "\\item Designed ML-based anomaly detection system for clinical data validation workflows, reducing data quality issues by 25% while maintaining prediction accuracy and improving operational efficiency in healthcare technology.",
+    "\\item Fine-tuned Llama-3.1-8B (SLM) using QLoRA on clinical domain data with 4-bit quantization, gaining hands-on experience in parameter-efficient training and deploying modern language models for production healthcare applications with cross-functional collaboration."
+  ]
+}

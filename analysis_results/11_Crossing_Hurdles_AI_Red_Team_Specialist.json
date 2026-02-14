@@ -1,0 +1,50 @@
+{
+  "ats_score": 72,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "Large Language Models",
+      "LLMs",
+      "OpenAI",
+      "Prompt Engineering",
+      "Adversarial Testing"
+    ],
+    "Cloud & Deployment": [
+      "AWS"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL"
+    ],
+    "Web & DevOps": [
+      "Git"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Red Team Testing",
+      "Adversarial AI",
+      "Security Testing",
+      "Vulnerability Analysis"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B with adversarial testing methodologies, identifying jailbreak vulnerabilities and improving model robustness by ~20% through systematic red-teaming approaches.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings with BM25 search for AI security testing, enhancing detection of prompt injection attacks and misuse cases across multiple LLM systems.",
+    "\\item Developed LLM-as-Judge evaluation pipeline to assess AI vulnerabilities, faithfulness, and exploit discovery across hundreds of adversarial test cases, ensuring production-ready reliability through structured red-teaming taxonomies.",
+    "\\item Optimized vulnerability testing workflows through batched adversarial query generation, reducing testing time by ~80% while systematically pushing AI systems to their breaking points with reproducible attack artifacts.",
+    "\\item Designed ML-based anomaly detection system for AI security posture monitoring, reducing false negatives by 25% and identifying high-impact socio-technical vulnerabilities that automated testing systems fail to detect.",
+    "\\item Implemented a tool-using LLM agent (LangGraph/ReAct) with structured testing playbooks for systematic evaluation of AI model security, generating detailed reports and datasets for vulnerability classification and risk analysis."
+  ]
+}

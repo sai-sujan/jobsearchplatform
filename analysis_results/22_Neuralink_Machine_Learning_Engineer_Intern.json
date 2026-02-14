@@ -1,0 +1,21 @@
+{
+  "ats_score": 81,
+  "location": "Fremont, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy"],
+    "LLM & NLP Tools": ["LangChain", "NLP"],
+    "Cloud & Deployment": ["AWS", "Model Deployment"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "Time Series Databases"],
+    "Web & DevOps": ["FastAPI", "Git"],
+    "ML Specializations": ["Deep Learning", "Machine Learning", "Neural Decoders", "Brain-Computer Interface", "Time Series Analysis", "Signal Processing"]
+  },
+  "points": [
+    "\\item Implemented machine learning models for brain-computer interface applications, improving neural decoder accuracy by ~20% and enabling faster control speed for individuals with paralysis to interact with computers and robotic arms.",
+    "\\item Built time series analysis workflows for neural signal processing, enhancing relevance and coverage of decoded brain signals for high-impact BCI functionality and novel computer user interfaces.",
+    "\\item Developed evaluation pipeline to assess neural decoder performance, reliability, and functionality across hundreds of BCI experiments, ensuring production-ready reliability for mission-critical brain interface goals.",
+    "\\item Optimized ML training workflows for complex neural datasets, reducing model training time by ~80% and enabling faster deployment of novel BCI decoders that restore movement, sight, and speech for patients.",
+    "\\item Designed ML-based anomaly detection system for neural signal validation, reducing decoder errors by 25% while maintaining control accuracy and improving BCI reliability for revolutionary human-AI interaction.",
+    "\\item Conducted exploratory data analysis on complex neural datasets to identify patterns and drive insights, achieving high model accuracy on time series prediction tasks and communicating results clearly to cross-functional teams of neuroscientists and engineers."
+  ]
+}

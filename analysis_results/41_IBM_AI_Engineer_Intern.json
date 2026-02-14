@@ -1,0 +1,44 @@
+{
+  "ats_score": 79,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "Large Language Models",
+      "LangChain",
+      "NLP"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL"
+    ],
+    "Web & DevOps": [
+      "Git",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "Machine Learning",
+      "Deep Learning",
+      "NLP"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for enterprise AI solutions.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for sales and business applications.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for client-facing AI systems.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference for AI-powered business solutions.",
+    "\\item Designed ML-based anomaly detection system for workflows, reducing redundant prompts by 25% and improving user experience while maintaining system coverage."
+  ]
+}

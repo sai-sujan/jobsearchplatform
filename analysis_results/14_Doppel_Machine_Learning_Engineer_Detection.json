@@ -1,0 +1,104 @@
+{
+  "ats_score": 86,
+  "location": "San Francisco, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization",
+      "Real-time Inference"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for social engineering threat detection, improving malicious content identification accuracy by ~20% and enabling AI-native defense against deepfakes and scams at scale.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings (FAISS) with BM25 similarity search, enhancing detection relevance and coverage across billions of domains, social media accounts, and dark web forums for real-time threat monitoring.",
+    "\\item Developed ML evaluation pipeline to assess model performance, precision-recall tradeoffs, and anomaly detection across hundreds of threat scenarios, ensuring production-ready reliability for scalable AI systems processing web-scale data.",
+    "\\item Optimized batch and real-time inference pipelines through distributed data processing frameworks, reducing detection latency by ~80% and enabling faster threat neutralization across diverse data sources at massive scale.",
+    "\\item Designed ML-based anomaly detection system for identifying infringing content and social engineering attacks, reducing false positives by 25% while maintaining detection coverage and improving brand protection for enterprise clients."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "Hugging Face Transformers",
+      "NumPy"
+    ],
+    "LLM & NLP Tools": [
+      "NLP",
+      "Transformers",
+      "Embeddings",
+      "LangChain",
+      "AI Agents"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment",
+      "Production ML",
+      "Distributed Processing"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Vector Databases",
+      "FAISS",
+      "Similarity Search"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Git",
+      "Real-time Inference",
+      "Batch Processing"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Anomaly Detection",
+      "Classification",
+      "Similarity Search",
+      "Threat Detection"
+    ]
+  }
+}

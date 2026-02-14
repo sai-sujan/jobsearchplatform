@@ -1,0 +1,20 @@
+{
+  "ats_score": 90,
+  "location": "Plano, TX (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "Java", "C++", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn"],
+    "LLM & NLP Tools": ["LangChain", "CrewAI", "Agents", "Multi-Agents", "Agentic AI"],
+    "Cloud & Deployment": ["AWS", "Azure", "Google Cloud", "Model Deployment"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL"],
+    "Web & DevOps": ["REST APIs", "Microservices", "Git", "CI/CD"],
+    "ML Specializations": ["Deep Learning", "Agentic Workflows", "GenAI"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for agentic AI applications.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents for multi-agent systems and intelligent automation.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for AI agents across cloud platforms.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference for domain-specific AI agents and agentic workflows.",
+    "\\item Built a multi-agent research workflow using CrewAI with A2A communication, enabling collaborative decision-making and task automation for enterprise transformation strategies."
+  ]
+}

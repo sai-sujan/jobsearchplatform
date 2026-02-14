@@ -1,0 +1,21 @@
+{
+  "ats_score": 82,
+  "location": "Oklahoma City, OK (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy", "Pandas"],
+    "LLM & NLP Tools": ["LangChain", "NLP"],
+    "Cloud & Deployment": ["AWS", "Cloud ML", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "MongoDB", "Data Pipelines"],
+    "Web & DevOps": ["FastAPI", "Git", "Linux", "Version Control", "Workflow Automation"],
+    "ML Specializations": ["Machine Learning", "Deep Learning", "Healthcare ML", "Financial Technology ML", "Model Optimization"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for healthcare and fintech applications, improving model accuracy by ~20% and enabling reliable machine learning solutions deployed in production environments.",
+    "\\item Built end-to-end ML workflows combining data pipeline development with model optimization, enhancing performance and scalability for real-world business applications in collaborative software engineering teams.",
+    "\\item Developed evaluation pipeline to assess ML model performance, accuracy, and operational reliability across hundreds of production scenarios, ensuring deployment-ready solutions with systematic monitoring and maintenance.",
+    "\\item Optimized machine learning pipelines in cloud environments and Linux systems, reducing training and inference time by ~80% and enabling faster project delivery from development through production deployment.",
+    "\\item Designed ML-based anomaly detection system for process improvement and automation workflows, reducing operational errors by 25% while maintaining model performance and improving system efficiency.",
+    "\\item Built end-to-end ML pipeline using ZenML and MLflow with Git version control, deploying production-ready solutions on AWS for automated training and inference with workflow automation and independent project management."
+  ]
+}

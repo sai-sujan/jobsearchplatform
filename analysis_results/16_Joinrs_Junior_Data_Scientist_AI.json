@@ -1,0 +1,52 @@
+{
+  "ats_score": 78,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "NumPy",
+      "Pandas"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "AI Models",
+      "NLP"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Git",
+      "Data Visualization",
+      "Dashboards"
+    ],
+    "ML Specializations": [
+      "Machine Learning",
+      "Data Analysis",
+      "Predictive Modeling",
+      "Business Optimization",
+      "Data Visualization"
+    ]
+  },
+  "points": [
+    "\\item Implemented machine learning algorithms for Joinrs AI employment matching system, improving job recommendation accuracy by ~20% and enabling intelligent solutions that help 1.5M+ users find career opportunities aligned with their ambitions.",
+    "\\item Built data analysis and predictive modeling workflows using Python and SQL, enhancing business decision-making through meaningful insights and optimizing job-candidate matching performance at scale.",
+    "\\item Developed evaluation framework to assess ML model performance, precision-recall tradeoffs, and business impact across hundreds of employment scenarios, ensuring production-ready reliability for AI-driven job placement systems.",
+    "\\item Optimized data processing pipelines through batched analytics and efficient algorithms, reducing computational overhead by ~80% and enabling faster insights extraction from large-scale user and employment datasets.",
+    "\\item Designed anomaly detection models for data quality validation in job matching workflows, reducing matching errors by 25% while maintaining system accuracy and improving user experience for recent graduates worldwide.",
+    "\\item Conducted exploratory data analysis on 30,000+ user profiles and job postings to identify key features and optimization opportunities, achieving 87% model accuracy on predictive tasks and creating interactive dashboards with clear data visualizations for stakeholders."
+  ]
+}

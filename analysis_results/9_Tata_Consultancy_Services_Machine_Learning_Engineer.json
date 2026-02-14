@@ -1,0 +1,54 @@
+{
+  "ats_score": 83,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "C++",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "OpenCV",
+      "NumPy"
+    ],
+    "LLM & NLP Tools": [
+      "Vision-Language Models",
+      "VLMs",
+      "Multi-modal AI",
+      "Fine-tuning"
+    ],
+    "Cloud & Deployment": [
+      "AWS (SageMaker, EC2, S3)",
+      "Model Deployment",
+      "Cloud ML Workflows"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Sensor Data Processing"
+    ],
+    "Web & DevOps": [
+      "ROS/ROS2",
+      "Git",
+      "Docker",
+      "Simulation Tools"
+    ],
+    "ML Specializations": [
+      "Computer Vision",
+      "Deep Learning",
+      "Robotics Perception",
+      "Object Recognition",
+      "Multi-modal AI Systems"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting vision-language alignment system for robotic perception tasks, improving semantic understanding accuracy by ~20% and enabling reliable object recognition and scene interpretation in simulation environments.",
+    "\\item Built a hybrid data processing workflow combining synthetic data generation with real-world sensor fusion (images, text, LiDAR), enhancing model robustness and coverage for multi-modal AI deployment in Isaac Sim and Omniverse.",
+    "\\item Developed evaluation pipeline using performance metrics and model tuning to assess VLA model outputs across hundreds of robotic scenarios, ensuring production-ready reliability for real-world deployment on robotic platforms.",
+    "\\item Optimized training pipelines through batched preprocessing and AWS cloud integration, reducing training time by ~80% and enabling faster, scalable model development for vision-language perception systems.",
+    "\\item Designed ML-based anomaly detection system for robotic sensor validation, reducing false detections by 25% while maintaining perception accuracy and improving system reliability in autonomous navigation tasks.",
+    "\\item Built a National ID authentication system using YOLO object detection, MiDaS depth estimation, and GAN-generated synthetic samples for robust hologram verification, demonstrating expertise in computer vision and deep learning for security applications."
+  ]
+}

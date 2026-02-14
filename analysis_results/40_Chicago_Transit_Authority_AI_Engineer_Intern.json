@@ -1,0 +1,50 @@
+{
+  "ats_score": 84,
+  "location": "Chicago, IL (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy"
+    ],
+    "LLM & NLP Tools": [
+      "Large Language Models",
+      "LangChain",
+      "Agents",
+      "Agentic AI"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Model Deployment"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "Time Series Databases"
+    ],
+    "Web & DevOps": [
+      "REST APIs",
+      "Microservices",
+      "Git",
+      "CI/CD"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Forecasting",
+      "Chatbots",
+      "Agentic Workflows"
+    ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA for transit system AI applications.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage for agentic workflows and automation pipelines.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability for AI-powered transit features.",
+    "\\item Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference for real-time AI chatbots and forecasting.",
+    "\\item Built end-to-end ML pipeline using MLflow, deploying REST APIs and microservices with automated training and inference for intelligent transit system support."
+  ]
+}

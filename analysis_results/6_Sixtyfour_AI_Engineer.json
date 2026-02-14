@@ -1,50 +1,96 @@
 {
-    "ats_score": 96,
-    "location": "Springfield, MO, USA (Open to relocate)",
-    "tech_stack": {
-        "Programming Languages": [
-            "Python",
-            "SQL"
-        ],
-        "ML Frameworks & Libraries": [
-            "PyTorch",
-            "TensorFlow",
-            "Pandas"
-        ],
-        "LLM & NLP Tools": [
-            "LangChain",
-            "Agentic Systems",
-            "Web Scraping",
-            "Structured Outputs"
-        ],
-        "Cloud & Deployment": [
-            "AWS",
-            "Docker",
-            "FastAPI",
-            "SQS",
-            "Lambda"
-        ],
-        "Databases & AI Infrastructure": [
-            "PostgreSQL",
-            "MongoDB"
-        ],
-        "Web & DevOps": [
-            "CI/CD Pipelines",
-            "Git",
-            "Anti-Bot Evasion"
-        ],
-        "ML Specializations": [
-            "Data Pipeline Orchestration",
-            "NLP",
-            "Multi-Agent Workflows"
-        ]
-    },
-    "points": [
-        "\\item Architected and shipped robust agentic systems capable of handling multi-step workflows and structured output generation, significantly improving data acquisition reliability.",
-        "\\item Engineered high-throughput web scraping architectures with advanced anti-bot evasion and proxy rotation strategies, ensuring 99.9% success rate in data extraction.",
-        "\\item Developed scalable backend services using FastAPI and Python, implementing clean contracts and strong observability for mission-critical data pipelines.",
-        "\\item Orchestrated complex data enrichment workflows on AWS using Docker and SQS, enabling parallel processing of millions of company records.",
-        "\\item Implemented resilient rate-limiting and retry policies for external API integrations, guaranteeing system stability and data integrity under high load.",
-        "\\item Designed and deployed LLM-driven parsing agents to normalize and structure unstructured web data, reducing manual QA efforts by 75%."
+  "ats_score": 96,
+  "location": "Springfield, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers",
+      "Pandas"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems",
+      "Web Scraping"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Data Pipeline Orchestration"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines"
+    ],
+    "Cloud & Infrastructure": [
+      "Azure",
+      "AWS (S3, lambda, SQS, EC2)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
+    ],
+    "Cloud & Deployment": []
+  },
+  "points": [
+    "\\item Architected and shipped robust agentic systems capable of handling multi-step workflows and structured output generation, significantly improving data acquisition reliability.",
+    "\\item Engineered high-throughput web scraping architectures with advanced anti-bot evasion and proxy rotation strategies, ensuring 99.9% success rate in data extraction.",
+    "\\item Developed scalable backend services using FastAPI and Python, implementing clean contracts and strong observability for mission-critical data pipelines.",
+    "\\item Orchestrated complex data enrichment workflows on AWS using Docker and SQS, enabling parallel processing of millions of company records.",
+    "\\item Implemented resilient rate-limiting and retry policies for external API integrations, guaranteeing system stability and data integrity under high load.",
+    "\\item Designed and deployed LLM-driven parsing agents to normalize and structure unstructured web data, reducing manual QA efforts by 75%."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Pandas"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "Agentic Systems",
+      "Web Scraping",
+      "Structured Outputs"
+    ],
+    "Cloud & Deployment": [
+      "AWS",
+      "Docker",
+      "FastAPI",
+      "SQS",
+      "Lambda"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "CI/CD Pipelines",
+      "Git",
+      "Anti-Bot Evasion"
+    ],
+    "ML Specializations": [
+      "Data Pipeline Orchestration",
+      "NLP",
+      "Multi-Agent Workflows"
     ]
+  }
 }

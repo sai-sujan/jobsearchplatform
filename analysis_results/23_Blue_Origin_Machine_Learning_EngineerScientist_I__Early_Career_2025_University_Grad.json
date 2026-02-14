@@ -1,47 +1,98 @@
 {
-    "ats_score": 88,
-    "location": "Kent, WA",
-    "tech_stack": {
-        "Programming Languages": [
-            "Python",
-            "C++"
-        ],
-        "ML Frameworks & Libraries": [
-            "PyTorch",
-            "TensorFlow",
-            "Scikit-learn",
-            "Pandas"
-        ],
-        "LLM & NLP Tools": [
-            "Generative AI",
-            "Computer Vision",
-            "Optimization"
-        ],
-        "Cloud & Deployment": [
-            "AWS",
-            "Docker",
-            "Linux"
-        ],
-        "Databases & AI Infrastructure": [
-            "SQL",
-            "Data Pipelines"
-        ],
-        "Web & DevOps": [
-            "Git",
-            "CI/CD"
-        ],
-        "ML Specializations": [
-            "Deep Learning",
-            "Robotics",
-            "Simulation"
-        ]
-    },
-    "points": [
-        "\\item Developed innovative machine learning models to support manufacturing and engineering processes, contributing to the safety and efficiency of next-generation space vehicles.",
-        "\\item Engineered robust software solutions for data analysis and process optimization, directly impacting the reusable rocket factory operations.",
-        "\\item Collaborated with multidisciplinary teams to integrate AI capabilities into hardware testing and flight data analysis workflows.",
-        "\\item Implemented deep learning algorithms for anomaly detection in telemetry data, improving fault identification and system reliability.",
-        "\\item Designed and executed experiments to validate model performance against strict aerospace safety standards, ensuring high-reliability deployment.",
-        "\\item Optimized computational workflows and data pipelines to accelerate the iteration cycle of R&D projects, driving faster technical innovations."
+  "ats_score": 88,
+  "location": "Springfiels, MO, USA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "Multi-Agents",
+      "Finetuning (LoRA, QLoRA)",
+      "OpenAI, Ollama",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Anomaly Detection"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "Git, GitHub Actions",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL, MySQL, MongoDB",
+      "Weaviate",
+      "FAISS",
+      "ChromaDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker Containerization"
     ]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA aligned with high-stakes operational requirements.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings and BM25 search to enhance relevance and coverage of critical documentation, supporting data-driven decision making.",
+    "\\item Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability in safety-critical contexts.",
+    "\\item Introduced batched query extraction, reducing LLM calls by approximately 80% per query, enabling efficient, repeatable AI model inference in operational pipelines.",
+    "\\item Designed an ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25% while maintaining security and operational safety.",
+    "\\item Containerized and deployed AI/ML solutions using Docker and AWS, ensuring scalable and production-ready pipelines aligned with Blue Origin\u2019s emphasis on reliable, repeatable systems."
+  ],
+  "suggested_tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangSmith",
+      "LlamaIndex",
+      "RAG Systems"
+    ],
+    "ML Specializations": [
+      "Deep Learning",
+      "Anomaly Detection",
+      "Computer Vision"
+    ],
+    "MLOps & Deployment": [
+      "MLflow",
+      "CI/CD Pipelines",
+      "Model Deployment"
+    ],
+    "Cloud & Infrastructure": [
+      "AWS",
+      "Azure"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MongoDB",
+      "FAISS"
+    ],
+    "Web & DevOps": [
+      "Docker Containerization",
+      "FastAPI"
+    ]
+  }
 }

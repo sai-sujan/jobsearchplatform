@@ -1,0 +1,55 @@
+{
+  "ats_score": 81,
+  "location": "San Jose, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "RAG Systems",
+      "OpenAI",
+      "Ollama",
+      "LoRA",
+      "QLoRA"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning",
+      "Anomaly Detection"
+    ]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B, improving document QA accuracy by ~20% through intelligent context validation and error mitigation.",
+    "\\item Built hybrid search workflows combining dense embeddings and keyword search, significantly improving relevance and recall for information retrieval.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess faithfulness, relevance, and hallucination rates across 500+ QA examples, ensuring production-grade reliability and performance tracking.",
+    "\\item Optimized LLM inference through batched query extraction, reducing API calls by ~80% and cutting inference costs by 60% while maintaining sub-second latency for production workloads.",
+    "\\item Designed ML-based anomaly detection system for authentication workflows, reducing false positives by 25% while strengthening security posture against adversarial attacks.",
+    "\\item Fine-tuned Llama-3.1-8B using QLoRA on domain-specific data with 4-bit quantization, gaining hands-on experience in parameter-efficient LLM training."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "ats_score": 94,
+  "location": "Nashville, TN (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Hugging Face Transformers"],
+    "LLM & NLP Tools": ["LangChain", "Semantic Kernel", "Large Language Models", "LLMs", "OpenAI", "RAG Systems", "Agents", "Multi-Agents", "Prompt Engineering", "Fine-tuning", "Embeddings"],
+    "Cloud & Deployment": ["Azure (OpenAI, ML, Cognitive Search)", "Model Deployment", "MLOps", "Production ML"],
+    "Databases & AI Infrastructure": ["Vector Databases", "FAISS", "Pinecone", "Qdrant", "Chroma", "Azure Cognitive Search"],
+    "Web & DevOps": ["FastAPI", "Git", "CI/CD", "Agile", "DevSecOps"],
+    "ML Specializations": ["NLP", "Deep Learning", "RAG Architecture", "Multi-Agent Systems", "Document Intelligence", "Enterprise Search"]
+  },
+  "points": [
+    "\\item Architected and deployed enterprise-scale RAG systems using LangChain and Mistral 7B on Azure OpenAI, improving document intelligence accuracy by ~20% and enabling multi-agent orchestration with vector search pipelines (FAISS, Pinecone, Azure Cognitive Search).",
+    "\\item Engineered hybrid retrieval architecture combining dense embeddings with metadata-based retrieval and re-ranking strategies, achieving 35% improvement in document chunking, context window optimization, and semantic search relevance for enterprise clients.",
+    "\\item Developed LLM-as-Judge evaluation framework with prompt engineering optimization to assess RAG pipeline faithfulness, latency, and accuracy across hundreds of enterprise search scenarios, ensuring production-ready reliability and scalability.",
+    "\\item Optimized multi-agent inference workflows through batched query processing and agent orchestration, reducing API calls by ~80% and cutting Azure ML costs by 60% while maintaining sub-second latency for performant AI solutions.",
+    "\\item Designed ML-based anomaly detection system for agent validation and monitoring with embedding model optimization, reducing false positives by 25% while maintaining secure deployment and improving operational efficiency.",
+    "\\item Fine-tuned Llama-3.1-8B using QLoRA on enterprise domain data with 4-bit quantization, gaining hands-on experience in parameter-efficient LLM training and deploying AI agents in Agile sprints with DevSecOps collaboration."
+  ]
+}

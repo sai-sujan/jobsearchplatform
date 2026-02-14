@@ -1,0 +1,21 @@
+{
+  "ats_score": 88,
+  "location": "San Mateo, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "NumPy", "Pandas"],
+    "LLM & NLP Tools": ["LangChain", "RAG Systems", "LLMs", "OpenAI", "Prompt Engineering", "Agentic AI"],
+    "Cloud & Deployment": ["AWS", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "Product Databases", "FAISS"],
+    "Web & DevOps": ["FastAPI", "Git", "Data Processing"],
+    "ML Specializations": ["NLP", "Machine Learning", "Product Recommendations", "Document Understanding", "AI Workflows"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for construction product intelligence, improving specification understanding accuracy by ~20% and enabling AI-powered product recommendations for the $13T construction industry.",
+    "\\item Built hybrid retrieval workflows combining dense embeddings (FAISS) with BM25 search for product catalog analysis, enhancing relevance and coverage across millions of construction products and enabling instant identification of best-fit materials.",
+    "\\item Developed evaluation framework to assess AI model performance, product matching accuracy, and customer satisfaction across hundreds of real-world use cases, ensuring production-ready reliability for customer-facing product features.",
+    "\\item Optimized AI-powered workflows through batched query processing and model iteration, reducing inference time by ~80% and enabling faster product recommendations while analyzing structured and unstructured construction data at scale.",
+    "\\item Designed ML-based anomaly detection system for product data quality validation, reducing specification errors by 25% while maintaining catalog accuracy and improving operational efficiency in materials supply chain digitization.",
+    "\\item Built early agentic AI workflows for exploring product specifications and metadata, prototyping AI-driven features that translate complex customer problems into technical solutions for transformative construction technology applications."
+  ]
+}

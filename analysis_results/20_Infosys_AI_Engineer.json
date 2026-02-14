@@ -1,0 +1,21 @@
+{
+  "ats_score": 84,
+  "location": "Hartford, CT (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["PyTorch", "TensorFlow", "Scikit-learn", "NumPy"],
+    "LLM & NLP Tools": ["NLP", "LangChain", "Transformers", "LLMs"],
+    "Cloud & Deployment": ["AWS", "Model Deployment", "Production ML"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "MongoDB"],
+    "Web & DevOps": ["FastAPI", "Git", "Agile", "SDLC"],
+    "ML Specializations": ["NLP", "Machine Learning", "Deep Learning", "AI Solutions", "Digital Transformation"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for enterprise digital transformation, improving answer reliability by ~20% and enabling AI-powered solutions for global delivery model across diverse technology domains.",
+    "\\item Built hybrid retrieval workflows combining dense embeddings with BM25 search for client-facing AI applications, enhancing relevance and coverage for high-quality technical solutions in compliance with enterprise guidelines and best practices.",
+    "\\item Developed evaluation pipeline using PyTorch and scikit-learn to assess model performance, accuracy, and business impact across hundreds of AI scenarios, ensuring production-ready reliability for technology-specific applications.",
+    "\\item Optimized NLP inference pipelines through batched query processing and model fine-tuning, reducing processing time by ~80% and enabling faster deployment of AI solutions for complex coding and technical challenges in Agile environments.",
+    "\\item Designed ML-based anomaly detection system for production issue resolution, reducing debugging time by 25% while maintaining system reliability and providing regular support to project teams on architectural solutions.",
+    "\\item Containerized and deployed ML solutions using Docker and AWS in global delivery environment, enabling scalable production-ready pipelines with strong communication skills and cross-functional collaboration across Business and Technology teams."
+  ]
+}

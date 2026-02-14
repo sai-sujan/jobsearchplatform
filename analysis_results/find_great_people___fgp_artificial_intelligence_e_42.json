@@ -1,0 +1,61 @@
+{
+  "ats_score": 95,
+  "location": "Greenville-Spartanburg-Anderson, South Carolina Area (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": [
+      "Python",
+      "SQL"
+    ],
+    "ML Frameworks & Libraries": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Hugging Face Transformers"
+    ],
+    "LLM & NLP Tools": [
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "LlamaIndex",
+      "RAG Systems",
+      "OpenAI",
+      "Ollama",
+      "Agents",
+      "Multi-Agents"
+    ],
+    "Cloud & Deployment": [
+      "AWS (Lambda, S3, EC2, ECR, API Gateway)",
+      "GCP (Vertex AI, BigQuery)",
+      "Azure ML"
+    ],
+    "Databases & AI Infrastructure": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "FAISS",
+      "Milvus",
+      "Weaviate"
+    ],
+    "Web & DevOps": [
+      "FastAPI",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "MLflow",
+      "Model Monitoring"
+    ],
+    "ML Specializations": [
+      "NLP",
+      "Deep Learning"
+    ]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B, improving document QA accuracy by ~20% with agentic error correction and context validation.",
+    "\\item Engineered a hybrid retrieval architecture combining dense embeddings (FAISS) with BM25 sparse search, achieving 35% improvement in retrieval relevance for document QA systems.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess faithfulness, relevance, and hallucination rates across 500+ QA examples, integrating with MLflow for automated model monitoring.",
+    "\\item Optimized LLM inference through batched query extraction, reducing API calls by ~80% and cutting inference costs by 60% while maintaining sub-second latency for production workloads.",
+    "\\item Designed ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25% while maintaining security coverage.",
+    "\\item Implemented CI/CD pipeline with GitHub Actions to automate model retraining and deployment to AWS (S3, ECR, API Gateway), ensuring reliable and repeatable ML releases."
+  ]
+}

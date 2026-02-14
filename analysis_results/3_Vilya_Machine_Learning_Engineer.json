@@ -1,0 +1,21 @@
+{
+  "ats_score": 85,
+  "location": "Seattle, WA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["PyTorch", "TensorFlow", "Scikit-learn", "Hugging Face Transformers", "NumPy", "SciPy", "Pandas"],
+    "LLM & NLP Tools": ["LangChain", "LangGraph", "Transformers", "RAG Systems"],
+    "Cloud & Deployment": ["AWS (Lambda, S3, EC2)", "Docker", "Model Deployment", "Cloud Computing"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "FAISS", "MongoDB"],
+    "Web & DevOps": ["Git", "Docker Containers", "Testing", "CI/CD Pipelines"],
+    "ML Specializations": ["Deep Learning", "NLP", "Drug Discovery", "Computational Biology", "ML Pipeline Development"]
+  },
+  "points": [
+    "\\item Implemented a self-correcting RAG system using LangChain and Mistral 7B for computational drug discovery pipelines, improving document QA accuracy by ~20% and enabling reliable knowledge extraction from biomedical literature.",
+    "\\item Built a hybrid retrieval workflow combining dense embeddings (FAISS) with BM25 search, enhancing relevance and coverage of retrieved scientific documents for scalable drug discovery platform infrastructure.",
+    "\\item Developed LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability and robust validation for machine learning workflows at scale.",
+    "\\item Introduced batched query extraction using PyTorch, reducing LLM calls by ~80% per query and enabling faster, efficient production inference for data processing and model training in biotechnology applications.",
+    "\\item Designed ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25% while maintaining security coverage and improving system efficiency in computational platforms.",
+    "\\item Built a multi-agent research workflow using CrewAI with PubMed retrieval via Model Context Protocol, enabling interactive biomedical QA and supporting computational scientists in world-class drug discovery pipelines."
+  ]
+}

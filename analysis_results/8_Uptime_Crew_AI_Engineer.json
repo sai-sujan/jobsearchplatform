@@ -1,0 +1,21 @@
+{
+  "ats_score": 87,
+  "location": "Mountain View, CA (Open to relocate)",
+  "tech_stack": {
+    "Programming Languages": ["Python", "SQL"],
+    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn"],
+    "LLM & NLP Tools": ["LangChain", "Large Language Models", "LLMs", "OpenAI", "AI Coding Assistants", "Prompt Engineering"],
+    "Cloud & Deployment": ["AWS", "Docker", "CI/CD Pipelines", "Infrastructure-as-Code", "Containerization"],
+    "Databases & AI Infrastructure": ["PostgreSQL", "MySQL", "MongoDB"],
+    "Web & DevOps": ["FastAPI", "Git", "GitHub Actions", "Agile", "DevSecOps", "Automation Tools"],
+    "ML Specializations": ["NLP", "Deep Learning", "AI-Assisted Development", "Security Automation"]
+  },
+  "points": [
+    "\\item Architected and deployed a self-correcting RAG system using LangChain and Mistral 7B for AI-enhanced DevSecOps workflows, improving documentation accuracy by ~20% and enabling automated security policy generation for containerized applications.",
+    "\\item Engineered AI-assisted CI/CD pipelines integrating large language models with GitHub Actions for automated code generation, security compliance, and infrastructure-as-code templates based on fintech best practices.",
+    "\\item Developed LLM-as-Judge evaluation framework to assess code quality, security risks, and compliance across hundreds of pull requests, ensuring production-grade reliability with AI-powered review summaries and risk assessments.",
+    "\\item Optimized development velocity through AI coding assistants and batched query workflows, reducing manual refactoring time by ~80% and accelerating secure containerization of legacy applications with automated unit testing.",
+    "\\item Designed ML-based anomaly detection system for log analysis and troubleshooting, reducing incident response time by 25% while maintaining security posture and enabling faster issue resolution with AI-powered diagnostics.",
+    "\\item Implemented CI/CD pipeline with GitHub Actions to automate model retraining, testing, and deployment to AWS with Docker containerization, ensuring reliable and repeatable ML releases with Agile team collaboration."
+  ]
+}

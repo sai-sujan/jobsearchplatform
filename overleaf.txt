@@ -52,7 +52,7 @@
 \begin{minipage}[t]{0.68\textwidth}
 
 \section{Professional Summary}
-AI/ML Engineer with 2 years of hands-on experience delivering production-ready AI solutions, with a focus on LLM- and RAG-based document QA systems. Improved document QA accuracy by 20\%, reduced MFA verification load by 25\%, and streamlined ID authentication pipelines. Recent graduate with strong proficiency in Python, PyTorch, TensorFlow, OpenCV, and AWS, and a solid foundation in LLMs, RAG systems, model evaluation, and end-to-end ML workflows.
+AI/ML Engineer with 2+ years of hands-on experience delivering production-ready AI solutions, with a focus on LLM- and RAG-based document QA systems. Improved document QA accuracy by 20\%, reduced MFA verification load by 25\%, and streamlined ID authentication pipelines. Recent graduate with strong proficiency in Python, PyTorch, TensorFlow, OpenCV, and AWS, and a solid foundation in LLMs, RAG systems, model evaluation, and end-to-end ML workflows.
 \end{minipage}
 
 \vspace{0.6em}
@@ -67,6 +67,7 @@ AI/ML Engineer with 2 years of hands-on experience delivering production-ready A
 \section{Contact}
 \vspace{0.3em}
 \faMapMarker\ Springfield, MO, USA\\
+\makebox[1em][l]{\hspace{1.5em}}(Open to relocate)\\
 \faPhone\ +1 (940) 843-0811\\
 \faEnvelope\ \href{mailto:sujanworkofficial@gmail.com}{sujanworkofficial@gmail.com}\\
 \faLinkedin\ \href{https://www.linkedin.com/in/sujan-dora-6110a4190}{linkedin.com/in/sujan-dora}
@@ -163,7 +164,7 @@ Master of Science in Computer Science — Data Science \hfill {GPA: 3.63}\\
 
 \vspace{0.3em}
 
-\textbf{AI/ML Intern} \hfill {Sep 2022 -- Jul 2023}\\
+\textbf{AI/ML Intern} \hfill {Jun 2022 -- Jul 2023}\\
 {Grootan Technologies \hfill Chennai, India}
 \begin{itemize}
  \item Built a National ID authentication system for detecting counterfeit holograms using YOLO object detection, MiDaS depth estimation, and GAN-generated synthetic samples to improve robustness.
@@ -174,7 +175,7 @@ Master of Science in Computer Science — Data Science \hfill {GPA: 3.63}\\
 
 \vspace{0.3em}
 
-\textbf{Data Science Intern} \hfill {Nov 2021 -- Mar 2022}\\
+\textbf{Data Science Intern} \hfill {Nov 2021 -- May 2022}\\
 {iNeuron.ai \hfill Bengaluru, India}
 \begin{itemize}
   \item Developed an end-to-end credit card default prediction project using Docker, CircleCI, and Heroku, achieving 92\% model accuracy on simulated customer transactions.
