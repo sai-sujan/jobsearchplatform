@@ -10,16 +10,18 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+from src.settings import settings
+
 # Configuration
-INTERVAL_HOURS = 3
+INTERVAL_HOURS = settings.SCHEDULE_INTERVAL_HOURS
 INTERVAL_SECONDS = INTERVAL_HOURS * 3600
-LOG_FILE = Path(__file__).parent / "scheduler.log"
-START_HOUR = 9   # 9am
-END_HOUR = 24    # 12am (midnight)
+START_HOUR = settings.SCHEDULE_START_HOUR
+END_HOUR = settings.SCHEDULE_END_HOUR
 
 # Use absolute path to script directory
-SCRIPT_DIR = Path(__file__).parent.absolute()
-VENV_PYTHON = SCRIPT_DIR / "venv" / "bin" / "python3"
+SCRIPT_DIR = settings.BASE_DIR
+VENV_PYTHON = settings.VENV_PYTHON
+LOG_FILE = settings.LOGS_DIR / "scheduler.log"
 
 
 def log_message(message):

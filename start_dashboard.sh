@@ -8,17 +8,16 @@ echo "🚀 Starting Job Dashboard..."
 echo ""
 
 # Check if we're in the right directory
-if [ ! -f "dashboard_api.py" ]; then
-    echo "❌ Error: dashboard_api.py not found"
+if [ ! -d "api" ]; then
+    echo "❌ Error: api/ directory not found"
     echo "Please run this script from the job-applications directory"
     exit 1
 fi
 
 # Start backend API in background
-# Start backend API in background
 source venv/bin/activate
 echo "📡 Starting Backend API on port 5001..."
-python dashboard_api.py &
+python -m api.server &
 BACKEND_PID=$!
 
 # Wait for backend to start

@@ -11,83 +11,40 @@ SAFETY FEATURES:
 """
 
 import os
-import sys
-import shutil
-import fcntl
 import pandas as pd
 from datetime import datetime
 from pathlib import Path
 
+from src.settings import settings
+from src.utils import create_backup, acquire_file_lock, release_file_lock, load_excel_safe
+from src.scraper.job_scraper import JobScraper
+from src.evaluation.simple_evaluator import SimpleEvaluator
+from src.evaluation.skill_matcher import SkillMatcher
+
 # Get absolute path to script directory
 SCRIPT_DIR = Path(__file__).parent.absolute()
 
-# Add src to path
-sys.path.insert(0, str(SCRIPT_DIR / 'src'))
+# Configuration - USE ABSOLUTE PATHS (from settings)
+MASTER_FILE = settings.MASTER_EXCEL
+BACKUP_DIR = settings.BACKUPS_DIR
+LOCK_FILE = settings.LOCK_FILE
 
-from job_scraper import JobScraper
-from simple_evaluator import SimpleEvaluator
-from skill_matcher import SkillMatcher
-
-# Configuration - USE ABSOLUTE PATHS
-MASTER_FILE = SCRIPT_DIR / "jobs_master.xlsx"
-BACKUP_DIR = SCRIPT_DIR / "backups"
-LOCK_FILE = SCRIPT_DIR / ".jobs_master.lock"
-
-SEARCH_QUERIES = [
-    ("AI Engineer", '("AI Engineer" OR "Artificial Intelligence Engineer") NOT (Senior OR Sr. OR Principal OR Staff OR Lead OR Manager)', 20),
-    ("Machine Learning Engineer", '("Machine Learning Engineer" OR "ML Engineer") NOT (Senior OR Sr. OR Principal OR Staff OR Lead OR Manager)', 20),
-    ("Data Scientist", '"Data Scientist" AND ("Machine Learning" OR "Deep Learning" OR "AI" OR "Generative AI") NOT (Senior OR Sr. OR Principal OR Staff OR Lead OR Manager)', 20)
-]
+SEARCH_QUERIES = settings.SEARCH_QUERIES
 
 
 def acquire_lock():
     """Acquire file lock to prevent concurrent writes."""
-    try:
-        lock_fd = open(LOCK_FILE, 'w')
-        fcntl.flock(lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        return lock_fd
-    except (IOError, OSError):
-        print("[ERROR] Another instance is running. Wait for it to finish.")
-        raise SystemExit(1)
+    return acquire_file_lock(LOCK_FILE)
 
 
 def release_lock(lock_fd):
     """Release file lock."""
-    if lock_fd:
-        fcntl.flock(lock_fd, fcntl.LOCK_UN)
-        lock_fd.close()
-        try:
-            os.remove(LOCK_FILE)
-        except:
-            pass
+    release_file_lock(lock_fd, LOCK_FILE)
 
 
-def create_backup():
+def create_backup_file():
     """Create a backup of the master file before writing."""
-    if not MASTER_FILE.exists():
-        return None
-
-    # Create backups directory if needed
-    BACKUP_DIR.mkdir(exist_ok=True)
-
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    backup_path = BACKUP_DIR / f"jobs_master_backup_{timestamp}.xlsx"
-
-    try:
-        shutil.copy2(MASTER_FILE, backup_path)
-        print(f"[BACKUP] Created: {backup_path.name}")
-
-        # Keep only last 10 backups to save space
-        backups = sorted(BACKUP_DIR.glob("jobs_master_backup_*.xlsx"))
-        if len(backups) > 10:
-            for old_backup in backups[:-10]:
-                old_backup.unlink()
-
-        return backup_path
-    except Exception as e:
-        print(f"[ERROR] Failed to create backup: {e}")
-        print("[ERROR] Aborting to prevent data loss.")
-        raise SystemExit(1)
+    return create_backup(MASTER_FILE, BACKUP_DIR, settings.MAX_BACKUPS)
 
 
 def load_existing_master():
@@ -97,11 +54,7 @@ def load_existing_master():
         return pd.DataFrame()
 
     try:
-        # Try "All Jobs" sheet first, then fall back to first sheet
-        try:
-            df = pd.read_excel(MASTER_FILE, sheet_name="All Jobs")
-        except:
-            df = pd.read_excel(MASTER_FILE, sheet_name=0)
+        df = load_excel_safe(MASTER_FILE, settings.SHEET_NAME)
 
         if len(df) == 0:
             print(f"[WARNING] Master file exists but has 0 rows!")
@@ -125,7 +78,7 @@ def create_master_excel(df):
     from openpyxl.worksheet.datavalidation import DataValidation
 
     # CRITICAL: Create backup before writing
-    create_backup()
+    create_backup_file()
 
     # Validate we have data
     if df.empty:
@@ -137,7 +90,7 @@ def create_master_excel(df):
     # Save to Excel
     with pd.ExcelWriter(MASTER_FILE, engine='openpyxl') as writer:
         # Sheet 1: All Jobs (everything)
-        df.to_excel(writer, sheet_name='All Jobs', index=False)
+        df.to_excel(writer, sheet_name=settings.SHEET_NAME, index=False)
 
         # Sheet 2: Top Matches (70%+ skill score, sorted by score)
         if 'Keywords_Matching_Score' in df.columns:
@@ -229,9 +182,9 @@ def main():
         existing_urls = set(existing_df['Job_Link'].dropna().tolist()) if not existing_df.empty and 'Job_Link' in existing_df.columns else set()
 
         # Initialize components
-        chrome_path = os.getenv("CHROME_PATH", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
-        chrome_profile = os.getenv("CHROME_PROFILE_PATH", "")
-        blacklist_path = str(SCRIPT_DIR / "config" / "blacklist.txt")
+        chrome_path = settings.CHROME_PATH
+        chrome_profile = settings.CHROME_PROFILE_PATH
+        blacklist_path = str(settings.BLACKLIST_FILE)
 
         simple_eval = SimpleEvaluator()
         skill_matcher = SkillMatcher()
@@ -344,7 +297,7 @@ def main():
         if scraper:
             try:
                 scraper.close_browser()
-            except:
+            except Exception:
                 pass
 
 

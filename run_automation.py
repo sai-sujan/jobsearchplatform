@@ -4,18 +4,11 @@ import subprocess
 import time
 from datetime import datetime
 
-# Configuration: Batches to run
+from src.settings import settings
+
+# Configuration: Batches to run from settings
 # Format: (Role Name, Search Keywords, Job Count)
-BATCHES = [
-    # Batch 1: AI Engineer (Filtered)
-    ("AI Engineer", '("AI Engineer" OR "Artificial Intelligence Engineer") NOT (Senior OR Sr. OR Principal OR Staff OR Lead OR Manager)', 10),
-    
-    # Batch 2: Machine Learning Engineer (Filtered)
-    ("Machine Learning Engineer", '("Machine Learning Engineer" OR "ML Engineer") NOT (Senior OR Sr. OR Principal OR Staff OR Lead OR Manager)', 10),
-    
-    # Batch 3: Data Scientist (ai/ml focused)
-    ("Data Scientist", '"Data Scientist" AND ("Machine Learning" OR "Deep Learning" OR "AI" OR "Generative AI") NOT (Senior OR Sr. OR Principal OR Staff OR Lead OR Manager)', 10)
-]
+BATCHES = settings.SEARCH_QUERIES
 
 def run_automation():
     print("""

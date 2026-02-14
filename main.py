@@ -24,15 +24,12 @@ from datetime import datetime
 from pathlib import Path
 
 import requests
-from dotenv import load_dotenv
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
-
-from src.job_scraper import JobScraper, JobListing
-from src.resume_evaluator import ResumeEvaluator
-from src.ats_scorer import ATSScorer
-from src.output_writer import OutputWriter
+from src.settings import settings
+from src.scraper.job_scraper import JobScraper, JobListing
+from src.evaluation.resume_evaluator import ResumeEvaluator
+from src.evaluation.ats_scorer import ATSScorer
+from src.data.output_writer import OutputWriter
 
 
 class JobSearchAutomation:
@@ -42,37 +39,31 @@ class JobSearchAutomation:
     """
 
     def __init__(self):
-        """Initialize the automation with configuration from .env"""
-        # Load environment variables
-        load_dotenv()
-
+        """Initialize the automation with configuration from settings"""
         # Configuration
-        self.browser = os.getenv('BROWSER', 'chrome')
-        self.chrome_path = os.getenv(
-            'CHROME_PATH',
-            '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-        )
-        self.chrome_profile_path = os.getenv('CHROME_PROFILE_PATH', '')
+        self.browser = 'chrome'
+        self.chrome_path = settings.CHROME_PATH
+        self.chrome_profile_path = settings.CHROME_PROFILE_PATH
 
         # AirLLM configuration (local LLM for M2 Mac)
-        self.airllm_model = os.getenv('AIRLLM_MODEL', 'google/gemma-2-2b-it')
-        self.airllm_cache_dir = os.getenv('AIRLLM_CACHE_DIR', '~/.cache/airllm')
+        self.airllm_model = settings.AIRLLM_MODEL
+        self.airllm_cache_dir = settings.AIRLLM_CACHE_DIR
 
         # Ollama configuration (fallback)
-        self.ollama_model = os.getenv('OLLAMA_MODEL', 'gemma3:12b')
-        self.ollama_url = os.getenv('OLLAMA_URL', 'http://localhost:11434')
+        self.ollama_model = settings.OLLAMA_MODEL
+        self.ollama_url = settings.OLLAMA_URL
 
         # Search configuration defaults
-        self.default_delay = float(os.getenv('ACTION_DELAY', '2'))
-        self.premium_boost = int(os.getenv('PREMIUM_BOOST', '5'))
-        self.top_n = int(os.getenv('TOP_JOBS_TO_KEEP', '10'))
+        self.default_delay = settings.ACTION_DELAY
+        self.premium_boost = settings.PREMIUM_BOOST
+        self.top_n = settings.TOP_JOBS_TO_KEEP
 
         # Paths
-        self.base_dir = Path(__file__).parent
-        self.resume_path = self.base_dir / 'resume' / 'master_resume.txt'
-        self.blacklist_path = self.base_dir / 'config' / 'company_blacklist.txt'
-        self.job_desc_dir = self.base_dir / 'job_descriptions'
-        
+        self.base_dir = settings.BASE_DIR
+        self.resume_path = Path(settings.RESUME_PATH)
+        self.blacklist_path = settings.BLACKLIST_FILE
+        self.job_desc_dir = settings.JOB_DESC_DIR
+
         # Ensure base directories exist
         self.job_desc_dir.mkdir(parents=True, exist_ok=True)
 
@@ -234,7 +225,7 @@ class JobSearchAutomation:
             print(f"\n[INFO] Filtering {len(jobs)} jobs (No AI)...")
             
             # Simple Filter & Scoring (No AI)
-            from src.simple_evaluator import SimpleEvaluator
+            from src.evaluation.simple_evaluator import SimpleEvaluator
             simple_eval = SimpleEvaluator()
             
             for i, job in enumerate(jobs, 1):
@@ -246,7 +237,7 @@ class JobSearchAutomation:
                 
                 # Create a mock result for the output writer
                 # The output writer expects a 'ScoredJob' object
-                from src.resume_evaluator import EvaluationResult
+                from src.evaluation.resume_evaluator import EvaluationResult
                 mock_result = EvaluationResult()
                 
                 if passed:
@@ -343,22 +334,20 @@ def check_status():
     print("\nConfiguration Status")
     print("=" * 50)
 
-    load_dotenv()
-
     # Check .env
-    base_dir = Path(__file__).parent
+    base_dir = settings.BASE_DIR
     env_path = base_dir / '.env'
     env_exists = env_path.exists()
     print(f"{'✓' if env_exists else '✗'} .env file exists")
 
     if env_exists:
         # Check required values
-        chrome_path = os.getenv('CHROME_PATH', '')
-        chrome_profile = os.getenv('CHROME_PROFILE_PATH', '')
-        airllm_model = os.getenv('AIRLLM_MODEL', 'google/gemma-2-2b-it')
-        ollama_model = os.getenv('OLLAMA_MODEL', 'gemma3:12b')
-        top_n = os.getenv('TOP_JOBS_TO_KEEP', '10')
-        premium_boost = os.getenv('PREMIUM_BOOST', '5')
+        chrome_path = settings.CHROME_PATH
+        chrome_profile = settings.CHROME_PROFILE_PATH
+        airllm_model = settings.AIRLLM_MODEL
+        ollama_model = settings.OLLAMA_MODEL
+        top_n = settings.TOP_JOBS_TO_KEEP
+        premium_boost = settings.PREMIUM_BOOST
 
         print(f"{'✓' if chrome_path else '✗'} CHROME_PATH: {chrome_path[:50] + '...' if len(chrome_path) > 50 else chrome_path or 'Using default'}")
         print(f"{'✓' if chrome_profile else '✗'} CHROME_PROFILE_PATH: {chrome_profile[:40] + '...' if len(chrome_profile) > 40 else chrome_profile or 'Not set'}")
@@ -385,11 +374,11 @@ def check_status():
             print(f"✓ Ollama running with {len(models)} models")
         else:
             print("✗ Ollama not responding")
-    except:
+    except Exception:
         print("✗ Ollama not running (run: ollama serve)")
 
     # Check resume
-    resume_path = base_dir / 'resume' / 'master_resume.txt'
+    resume_path = Path(settings.RESUME_PATH)
     resume_exists = resume_path.exists()
     print(f"{'✓' if resume_exists else '✗'} Resume file exists")
 

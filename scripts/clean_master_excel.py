@@ -1,9 +1,14 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 import pandas as pd
 import os
 import shutil
 from datetime import datetime
+from src.settings import settings
 
-EXCEL_PATH = 'jobs_master.xlsx'
+EXCEL_PATH = str(settings.MASTER_EXCEL)
 
 STANDARD_COLUMNS = [
     'Status',

@@ -1,15 +1,16 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 import pandas as pd
 import json
 import os
-import sys
+from src.scraper.history_manager import HistoryManager
+from src.settings import settings
+from src.utils import load_excel_safe
 
-# Ensure we can import from src
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src'))
-
-from history_manager import HistoryManager
-
-EXCEL_PATH = 'jobs_master.xlsx'
-HISTORY_PATH = 'processed_jobs_history.json'
+EXCEL_PATH = str(settings.MASTER_EXCEL)
+HISTORY_PATH = str(settings.HISTORY_FILE)
 
 # Target jobs to remove (Title substring, Company substring)
 TARGETS = [
@@ -27,7 +28,7 @@ def clean_recent_run():
     
     # 1. Load Excel
     try:
-        df = pd.read_excel(EXCEL_PATH, sheet_name='All Jobs')
+        df = load_excel_safe(EXCEL_PATH, settings.SHEET_NAME)
         print(f"Loaded Excel with {len(df)} rows")
     except Exception as e:
         print(f"Error loading Excel: {e}")
@@ -58,7 +59,7 @@ def clean_recent_run():
         
         # Save back to Excel
         with pd.ExcelWriter(EXCEL_PATH, engine='openpyxl') as writer:
-            df_clean.to_excel(writer, sheet_name='All Jobs', index=False)
+            df_clean.to_excel(writer, sheet_name=settings.SHEET_NAME, index=False)
         print("Saved cleaned Excel.")
 
     # 3. Remove from History
