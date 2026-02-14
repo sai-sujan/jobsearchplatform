@@ -127,7 +127,7 @@ class ResumeEvaluator:
                 print(f"[INFO] Using Ollama as fallback ({self.ollama_model})")
                 self._use_ollama = True
                 return True
-        except:
+        except Exception:
             pass
         return False
 
@@ -224,7 +224,7 @@ class ResumeEvaluator:
             text = re.sub(r',\s*]', ']', text)
             try:
                 return json.loads(text)
-            except:
+            except (json.JSONDecodeError, ValueError):
                 return {}
 
     def load_resume(self, resume_path: str) -> bool:

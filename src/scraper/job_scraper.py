@@ -222,7 +222,7 @@ class JobScraper:
                         text = elem.inner_text().strip().lower()
                         if any(p in text for p in ['premium', 'featured', 'early', 'actively', 'hiring']):
                             indicators.append(f"badge:{text[:30]}")
-                except:
+                except Exception:
                     pass
 
             is_premium = len(indicators) > 0
@@ -254,7 +254,7 @@ class JobScraper:
                         '.jobs-search-results__list-item, .scaffold-layout__list-item, [data-job-id]',
                         timeout=5000
                     )
-                except:
+                except Exception:
                     pass
 
                 # Get job cards
@@ -320,7 +320,7 @@ class JobScraper:
                     if see_more:
                         see_more.click()
                         self._safe_delay(2)
-                except:
+                except Exception:
                     pass
 
             # Count premium jobs
@@ -446,7 +446,7 @@ class JobScraper:
                             break
                 if location:
                     break
-            except:
+            except Exception:
                 continue
         
         # Strategy 2: Look in metadata sections
@@ -463,7 +463,7 @@ class JobScraper:
                                 if not any(x in text.lower() for x in ['ago', 'applicant', 'reposted']):
                                     location = text
                                     break
-            except:
+            except Exception:
                 pass
         
         # Strategy 3: JSON-LD structured data
@@ -492,7 +492,7 @@ class JobScraper:
                         
                         if location_parts:
                             location = ', '.join(location_parts)
-            except:
+            except Exception:
                 pass
         
         # Clean up location string
@@ -527,7 +527,7 @@ class JobScraper:
                 if see_more and see_more.is_visible():
                     see_more.click()
                     self._safe_delay(1)
-            except:
+            except Exception:
                 pass
 
             # Extract description

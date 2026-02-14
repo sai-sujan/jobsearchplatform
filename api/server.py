@@ -107,7 +107,7 @@ def get_jobs():
                         job['Analysis Data'] = analysis_data
                         # Flatten for table view if needed, or keep nested
                         job['ats_score'] = analysis_data.get('ats_score', 'N/A')
-                except:
+                except (json.JSONDecodeError, IOError):
                     job['Analysis Data'] = None
             else:
                 job['Analysis Data'] = None

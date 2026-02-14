@@ -221,8 +221,8 @@ class ResumeGenerator:
             for f in self.temp_dir.glob(f'*.{ext}'):
                 try:
                     f.unlink()
-                except:
-                    pass
+                except Exception as e:
+                    print(f"[WARN] Failed to clean up temp file {f}: {e}")
 
     def generate_all_resumes(self):
         """Generate customized resumes for all jobs in the Excel file."""
