@@ -1,1 +1,0 @@
-Columns: ['New', 'Company', 'Title', 'Location', 'Link', 'Date Found', 'Skill Score', 'Match', 'Tier', 'Matched Skills', 'Missing Skills', 'Verdict', 'Reason', 'Applied', 'Search Query', 'Job Description', 'Analysis JSON', 'Analysis File', 'Search_Query', 'Premium_Indicators', 'Job_Title', 'Posting_Date', 'Is_Premium', 'Job_Description', 'Date_Added', 'Role_Type', 'Job_Link']
