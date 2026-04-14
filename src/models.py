@@ -53,6 +53,7 @@ class UserProfile(Base):
     employment_types = Column(JSON, nullable=False, default=list)
     industries = Column(JSON, nullable=False, default=list)
     visa_preferences = Column(JSON, nullable=False, default=dict)
+    quality_filters = Column(JSON, nullable=False, default=dict)
     salary_expectations = Column(String(120), nullable=True)
     candidate_summary = Column(Text, nullable=True)
     parsed_skills = Column(JSON, nullable=False, default=list)

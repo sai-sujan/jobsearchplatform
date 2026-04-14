@@ -12,6 +12,7 @@ Usage:
     jobs = get_user_jobs(db, user.id, status='applied')
 """
 
+import re
 from datetime import datetime
 from typing import Dict, List, Optional
 
@@ -182,6 +183,7 @@ def get_user_jobs(
     source: str = None,
     skip: int = 0,
     limit: int = 100,
+    quality_filters: Optional[Dict] = None,
 ) -> List[Job]:
     """Get user's jobs with optional filters."""
     query = db.query(Job).filter(Job.user_id == user_id)
@@ -191,7 +193,162 @@ def get_user_jobs(
     if source:
         query = query.filter(Job.source == source)
 
-    return query.order_by(desc(Job.date_added)).offset(skip).limit(limit).all()
+    jobs = query.order_by(desc(Job.date_added)).all()
+    filtered_jobs = [job for job in jobs if job_passes_quality_filters(job, quality_filters)]
+    return filtered_jobs[skip:skip + limit]
+
+
+def count_user_jobs(
+    db: Session,
+    user_id: int,
+    status: str = None,
+    source: str = None,
+    quality_filters: Optional[Dict] = None,
+) -> int:
+    """Count user's jobs after quality filtering is applied."""
+    return len(
+        get_user_jobs(
+            db,
+            user_id,
+            status=status,
+            source=source,
+            skip=0,
+            limit=100000,
+            quality_filters=quality_filters,
+        )
+    )
+
+
+def job_passes_quality_filters(job: Job, quality_filters: Optional[Dict]) -> bool:
+    """Apply user-controlled quality filters to candidate jobs."""
+    if not quality_filters:
+        return True
+
+    source_labels = {
+        "linkedin": "LinkedIn",
+        "indeed": "Indeed",
+        "glassdoor": "Glassdoor",
+        "company site": "Company Site",
+        "company": "Company Site",
+        "web": "Company Site",
+    }
+
+    normalized_source = source_labels.get((job.source or "").strip().lower(), (job.source or "Web").title())
+    preferred_sources = quality_filters.get("preferred_sources") or []
+    if preferred_sources and normalized_source not in preferred_sources:
+        return False
+
+    match_score = int(job.skill_score or job.ats_score or 0)
+    minimum_match_score = int(quality_filters.get("minimum_match_score") or 0)
+    if match_score < minimum_match_score:
+        return False
+
+    include_stretch_roles = bool(quality_filters.get("include_stretch_roles", True))
+    tier_text = f"{job.tier or ''} {job.role_type or ''}".lower()
+    if not include_stretch_roles and (match_score < max(minimum_match_score, 70) or "stretch" in tier_text or "junior to senior" in tier_text):
+        return False
+
+    haystack = build_job_search_text(job)
+
+    if quality_filters.get("hide_staffing_agencies") and looks_like_staffing_job(job, haystack):
+        return False
+
+    if quality_filters.get("hide_suspicious_jobs") and looks_suspicious_job(job, haystack):
+        return False
+
+    if quality_filters.get("exclude_recruiter_posts") and looks_like_recruiter_post(job, haystack):
+        return False
+
+    if quality_filters.get("require_salary_visibility") and not has_salary_signal(job):
+        return False
+
+    exclude_keywords = [keyword.strip().lower() for keyword in quality_filters.get("exclude_keywords", []) if keyword.strip()]
+    if exclude_keywords and any(keyword in haystack for keyword in exclude_keywords):
+        return False
+
+    return True
+
+
+def build_job_search_text(job: Job) -> str:
+    """Build a searchable normalized blob from job fields."""
+    fields = [
+        job.title or "",
+        job.company or "",
+        job.location or "",
+        job.job_description or "",
+        job.search_query or "",
+    ]
+    return " ".join(fields).lower()
+
+
+def looks_like_staffing_job(job: Job, haystack: str) -> bool:
+    """Flag likely staffing-agency or recruiter middleman listings."""
+    staffing_company_keywords = [
+        "staffing",
+        "recruiting",
+        "recruitment",
+        "talent",
+        "hiring",
+        "placement",
+        "search group",
+        "solutions",
+        "consulting",
+    ]
+    staffing_description_keywords = [
+        "our client",
+        "for one of our clients",
+        "staffing agency",
+        "recruitment agency",
+        "contract-to-hire",
+        "w2 only",
+        "corp to corp",
+        "third-party",
+    ]
+    company_text = (job.company or "").lower()
+    if any(keyword in company_text for keyword in staffing_company_keywords):
+        return True
+    return any(keyword in haystack for keyword in staffing_description_keywords)
+
+
+def looks_suspicious_job(job: Job, haystack: str) -> bool:
+    """Flag likely low-trust listings using simple heuristics."""
+    suspicious_keywords = [
+        "commission only",
+        "unpaid",
+        "training fee",
+        "quick money",
+        "whatsapp",
+        "telegram",
+        "crypto mining",
+        "multi level marketing",
+        "mlm",
+        "pay to apply",
+    ]
+    if any(keyword in haystack for keyword in suspicious_keywords):
+        return True
+
+    if not job.job_link or len(job.job_link.strip()) < 10:
+        return True
+
+    return False
+
+
+def looks_like_recruiter_post(job: Job, haystack: str) -> bool:
+    """Flag recruiter-style listings the user may want hidden."""
+    recruiter_keywords = [
+        "recruiter",
+        "sourcer",
+        "talent acquisition",
+        "hiring immediately",
+        "we are hiring for our client",
+    ]
+    return any(keyword in haystack for keyword in recruiter_keywords)
+
+
+def has_salary_signal(job: Job) -> bool:
+    """Check whether the job appears to expose a salary range."""
+    haystack = build_job_search_text(job)
+    return bool(re.search(r"\$\s?\d", haystack) or re.search(r"\b\d{2,3}k\b", haystack))
 
 
 def update_job(db: Session, job_id: int, user_id: int, **update_data) -> Job:

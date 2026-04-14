@@ -207,10 +207,127 @@
   resize: vertical;
 }
 
+/* File upload styles */
+.file-upload-label {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.file-upload-wrapper {
+  position: relative;
+}
+
+.file-upload-wrapper input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.file-upload-display {
+  padding: 1.5rem 1rem;
+  border-radius: 1rem;
+  border: 2px dashed var(--line-strong);
+  background: rgba(248, 250, 252, 0.5);
+  text-align: center;
+  transition: all 160ms ease;
+  pointer-events: none;
+}
+
+.file-upload-wrapper:hover .file-upload-display {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, 0.04);
+}
+
+.file-upload-wrapper input[type="file"]:focus-visible ~ .file-upload-display {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, 0.08);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.file-placeholder {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.file-placeholder span {
+  display: block;
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+  font-size: 0.95rem;
+}
+
+.file-placeholder p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.file-selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+
+.file-selected span {
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.clear-file {
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--muted-strong);
+  font-size: 0.8rem;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: all 160ms ease;
+  pointer-events: auto;
+}
+
+.clear-file:hover {
+  border-color: var(--line-strong);
+  background: rgba(241, 245, 249, 0.96);
+  color: var(--ink);
+}
+
 .choice-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
+}
+
+.toggle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.toggle-card {
+  display: flex;
+  gap: 0.7rem;
+  align-items: start;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.toggle-card input {
+  width: auto;
+  margin-top: 0.24rem;
+}
+
+.toggle-card span {
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  color: var(--ink);
 }
 
 .choice-chip {
@@ -349,6 +466,10 @@
   .onboarding-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .toggle-grid {
+    grid-template-columns: 1fr;
   }
 
   .onboarding-nav-button,

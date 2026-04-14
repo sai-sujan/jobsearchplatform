@@ -19,7 +19,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from api.deps import get_current_user, get_db, require_csrf
-from src.crud import delete_job, get_job, get_user_jobs, update_job
+from src.crud import count_user_jobs, delete_job, get_job, get_or_create_profile, get_user_jobs, update_job
 from src.models import Job, User
 
 router = APIRouter(prefix="/api", tags=["jobs"])
@@ -29,6 +29,15 @@ def serialize_job(job: Job) -> dict:
     """Map database jobs to the frontend shape used by the user web app."""
     matched_skills = job.matched_skills or []
     match_score = int(job.skill_score or 0)
+    source_labels = {
+        "linkedin": "LinkedIn",
+        "indeed": "Indeed",
+        "glassdoor": "Glassdoor",
+        "company": "Company Site",
+        "company site": "Company Site",
+        "web": "Company Site",
+    }
+    source_label = source_labels.get((job.source or "").strip().lower(), (job.source or "Web").title())
     tier = job.tier or (
         '🟢 Perfect Match'
         if match_score >= 90
@@ -44,7 +53,7 @@ def serialize_job(job: Job) -> dict:
         "Title": job.title,
         "Company": job.company,
         "Location": job.location or "",
-        "Source": (job.source or "web").title(),
+        "Source": source_label,
         "Status": job.status,
         "Skill Score": match_score,
         "Tier": tier,
@@ -113,18 +122,36 @@ def list_jobs(
     limit: int = Query(100, ge=1, le=500),
 ):
     """Get all jobs (paginated, filtered)."""
-    jobs = get_user_jobs(db, user.id, status=status, source=source, skip=skip, limit=limit)
+    profile = get_or_create_profile(db, user.id)
+    quality_filters = profile.quality_filters or {}
+    jobs = get_user_jobs(
+        db,
+        user.id,
+        status=status,
+        source=source,
+        skip=skip,
+        limit=limit,
+        quality_filters=quality_filters,
+    )
     serialized = [serialize_job(job) for job in jobs]
     match_scores = [job.get("Skill Score", 0) for job in serialized]
+    total_count = count_user_jobs(
+        db,
+        user.id,
+        status=status,
+        source=source,
+        quality_filters=quality_filters,
+    )
 
     return {
         "jobs": serialized,
         "stats": {
-            "total": db.query(Job).filter(Job.user_id == user.id).count(),
+            "total": total_count,
             "good_matches": len([score for score in match_scores if 70 <= score < 90]),
             "perfect_matches": len([score for score in match_scores if score >= 90]),
             "last_updated": "Live",
         },
+        "active_filters": quality_filters,
     }
 
 

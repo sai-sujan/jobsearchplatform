@@ -25,6 +25,20 @@ def _load_common_skills() -> list[str]:
 
 COMMON_SKILLS = _load_common_skills()
 
+
+def default_quality_filters() -> dict:
+    """Default user-controlled recommendation filters for delivered jobs."""
+    return {
+        "preferred_sources": ["LinkedIn", "Indeed", "Company Site"],
+        "minimum_match_score": 65,
+        "include_stretch_roles": True,
+        "hide_staffing_agencies": True,
+        "hide_suspicious_jobs": True,
+        "require_salary_visibility": False,
+        "exclude_recruiter_posts": True,
+        "exclude_keywords": [],
+    }
+
 ROLE_INFERENCE_RULES = [
     ("AI Engineer", ["llm", "langchain", "rag", "generative ai", "agents", "openai", "ollama"]),
     ("Machine Learning Engineer", ["machine learning", "pytorch", "tensorflow", "mlflow", "scikit-learn"]),

@@ -36,6 +36,10 @@ def init_db():
             user_columns = {column["name"] for column in inspector.get_columns('users')}
             if 'full_name' not in user_columns:
                 connection.execute(text("ALTER TABLE users ADD COLUMN full_name VARCHAR(120)"))
+        if 'user_profiles' in inspector.get_table_names():
+            profile_columns = {column["name"] for column in inspector.get_columns('user_profiles')}
+            if 'quality_filters' not in profile_columns:
+                connection.execute(text("ALTER TABLE user_profiles ADD COLUMN quality_filters JSON"))
 
 
 def get_db():

@@ -4,7 +4,7 @@ Onboarding, profile, resume, and search preset endpoints.
 
 from typing import Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -21,12 +21,110 @@ from src.models import User
 from src.onboarding import (
     build_generated_search_presets,
     build_role_prompt_context,
+    default_quality_filters,
     extract_skills_from_resume,
     infer_profile_from_resume,
     summarize_candidate,
 )
 
 router = APIRouter(prefix="/api", tags=["onboarding"])
+
+
+async def extract_text_from_file(file: UploadFile) -> str:
+    """Extract text from uploaded resume file (PDF, DOCX, TXT, DOC)."""
+    import io
+
+    content = await file.read()
+    filename = file.filename.lower()
+
+    # TXT file
+    if filename.endswith(".txt"):
+        return content.decode("utf-8", errors="ignore")
+
+    # PDF file
+    if filename.endswith(".pdf"):
+        try:
+            import PyPDF2
+            pdf_file = io.BytesIO(content)
+            reader = PyPDF2.PdfReader(pdf_file)
+            text = ""
+            for page in reader.pages:
+                text += page.extract_text() or ""
+            return text.strip()
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Failed to read PDF: {str(e)}")
+
+    # DOCX file
+    if filename.endswith(".docx"):
+        try:
+            from docx import Document
+            doc = Document(io.BytesIO(content))
+            text = "\n".join([para.text for para in doc.paragraphs])
+            return text.strip()
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Failed to read DOCX: {str(e)}")
+
+    # DOC file
+    if filename.endswith(".doc"):
+        try:
+            import docx2txt
+            text = docx2txt.process(io.BytesIO(content))
+            return text.strip()
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Failed to read DOC: {str(e)}")
+
+    raise HTTPException(
+        status_code=400,
+        detail=f"Unsupported file format '{filename}'. Please upload PDF, DOCX, DOC, or TXT.",
+    )
+
+
+def process_resume_payload(db: Session, user: User, resume_text: str, filename: Optional[str], content_type: Optional[str]):
+    """Normalize resume intake and update the user's inferred onboarding state."""
+    normalized_text = (resume_text or "").strip()
+    if len(normalized_text) < 50:
+        raise HTTPException(status_code=400, detail="Resume text is too short. Please upload or paste a complete resume.")
+
+    parsed_skills = extract_skills_from_resume(normalized_text)
+    inferred_profile = infer_profile_from_resume(normalized_text, parsed_skills)
+    resume_asset = create_resume_asset(
+        db,
+        user_id=user.id,
+        original_text=normalized_text,
+        parsed_skills=parsed_skills,
+        filename=filename,
+        content_type=content_type,
+    )
+    current_profile = get_or_create_profile(db, user.id)
+    profile = update_user_profile(
+        db,
+        user.id,
+        parsed_skills=parsed_skills,
+        target_roles=current_profile.target_roles or inferred_profile["target_roles"],
+        seniority=current_profile.seniority or inferred_profile["seniority"],
+        preferred_locations=current_profile.preferred_locations or inferred_profile["preferred_locations"],
+        work_modes=current_profile.work_modes or inferred_profile["work_modes"],
+        employment_types=current_profile.employment_types or inferred_profile["employment_types"],
+        industries=current_profile.industries or inferred_profile["industries"],
+        quality_filters=current_profile.quality_filters or default_quality_filters(),
+        candidate_summary=current_profile.candidate_summary or inferred_profile["candidate_summary"],
+        onboarding_step="resume_review",
+    )
+    presets = replace_search_presets(
+        db,
+        user.id,
+        build_generated_search_presets(
+            {
+                "target_roles": profile.target_roles or [],
+                "seniority": profile.seniority or "",
+                "preferred_locations": profile.preferred_locations or [],
+                "work_modes": profile.work_modes or [],
+                "employment_types": profile.employment_types or [],
+                "industries": profile.industries or [],
+            }
+        ),
+    )
+    return _serialize_profile(user, profile, resume_asset, presets)
 
 
 class ResumeIntakeRequest(BaseModel):
@@ -44,6 +142,7 @@ class OnboardingProfileRequest(BaseModel):
     employment_types: list[str] = Field(default_factory=list)
     industries: list[str] = Field(default_factory=list)
     visa_preferences: dict = Field(default_factory=dict)
+    quality_filters: dict = Field(default_factory=default_quality_filters)
     salary_expectations: Optional[str] = None
     candidate_summary: Optional[str] = None
     parsed_skills: list[str] = Field(default_factory=list)
@@ -71,6 +170,7 @@ def _serialize_profile(user: User, profile, resume_asset, presets):
             "employment_types": profile.employment_types or [],
             "industries": profile.industries or [],
             "visa_preferences": profile.visa_preferences or {},
+            "quality_filters": profile.quality_filters or default_quality_filters(),
             "salary_expectations": profile.salary_expectations or "",
             "candidate_summary": profile.candidate_summary or "",
             "parsed_skills": profile.parsed_skills or [],
@@ -86,6 +186,7 @@ def _serialize_profile(user: User, profile, resume_asset, presets):
                     "employment_types": profile.employment_types or [],
                     "industries": profile.industries or [],
                     "visa_preferences": profile.visa_preferences or {},
+                    "quality_filters": profile.quality_filters or default_quality_filters(),
                     "candidate_summary": profile.candidate_summary or "",
                     "parsed_skills": profile.parsed_skills or [],
                 }
@@ -128,51 +229,30 @@ def get_onboarding_state(user: User = Depends(get_current_user), db: Session = D
 
 
 @router.post("/onboarding/resume", dependencies=[Depends(require_csrf)])
-def save_resume_intake(
-    request: ResumeIntakeRequest,
+async def save_resume_intake(
+    request: Request,
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Save a pasted/uploaded resume and derive parsed skills."""
-    parsed_skills = extract_skills_from_resume(request.resume_text)
-    inferred_profile = infer_profile_from_resume(request.resume_text, parsed_skills)
-    resume_asset = create_resume_asset(
-        db,
-        user_id=user.id,
-        original_text=request.resume_text.strip(),
-        parsed_skills=parsed_skills,
-        filename=request.filename,
-        content_type=request.content_type,
-    )
-    current_profile = get_or_create_profile(db, user.id)
-    profile = update_user_profile(
-        db,
-        user.id,
-        parsed_skills=parsed_skills,
-        target_roles=current_profile.target_roles or inferred_profile["target_roles"],
-        seniority=current_profile.seniority or inferred_profile["seniority"],
-        preferred_locations=current_profile.preferred_locations or inferred_profile["preferred_locations"],
-        work_modes=current_profile.work_modes or inferred_profile["work_modes"],
-        employment_types=current_profile.employment_types or inferred_profile["employment_types"],
-        industries=current_profile.industries or inferred_profile["industries"],
-        candidate_summary=current_profile.candidate_summary or inferred_profile["candidate_summary"],
-        onboarding_step="resume_review",
-    )
-    presets = replace_search_presets(
-        db,
-        user.id,
-        build_generated_search_presets(
-            {
-                "target_roles": profile.target_roles or [],
-                "seniority": profile.seniority or "",
-                "preferred_locations": profile.preferred_locations or [],
-                "work_modes": profile.work_modes or [],
-                "employment_types": profile.employment_types or [],
-                "industries": profile.industries or [],
-            }
-        ),
-    )
-    return _serialize_profile(user, profile, resume_asset, presets)
+    """Accept either uploaded files or pasted resume text and derive profile state."""
+    content_type = request.headers.get("content-type", "")
+
+    if "multipart/form-data" in content_type:
+        form = await request.form()
+        file = form.get("file")
+        if not isinstance(file, UploadFile):
+            raise HTTPException(status_code=400, detail="Please upload a resume file.")
+
+        contents = await file.read()
+        if len(contents) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=400, detail="File size exceeds 10MB limit")
+        await file.seek(0)
+
+        resume_text = await extract_text_from_file(file)
+        return process_resume_payload(db, user, resume_text, file.filename, file.content_type)
+
+    payload = ResumeIntakeRequest(**await request.json())
+    return process_resume_payload(db, user, payload.resume_text, payload.filename, payload.content_type)
 
 
 @router.put("/onboarding/profile", dependencies=[Depends(require_csrf)])
@@ -201,6 +281,7 @@ def save_onboarding_profile(
         employment_types=request.employment_types,
         industries=request.industries,
         visa_preferences=request.visa_preferences,
+        quality_filters=request.quality_filters or default_quality_filters(),
         salary_expectations=request.salary_expectations,
         candidate_summary=summary,
         parsed_skills=request.parsed_skills,

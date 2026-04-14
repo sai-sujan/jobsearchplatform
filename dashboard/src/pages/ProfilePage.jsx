@@ -6,6 +6,7 @@ import './ProfilePage.css'
 const TABS = [
   { key: 'profile', label: 'Profile' },
   { key: 'preferences', label: 'Preferences' },
+  { key: 'filters', label: 'Feed filters' },
   { key: 'presets', label: 'Search presets' },
   { key: 'resume', label: 'Resume' },
   { key: 'automation', label: 'Automation' },
@@ -20,6 +21,16 @@ const DEFAULT_PROFILE = {
   employment_types: [],
   industries: [],
   visa_preferences: {},
+  quality_filters: {
+    preferred_sources: ['LinkedIn', 'Indeed', 'Company Site'],
+    minimum_match_score: 65,
+    include_stretch_roles: true,
+    hide_staffing_agencies: true,
+    hide_suspicious_jobs: true,
+    require_salary_visibility: false,
+    exclude_recruiter_posts: true,
+    exclude_keywords: [],
+  },
   salary_expectations: '',
   candidate_summary: '',
   parsed_skills: [],
@@ -34,6 +45,10 @@ function splitCsv(value) {
     .filter(Boolean)
 }
 
+function toggleValue(list, value) {
+  return list.includes(value) ? list.filter((item) => item !== value) : [...list, value]
+}
+
 function ProfilePage({ onboarding, onUpdated }) {
   const [activeTab, setActiveTab] = useState('profile')
   const [profile, setProfile] = useState({
@@ -42,6 +57,7 @@ function ProfilePage({ onboarding, onUpdated }) {
     ...(onboarding?.profile || {}),
   })
   const [resumeText, setResumeText] = useState(onboarding?.resume?.original_text || '')
+  const [excludeKeywordInput, setExcludeKeywordInput] = useState('')
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
@@ -93,6 +109,20 @@ function ProfilePage({ onboarding, onUpdated }) {
     } finally {
       setSaving(false)
     }
+  }
+
+  const addExcludeKeyword = () => {
+    if (!excludeKeywordInput.trim()) return
+    setProfile((current) => ({
+      ...current,
+      quality_filters: {
+        ...(current.quality_filters || {}),
+        exclude_keywords: Array.from(
+          new Set([...(current.quality_filters?.exclude_keywords || []), excludeKeywordInput.trim()]),
+        ),
+      },
+    }))
+    setExcludeKeywordInput('')
   }
 
   return (
@@ -290,6 +320,115 @@ function ProfilePage({ onboarding, onUpdated }) {
                     }
                   />
                   <span>I do not need employer sponsorship.</span>
+                </label>
+              </div>
+            </section>
+          )}
+
+          {activeTab === 'filters' && (
+            <section className="profile-panel">
+              <div className="profile-panel-head">
+                <div>
+                  <h2>Recommendation filters</h2>
+                  <p>Give users direct control over source quality, fit threshold, and noisy-job filters.</p>
+                </div>
+                <button type="button" className="primary-action" onClick={saveProfile} disabled={saving}>
+                  {saving ? 'Saving...' : 'Save filters'}
+                </button>
+              </div>
+
+              <div className="profile-form-grid">
+                <label className="profile-form-wide">
+                  <span>Preferred sources</span>
+                  <div className="profile-chip-row">
+                    {['LinkedIn', 'Indeed', 'Glassdoor', 'Company Site'].map((source) => (
+                      <button
+                        key={source}
+                        type="button"
+                        className={`filter-chip ${profile.quality_filters?.preferred_sources?.includes(source) ? 'selected' : ''}`}
+                        onClick={() =>
+                          setProfile((current) => ({
+                            ...current,
+                            quality_filters: {
+                              ...(current.quality_filters || {}),
+                              preferred_sources: toggleValue(current.quality_filters?.preferred_sources || [], source),
+                            },
+                          }))
+                        }
+                      >
+                        {source}
+                      </button>
+                    ))}
+                  </div>
+                </label>
+
+                <label>
+                  <span>Minimum fit threshold</span>
+                  <select
+                    value={String(profile.quality_filters?.minimum_match_score ?? 65)}
+                    onChange={(event) =>
+                      setProfile((current) => ({
+                        ...current,
+                        quality_filters: {
+                          ...(current.quality_filters || {}),
+                          minimum_match_score: Number(event.target.value),
+                        },
+                      }))
+                    }
+                  >
+                    <option value="55">Show broader matches</option>
+                    <option value="65">Balanced</option>
+                    <option value="75">Only stronger matches</option>
+                    <option value="85">Only top-fit roles</option>
+                  </select>
+                </label>
+
+                <div className="profile-form-wide profile-toggle-grid">
+                  {[
+                    ['include_stretch_roles', 'Include stretch roles'],
+                    ['hide_staffing_agencies', 'Hide staffing agencies'],
+                    ['hide_suspicious_jobs', 'Hide suspicious listings'],
+                    ['exclude_recruiter_posts', 'Hide recruiter-style posts'],
+                    ['require_salary_visibility', 'Only show jobs with salary'],
+                  ].map(([key, label]) => (
+                    <label key={key} className="profile-checkbox-card profile-toggle-card">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(profile.quality_filters?.[key])}
+                        onChange={(event) =>
+                          setProfile((current) => ({
+                            ...current,
+                            quality_filters: {
+                              ...(current.quality_filters || {}),
+                              [key]: event.target.checked,
+                            },
+                          }))
+                        }
+                      />
+                      <span>{label}</span>
+                    </label>
+                  ))}
+                </div>
+
+                <label className="profile-form-wide">
+                  <span>Exclude keywords</span>
+                  <div className="profile-inline-input">
+                    <input
+                      value={excludeKeywordInput}
+                      onChange={(event) => setExcludeKeywordInput(event.target.value)}
+                      placeholder="commission-only, staffing, relocation required"
+                    />
+                    <button type="button" className="secondary-action" onClick={addExcludeKeyword}>
+                      Add keyword
+                    </button>
+                  </div>
+                  <div className="profile-chip-row">
+                    {(profile.quality_filters?.exclude_keywords || []).map((keyword) => (
+                      <span key={keyword} className="job-skill-chip">
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
                 </label>
               </div>
             </section>

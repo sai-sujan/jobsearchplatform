@@ -6,9 +6,11 @@ import './OnboardingPage.css'
 const STEPS = ['welcome', 'resume', 'roles', 'preferences', 'presets', 'automation']
 
 const SENIORITY_OPTIONS = ['Entry level', 'Mid level', 'Senior']
-const WORK_MODE_OPTIONS = ['Remote', 'Hybrid', 'On-site']
-const EMPLOYMENT_OPTIONS = ['Full-time', 'Internship', 'Contract']
-const INDUSTRY_OPTIONS = ['Developer Tools', 'SaaS', 'Healthcare', 'Fintech', 'E-commerce', 'Education']
+const WORK_MODE_OPTIONS = ['Any', 'Remote', 'Hybrid', 'On-site']
+const EMPLOYMENT_OPTIONS = ['Any', 'Full-time', 'Internship', 'Contract']
+const INDUSTRY_OPTIONS = ['Any', 'Developer Tools', 'SaaS', 'Healthcare', 'Fintech', 'E-commerce', 'Education']
+const LOCATION_OPTIONS = ['Any', 'Remote', 'United States', 'Chicago', 'New York', 'San Francisco', 'Austin']
+const SOURCE_OPTIONS = ['LinkedIn', 'Indeed', 'Glassdoor', 'Company Site']
 const ROLE_LIBRARY = [
   'Software Engineer',
   'Frontend Engineer',
@@ -32,6 +34,16 @@ const DEFAULT_PROFILE = {
   employment_types: [],
   industries: [],
   visa_preferences: {},
+  quality_filters: {
+    preferred_sources: ['LinkedIn', 'Indeed', 'Company Site'],
+    minimum_match_score: 65,
+    include_stretch_roles: true,
+    hide_staffing_agencies: true,
+    hide_suspicious_jobs: true,
+    require_salary_visibility: false,
+    exclude_recruiter_posts: true,
+    exclude_keywords: [],
+  },
   salary_expectations: '',
   candidate_summary: '',
   parsed_skills: [],
@@ -41,6 +53,18 @@ const DEFAULT_PROFILE = {
 
 function toggleValue(list, value) {
   return list.includes(value) ? list.filter((item) => item !== value) : [...list, value]
+}
+
+function toggleWithAny(list, value) {
+  // If toggling "Any" on, it becomes the only selection. If toggling off, clear.
+  if (value === 'Any') {
+    return list.includes('Any') ? [] : ['Any']
+  }
+  // If toggling any other value on, remove "Any" from the list.
+  const withoutAny = list.filter((item) => item !== 'Any')
+  return withoutAny.includes(value)
+    ? withoutAny.filter((item) => item !== value)
+    : [...withoutAny, value]
 }
 
 function ChoiceChips({ options, values, onToggle, tone = 'neutral' }) {
@@ -76,7 +100,8 @@ function StepBadge({ stepIndex }) {
 
 function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
   const [stepIndex, setStepIndex] = useState(() => Math.max(STEPS.indexOf(onboarding?.profile?.onboarding_step || 'welcome'), 0))
-  const [resumeText, setResumeText] = useState(onboarding?.resume?.original_text || '')
+  const [resumeFile, setResumeFile] = useState(null)
+  const [resumeFileName, setResumeFileName] = useState(onboarding?.resume?.filename || '')
   const [profile, setProfile] = useState({
     ...DEFAULT_PROFILE,
     full_name: onboarding?.user?.full_name || '',
@@ -84,6 +109,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
   })
   const [customRole, setCustomRole] = useState('')
   const [customLocation, setCustomLocation] = useState('')
+  const [customExcludeKeyword, setCustomExcludeKeyword] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
@@ -96,7 +122,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
 
   const canContinue =
     step === 'welcome' ||
-    (step === 'resume' && resumeText.trim().length >= 50) ||
+    (step === 'resume' && (resumeFile !== null || resumeFileName)) ||
     (step === 'roles' && profile.target_roles.length > 0 && profile.seniority) ||
     ['preferences', 'presets', 'automation'].includes(step)
 
@@ -121,17 +147,25 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
   }, [step])
 
   const saveResume = async () => {
-    const response = await api.post('/api/onboarding/resume', {
-      resume_text: resumeText,
-      filename: 'resume.txt',
-      content_type: 'text/plain',
-    })
+    // If a new file was picked, upload it. Otherwise, if a resume is already
+    // on file (resumeFileName came from onboarding state), skip re-upload.
+    if (!resumeFile) {
+      return Boolean(resumeFileName)
+    }
+
+    const formData = new FormData()
+    formData.append('file', resumeFile)
+
+    const response = await api.post('/api/onboarding/resume', formData)
     onUpdated(response.data)
+    setResumeFileName(response.data.resume?.filename || '')
+    setResumeFile(null)
     setProfile((current) => ({
       ...current,
       full_name: response.data.user?.full_name || current.full_name,
       ...(response.data.profile || {}),
     }))
+    return true
   }
 
   const saveProfile = async (nextStep) => {
@@ -152,7 +186,11 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
     setError('')
     try {
       if (step === 'resume') {
-        await saveResume()
+        const ok = await saveResume()
+        if (!ok) {
+          setError('Please upload a resume file.')
+          return
+        }
       } else if (step === 'roles' || step === 'preferences') {
         await saveProfile(step === 'roles' ? 'preferences' : 'presets')
       } else if (step === 'presets') {
@@ -168,7 +206,9 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
 
       setStepIndex((current) => Math.min(current + 1, STEPS.length - 1))
     } catch (requestError) {
-      setError(requestError.response?.data?.detail || 'Unable to save this step right now.')
+      const errorMsg = requestError.response?.data?.detail || requestError.message || 'Unable to save this step right now.'
+      console.error(`[${step}] Error:`, errorMsg, requestError)
+      setError(errorMsg)
     } finally {
       setSubmitting(false)
     }
@@ -195,6 +235,20 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
       preferred_locations: Array.from(new Set([...current.preferred_locations, customLocation.trim()])),
     }))
     setCustomLocation('')
+  }
+
+  const addExcludeKeyword = () => {
+    if (!customExcludeKeyword.trim()) return
+    setProfile((current) => ({
+      ...current,
+      quality_filters: {
+        ...(current.quality_filters || {}),
+        exclude_keywords: Array.from(
+          new Set([...(current.quality_filters?.exclude_keywords || []), customExcludeKeyword.trim()]),
+        ),
+      },
+    }))
+    setCustomExcludeKeyword('')
   }
 
   return (
@@ -247,23 +301,52 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
             </div>
           )}
 
-          {step === 'resume' && (
+          {step === "resume" && (
             <div className="onboarding-panel">
               <div className="onboarding-section-head">
                 <div>
                   <h2>Resume intake</h2>
-                  <p>Paste your current resume and we’ll prefill the rest of onboarding from it.</p>
+                  <p>Upload your current resume and we will prefill the rest of onboarding from it.</p>
                 </div>
                 <span className="onboarding-helper-pill">Auto-detect roles and skills</span>
               </div>
 
-              <label>
-                <span>Resume text</span>
-                <textarea
-                  value={resumeText}
-                  onChange={(event) => setResumeText(event.target.value)}
-                  placeholder="Paste your current resume here..."
-                />
+              <label className="file-upload-label">
+                <span>Upload resume</span>
+                <div className="file-upload-wrapper">
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.txt"
+                    onChange={(event) => {
+                      setResumeFile(event.target.files?.[0] || null)
+                      if (event.target.files?.[0]) {
+                        setResumeFileName(event.target.files[0].name)
+                      }
+                    }}
+                  />
+                  <div className="file-upload-display">
+                    {resumeFileName ? (
+                      <div className="file-selected">
+                        <span>Check {resumeFileName}</span>
+                        <button
+                          type="button"
+                          className="clear-file"
+                          onClick={() => {
+                            setResumeFile(null)
+                            setResumeFileName("")
+                          }}
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="file-placeholder">
+                        <span>Choose a file or drag and drop</span>
+                        <p>PDF, DOC, DOCX, or TXT (max 10MB)</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </label>
             </div>
           )}
@@ -354,14 +437,14 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
                 <div className="onboarding-section-head">
                   <div>
                     <h2>Work mode</h2>
-                    <p>Choose how you want these roles to feel in practice.</p>
+                    <p>Choose how you want these roles to feel in practice. Pick "Any" for no filter.</p>
                   </div>
                 </div>
                 <ChoiceChips
                   options={WORK_MODE_OPTIONS}
                   values={profile.work_modes}
                   onToggle={(value) =>
-                    setProfile((current) => ({ ...current, work_modes: toggleValue(current.work_modes, value) }))
+                    setProfile((current) => ({ ...current, work_modes: toggleWithAny(current.work_modes, value) }))
                   }
                 />
               </div>
@@ -379,7 +462,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
                   onToggle={(value) =>
                     setProfile((current) => ({
                       ...current,
-                      employment_types: toggleValue(current.employment_types, value),
+                      employment_types: toggleWithAny(current.employment_types, value),
                     }))
                   }
                 />
@@ -396,7 +479,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
                   options={INDUSTRY_OPTIONS}
                   values={profile.industries}
                   onToggle={(value) =>
-                    setProfile((current) => ({ ...current, industries: toggleValue(current.industries, value) }))
+                    setProfile((current) => ({ ...current, industries: toggleWithAny(current.industries, value) }))
                   }
                 />
               </div>
@@ -405,16 +488,16 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
                 <div className="onboarding-section-head">
                   <div>
                     <h2>Preferred locations</h2>
-                    <p>Add a few places you care about. Remote is already suggested when it fits.</p>
+                    <p>Add a few places you care about. Select "Any" to see roles everywhere.</p>
                   </div>
                 </div>
                 <ChoiceChips
-                  options={['Remote', 'United States', 'Chicago', 'New York', 'San Francisco', 'Austin']}
+                  options={LOCATION_OPTIONS}
                   values={profile.preferred_locations}
                   onToggle={(value) =>
                     setProfile((current) => ({
                       ...current,
-                      preferred_locations: toggleValue(current.preferred_locations, value),
+                      preferred_locations: toggleWithAny(current.preferred_locations, value),
                     }))
                   }
                 />
@@ -427,6 +510,101 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
                   <button type="button" className="secondary-action onboarding-inline-button" onClick={addCustomLocation}>
                     Add location
                   </button>
+                </div>
+              </div>
+
+              <div className="onboarding-card-block onboarding-grid-wide">
+                <div className="onboarding-section-head">
+                  <div>
+                    <h2>Feed quality controls</h2>
+                    <p>Use these to reduce fake jobs, recruiter spam, and low-quality matches.</p>
+                  </div>
+                </div>
+
+                <label>
+                  <span>Preferred sources</span>
+                </label>
+                <ChoiceChips
+                  options={SOURCE_OPTIONS}
+                  values={profile.quality_filters?.preferred_sources || []}
+                  onToggle={(value) =>
+                    setProfile((current) => ({
+                      ...current,
+                      quality_filters: {
+                        ...(current.quality_filters || {}),
+                        preferred_sources: toggleValue(current.quality_filters?.preferred_sources || [], value),
+                      },
+                    }))
+                  }
+                />
+
+                <label>
+                  <span>Minimum fit threshold</span>
+                  <select
+                    value={String(profile.quality_filters?.minimum_match_score ?? 65)}
+                    onChange={(event) =>
+                      setProfile((current) => ({
+                        ...current,
+                        quality_filters: {
+                          ...(current.quality_filters || {}),
+                          minimum_match_score: Number(event.target.value),
+                        },
+                      }))
+                    }
+                  >
+                    <option value="55">Show broader matches</option>
+                    <option value="65">Balanced</option>
+                    <option value="75">Only stronger matches</option>
+                    <option value="85">Only top-fit roles</option>
+                  </select>
+                </label>
+
+                <div className="toggle-grid">
+                  {[
+                    ['include_stretch_roles', 'Include stretch roles if they are still promising'],
+                    ['hide_staffing_agencies', 'Hide staffing agency posts'],
+                    ['hide_suspicious_jobs', 'Hide suspicious or low-trust listings'],
+                    ['exclude_recruiter_posts', 'Hide recruiter-style listings'],
+                    ['require_salary_visibility', 'Only show roles with visible salary'],
+                  ].map(([key, label]) => (
+                    <label key={key} className="toggle-card">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(profile.quality_filters?.[key])}
+                        onChange={(event) =>
+                          setProfile((current) => ({
+                            ...current,
+                            quality_filters: {
+                              ...(current.quality_filters || {}),
+                              [key]: event.target.checked,
+                            },
+                          }))
+                        }
+                      />
+                      <span>{label}</span>
+                    </label>
+                  ))}
+                </div>
+
+                <label>
+                  <span>Exclude keywords</span>
+                </label>
+                <div className="onboarding-inline-input">
+                  <input
+                    value={customExcludeKeyword}
+                    onChange={(event) => setCustomExcludeKeyword(event.target.value)}
+                    placeholder="e.g. commission-only, staffing, relocation required"
+                  />
+                  <button type="button" className="secondary-action onboarding-inline-button" onClick={addExcludeKeyword}>
+                    Add keyword
+                  </button>
+                </div>
+                <div className="skill-chip-row">
+                  {(profile.quality_filters?.exclude_keywords || []).map((keyword) => (
+                    <span key={keyword} className="skill-chip">
+                      {keyword}
+                    </span>
+                  ))}
                 </div>
               </div>
 
