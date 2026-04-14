@@ -172,6 +172,7 @@ class MatchedJob(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
     job_id = Column(Integer, ForeignKey('jobs.id'), nullable=False, index=True)
+    delivery_origin = Column(String(30), nullable=False, default='legacy_sync', index=True)
     delivery_status = Column(String(30), nullable=False, default='active', index=True)
     user_status = Column(String(50), nullable=False, default='not_applied', index=True)
     fit_score = Column(Float, nullable=False, default=0)

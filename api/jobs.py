@@ -15,6 +15,7 @@ from src.crud import (
     get_matched_job,
     get_application_events,
     get_or_create_profile,
+    get_preferred_delivery_origin,
     get_user_matched_jobs,
     sync_user_matched_jobs,
     update_job,
@@ -79,6 +80,7 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
         "AI Match Summary": matched_job.ai_match_summary or "",
         "AI Match Reasons": matched_job.ai_match_reasons or [],
         "Tier": job.tier or tier,
+        "Delivery Origin": matched_job.delivery_origin,
         "Delivery Status": matched_job.delivery_status,
         "Special Interest": bool(matched_job.special_interest),
         "Notes": matched_job.notes or "",
@@ -98,6 +100,10 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
 def refresh_user_delivery(db: Session, user_id: int) -> None:
     """Fallback refresh from the legacy jobs store only when needed."""
     if not settings.LEGACY_DELIVERY_FALLBACK_ENABLED:
+        return
+
+    preferred_origin = get_preferred_delivery_origin(db, user_id)
+    if preferred_origin:
         return
 
     existing_count = count_user_matched_jobs(db, user_id, delivery_status=None)
@@ -192,11 +198,13 @@ def list_jobs(
     """Get delivered matched jobs for the signed-in user."""
     profile = get_or_create_profile(db, user.id)
     refresh_user_delivery(db, user.id)
+    preferred_origin = get_preferred_delivery_origin(db, user.id)
     matched_jobs = get_user_matched_jobs(
         db,
         user.id,
         status=status,
         source=source,
+        preferred_origin=preferred_origin,
         skip=skip,
         limit=limit,
     )
@@ -207,6 +215,7 @@ def list_jobs(
         user.id,
         status=status,
         source=source,
+        preferred_origin=preferred_origin,
     )
 
     return {
@@ -216,6 +225,7 @@ def list_jobs(
             "good_matches": len([score for score in match_scores if 70 <= score < 90]),
             "perfect_matches": len([score for score in match_scores if score >= 90]),
             "last_updated": "Live",
+            "delivery_origin": preferred_origin or "",
         },
         "active_filters": profile.quality_filters or {},
     }

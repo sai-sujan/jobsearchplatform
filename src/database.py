@@ -42,6 +42,8 @@ def init_db():
                 connection.execute(text("ALTER TABLE user_profiles ADD COLUMN quality_filters JSON"))
         if 'matched_jobs' in inspector.get_table_names():
             matched_columns = {column["name"] for column in inspector.get_columns('matched_jobs')}
+            if 'delivery_origin' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN delivery_origin VARCHAR(30) DEFAULT 'legacy_sync'"))
             if 'freshness_score' not in matched_columns:
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN freshness_score FLOAT"))
             if 'freshness_label' not in matched_columns:
@@ -58,6 +60,14 @@ def init_db():
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_cache_key VARCHAR(80)"))
             if 'ai_match_updated_at' not in matched_columns:
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_updated_at DATETIME"))
+            matched_indexes = {index["name"] for index in inspector.get_indexes('matched_jobs')}
+            if 'ix_matched_jobs_user_origin_status' not in matched_indexes:
+                connection.execute(
+                    text(
+                        "CREATE INDEX ix_matched_jobs_user_origin_status "
+                        "ON matched_jobs (user_id, delivery_origin, delivery_status)"
+                    )
+                )
 
 
 def get_db():

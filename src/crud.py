@@ -374,6 +374,7 @@ def get_user_matched_jobs(
     status: str = None,
     source: str = None,
     delivery_status: str = 'active',
+    preferred_origin: Optional[str] = None,
     skip: int = 0,
     limit: int = 100,
 ) -> List[MatchedJob]:
@@ -386,6 +387,8 @@ def get_user_matched_jobs(
 
     if delivery_status:
         query = query.filter(MatchedJob.delivery_status == delivery_status)
+    if preferred_origin:
+        query = query.filter(MatchedJob.delivery_origin == preferred_origin)
     if status:
         query = query.filter(MatchedJob.user_status == status)
     if source:
@@ -405,6 +408,7 @@ def count_user_matched_jobs(
     status: str = None,
     source: str = None,
     delivery_status: str = 'active',
+    preferred_origin: Optional[str] = None,
 ) -> int:
     """Count delivered matched jobs for the user."""
     query = (
@@ -415,12 +419,41 @@ def count_user_matched_jobs(
 
     if delivery_status:
         query = query.filter(MatchedJob.delivery_status == delivery_status)
+    if preferred_origin:
+        query = query.filter(MatchedJob.delivery_origin == preferred_origin)
     if status:
         query = query.filter(MatchedJob.user_status == status)
     if source:
         query = query.filter(Job.source == source.lower())
 
     return query.count()
+
+
+def get_preferred_delivery_origin(db: Session, user_id: int) -> Optional[str]:
+    """Prefer internal delivery when present; otherwise fall back to legacy sync rows."""
+    has_internal = (
+        db.query(MatchedJob.id)
+        .filter(
+            MatchedJob.user_id == user_id,
+            MatchedJob.delivery_origin == "internal_delivery",
+            MatchedJob.delivery_status.in_(["active", "suppressed", "stale"]),
+        )
+        .first()
+    )
+    if has_internal:
+        return "internal_delivery"
+    has_legacy = (
+        db.query(MatchedJob.id)
+        .filter(
+            MatchedJob.user_id == user_id,
+            MatchedJob.delivery_origin == "legacy_sync",
+            MatchedJob.delivery_status.in_(["active", "suppressed", "stale"]),
+        )
+        .first()
+    )
+    if has_legacy:
+        return "legacy_sync"
+    return None
 
 
 def _apply_fit_snapshot_to_matched_job(
@@ -485,10 +518,13 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
             matched_job = MatchedJob(
                 user_id=user_id,
                 job_id=job.id,
+                delivery_origin='legacy_sync',
                 special_interest=bool(job.special_interest),
                 notes=job.notes or "",
             )
             db.add(matched_job)
+        else:
+            matched_job.delivery_origin = matched_job.delivery_origin or 'legacy_sync'
 
         matched_job.user_status = job.status or matched_job.user_status or 'not_applied'
         _apply_fit_snapshot_to_matched_job(matched_job, job, fit_snapshot, quality_filters)
@@ -626,6 +662,7 @@ def upsert_delivered_job_for_user(
         matched_job = MatchedJob(
             user_id=user_id,
             job_id=job.id,
+            delivery_origin="internal_delivery",
             user_status=job.status or incoming_status,
             special_interest=bool(job.special_interest),
             notes=job.notes or "",
@@ -633,9 +670,12 @@ def upsert_delivered_job_for_user(
         db.add(matched_job)
         db.flush()
     elif not preserve_user_state:
+        matched_job.delivery_origin = "internal_delivery"
         matched_job.user_status = incoming_status
         matched_job.special_interest = bool(job.special_interest)
         matched_job.notes = job.notes or ""
+    else:
+        matched_job.delivery_origin = "internal_delivery"
 
     fit_snapshot = build_current_fit_snapshot(job, profile, resume_asset=resume_asset)
     _apply_fit_snapshot_to_matched_job(matched_job, job, fit_snapshot, quality_filters)

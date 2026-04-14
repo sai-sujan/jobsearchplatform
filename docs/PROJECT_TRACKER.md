@@ -147,17 +147,26 @@ Reference:
 Reference:
 - [CHECKPOINT_13_EXPLICIT_REBUILD.md](./CHECKPOINT_13_EXPLICIT_REBUILD.md)
 
+### Checkpoint 14
+- Added `delivery_origin` as an explicit matched-job signal so the system can distinguish legacy-synced recommendations from internally delivered recommendations
+- User-facing `/api/jobs` now prefers `internal_delivery` rows whenever they exist for the user, instead of mixing legacy and internal recommendation sources in the same feed
+- Added a supporting matched-job index for `(user_id, delivery_origin, delivery_status)` so this preference stays cheap and stable as internal delivery becomes the primary path
+
+Reference:
+- [CHECKPOINT_14_DELIVERY_ORIGIN_PREFERENCE.md](./CHECKPOINT_14_DELIVERY_ORIGIN_PREFERENCE.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
 - keep AI enrichment secondary, cached, and detail-only
 - keep stronger delivery-time freshness and suppression rules stable
 - use the new internal delivery API as the path toward canonical ingestion
+- prefer internal delivery as the user-facing source of truth once it exists
 - continue deprecating or removing legacy Excel-only surfaces
 - improve application history and timeline UX
 
 ## Next implementation priorities
-1. Continue reducing runtime dependence on legacy Excel refresh paths
+1. Continue shrinking the legacy `jobs` table's role in recommendation delivery after internal delivery has been preferred in the feed
 2. Preserve richer deterministic “why this matched” signals across the UI
 3. Keep AI token spend limited to:
    - single-job match intelligence
@@ -165,7 +174,7 @@ Move delivery logic closer to a real recommendation pipeline:
    - future async reranking only for top candidates
 4. Continue retiring legacy Excel/config endpoints from the runtime path
 5. Expand application history and notes into a more complete activity feed
-6. Start shrinking the legacy `jobs` table’s role in the delivery pipeline over time
+6. Start separating canonical/internal delivery from the legacy source store more explicitly
 
 ## Scoring direction notes
 - Industry affinity should be a first-class positive signal in recommendation scoring.
