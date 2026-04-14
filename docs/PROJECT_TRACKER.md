@@ -163,6 +163,14 @@ Reference:
 Reference:
 - [CHECKPOINT_15_MATCHED_JOB_STATE_OWNERSHIP.md](./CHECKPOINT_15_MATCHED_JOB_STATE_OWNERSHIP.md)
 
+### Checkpoint 16
+- Moved editable job-detail workspace analysis onto `matched_jobs`
+- Analysis edits from the sidebar now persist as matched-job workspace state instead of mutating the legacy `jobs` row
+- Delivered jobs now seed workspace analysis/location/ATS/skills when first materialized, but rebuilds preserve the user's edited workspace version
+
+Reference:
+- [CHECKPOINT_16_WORKSPACE_ANALYSIS_ON_MATCHED_JOBS.md](./CHECKPOINT_16_WORKSPACE_ANALYSIS_ON_MATCHED_JOBS.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -171,6 +179,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - use the new internal delivery API as the path toward canonical ingestion
 - prefer internal delivery as the user-facing source of truth once it exists
 - keep user workflow state owned by `matched_jobs`, not the legacy `jobs` table
+- keep editable job-detail workspace state owned by `matched_jobs`, not the legacy `jobs` table
 - continue deprecating or removing legacy Excel-only surfaces
 - improve application history and timeline UX
 
@@ -213,7 +222,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - Current canonical source is still the legacy user-owned `jobs` table, even though the web app now reads `matched_jobs`
 - Internal ingestion/matching boundary is not fully isolated yet
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
-- Analysis editing still mutates the underlying legacy `jobs` record because those role details are still stored there
+- Resume generation and some old analysis/tailoring flows still assume legacy job-row data paths in parts of the stack
 - Resume upload path now supports both file and text intake, but still needs stronger production hardening
 
 ## Operating rule

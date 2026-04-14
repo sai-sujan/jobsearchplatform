@@ -522,6 +522,10 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
                 user_status=job.status or 'not_applied',
                 special_interest=bool(job.special_interest),
                 notes=job.notes or "",
+                workspace_location=job.location,
+                workspace_ats_score=job.ats_score,
+                workspace_matched_skills=job.matched_skills or [],
+                workspace_analysis=job.ai_evaluation,
             )
             db.add(matched_job)
         else:
@@ -533,6 +537,14 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
             matched_job.notes = job.notes
         if not matched_job.special_interest and job.special_interest:
             matched_job.special_interest = bool(job.special_interest)
+        if not matched_job.workspace_location and job.location:
+            matched_job.workspace_location = job.location
+        if matched_job.workspace_ats_score is None and job.ats_score is not None:
+            matched_job.workspace_ats_score = job.ats_score
+        if not matched_job.workspace_matched_skills and job.matched_skills:
+            matched_job.workspace_matched_skills = job.matched_skills
+        if matched_job.workspace_analysis is None and job.ai_evaluation is not None:
+            matched_job.workspace_analysis = job.ai_evaluation
 
     for job_id, matched_job in existing.items():
         if job_id not in active_job_ids:
@@ -669,6 +681,10 @@ def upsert_delivered_job_for_user(
             user_status=incoming_status,
             special_interest=bool(job.special_interest),
             notes=job.notes or "",
+            workspace_location=job.location,
+            workspace_ats_score=job.ats_score,
+            workspace_matched_skills=job.matched_skills or [],
+            workspace_analysis=job.ai_evaluation,
         )
         db.add(matched_job)
         db.flush()
@@ -686,6 +702,14 @@ def upsert_delivered_job_for_user(
         matched_job.notes = job.notes
     if not matched_job.special_interest and job.special_interest:
         matched_job.special_interest = bool(job.special_interest)
+    if not matched_job.workspace_location and job.location:
+        matched_job.workspace_location = job.location
+    if matched_job.workspace_ats_score is None and job.ats_score is not None:
+        matched_job.workspace_ats_score = job.ats_score
+    if not matched_job.workspace_matched_skills and job.matched_skills:
+        matched_job.workspace_matched_skills = job.matched_skills
+    if matched_job.workspace_analysis is None and job.ai_evaluation is not None:
+        matched_job.workspace_analysis = job.ai_evaluation
 
     db.commit()
     db.refresh(job)

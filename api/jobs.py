@@ -28,10 +28,21 @@ from src.settings import settings
 router = APIRouter(prefix="/api", tags=["jobs"])
 
 
+def get_workspace_matched_skills(matched_job: MatchedJob) -> list[str]:
+    """Prefer user-edited workspace skills over the source job snapshot."""
+    skills = matched_job.workspace_matched_skills
+    if isinstance(skills, list) and skills:
+        return [skill for skill in skills if isinstance(skill, str)]
+    return matched_job.job.matched_skills or []
+
+
 def serialize_matched_job(matched_job: MatchedJob) -> dict:
     """Map matched job delivery rows to the frontend shape."""
     job = matched_job.job
-    matched_skills = job.matched_skills or []
+    matched_skills = get_workspace_matched_skills(matched_job)
+    analysis_data = matched_job.workspace_analysis or job.ai_evaluation or None
+    display_location = matched_job.workspace_location or job.location or ""
+    display_ats_score = matched_job.workspace_ats_score if matched_job.workspace_ats_score is not None else job.ats_score
     match_score = int(matched_job.fit_score or 0)
     source_labels = {
         "linkedin": "LinkedIn",
@@ -58,7 +69,7 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
         "job_record_id": job.id,
         "Title": job.title,
         "Company": job.company,
-        "Location": job.location or "",
+        "Location": display_location,
         "Source": source_label,
         "Status": matched_job.user_status,
         "Skill Score": match_score,
@@ -91,8 +102,8 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
         "Link": job.job_link,
         "Resume Path": job.resume_path or "",
         "pdf_path": job.resume_path or "",
-        "ats_score": int(job.ats_score or 0) if job.ats_score is not None else "N/A",
-        "Analysis Data": job.ai_evaluation or None,
+        "ats_score": int(display_ats_score or 0) if display_ats_score is not None else "N/A",
+        "Analysis Data": analysis_data,
         "Match": f"{len(matched_skills)}/{max(len(matched_skills), len(job.missing_skills or []) + len(matched_skills), 1)} skills",
     }
 
@@ -342,20 +353,18 @@ def update_job_analysis(
         "suggested_tech_stack": payload.suggested_tech_stack or {},
         "points": payload.points or [],
     }
-    job = update_job(
+    refreshed = update_matched_job(
         db,
-        matched_job.job_id,
+        job_id,
         user.id,
-        location=payload.location,
-        ats_score=payload.ats_score,
-        matched_skills=matched_skills[:16],
-        ai_evaluation=next_ai_evaluation,
+        workspace_location=payload.location,
+        workspace_ats_score=payload.ats_score,
+        workspace_matched_skills=matched_skills[:16],
+        workspace_analysis=next_ai_evaluation,
     )
-    if not job:
+    if not refreshed:
         raise HTTPException(status_code=404, detail="Job not found")
 
-    refresh_user_delivery(db, user.id)
-    refreshed = require_matched_job(db, user.id, job_id)
     return {"message": "Analysis updated", "job": serialize_matched_job(refreshed)}
 
 

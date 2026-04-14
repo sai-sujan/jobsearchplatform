@@ -44,6 +44,14 @@ def init_db():
             matched_columns = {column["name"] for column in inspector.get_columns('matched_jobs')}
             if 'delivery_origin' not in matched_columns:
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN delivery_origin VARCHAR(30) DEFAULT 'legacy_sync'"))
+            if 'workspace_location' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN workspace_location VARCHAR(255)"))
+            if 'workspace_ats_score' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN workspace_ats_score FLOAT"))
+            if 'workspace_matched_skills' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN workspace_matched_skills JSON"))
+            if 'workspace_analysis' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN workspace_analysis JSON"))
             if 'freshness_score' not in matched_columns:
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN freshness_score FLOAT"))
             if 'freshness_label' not in matched_columns:

@@ -196,6 +196,10 @@ class MatchedJob(Base):
     ai_match_updated_at = Column(DateTime, nullable=True)
     special_interest = Column(Boolean, default=False)
     notes = Column(Text, nullable=True)
+    workspace_location = Column(String(255), nullable=True)
+    workspace_ats_score = Column(Float, nullable=True)
+    workspace_matched_skills = Column(JSON, nullable=True)
+    workspace_analysis = Column(JSON, nullable=True)
     delivered_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
