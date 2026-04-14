@@ -281,7 +281,6 @@ def update_job_status(
     """Update application status for a delivered matched job."""
     matched_job = require_matched_job(db, user.id, job_id)
     old_status = matched_job.user_status
-    update_job(db, matched_job.job_id, user.id, status=status)
     update_matched_job(db, job_id, user.id, user_status=status)
     if old_status != status:
         create_application_event(
@@ -304,7 +303,6 @@ def toggle_job_interest(
 ):
     """Star/unstar a delivered matched job."""
     matched_job = require_matched_job(db, user.id, job_id)
-    update_job(db, matched_job.job_id, user.id, special_interest=special_interest)
     update_matched_job(db, job_id, user.id, special_interest=special_interest)
     return {"message": "Interest updated"}
 
@@ -318,7 +316,6 @@ def update_job_notes(
 ):
     """Update notes for a delivered matched job."""
     matched_job = require_matched_job(db, user.id, job_id)
-    update_job(db, matched_job.job_id, user.id, notes=notes)
     update_matched_job(db, job_id, user.id, notes=notes)
     return {"message": "Notes updated"}
 

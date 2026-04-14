@@ -155,6 +155,14 @@ Reference:
 Reference:
 - [CHECKPOINT_14_DELIVERY_ORIGIN_PREFERENCE.md](./CHECKPOINT_14_DELIVERY_ORIGIN_PREFERENCE.md)
 
+### Checkpoint 15
+- Moved user workflow state ownership closer to `matched_jobs`
+- Status, notes, and special-interest changes from the user-facing app no longer write back to the legacy `jobs` record
+- Legacy sync and internal delivery now only seed user state into `matched_jobs` when a row is first created or still missing that value, which reduces the chance of rebuilds overwriting live user activity
+
+Reference:
+- [CHECKPOINT_15_MATCHED_JOB_STATE_OWNERSHIP.md](./CHECKPOINT_15_MATCHED_JOB_STATE_OWNERSHIP.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -162,11 +170,12 @@ Move delivery logic closer to a real recommendation pipeline:
 - keep stronger delivery-time freshness and suppression rules stable
 - use the new internal delivery API as the path toward canonical ingestion
 - prefer internal delivery as the user-facing source of truth once it exists
+- keep user workflow state owned by `matched_jobs`, not the legacy `jobs` table
 - continue deprecating or removing legacy Excel-only surfaces
 - improve application history and timeline UX
 
 ## Next implementation priorities
-1. Continue shrinking the legacy `jobs` table's role in recommendation delivery after internal delivery has been preferred in the feed
+1. Continue shrinking the legacy `jobs` table's role in recommendation delivery after internal delivery has been preferred in the feed and user state has been decoupled
 2. Preserve richer deterministic “why this matched” signals across the UI
 3. Keep AI token spend limited to:
    - single-job match intelligence
@@ -204,6 +213,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - Current canonical source is still the legacy user-owned `jobs` table, even though the web app now reads `matched_jobs`
 - Internal ingestion/matching boundary is not fully isolated yet
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
+- Analysis editing still mutates the underlying legacy `jobs` record because those role details are still stored there
 - Resume upload path now supports both file and text intake, but still needs stronger production hardening
 
 ## Operating rule

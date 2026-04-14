@@ -519,6 +519,7 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
                 user_id=user_id,
                 job_id=job.id,
                 delivery_origin='legacy_sync',
+                user_status=job.status or 'not_applied',
                 special_interest=bool(job.special_interest),
                 notes=job.notes or "",
             )
@@ -526,10 +527,12 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
         else:
             matched_job.delivery_origin = matched_job.delivery_origin or 'legacy_sync'
 
-        matched_job.user_status = job.status or matched_job.user_status or 'not_applied'
         _apply_fit_snapshot_to_matched_job(matched_job, job, fit_snapshot, quality_filters)
-        matched_job.special_interest = bool(job.special_interest)
-        matched_job.notes = job.notes or matched_job.notes or ""
+        matched_job.user_status = matched_job.user_status or job.status or 'not_applied'
+        if not matched_job.notes and job.notes:
+            matched_job.notes = job.notes
+        if not matched_job.special_interest and job.special_interest:
+            matched_job.special_interest = bool(job.special_interest)
 
     for job_id, matched_job in existing.items():
         if job_id not in active_job_ids:
@@ -663,7 +666,7 @@ def upsert_delivered_job_for_user(
             user_id=user_id,
             job_id=job.id,
             delivery_origin="internal_delivery",
-            user_status=job.status or incoming_status,
+            user_status=incoming_status,
             special_interest=bool(job.special_interest),
             notes=job.notes or "",
         )
@@ -679,8 +682,10 @@ def upsert_delivered_job_for_user(
 
     fit_snapshot = build_current_fit_snapshot(job, profile, resume_asset=resume_asset)
     _apply_fit_snapshot_to_matched_job(matched_job, job, fit_snapshot, quality_filters)
-    matched_job.special_interest = bool(job.special_interest)
-    matched_job.notes = job.notes or matched_job.notes or ""
+    if not matched_job.notes and job.notes:
+        matched_job.notes = job.notes
+    if not matched_job.special_interest and job.special_interest:
+        matched_job.special_interest = bool(job.special_interest)
 
     db.commit()
     db.refresh(job)
