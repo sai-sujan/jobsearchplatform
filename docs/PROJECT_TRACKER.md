@@ -70,12 +70,25 @@ Reference:
 Reference:
 - [CHECKPOINT_04_INDUSTRY_AFFINITY.md](./CHECKPOINT_04_INDUSTRY_AFFINITY.md)
 
+### Checkpoint 05
+- Removed automation/internal-pipeline language from user-facing onboarding and profile
+- Simplified the new-user setup flow to only the parts end users should control
+
+### Checkpoint 06
+- Added `matched_jobs` as the first real delivery/read model
+- `/api/jobs` now reads from delivered matched rows instead of directly from the legacy `jobs` table
+- Matched-job sync preserves user status, notes, and interest while materializing fit data
+
+Reference:
+- [CHECKPOINT_06_MATCHED_JOBS.md](./CHECKPOINT_06_MATCHED_JOBS.md)
+
 ## Current active slice
-Transition from legacy feed scoring to real delivery scoring:
-- add `matched_jobs`
-- move read-time fit logic into delivery-time scoring
-- preserve industry affinity as one of the stored fit components
-- add experience-fit and resume-match as first-class scores
+Expand delivery scoring inside `matched_jobs`:
+- add explicit experience-fit
+- add explicit resume-match
+- preserve industry affinity as a stored fit component
+- add richer why-it-matched reasons
+- prepare for canonical ingestion to write directly into the delivery model
 
 ## Next implementation priorities
 1. Add `matched_jobs` as the real delivery/read model
@@ -100,9 +113,9 @@ Transition from legacy feed scoring to real delivery scoring:
 - The future `matched_jobs` scoring breakdown should explicitly store whether industry affinity contributed to the match.
 
 ## Open risks
-- Current user feed still reads from the old `jobs` model rather than a dedicated delivery layer
+- Current canonical source is still the legacy user-owned `jobs` table, even though the web app now reads `matched_jobs`
 - Internal ingestion/matching boundary is not fully isolated yet
-- Recommendation filtering is now applied at read time, but not yet enforced by a true delivery engine
+- Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
 - Resume upload path now supports both file and text intake, but still needs stronger production hardening
 
 ## Operating rule

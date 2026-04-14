@@ -1,15 +1,5 @@
 """
-Jobs API Endpoints
-------------------
-REST API for job CRUD operations.
-
-Endpoints:
-  GET  /api/jobs               - List all jobs (paginated, filtered)
-  GET  /api/jobs/{id}          - Get single job
-  PATCH /api/jobs/{id}/status  - Update job status
-  PATCH /api/jobs/{id}/interest - Star/unstar job
-  PATCH /api/jobs/{id}/notes   - Update job notes
-  DELETE /api/jobs/{id}        - Delete job
+User-facing matched jobs API.
 """
 
 from typing import Optional
@@ -19,18 +9,25 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from api.deps import get_current_user, get_db, require_csrf
-from src.crud import count_user_jobs, delete_job, get_job, get_or_create_profile, get_user_jobs, update_job
-from src.models import Job, User
-from src.recommendations import build_current_fit_snapshot
+from src.crud import (
+    count_user_matched_jobs,
+    get_matched_job,
+    get_or_create_profile,
+    get_user_matched_jobs,
+    sync_user_matched_jobs,
+    update_job,
+    update_matched_job,
+)
+from src.models import MatchedJob, User
 
 router = APIRouter(prefix="/api", tags=["jobs"])
 
 
-def serialize_job(job: Job, profile) -> dict:
-    """Map database jobs to the frontend shape used by the user web app."""
+def serialize_matched_job(matched_job: MatchedJob) -> dict:
+    """Map matched job delivery rows to the frontend shape."""
+    job = matched_job.job
     matched_skills = job.matched_skills or []
-    fit_snapshot = build_current_fit_snapshot(job, profile)
-    match_score = fit_snapshot["overall_fit_score"]
+    match_score = int(matched_job.fit_score or 0)
     source_labels = {
         "linkedin": "LinkedIn",
         "indeed": "Indeed",
@@ -40,36 +37,40 @@ def serialize_job(job: Job, profile) -> dict:
         "web": "Company Site",
     }
     source_label = source_labels.get((job.source or "").strip().lower(), (job.source or "Web").title())
-    tier = job.tier or (
-        '🟢 Perfect Match'
+    tier = (
+        "🟢 Perfect Match"
         if match_score >= 90
-        else '🟡 Good Match'
+        else "🟡 Good Match"
         if match_score >= 70
-        else '🟠 Stretch Goal'
+        else "🟠 Stretch Goal"
         if match_score >= 50
-        else '🔴 Skip'
+        else "🔴 Skip"
     )
+
     return {
-        "job_id": f"job_{job.id}",
-        "id": job.id,
+        "job_id": f"match_{matched_job.id}",
+        "id": matched_job.id,
+        "job_record_id": job.id,
         "Title": job.title,
         "Company": job.company,
         "Location": job.location or "",
         "Source": source_label,
-        "Status": job.status,
+        "Status": matched_job.user_status,
         "Skill Score": match_score,
-        "Base Skill Score": fit_snapshot["base_skill_score"],
-        "Industry": ", ".join(fit_snapshot["job_industries"]),
-        "Industry Fit": fit_snapshot["industry_fit_label"],
-        "Industry Boost": fit_snapshot["industry_boost"],
-        "Matched Industries": ", ".join(fit_snapshot["matched_industries"]),
-        "Fit Reasons": fit_snapshot["fit_reasons"],
-        "Tier": tier,
-        "Special Interest": bool(job.special_interest),
-        "Notes": job.notes or "",
+        "Fit Score": match_score,
+        "Base Skill Score": int(matched_job.base_skill_score or 0),
+        "Industry": ", ".join(matched_job.job_industries or []),
+        "Industry Fit": matched_job.industry_fit_label or "",
+        "Industry Boost": int(matched_job.industry_boost or 0),
+        "Matched Industries": ", ".join(matched_job.matched_industries or []),
+        "Fit Reasons": matched_job.fit_reasons or [],
+        "Tier": job.tier or tier,
+        "Delivery Status": matched_job.delivery_status,
+        "Special Interest": bool(matched_job.special_interest),
+        "Notes": matched_job.notes or "",
         "Matched Skills": ", ".join(matched_skills[:8]),
         "Search Query": job.search_query or "",
-        "Date Found": job.date_added.isoformat() if job.date_added else None,
+        "Date Found": matched_job.delivered_at.isoformat() if matched_job.delivered_at else (job.date_added.isoformat() if job.date_added else None),
         "Job Description": job.job_description or "",
         "Link": job.job_link,
         "Resume Path": job.resume_path or "",
@@ -80,7 +81,18 @@ def serialize_job(job: Job, profile) -> dict:
     }
 
 
-# ============ SCHEMAS ============
+def refresh_user_delivery(db: Session, user_id: int) -> None:
+    """Refresh the matched_jobs read model from the current legacy jobs store."""
+    sync_user_matched_jobs(db, user_id)
+
+
+def require_matched_job(db: Session, user_id: int, matched_job_id: int) -> MatchedJob:
+    """Return a user's matched job or raise 404."""
+    matched_job = get_matched_job(db, matched_job_id, user_id)
+    if not matched_job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return matched_job
+
 
 class JobUpdate(BaseModel):
     status: str = None
@@ -93,7 +105,7 @@ class JobUpdate(BaseModel):
 
 class JobAnalysisUpdate(BaseModel):
     ats_score: Optional[int] = None
-    location: str = ''
+    location: str = ""
     tech_stack: dict = {}
     suggested_tech_stack: dict = {}
     points: list[str] = []
@@ -118,8 +130,6 @@ class JobResponse(BaseModel):
         from_attributes = True
 
 
-# ============ ENDPOINTS ============
-
 @router.get("/jobs")
 def list_jobs(
     db: Session = Depends(get_db),
@@ -129,27 +139,24 @@ def list_jobs(
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=500),
 ):
-    """Get all jobs (paginated, filtered)."""
+    """Get delivered matched jobs for the signed-in user."""
     profile = get_or_create_profile(db, user.id)
-    quality_filters = profile.quality_filters or {}
-    jobs = get_user_jobs(
+    refresh_user_delivery(db, user.id)
+    matched_jobs = get_user_matched_jobs(
         db,
         user.id,
         status=status,
         source=source,
         skip=skip,
         limit=limit,
-        quality_filters=quality_filters,
-        sort_key=lambda job: build_current_fit_snapshot(job, profile)["overall_fit_score"],
     )
-    serialized = [serialize_job(job, profile) for job in jobs]
-    match_scores = [job.get("Skill Score", 0) for job in serialized]
-    total_count = count_user_jobs(
+    serialized = [serialize_matched_job(matched_job) for matched_job in matched_jobs]
+    match_scores = [job.get("Fit Score", 0) for job in serialized]
+    total_count = count_user_matched_jobs(
         db,
         user.id,
         status=status,
         source=source,
-        quality_filters=quality_filters,
     )
 
     return {
@@ -160,18 +167,16 @@ def list_jobs(
             "perfect_matches": len([score for score in match_scores if score >= 90]),
             "last_updated": "Live",
         },
-        "active_filters": quality_filters,
+        "active_filters": profile.quality_filters or {},
     }
 
 
 @router.get("/jobs/{job_id}")
 def get_single_job(job_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    """Get a single job by ID."""
-    job = get_job(db, job_id, user.id)
-    if not job:
-        raise HTTPException(status_code=404, detail="Job not found")
-    profile = get_or_create_profile(db, user.id)
-    return serialize_job(job, profile)
+    """Get a single delivered matched job by ID."""
+    refresh_user_delivery(db, user.id)
+    matched_job = require_matched_job(db, user.id, job_id)
+    return serialize_matched_job(matched_job)
 
 
 @router.patch("/jobs/{job_id}/status", dependencies=[Depends(require_csrf)])
@@ -181,10 +186,10 @@ def update_job_status(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    """Update job application status."""
-    job = update_job(db, job_id, user.id, status=status)
-    if not job:
-        raise HTTPException(status_code=404, detail="Job not found")
+    """Update application status for a delivered matched job."""
+    matched_job = require_matched_job(db, user.id, job_id)
+    update_job(db, matched_job.job_id, user.id, status=status)
+    update_matched_job(db, job_id, user.id, user_status=status)
     return {"message": "Status updated"}
 
 
@@ -195,10 +200,10 @@ def toggle_job_interest(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    """Star/unstar a job."""
-    job = update_job(db, job_id, user.id, special_interest=special_interest)
-    if not job:
-        raise HTTPException(status_code=404, detail="Job not found")
+    """Star/unstar a delivered matched job."""
+    matched_job = require_matched_job(db, user.id, job_id)
+    update_job(db, matched_job.job_id, user.id, special_interest=special_interest)
+    update_matched_job(db, job_id, user.id, special_interest=special_interest)
     return {"message": "Interest updated"}
 
 
@@ -209,10 +214,10 @@ def update_job_notes(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    """Update job notes."""
-    job = update_job(db, job_id, user.id, notes=notes)
-    if not job:
-        raise HTTPException(status_code=404, detail="Job not found")
+    """Update notes for a delivered matched job."""
+    matched_job = require_matched_job(db, user.id, job_id)
+    update_job(db, matched_job.job_id, user.id, notes=notes)
+    update_matched_job(db, job_id, user.id, notes=notes)
     return {"message": "Notes updated"}
 
 
@@ -224,6 +229,8 @@ def update_job_analysis(
     user: User = Depends(get_current_user),
 ):
     """Persist edited role analysis for the matched job workspace."""
+    matched_job = require_matched_job(db, user.id, job_id)
+
     matched_skills = []
     for category, skills in (payload.tech_stack or {}).items():
         if isinstance(skills, list):
@@ -238,7 +245,7 @@ def update_job_analysis(
     }
     job = update_job(
         db,
-        job_id,
+        matched_job.job_id,
         user.id,
         location=payload.location,
         ats_score=payload.ats_score,
@@ -247,21 +254,22 @@ def update_job_analysis(
     )
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
-    profile = get_or_create_profile(db, user.id)
-    return {"message": "Analysis updated", "job": serialize_job(job, profile)}
+
+    refresh_user_delivery(db, user.id)
+    refreshed = require_matched_job(db, user.id, job_id)
+    return {"message": "Analysis updated", "job": serialize_matched_job(refreshed)}
 
 
 @router.delete("/jobs/{job_id}", dependencies=[Depends(require_csrf)])
 def delete_single_job(job_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    """Delete a job."""
-    success = delete_job(db, job_id, user.id)
-    if not success:
+    """Archive a delivered matched job so it no longer appears in the feed."""
+    matched_job = update_matched_job(db, job_id, user.id, delivery_status="archived")
+    if not matched_job:
         raise HTTPException(status_code=404, detail="Job not found")
-    return {"message": "Job deleted"}
+    return {"message": "Job archived"}
 
 
 @router.post("/jobs/backup")
-def backup_jobs(db: Session = Depends(get_db)):
+def backup_jobs():
     """Trigger backup of jobs database."""
-    # This is a placeholder for future backup functionality
     return {"message": "Backup triggered"}

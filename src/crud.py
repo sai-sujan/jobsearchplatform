@@ -20,7 +20,8 @@ from passlib.context import CryptContext
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from src.models import Job, Resume, ResumeAsset, ScrapeRun, SearchConfig, SearchPreset, User, UserProfile
+from src.models import Job, MatchedJob, Resume, ResumeAsset, ScrapeRun, SearchConfig, SearchPreset, User, UserProfile
+from src.recommendations import build_current_fit_snapshot
 
 # Password hashing
 # Use pbkdf2_sha256 for compatibility with local Python environments where
@@ -352,6 +353,137 @@ def has_salary_signal(job: Job) -> bool:
     """Check whether the job appears to expose a salary range."""
     haystack = build_job_search_text(job)
     return bool(re.search(r"\$\s?\d", haystack) or re.search(r"\b\d{2,3}k\b", haystack))
+
+
+def get_matched_job(db: Session, matched_job_id: int, user_id: int) -> Optional[MatchedJob]:
+    """Get a delivered matched job owned by the user."""
+    return (
+        db.query(MatchedJob)
+        .filter(MatchedJob.id == matched_job_id, MatchedJob.user_id == user_id)
+        .first()
+    )
+
+
+def get_user_matched_jobs(
+    db: Session,
+    user_id: int,
+    status: str = None,
+    source: str = None,
+    delivery_status: str = 'active',
+    skip: int = 0,
+    limit: int = 100,
+) -> List[MatchedJob]:
+    """Return delivered matched jobs for the user."""
+    query = (
+        db.query(MatchedJob)
+        .join(Job, MatchedJob.job_id == Job.id)
+        .filter(MatchedJob.user_id == user_id)
+    )
+
+    if delivery_status:
+        query = query.filter(MatchedJob.delivery_status == delivery_status)
+    if status:
+        query = query.filter(MatchedJob.user_status == status)
+    if source:
+        query = query.filter(Job.source == source.lower())
+
+    return (
+        query.order_by(desc(MatchedJob.fit_score), desc(MatchedJob.delivered_at))
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+
+def count_user_matched_jobs(
+    db: Session,
+    user_id: int,
+    status: str = None,
+    source: str = None,
+    delivery_status: str = 'active',
+) -> int:
+    """Count delivered matched jobs for the user."""
+    query = (
+        db.query(MatchedJob)
+        .join(Job, MatchedJob.job_id == Job.id)
+        .filter(MatchedJob.user_id == user_id)
+    )
+
+    if delivery_status:
+        query = query.filter(MatchedJob.delivery_status == delivery_status)
+    if status:
+        query = query.filter(MatchedJob.user_status == status)
+    if source:
+        query = query.filter(Job.source == source.lower())
+
+    return query.count()
+
+
+def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
+    """Materialize the user-facing matched_jobs read model from legacy jobs."""
+    profile = get_or_create_profile(db, user_id)
+    quality_filters = profile.quality_filters or {}
+    all_jobs = get_user_jobs(
+        db,
+        user_id,
+        quality_filters=None,
+        skip=0,
+        limit=100000,
+    )
+    existing = {
+        matched.job_id: matched
+        for matched in db.query(MatchedJob).filter(MatchedJob.user_id == user_id).all()
+    }
+    active_job_ids = set()
+
+    for job in all_jobs:
+        fit_snapshot = build_current_fit_snapshot(job, profile)
+        passes_filters = job_passes_quality_filters(job, quality_filters)
+        matched_job = existing.get(job.id)
+        active_job_ids.add(job.id)
+
+        if matched_job is None:
+            matched_job = MatchedJob(
+                user_id=user_id,
+                job_id=job.id,
+                special_interest=bool(job.special_interest),
+                notes=job.notes or "",
+            )
+            db.add(matched_job)
+
+        matched_job.delivery_status = 'active' if passes_filters else 'suppressed'
+        matched_job.user_status = job.status or matched_job.user_status or 'not_applied'
+        matched_job.fit_score = float(fit_snapshot["overall_fit_score"])
+        matched_job.base_skill_score = float(fit_snapshot["base_skill_score"])
+        matched_job.industry_boost = float(fit_snapshot["industry_boost"])
+        matched_job.industry_fit_label = fit_snapshot["industry_fit_label"] or None
+        matched_job.job_industries = fit_snapshot["job_industries"]
+        matched_job.matched_industries = fit_snapshot["matched_industries"]
+        matched_job.fit_reasons = fit_snapshot["fit_reasons"]
+        matched_job.special_interest = bool(job.special_interest)
+        matched_job.notes = job.notes or matched_job.notes or ""
+
+    for job_id, matched_job in existing.items():
+        if job_id not in active_job_ids:
+            matched_job.delivery_status = 'archived'
+
+    db.commit()
+    return get_user_matched_jobs(db, user_id, delivery_status='active', skip=0, limit=100000)
+
+
+def update_matched_job(db: Session, matched_job_id: int, user_id: int, **update_data) -> Optional[MatchedJob]:
+    """Update a matched job row."""
+    matched_job = get_matched_job(db, matched_job_id, user_id)
+    if not matched_job:
+        return None
+
+    for key, value in update_data.items():
+        if hasattr(matched_job, key):
+            setattr(matched_job, key, value)
+
+    db.commit()
+    db.refresh(matched_job)
+    return matched_job
 
 
 def update_job(db: Session, job_id: int, user_id: int, **update_data) -> Job:

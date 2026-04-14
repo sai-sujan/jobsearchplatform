@@ -8,7 +8,8 @@ Models:
   - UserProfile: Role-aware onboarding profile for each user
   - ResumeAsset: Stored resume text/assets owned by the user
   - SearchPreset: Generated search presets derived from onboarding
-  - Job: Job listings with evaluation and status
+  - Job: Legacy/canonical job listings with evaluation and status
+  - MatchedJob: User-facing delivered jobs read model
   - Resume: Generated tailored resumes for jobs
   - SearchConfig: Legacy saved search configurations
   - ScrapeRun: Background scraper execution history
@@ -36,6 +37,7 @@ class User(Base):
     resume_assets = relationship('ResumeAsset', back_populates='user', cascade='all, delete-orphan')
     search_presets = relationship('SearchPreset', back_populates='user', cascade='all, delete-orphan')
     jobs = relationship('Job', back_populates='user', cascade='all, delete-orphan')
+    matched_jobs = relationship('MatchedJob', back_populates='user', cascade='all, delete-orphan')
     search_configs = relationship('SearchConfig', back_populates='user', cascade='all, delete-orphan')
     scrape_runs = relationship('ScrapeRun', back_populates='user', cascade='all, delete-orphan')
 
@@ -103,7 +105,7 @@ class SearchPreset(Base):
 
 
 class Job(Base):
-    """Job listing with evaluation scores and application status."""
+    """Legacy/canonical job listing with evaluation scores and source metadata."""
     __tablename__ = 'jobs'
     __table_args__ = (
         UniqueConstraint('user_id', 'job_link', name='uq_user_job_link'),
@@ -156,7 +158,40 @@ class Job(Base):
 
     # Relationships
     user = relationship('User', back_populates='jobs')
+    matched_jobs = relationship('MatchedJob', back_populates='job', cascade='all, delete-orphan')
     resumes = relationship('Resume', back_populates='job', cascade='all, delete-orphan')
+
+
+class MatchedJob(Base):
+    """User-facing delivered job record used by the web app."""
+    __tablename__ = 'matched_jobs'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'job_id', name='uq_user_matched_job'),
+    )
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    job_id = Column(Integer, ForeignKey('jobs.id'), nullable=False, index=True)
+    delivery_status = Column(String(30), nullable=False, default='active', index=True)
+    user_status = Column(String(50), nullable=False, default='not_applied', index=True)
+    fit_score = Column(Float, nullable=False, default=0)
+    base_skill_score = Column(Float, nullable=False, default=0)
+    industry_boost = Column(Float, nullable=False, default=0)
+    experience_fit_score = Column(Float, nullable=True)
+    resume_match_score = Column(Float, nullable=True)
+    role_fit_score = Column(Float, nullable=True)
+    location_fit_score = Column(Float, nullable=True)
+    industry_fit_label = Column(String(120), nullable=True)
+    job_industries = Column(JSON, nullable=False, default=list)
+    matched_industries = Column(JSON, nullable=False, default=list)
+    fit_reasons = Column(JSON, nullable=False, default=list)
+    special_interest = Column(Boolean, default=False)
+    notes = Column(Text, nullable=True)
+    delivered_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = relationship('User', back_populates='matched_jobs')
+    job = relationship('Job', back_populates='matched_jobs')
 
 
 class Resume(Base):
