@@ -3,6 +3,7 @@ import random
 import os
 import hashlib
 from pathlib import Path
+from typing import Dict, List, Optional
 from pydantic import BaseModel
 
 # Try to import settings. Depending on where this is called from, path might vary.
@@ -27,23 +28,44 @@ def _truncate(text: str, limit: int) -> str:
     return text if len(text) <= limit else f"{text[:limit].rstrip()}..."
 
 
-def _cache_path(job_description: str) -> Path:
-    digest = hashlib.sha1(_truncate(job_description, settings.AI_TAILOR_MAX_JOB_CHARS).encode("utf-8")).hexdigest()
+def _cache_path(job_description: str, context_signature: str = "") -> Path:
+    digest = hashlib.sha1(
+        (
+            _truncate(job_description, settings.AI_TAILOR_MAX_JOB_CHARS) +
+            "|" +
+            _truncate(context_signature, 800)
+        ).encode("utf-8")
+    ).hexdigest()
     settings.ensure_directories()
     return Path(settings.AI_CACHE_DIR) / f"tailor_{digest}.json"
 
 
-def _compact_tailor_prompt(job_description: str) -> str:
+def _compact_tailor_prompt(
+    job_description: str,
+    *,
+    candidate_summary: str = "",
+    current_location: str = "",
+    current_tech_stack: Optional[Dict] = None,
+    target_roles: Optional[List[str]] = None,
+    seniority: str = "",
+) -> str:
     shortened_jd = _truncate(job_description, settings.AI_TAILOR_MAX_JOB_CHARS)
+    current_tech_stack = current_tech_stack or {}
+    target_roles = target_roles or []
+    compact_stack = {
+        category: skills[:8]
+        for category, skills in current_tech_stack.items()
+        if isinstance(skills, list) and skills
+    }
     return f"""
 You are an ATS optimization assistant. Return only valid JSON.
 
 Candidate profile:
-- Target roles: AI Engineer, Machine Learning Engineer, Data Scientist
-- Seniority: early-career (0-2 years)
-- Core skills: Python, SQL, TensorFlow, PyTorch, Scikit-learn, Hugging Face, LangChain, LangGraph, RAG, MLflow, FastAPI, Docker, AWS, PostgreSQL
-- Domain strengths: NLP, LLM systems, anomaly detection, MLOps, experimentation
-- Location preference: use the job's location, otherwise Springfield, MO, USA (Open to relocate)
+- Target roles: {", ".join(target_roles) if target_roles else "Use the role implied by the resume and current workspace"}
+- Seniority: {seniority or "Infer from the profile and keep suggestions realistic"}
+- Candidate summary: {_truncate(candidate_summary, 400) or "Not provided"}
+- Current workspace location: {current_location or "Use the job's location if it helps"}
+- Current tech stack: {json.dumps(compact_stack) if compact_stack else "Not provided"}
 
 Job description excerpt:
 {shortened_jd}
@@ -77,7 +99,15 @@ Rules:
 - Do not add explanation or markdown fences.
 """.strip()
 
-def generate_tailored_resume_data(job_description: str) -> dict:
+def generate_tailored_resume_data(
+    job_description: str,
+    *,
+    candidate_summary: str = "",
+    current_location: str = "",
+    current_tech_stack: Optional[Dict] = None,
+    target_roles: Optional[List[str]] = None,
+    seniority: str = "",
+) -> dict:
     """
     Given a job description, uses the Groq LLM (with fallback rotation) 
     to generate an ATS score, location, tailored tech stack, and points.
@@ -87,14 +117,31 @@ def generate_tailored_resume_data(job_description: str) -> dict:
     """
     if not hasattr(settings, 'GROQ_API_KEYS') or not settings.GROQ_API_KEYS:
         raise TailorServiceError("GROQ_API_KEYS not configured in settings")
-    cache_path = _cache_path(job_description)
+    context_signature = json.dumps(
+        {
+            "candidate_summary": _truncate(candidate_summary, 400),
+            "current_location": current_location,
+            "current_tech_stack": current_tech_stack or {},
+            "target_roles": target_roles or [],
+            "seniority": seniority,
+        },
+        sort_keys=True,
+    )
+    cache_path = _cache_path(job_description, context_signature=context_signature)
     if cache_path.exists():
         try:
             return json.loads(cache_path.read_text())
         except json.JSONDecodeError:
             pass
 
-    prompt = _compact_tailor_prompt(job_description)
+    prompt = _compact_tailor_prompt(
+        job_description,
+        candidate_summary=candidate_summary,
+        current_location=current_location,
+        current_tech_stack=current_tech_stack,
+        target_roles=target_roles,
+        seniority=seniority,
+    )
     import re
 
     # Reasoning models (like gpt-oss-120b) don't support response_format=json_object

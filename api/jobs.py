@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 from api.deps import get_current_user, get_db, require_csrf
 from src.crud import (
     create_application_event,
+    create_resume,
     count_user_matched_jobs,
     get_matched_job,
     get_application_events,
@@ -22,6 +23,7 @@ from src.crud import (
     update_matched_job,
 )
 from src.ai_match_service import AIMatchError, maybe_enrich_matched_job_with_ai
+from src.evaluation.tailor_service import TailorServiceError, generate_tailored_resume_data
 from src.resume.workspace_service import (
     WorkspaceResumeGenerationError,
     generate_resume_from_workspace,
@@ -403,11 +405,67 @@ def generate_job_resume(
     )
     if not updated:
         raise HTTPException(status_code=404, detail="Job not found")
+    resume_record = create_resume(db, matched_job.job_id, pdf_path)
 
     return {
         "success": True,
         "pdf_url": pdf_url,
         "pdf_path": pdf_path,
+        "resume_version": resume_record.version,
+        "job": serialize_matched_job(updated),
+    }
+
+
+@router.post("/jobs/{job_id}/tailor", dependencies=[Depends(require_csrf)])
+def tailor_job_workspace(
+    job_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Generate workspace-tailoring suggestions for a matched job and persist them on the matched job."""
+    matched_job = require_matched_job(db, user.id, job_id)
+    profile = get_or_create_profile(db, user.id)
+    current_workspace = matched_job.workspace_analysis or {}
+
+    try:
+        tailored_data = generate_tailored_resume_data(
+            matched_job.job.job_description or "",
+            candidate_summary=profile.candidate_summary or "",
+            current_location=matched_job.workspace_location or matched_job.job.location or "",
+            current_tech_stack=current_workspace.get("tech_stack") or {},
+            target_roles=profile.target_roles or [],
+            seniority=profile.seniority or "",
+        )
+    except TailorServiceError as error:
+        raise HTTPException(status_code=500, detail=str(error)) from error
+
+    next_workspace = {
+        "ats_score": tailored_data.get("ats_score"),
+        "location": tailored_data.get("location") or matched_job.workspace_location or matched_job.job.location or "",
+        "tech_stack": current_workspace.get("tech_stack") or {},
+        "suggested_tech_stack": tailored_data.get("tech_stack") or current_workspace.get("suggested_tech_stack") or {},
+        "points": tailored_data.get("points") or current_workspace.get("points") or [],
+    }
+    suggested_skills = []
+    for skills in (tailored_data.get("tech_stack") or {}).values():
+        if isinstance(skills, list):
+            suggested_skills.extend([skill for skill in skills if isinstance(skill, str)])
+
+    updated = update_matched_job(
+        db,
+        job_id,
+        user.id,
+        workspace_location=next_workspace["location"],
+        workspace_ats_score=tailored_data.get("ats_score"),
+        workspace_analysis=next_workspace,
+        workspace_matched_skills=suggested_skills[:16] or matched_job.workspace_matched_skills,
+    )
+    if not updated:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    return {
+        "success": True,
+        "tailored_data": next_workspace,
         "job": serialize_matched_job(updated),
     }
 

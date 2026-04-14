@@ -179,6 +179,14 @@ Reference:
 Reference:
 - [CHECKPOINT_17_MATCHED_JOB_RESUME_GENERATION.md](./CHECKPOINT_17_MATCHED_JOB_RESUME_GENERATION.md)
 
+### Checkpoint 18
+- Moved AI tailoring in the job detail workspace onto a matched-job-based API route
+- Tailoring prompts now include compact profile-aware context instead of relying on one hardcoded candidate profile
+- Matched-job resume generation now records versioned `Resume` rows so the new path preserves document history
+
+Reference:
+- [CHECKPOINT_18_MATCHED_JOB_TAILORING_AND_VERSIONS.md](./CHECKPOINT_18_MATCHED_JOB_TAILORING_AND_VERSIONS.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -189,6 +197,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - keep user workflow state owned by `matched_jobs`, not the legacy `jobs` table
 - keep editable job-detail workspace state owned by `matched_jobs`, not the legacy `jobs` table
 - keep resume generation reachable from matched-job workspace APIs instead of legacy row-index APIs
+- keep AI tailoring reachable from matched-job workspace APIs instead of legacy helper routes
 - continue deprecating or removing legacy Excel-only surfaces
 - improve application history and timeline UX
 
@@ -231,7 +240,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - Current canonical source is still the legacy user-owned `jobs` table, even though the web app now reads `matched_jobs`
 - Internal ingestion/matching boundary is not fully isolated yet
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
-- Some old tailoring and resume/version bookkeeping flows still exist in legacy routes even though the main workspace now has a matched-job-based generation path
+- Some old tailoring and resume/version bookkeeping flows still exist in legacy routes even though the main workspace path is now matched-job-based
 - Resume upload path now supports both file and text intake, but still needs stronger production hardening
 
 ## Operating rule

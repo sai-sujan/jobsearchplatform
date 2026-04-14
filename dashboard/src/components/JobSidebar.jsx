@@ -465,25 +465,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     setActiveTab('match')
 
     try {
-      const response = await fetch(`${API_URL}/api/ai-tailor-resume`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          job_description: job['Job Description'] || '',
-          current_location: editedData.location,
-          current_tech_stack: editedData.tech_stack,
-          current_points: editedData.points,
-        }),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok || !result.success) {
-        setTailorError(`Tailor failed: ${result.detail || 'Unknown error.'}`)
-        return
-      }
-
-      const tailoredData = result.tailored_data || {}
+      const response = await api.post(`/api/jobs/${job.id}/tailor`)
+      const tailoredData = response.data?.tailored_data || {}
       setEditedData((current) => ({
         ...current,
         ats_score: tailoredData.ats_score || current.ats_score,
@@ -494,7 +477,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
       setSaveMessage('New AI suggestions are ready to review.')
     } catch (error) {
       console.error('Auto tailor error:', error)
-      setTailorError(`Tailor failed: ${error.message}`)
+      setTailorError(`Tailor failed: ${error?.response?.data?.detail || error.message}`)
     } finally {
       setTailoring(false)
     }

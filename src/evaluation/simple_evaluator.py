@@ -35,11 +35,13 @@ class SimpleEvaluator:
         # 1. Title Check
         for pattern in self.SENIOR_TITLES:
             if re.search(pattern, title_lower):
-                return False, f"Senior Title Detected: {pattern.replace(r'\\b', '')}"
+                cleaned_pattern = pattern.replace(r'\b', '')
+                return False, f"Senior Title Detected: {cleaned_pattern}"
                 
         # 2. Description Dealbreakers
         for pattern in self.DEALBREAKERS:
             if re.search(pattern, desc_lower):
-                return False, f"Dealbreaker Detected: {pattern.replace(r'\\b', '')}"
+                cleaned_pattern = pattern.replace(r'\b', '')
+                return False, f"Dealbreaker Detected: {cleaned_pattern}"
                 
         return True, "Check Passed"

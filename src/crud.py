@@ -800,8 +800,10 @@ def job_exists_by_link(db: Session, user_id: int, job_link: str) -> bool:
 # ============ RESUME CRUD ============
 
 def create_resume(db: Session, job_id: int, pdf_path: str) -> Resume:
-    """Create a new resume for a job."""
-    resume = Resume(job_id=job_id, pdf_path=pdf_path)
+    """Create a versioned resume record for a job."""
+    latest = get_latest_resume(db, job_id)
+    next_version = (latest.version + 1) if latest else 1
+    resume = Resume(job_id=job_id, pdf_path=pdf_path, version=next_version)
     db.add(resume)
     db.commit()
     db.refresh(resume)
