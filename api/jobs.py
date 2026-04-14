@@ -22,6 +22,7 @@ from src.crud import (
 )
 from src.ai_match_service import AIMatchError, maybe_enrich_matched_job_with_ai
 from src.models import MatchedJob, User
+from src.settings import settings
 
 router = APIRouter(prefix="/api", tags=["jobs"])
 
@@ -95,7 +96,14 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
 
 
 def refresh_user_delivery(db: Session, user_id: int) -> None:
-    """Refresh the matched_jobs read model from the current legacy jobs store."""
+    """Fallback refresh from the legacy jobs store only when needed."""
+    if not settings.LEGACY_DELIVERY_FALLBACK_ENABLED:
+        return
+
+    existing_count = count_user_matched_jobs(db, user_id, delivery_status=None)
+    if existing_count > 0:
+        return
+
     sync_user_matched_jobs(db, user_id)
 
 

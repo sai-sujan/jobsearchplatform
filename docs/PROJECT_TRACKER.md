@@ -131,6 +131,22 @@ Reference:
 Reference:
 - [CHECKPOINT_11_INTERNAL_DELIVERY_API.md](./CHECKPOINT_11_INTERNAL_DELIVERY_API.md)
 
+### Checkpoint 12
+- Reduced runtime dependence on the legacy refresh path in `api/jobs`
+- Normal `/api/jobs` reads now prefer existing delivered recommendations
+- Legacy sync is now a fallback only for users who have no delivered feed yet
+
+Reference:
+- [CHECKPOINT_12_DELIVERY_SOURCE_OF_TRUTH.md](./CHECKPOINT_12_DELIVERY_SOURCE_OF_TRUTH.md)
+
+### Checkpoint 13
+- Added an explicit internal rebuild path at `/internal/v1/jobs/rebuild-delivery`
+- Legacy matched-job sync can now be triggered operationally instead of being hidden behind normal user traffic
+- This makes internal delivery and operational rebuilds separate, clearer actions
+
+Reference:
+- [CHECKPOINT_13_EXPLICIT_REBUILD.md](./CHECKPOINT_13_EXPLICIT_REBUILD.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -149,6 +165,7 @@ Move delivery logic closer to a real recommendation pipeline:
    - future async reranking only for top candidates
 4. Continue retiring legacy Excel/config endpoints from the runtime path
 5. Expand application history and notes into a more complete activity feed
+6. Start shrinking the legacy `jobs` table’s role in the delivery pipeline over time
 
 ## Scoring direction notes
 - Industry affinity should be a first-class positive signal in recommendation scoring.

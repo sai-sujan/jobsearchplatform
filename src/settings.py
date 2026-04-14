@@ -191,6 +191,7 @@ class Settings:
     COOKIE_SECURE = _getenv('COOKIE_SECURE', 'False').lower() == 'true'
     COOKIE_SAMESITE = _getenv('COOKIE_SAMESITE', 'lax')
     INTERNAL_API_TOKEN = _getenv('INTERNAL_API_TOKEN', '')
+    LEGACY_DELIVERY_FALLBACK_ENABLED = _getenv('LEGACY_DELIVERY_FALLBACK_ENABLED', 'True').lower() == 'true'
 
     # === DATABASE ===
     DB_PATH = DATA_DIR / 'jobs.db'

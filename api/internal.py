@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from api.deps import get_db, require_internal_token
-from src.crud import get_user_by_username, sync_delivered_jobs_for_user
+from src.crud import get_user_by_username, sync_delivered_jobs_for_user, sync_user_matched_jobs
 
 router = APIRouter(prefix="/internal/v1", tags=["internal"])
 
@@ -49,6 +49,10 @@ class DeliveryRequest(BaseModel):
     preserve_user_state: bool = True
 
 
+class LegacySyncRequest(BaseModel):
+    username: str
+
+
 @router.post("/jobs/deliver", dependencies=[Depends(require_internal_token)])
 def deliver_jobs(request: DeliveryRequest, db: Session = Depends(get_db)):
     """Upsert delivered jobs for one user from the internal matching pipeline."""
@@ -70,4 +74,19 @@ def deliver_jobs(request: DeliveryRequest, db: Session = Depends(get_db)):
         "job_ids": [row.id for row in matched_rows],
         "replace_existing": request.replace_existing,
         "preserve_user_state": request.preserve_user_state,
+    }
+
+
+@router.post("/jobs/rebuild-delivery", dependencies=[Depends(require_internal_token)])
+def rebuild_delivery(request: LegacySyncRequest, db: Session = Depends(get_db)):
+    """Explicitly rebuild a user's delivered feed from the legacy jobs source."""
+    user = get_user_by_username(db, request.username.strip().lower())
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    matched_rows = sync_user_matched_jobs(db, user.id)
+    return {
+        "username": user.username,
+        "rebuilt": len(matched_rows),
+        "job_ids": [row.id for row in matched_rows[:50]],
     }
