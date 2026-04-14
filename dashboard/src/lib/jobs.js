@@ -75,6 +75,14 @@ export function getSourceLabel(job) {
   return job?.Source || 'Web'
 }
 
+export function getDisplayMatchScore(job) {
+  return job?.['Fit Score'] || job?.['Skill Score'] || 0
+}
+
+export function getIndustryFitLabel(job) {
+  return job?.['Industry Fit'] || ''
+}
+
 export function getMatchedSkills(job, limit = 4) {
   return (job?.['Matched Skills'] || '')
     .split(',')

@@ -14,7 +14,7 @@ Usage:
 
 import re
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Union
 
 from passlib.context import CryptContext
 from sqlalchemy import desc
@@ -184,6 +184,7 @@ def get_user_jobs(
     skip: int = 0,
     limit: int = 100,
     quality_filters: Optional[Dict] = None,
+    sort_key: Optional[Callable[[Job], Union[int, float]]] = None,
 ) -> List[Job]:
     """Get user's jobs with optional filters."""
     query = db.query(Job).filter(Job.user_id == user_id)
@@ -195,6 +196,8 @@ def get_user_jobs(
 
     jobs = query.order_by(desc(Job.date_added)).all()
     filtered_jobs = [job for job in jobs if job_passes_quality_filters(job, quality_filters)]
+    if sort_key:
+        filtered_jobs.sort(key=sort_key, reverse=True)
     return filtered_jobs[skip:skip + limit]
 
 

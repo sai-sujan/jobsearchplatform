@@ -21,14 +21,16 @@ from sqlalchemy.orm import Session
 from api.deps import get_current_user, get_db, require_csrf
 from src.crud import count_user_jobs, delete_job, get_job, get_or_create_profile, get_user_jobs, update_job
 from src.models import Job, User
+from src.recommendations import build_current_fit_snapshot
 
 router = APIRouter(prefix="/api", tags=["jobs"])
 
 
-def serialize_job(job: Job) -> dict:
+def serialize_job(job: Job, profile) -> dict:
     """Map database jobs to the frontend shape used by the user web app."""
     matched_skills = job.matched_skills or []
-    match_score = int(job.skill_score or 0)
+    fit_snapshot = build_current_fit_snapshot(job, profile)
+    match_score = fit_snapshot["overall_fit_score"]
     source_labels = {
         "linkedin": "LinkedIn",
         "indeed": "Indeed",
@@ -56,6 +58,12 @@ def serialize_job(job: Job) -> dict:
         "Source": source_label,
         "Status": job.status,
         "Skill Score": match_score,
+        "Base Skill Score": fit_snapshot["base_skill_score"],
+        "Industry": ", ".join(fit_snapshot["job_industries"]),
+        "Industry Fit": fit_snapshot["industry_fit_label"],
+        "Industry Boost": fit_snapshot["industry_boost"],
+        "Matched Industries": ", ".join(fit_snapshot["matched_industries"]),
+        "Fit Reasons": fit_snapshot["fit_reasons"],
         "Tier": tier,
         "Special Interest": bool(job.special_interest),
         "Notes": job.notes or "",
@@ -132,8 +140,9 @@ def list_jobs(
         skip=skip,
         limit=limit,
         quality_filters=quality_filters,
+        sort_key=lambda job: build_current_fit_snapshot(job, profile)["overall_fit_score"],
     )
-    serialized = [serialize_job(job) for job in jobs]
+    serialized = [serialize_job(job, profile) for job in jobs]
     match_scores = [job.get("Skill Score", 0) for job in serialized]
     total_count = count_user_jobs(
         db,
@@ -161,7 +170,8 @@ def get_single_job(job_id: int, db: Session = Depends(get_db), user: User = Depe
     job = get_job(db, job_id, user.id)
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
-    return serialize_job(job)
+    profile = get_or_create_profile(db, user.id)
+    return serialize_job(job, profile)
 
 
 @router.patch("/jobs/{job_id}/status", dependencies=[Depends(require_csrf)])
@@ -237,7 +247,8 @@ def update_job_analysis(
     )
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
-    return {"message": "Analysis updated", "job": serialize_job(job)}
+    profile = get_or_create_profile(db, user.id)
+    return {"message": "Analysis updated", "job": serialize_job(job, profile)}
 
 
 @router.delete("/jobs/{job_id}", dependencies=[Depends(require_csrf)])

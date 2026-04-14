@@ -58,6 +58,16 @@ INDUSTRY_RULES = [
 ]
 
 
+def infer_industries_from_text(text: str, limit: int = 3) -> list[str]:
+    """Infer industry labels from arbitrary resume or job text."""
+    lowered = (text or "").lower()
+    return [
+        label
+        for label, keywords in INDUSTRY_RULES
+        if any(keyword in lowered for keyword in keywords)
+    ][:limit]
+
+
 def extract_skills_from_resume(resume_text: str) -> list[str]:
     """Extract likely skills from resume text using a curated dictionary."""
     haystack = f" {resume_text.lower()} "
@@ -121,11 +131,7 @@ def infer_profile_from_resume(resume_text: str, parsed_skills: list[str]) -> dic
     elif "contract" in lowered:
         employment_types = ["Contract"]
 
-    industries = [
-        label
-        for label, keywords in INDUSTRY_RULES
-        if any(keyword in lowered for keyword in keywords)
-    ][:3]
+    industries = infer_industries_from_text(lowered, limit=3)
 
     return {
         "target_roles": inferred_roles,
@@ -148,10 +154,10 @@ def summarize_candidate(resume_text: str, target_roles: list[str], parsed_skills
 def build_generated_search_presets(profile: dict) -> list[dict]:
     """Generate user-facing search presets from onboarding data."""
     roles = [role.strip() for role in profile.get("target_roles", []) if role and role.strip()]
-    locations = [location.strip() for location in profile.get("preferred_locations", []) if location and location.strip()]
-    work_modes = [mode.strip() for mode in profile.get("work_modes", []) if mode and mode.strip()]
-    employment_types = [item.strip() for item in profile.get("employment_types", []) if item and item.strip()]
-    industries = [item.strip() for item in profile.get("industries", []) if item and item.strip()]
+    locations = [l.strip() for l in profile.get("preferred_locations", []) if l and l.strip() and l.strip().lower() != "any"]
+    work_modes = [m.strip() for m in profile.get("work_modes", []) if m and m.strip() and m.strip().lower() != "any"]
+    employment_types = [i.strip() for i in profile.get("employment_types", []) if i and i.strip() and i.strip().lower() != "any"]
+    industries = [i.strip() for i in profile.get("industries", []) if i and i.strip() and i.strip().lower() != "any"]
 
     presets = []
     for role in roles[:5]:

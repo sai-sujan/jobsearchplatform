@@ -1,5 +1,7 @@
 import {
   formatCompactDate,
+  getDisplayMatchScore,
+  getIndustryFitLabel,
   getJobId,
   getMatchedSkills,
   getSourceLabel,
@@ -21,6 +23,8 @@ function JobCard({ job, onClick, onStatusChange }) {
   const tierVariant = getTierVariant(job)
   const status = normalizeStatus(job.Status)
   const companyInitial = (job.Company || 'J').trim().charAt(0).toUpperCase()
+  const displayScore = getDisplayMatchScore(job)
+  const industryFit = getIndustryFitLabel(job)
 
   return (
     <article
@@ -45,7 +49,7 @@ function JobCard({ job, onClick, onStatusChange }) {
         <div className="job-card-heading-copy">
           <div className="job-card-heading-row">
             <h3>{job.Title || 'Untitled role'}</h3>
-            <span className="job-score-pill">{job['Skill Score'] || 0}% match</span>
+            <span className="job-score-pill">{displayScore}% fit</span>
           </div>
           <p>{job.Company || 'Unknown company'}</p>
         </div>
@@ -63,6 +67,7 @@ function JobCard({ job, onClick, onStatusChange }) {
               {skill}
             </span>
           ))}
+          {industryFit && <span className="job-skill-chip">{industryFit}</span>}
         </div>
       )}
 

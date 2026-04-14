@@ -256,6 +256,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   const summaryItems = [
     { label: 'Location', value: editedData.location || job.Location || 'Remote / flexible' },
     { label: 'Source', value: sourceLabel },
+    { label: 'Industry', value: job.Industry || 'Generalist role' },
     { label: 'Search', value: job['Search Query'] || 'Imported opportunity' },
     { label: 'Saved', value: formatDisplayDate(job['Date Found']) },
   ]
@@ -715,6 +716,12 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                     </div>
                     <span className="section-caption">{matchedSkills.length} captured</span>
                   </div>
+
+                  {job['Industry Fit'] && (
+                    <p className="empty-copy">
+                      <strong>{job['Industry Fit']}.</strong> {(job['Fit Reasons'] || []).join(' ')}
+                    </p>
+                  )}
 
                   {matchedSkills.length > 0 ? (
                     <div className="skill-pill-row">

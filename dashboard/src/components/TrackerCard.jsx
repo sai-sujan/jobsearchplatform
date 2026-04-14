@@ -1,4 +1,4 @@
-import { formatCompactDate, getJobId, getSourceLabel, normalizeStatus } from '../lib/jobs'
+import { formatCompactDate, getDisplayMatchScore, getIndustryFitLabel, getJobId, getSourceLabel, normalizeStatus } from '../lib/jobs'
 import './TrackerCard.css'
 
 const STATUS_OPTIONS = [
@@ -12,6 +12,8 @@ const STATUS_OPTIONS = [
 function TrackerCard({ job, isDragging = false, onClick, onStatusChange, onDragStart, onDragEnd }) {
   const companyInitial = (job.Company || 'J').trim().charAt(0).toUpperCase()
   const status = normalizeStatus(job.Status)
+  const displayScore = getDisplayMatchScore(job)
+  const industryFit = getIndustryFitLabel(job)
 
   return (
     <article
@@ -53,7 +55,8 @@ function TrackerCard({ job, isDragging = false, onClick, onStatusChange, onDragS
 
       <div className="tracker-card-meta">
         <span className="tracker-meta-pill">{getSourceLabel(job)}</span>
-        <span className="tracker-meta-pill tracker-match-pill">{job['Skill Score'] || 0}% match</span>
+        <span className="tracker-meta-pill tracker-match-pill">{displayScore}% fit</span>
+        {industryFit && <span className="tracker-meta-pill">{industryFit}</span>}
         <span className="tracker-date">{formatCompactDate(job['Date Found'])}</span>
       </div>
 
