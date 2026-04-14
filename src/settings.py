@@ -23,6 +23,33 @@ def _getenv(key, default=''):
     return os.getenv(key, default)
 
 
+def _merge_cors_origins():
+    """Return a stable CORS origin list covering localhost and loopback dev URLs."""
+    default_origins = [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+        'http://localhost:5174',
+        'http://127.0.0.1:5174',
+        'http://localhost:4173',
+        'http://127.0.0.1:4173',
+        'http://localhost:4174',
+        'http://127.0.0.1:4174',
+    ]
+    configured_origins = [
+        origin.strip()
+        for origin in _getenv('CORS_ORIGINS', '').split(',')
+        if origin.strip()
+    ]
+
+    merged = []
+    for origin in [*configured_origins, *default_origins]:
+        if origin not in merged:
+            merged.append(origin)
+    return merged
+
+
 class Settings:
     """All project configuration in one place."""
 
@@ -134,14 +161,29 @@ class Settings:
     AIRLLM_CACHE_DIR = _getenv('AIRLLM_CACHE_DIR', '~/.cache/airllm')
     OLLAMA_URL = _getenv('OLLAMA_URL', 'http://localhost:11434')
     OLLAMA_MODEL = _getenv('OLLAMA_MODEL', 'gemma3:12b')
+    GROQ_API_KEYS = [
+        k.strip() for k in _getenv('GROQ_API_KEYS', '').split(',') if k.strip()
+    ]
+    GROQ_MODEL = _getenv('GROQ_MODEL', 'llama-3.3-70b-versatile')
 
     # === API SERVER ===
     API_HOST = _getenv('API_HOST', '0.0.0.0')
     API_PORT = int(_getenv('API_PORT', '5001'))
-    CORS_ORIGINS = [
-        o.strip() for o in
-        _getenv('CORS_ORIGINS', 'http://localhost:3000,http://localhost:5173,http://localhost:5174').split(',')
-    ]
+    CORS_ORIGINS = _merge_cors_origins()
+
+    # === AUTHENTICATION ===
+    JWT_SECRET = _getenv('JWT_SECRET', 'your-secret-key-change-in-production')
+    JWT_ALGORITHM = 'HS256'
+    JWT_EXPIRATION_HOURS = int(_getenv('JWT_EXPIRATION_HOURS', '24'))
+    SESSION_COOKIE_NAME = _getenv('SESSION_COOKIE_NAME', 'jobapp_session')
+    CSRF_COOKIE_NAME = _getenv('CSRF_COOKIE_NAME', 'jobapp_csrf')
+    SESSION_EXPIRES_HOURS = int(_getenv('SESSION_EXPIRES_HOURS', '24'))
+    COOKIE_SECURE = _getenv('COOKIE_SECURE', 'False').lower() == 'true'
+    COOKIE_SAMESITE = _getenv('COOKIE_SAMESITE', 'lax')
+
+    # === DATABASE ===
+    DB_PATH = DATA_DIR / 'jobs.db'
+    DATABASE_URL = f'sqlite:///{DB_PATH}'
 
     # === VENV ===
     VENV_PYTHON = BASE_DIR / 'venv' / 'bin' / 'python3'

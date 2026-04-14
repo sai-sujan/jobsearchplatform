@@ -9,14 +9,28 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import pandas as pd
 import json
+import hashlib
 from datetime import datetime
 from pathlib import Path
 import os
 import shutil
 
 from src.settings import settings
+from src.utils import sanitize_job_title
+from src.database import init_db
+from api.auth import router as auth_router
+from api.jobs import router as jobs_router
+from api.onboarding import router as onboarding_router
+
+# Initialize database
+init_db()
 
 app = FastAPI()
+
+# Include routers
+app.include_router(auth_router)
+app.include_router(onboarding_router)
+app.include_router(jobs_router)
 
 # Enable CORS for React frontend (all localhost ports)
 app.add_middleware(
@@ -28,6 +42,31 @@ app.add_middleware(
 )
 
 EXCEL_FILE = str(settings.MASTER_EXCEL)
+
+
+def build_job_id(job: dict, fallback_index: int) -> str:
+    """Build a stable-ish identifier from immutable job fields."""
+    source = "|".join([
+        str(job.get("Job_Link", "") or ""),
+        str(job.get("Company", "") or ""),
+        sanitize_job_title(str(job.get("Job_Title", "") or "")),
+        str(job.get("Posting_Date", "") or ""),
+        str(job.get("Date_Added", "") or ""),
+        str(fallback_index),
+    ])
+    digest = hashlib.sha1(source.encode("utf-8")).hexdigest()[:16]
+    return f"job_{digest}"
+
+
+def infer_job_source(job_link: str) -> str:
+    link = (job_link or "").lower()
+    if "linkedin." in link:
+        return "LinkedIn"
+    if "indeed." in link:
+        return "Indeed"
+    if "glassdoor." in link:
+        return "Glassdoor"
+    return "Web"
 
 def cleanup_duplicates():
     """Auto-cleanup duplicate jobs from Excel on startup"""
@@ -68,8 +107,8 @@ def get_file_modified_time():
         return os.path.getmtime(EXCEL_FILE)
     return None
 
-@app.get("/api/jobs")
-def get_jobs():
+@app.get("/api/legacy/jobs")
+def get_legacy_jobs():
     """Get all jobs from Excel file"""
     try:
         if not os.path.exists(EXCEL_FILE):
@@ -81,9 +120,9 @@ def get_jobs():
         # Read Excel file
         df = pd.read_excel(EXCEL_FILE, sheet_name=0)
         
-        # Clean job titles - remove newlines and extra whitespace
+        # Clean job titles and remove common LinkedIn duplication artifacts.
         if 'Job_Title' in df.columns:
-            df['Job_Title'] = df['Job_Title'].str.replace('\n', ' - ', regex=False).str.strip()
+            df['Job_Title'] = df['Job_Title'].fillna('').map(sanitize_job_title)
         
         # Remove exact duplicate jobs (same Link)
         # Remove exact duplicate jobs (same Link, or same Company+Title)
@@ -97,20 +136,26 @@ def get_jobs():
         # Add row index to each job for tracking
         for idx, job in enumerate(jobs):
             job['_rowIndex'] = idx
+            job['job_id'] = build_job_id(job, idx)
+            job['Source'] = infer_job_source(job.get('Job_Link', ''))
             
             # Load analysis data from file if available
             analysis_path = job.get('Analysis_File')
-            if pd.notna(analysis_path) and isinstance(analysis_path, str) and analysis_path and os.path.exists(analysis_path):
-                try:
-                    with open(analysis_path, 'r') as f:
-                        analysis_data = json.load(f)
-                        job['Analysis Data'] = analysis_data
-                        # Flatten for table view if needed, or keep nested
-                        job['ats_score'] = analysis_data.get('ats_score', 'N/A')
-                except (json.JSONDecodeError, IOError):
+            if pd.notna(analysis_path) and isinstance(analysis_path, str) and analysis_path.strip():
+                # Resolve relative paths against analysis_results directory
+                if not os.path.isabs(analysis_path):
+                    analysis_path = os.path.join(str(settings.DATA_DIR), 'analysis_results', analysis_path)
+                
+                if os.path.exists(analysis_path):
+                    try:
+                        with open(analysis_path, 'r') as f:
+                            analysis_data = json.load(f)
+                            job['Analysis Data'] = analysis_data
+                            job['ats_score'] = analysis_data.get('ats_score', 'N/A')
+                    except (json.JSONDecodeError, IOError):
+                        job['Analysis Data'] = None
+                else:
                     job['Analysis Data'] = None
-            else:
-                job['Analysis Data'] = None
         
         # Clean up data
         # Clean up data and map to frontend expectations
@@ -122,6 +167,7 @@ def get_jobs():
             job['Location'] = job.get('Location', '')
             job['Date Found'] = job.get('Date_Added', '')
             job['Search Query'] = job.get('Search_Query', '')
+            job['Source'] = job.get('Source', 'Web')
             
             # Map Score
             score = job.get('Keywords_Matching_Score', 0)
@@ -164,6 +210,13 @@ def get_jobs():
             
             # Map Resume Path
             job['Resume Path'] = job.get('Resume Path', '')
+            
+            # Map Special Interest and Notes
+            val = job.get('Special_Interest', False)
+            job['Special Interest'] = bool(val) if pd.notna(val) else False
+            
+            notes = job.get('Notes', '')
+            job['Notes'] = str(notes) if pd.notna(notes) else ''
             
             # Legacy/Fallback keys for safety (though Resume Path is main one)
             if 'Resume Path' in job and pd.notna(job['Resume Path']):
@@ -209,6 +262,7 @@ def health_check():
 # Request model for updating analysis
 class UpdateAnalysisRequest(BaseModel):
     row_index: int
+    ats_score: int = None
     location: str
     tech_stack: dict
     suggested_tech_stack: dict = {}
@@ -226,24 +280,47 @@ def update_analysis(request: UpdateAnalysisRequest):
 
         # Get analysis file path
         if 'Analysis_File' not in df.columns:
-             raise HTTPException(status_code=500, detail="Analysis_File column missing")
+             df['Analysis_File'] = ''
              
         analysis_file = df.at[request.row_index, 'Analysis_File']
 
-        if pd.isna(analysis_file) or not os.path.exists(analysis_file):
-            raise HTTPException(status_code=404, detail="No analysis file found for this job")
-        
-        # Read current analysis from file
-        with open(analysis_file, 'r') as f:
-            analysis_data = json.load(f)
+        # Determine safe company name
+        company = df.at[request.row_index, 'Company']
+        if pd.isna(company):
+            company = "Unknown"
+        import re
+        safe_company = re.sub(r'[^\w\s-]', '', str(company)).replace(' ', '_')
 
-        # Backup original if not already backed up
-        analysis_path = Path(analysis_file)
-        backup_file = analysis_path.with_suffix('.original.json')
-        if not backup_file.exists():
-            shutil.copy2(analysis_file, backup_file)
+        # Resolve relative paths against analysis_results directory
+        if pd.notna(analysis_file) and isinstance(analysis_file, str) and str(analysis_file).strip():
+            if not os.path.isabs(analysis_file):
+                analysis_file = os.path.join(str(settings.DATA_DIR), 'analysis_results', analysis_file)
+        else:
+            # Generate a new filename if it's completely missing
+            new_filename = f"{request.row_index}_{safe_company}.json"
+            analysis_file = os.path.join(str(settings.DATA_DIR), 'analysis_results', new_filename)
+            # Update Excel with the new filename (relative path to maintain consistency)
+            df.at[request.row_index, 'Analysis_File'] = new_filename
+            df.to_excel(EXCEL_FILE, sheet_name=settings.SHEET_NAME, index=False)
+
+        # If file doesn't exist on disk yet, initialize it with default structure
+        if not os.path.exists(analysis_file):
+            os.makedirs(os.path.dirname(analysis_file), exist_ok=True)
+            analysis_data = {}
+        else:
+            # Read current analysis from file
+            with open(analysis_file, 'r') as f:
+                analysis_data = json.load(f)
+
+            # Backup original if not already backed up
+            analysis_path = Path(analysis_file)
+            backup_file = analysis_path.with_suffix('.original.json')
+            if not backup_file.exists():
+                shutil.copy2(analysis_file, backup_file)
 
         # Update fields
+        if hasattr(request, 'ats_score') and request.ats_score is not None:
+             analysis_data['ats_score'] = request.ats_score
         analysis_data['location'] = request.location
         analysis_data['tech_stack'] = request.tech_stack
         analysis_data['suggested_tech_stack'] = request.suggested_tech_stack
@@ -257,6 +334,41 @@ def update_analysis(request: UpdateAnalysisRequest):
         
         return {"success": True, "message": "Analysis updated successfully"}
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class AITailorRequest(BaseModel):
+    job_description: str
+    current_location: str
+    current_tech_stack: dict
+    current_points: list
+
+import random
+from groq import Groq
+
+def get_groq_client():
+    if not settings.GROQ_API_KEYS:
+        raise HTTPException(status_code=500, detail="GROQ_API_KEYS not configured in .env")
+    # Randomly select an API key to load balance requests
+    api_key = random.choice(settings.GROQ_API_KEYS)
+    return Groq(api_key=api_key)
+
+@app.post("/api/ai-tailor-resume")
+def ai_tailor_resume(request: AITailorRequest):
+    """Use Groq LLM to intelligently tailor location, tech stack, and resume points based on the JD."""
+    if not settings.GROQ_API_KEYS:
+        raise HTTPException(status_code=500, detail="GROQ_API_KEYS not configured in .env")
+        
+    from src.evaluation.tailor_service import generate_tailored_resume_data, TailorServiceError
+    
+    try:
+        tailored_data = generate_tailored_resume_data(request.job_description)
+        return {
+            "success": True, 
+            "tailored_data": tailored_data
+        }
+    except TailorServiceError as e:
+        raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -290,6 +402,47 @@ def update_status(request: UpdateStatusRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class UpdateSpecialInterestRequest(BaseModel):
+    row_index: int
+    special_interest: bool
+
+@app.post("/api/update-special-interest")
+def update_special_interest(request: UpdateSpecialInterestRequest):
+    """Update job special interest flag in Excel"""
+    try:
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
+        if request.row_index >= len(df):
+            raise HTTPException(status_code=400, detail="Invalid row index")
+        
+        if 'Special_Interest' not in df.columns:
+            df['Special_Interest'] = False
+
+        df.at[request.row_index, 'Special_Interest'] = request.special_interest
+        df.to_excel(EXCEL_FILE, sheet_name=settings.SHEET_NAME, index=False)
+        return {"success": True, "message": "Special Interest updated successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class UpdateNotesRequest(BaseModel):
+    row_index: int
+    notes: str
+
+@app.post("/api/update-notes")
+def update_notes(request: UpdateNotesRequest):
+    """Update job notes in Excel"""
+    try:
+        df = pd.read_excel(EXCEL_FILE, sheet_name=0)
+        if request.row_index >= len(df):
+            raise HTTPException(status_code=400, detail="Invalid row index")
+        
+        if 'Notes' not in df.columns:
+            df['Notes'] = ''
+
+        df.at[request.row_index, 'Notes'] = request.notes
+        df.to_excel(EXCEL_FILE, sheet_name=settings.SHEET_NAME, index=False)
+        return {"success": True, "message": "Notes updated successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 class GenerateResumeRequest(BaseModel):
@@ -316,8 +469,12 @@ def generate_resume(request: GenerateResumeRequest):
             # Replace curly quotes with straight quotes
             text = text.replace('“', '"').replace('”', '"')
             text = text.replace('‘', "'").replace('’', "'")
-            # Replace other problematic characters
+            # Handle LaTeX special characters safely if they aren't already handled
+            import re
             text = text.replace('…', '...')
+            text = text.replace('~', r'\textasciitilde{}')
+            text = re.sub(r'(?<!\\)%', r'\\%', text)
+            
             return text
         
         def sanitize_data(data):
@@ -524,6 +681,103 @@ def list_backups():
         backup_list = [{"name": b.name, "size": b.stat().st_size, "created": datetime.fromtimestamp(b.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")} for b in backups]
 
         return {"backups": backup_list}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==================== CONFIGURATION ENDPOINTS ====================
+
+@app.get("/api/config")
+def get_config():
+    """Get all configuration"""
+    try:
+        config_data = {}
+
+        # Get .env settings
+        env_path = settings.BASE_DIR / '.env'
+        if env_path.exists():
+            with open(env_path, 'r') as f:
+                config_data['env'] = f.read()
+        else:
+            config_data['env'] = ''
+
+        # Get job_config.json
+        job_config_path = settings.CONFIG_DIR / 'job_config.json'
+        if job_config_path.exists():
+            with open(job_config_path, 'r') as f:
+                config_data['job_config'] = json.load(f)
+        else:
+            config_data['job_config'] = {}
+
+        # Get company blacklist
+        blacklist_path = settings.CONFIG_DIR / 'company_blacklist.txt'
+        if blacklist_path.exists():
+            with open(blacklist_path, 'r') as f:
+                config_data['company_blacklist'] = f.read()
+        else:
+            config_data['company_blacklist'] = ''
+
+        # Get skills
+        skills_path = settings.CONFIG_DIR / 'your_skills.txt'
+        if skills_path.exists():
+            with open(skills_path, 'r') as f:
+                config_data['your_skills'] = f.read()
+        else:
+            config_data['your_skills'] = ''
+
+        # Get resume
+        resume_path = Path(settings.RESUME_PATH)
+        if resume_path.exists():
+            with open(resume_path, 'r') as f:
+                config_data['resume'] = f.read()
+        else:
+            config_data['resume'] = ''
+
+        return config_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class UpdateConfigRequest(BaseModel):
+    config_type: str  # 'env', 'job_config', 'company_blacklist', 'your_skills', 'resume'
+    content: str = None  # For text files
+    data: dict = None  # For JSON files
+
+@app.post("/api/config")
+def update_config(request: UpdateConfigRequest):
+    """Update configuration files"""
+    try:
+        if request.config_type == 'env':
+            env_path = settings.BASE_DIR / '.env'
+            with open(env_path, 'w') as f:
+                f.write(request.content)
+            return {"success": True, "message": "Environment configuration updated"}
+
+        elif request.config_type == 'job_config':
+            job_config_path = settings.CONFIG_DIR / 'job_config.json'
+            with open(job_config_path, 'w') as f:
+                json.dump(request.data, f, indent=2)
+            return {"success": True, "message": "Job configuration updated"}
+
+        elif request.config_type == 'company_blacklist':
+            blacklist_path = settings.CONFIG_DIR / 'company_blacklist.txt'
+            with open(blacklist_path, 'w') as f:
+                f.write(request.content)
+            return {"success": True, "message": "Company blacklist updated"}
+
+        elif request.config_type == 'your_skills':
+            skills_path = settings.CONFIG_DIR / 'your_skills.txt'
+            with open(skills_path, 'w') as f:
+                f.write(request.content)
+            return {"success": True, "message": "Your skills updated"}
+
+        elif request.config_type == 'resume':
+            resume_path = Path(settings.RESUME_PATH)
+            with open(resume_path, 'w') as f:
+                f.write(request.content)
+            return {"success": True, "message": "Resume updated"}
+
+        else:
+            raise HTTPException(status_code=400, detail=f"Unknown config type: {request.config_type}")
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

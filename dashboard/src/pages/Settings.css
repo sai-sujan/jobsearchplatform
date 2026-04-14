@@ -1,0 +1,189 @@
+.settings-shell {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.settings-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.82fr);
+  gap: 1.35rem;
+  padding: 1.7rem;
+  border-radius: 1.45rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
+}
+
+.settings-hero h1 {
+  margin: 0.35rem 0 0.55rem;
+  color: var(--ink);
+  line-height: 1.05;
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 3vw, 2.85rem);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-headline);
+}
+
+.settings-hero p,
+.settings-hero-note p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.settings-hero-note {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+  padding: 1.05rem;
+  border-radius: 1rem;
+  background: rgba(247, 250, 255, 0.9);
+  border: 1px solid var(--line);
+}
+
+.settings-hero-note span {
+  color: var(--accent);
+  font-size: 0.74rem;
+  letter-spacing: var(--tracking-label);
+  font-weight: var(--weight-semibold);
+}
+
+.settings-hero-note strong {
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.settings-banner {
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  font-weight: var(--weight-semibold);
+}
+
+.settings-banner.success {
+  background: rgba(228, 245, 233, 0.9);
+  color: #256844;
+}
+
+.settings-banner.error {
+  background: rgba(254, 236, 232, 0.92);
+  color: #a13f2f;
+}
+
+.settings-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1rem;
+}
+
+.settings-tabs,
+.settings-panel {
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.settings-tabs {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.8rem;
+  align-content: start;
+}
+
+.settings-tab {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: start;
+  text-align: left;
+  padding: 1rem;
+  border: none;
+  border-radius: 1.1rem;
+  background: transparent;
+  color: var(--muted);
+}
+
+.settings-tab strong {
+  color: var(--ink);
+}
+
+.settings-tab span {
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.settings-tab.active {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #dbe8ff;
+}
+
+.settings-tab.active strong {
+  color: #f8fbff;
+}
+
+.settings-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.settings-panel-header h2,
+.settings-panel-header p {
+  margin: 0;
+}
+
+.settings-panel-header h2 {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.settings-panel-header p {
+  margin-top: 0.32rem;
+  color: var(--muted);
+}
+
+.settings-editor {
+  min-height: 420px;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.98);
+  color: var(--ink);
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.settings-editor-resume {
+  min-height: 520px;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.secondary-action {
+  padding: 0.92rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+
+.settings-loading {
+  padding: 2rem;
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+}
+
+@media (max-width: 1080px) {
+  .settings-hero,
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+}

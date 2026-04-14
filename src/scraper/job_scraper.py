@@ -8,10 +8,30 @@ Detects Premium/Featured jobs and applies relevance boost.
 import os
 import time
 import random
+import hashlib
 from urllib.parse import quote_plus
 from typing import List, Optional
 from dataclasses import dataclass
 from playwright.sync_api import sync_playwright, Page, BrowserContext
+from ..utils import sanitize_job_title
+
+
+def infer_job_source(job_link: str) -> str:
+    """Infer job source from URL."""
+    url_lower = job_link.lower()
+    if 'linkedin.com' in url_lower:
+        return 'linkedin'
+    elif 'indeed.com' in url_lower:
+        return 'indeed'
+    elif 'glassdoor.com' in url_lower:
+        return 'glassdoor'
+    return 'unknown'
+
+
+def build_job_id(company: str, title: str, job_link: str) -> str:
+    """Generate stable job_id from immutable fields."""
+    text = f"{company}|{title}|{job_link}".lower()
+    return hashlib.sha1(text.encode()).hexdigest()[:16]
 
 
 @dataclass
@@ -28,6 +48,7 @@ class JobListing:
     is_premium: bool = False  # LinkedIn Premium/Featured job indicator
     premium_indicators: str = ""  # What made it premium (for tracking)
     search_query: str = ""  # The search query used to find this job
+    source: str = "linkedin"  # linkedin, indeed, glassdoor - auto-detected from job_link
 
 
 class JobScraper:
@@ -126,25 +147,26 @@ class JobScraper:
         except Exception as e:
             print(f"[WARNING] Error closing browser: {e}")
 
-    def build_linkedin_url(self, keywords: str, time_filter: str = "r604800") -> str:
+    def build_linkedin_url(self, keywords: str, time_filter: str = "r86400") -> str:
         """
         Build LinkedIn Jobs search URL with filters.
         time_filter: 'r86400' (24h) or 'r604800' (week)
         """
         encoded_keywords = quote_plus(keywords)
-        # f_E=1,2 = Internship + Entry level
+        # f_E=1,2,3,4 = Internship + Entry level + Associate + Mid-Senior level
         # f_TPR=r604800/r86400 = Past week/24hr
         # f_WT=2 = Remote
         url = (
             f"https://www.linkedin.com/jobs/search/?"
             f"keywords={encoded_keywords}"
-            f"&f_E=1%2C2"
+            f"&f_E=1%2C2%2C3%2C4"
             f"&f_TPR={time_filter}"
+            f"&geoId=103644278"
             f"&sortBy=R"
         )
         return url
 
-    def navigate_to_linkedin_jobs(self, search_keywords: str, time_filter: str = "r604800") -> bool:
+    def navigate_to_linkedin_jobs(self, search_keywords: str, time_filter: str = "r86400") -> bool:
         """Navigate to LinkedIn Jobs search page."""
         try:
             url = self.build_linkedin_url(search_keywords, time_filter)
@@ -345,7 +367,7 @@ class JobScraper:
                 card.query_selector('.artdeco-entity-lockup__title') or
                 card.query_selector('strong')
             )
-            job_title = title_elem.inner_text().strip() if title_elem else ""
+            job_title = sanitize_job_title(title_elem.inner_text().strip() if title_elem else "")
 
             # Get company name
             company_elem = (
@@ -591,22 +613,19 @@ class JobScraper:
             if not self.start_browser():
                 return all_jobs
 
-            # Stage 1: Past 24 Hours (COMMENTED OUT FOR ONE-TIME PAST WEEK SCAN)
-            # print(f"\n[INFO] --- STAGE 1: Searching Past 24 Hours ---")
-            # if self.navigate_to_linkedin_jobs(search_keywords, time_filter="r86400"):
-            #      fresh_jobs = self.collect_job_listings(collected_links, search_query=search_keywords)
-            #      # collected_links is updated in-place by collect_job_listings
-            #      all_jobs.extend(fresh_jobs)
-
-            # Stage 2: Past Week (NOW PRIMARY SEARCH)
-            # if len(all_jobs) < self.max_jobs:
-            #     needed = self.max_jobs - len(all_jobs)
-            #     print(f"\n[INFO] Only found {len(all_jobs)} jobs in 24h. Need {needed} more.")
-            print(f"[INFO] --- Searching Past 24 Hours ---")
-
+            # Stage 1: Past 24 Hours
+            print(f"\n[INFO] --- STAGE 1: Searching Past 24 Hours ---")
             if self.navigate_to_linkedin_jobs(search_keywords, time_filter="r86400"):
-                week_jobs = self.collect_job_listings(collected_links, search_query=search_keywords)
-                all_jobs.extend(week_jobs)
+                 fresh_jobs = self.collect_job_listings(collected_links, search_query=search_keywords)
+                 all_jobs.extend(fresh_jobs)
+
+            # Stage 2: Past Week (Fallback if more jobs needed)
+            if len(all_jobs) < self.max_jobs:
+                needed = self.max_jobs - len(all_jobs)
+                print(f"\n[INFO] --- STAGE 2: Searching Past Week (Need {needed} more) ---")
+                if self.navigate_to_linkedin_jobs(search_keywords, time_filter="r604800"):
+                    week_jobs = self.collect_job_listings(collected_links, search_query=search_keywords)
+                    all_jobs.extend(week_jobs)
 
             if not all_jobs:
                 print("[WARNING] No jobs found in 24h or Week.")
@@ -630,4 +649,3 @@ class JobScraper:
         finally:
             self.history.save_history()
             print("\n[INFO] Job collection complete.")
-

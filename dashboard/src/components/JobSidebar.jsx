@@ -1,878 +1,1239 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './JobSidebar.css'
+import { api, API_URL } from '../lib/api'
+import {
+  formatDisplayDate,
+  getMatchedSkills,
+  getSourceLabel,
+  normalizeStatus,
+} from '../lib/jobs'
 
-const FIXED_TECH_STACK_CONST = {
-    "Programming Languages": ["Python", "SQL"],
-    "ML Frameworks & Libraries": ["TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"],
-    "LLM & NLP Tools": ["LangChain", "LangSmith", "LlamaIndex", "Multi-Agents", "Finetuning (LoRA, QLoRA)", "OpenAI, Ollama", "RAG Systems"],
-    "ML Specializations": ["Deep Learning", "Computer Vision", "Anomaly Detection"],
-    "MLOps & Deployment": ["MLflow", "Git, GitHub Actions", "CI/CD Pipelines", "Model Deployment"],
-    "Cloud & Infrastructure": ["AWS", "Azure"],
-    "Databases & AI Infrastructure": ["PostgreSQL, MySQL, MongoDB", "Weaviate", "FAISS", "ChromaDB"],
-    "Web & DevOps": ["FastAPI", "Docker Containerization"]
+const STATUS_OPTIONS = [
+  { value: 'not_applied', label: 'Saved' },
+  { value: 'applied', label: 'Applied' },
+  { value: 'interviewing', label: 'Interviewing' },
+  { value: 'accepted', label: 'Offer' },
+  { value: 'skipped', label: 'Archived' },
+]
+
+const STATUS_TIMELINE = [
+  { value: 'not_applied', label: 'Saved', hint: 'Ready to review.' },
+  { value: 'applied', label: 'Applied', hint: 'Submitted.' },
+  { value: 'interviewing', label: 'Interviewing', hint: 'In process.' },
+  { value: 'accepted', label: 'Offer', hint: 'Offer received.' },
+  { value: 'skipped', label: 'Archived', hint: 'Closed out.' },
+]
+
+const WORKSPACE_TABS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'match', label: 'Resume match' },
+  { id: 'resume', label: 'Resume draft' },
+  { id: 'data', label: 'Raw data' },
+]
+
+const GENERIC_TECH_STACK_TEMPLATE = {
+  'Core Skills': [],
+  'Tools & Platforms': [],
+  'Domain Knowledge': [],
+  'Workflow Strengths': [],
 }
 
-const JobSidebar = ({ job, onClose, onStatusChange, onDelete, onNext, onPrev, hasNext, hasPrev }) => {
-    const [expandedSections, setExpandedSections] = useState({
-        jobDescription: false,
-        analysis: false,
-        location: false,
-        techStack: false,
-        points: false
-    })
+function buildInitialTechStack(job, existingTechStack = {}) {
+  if (Object.keys(existingTechStack).length > 0) {
+    return existingTechStack
+  }
 
-    const [editMode, setEditMode] = useState(false)
-    const [editedData, setEditedData] = useState({
-        location: '',
-        tech_stack: {},
-        points: []
-    })
-    const [originalData, setOriginalData] = useState(null)
-    const [saving, setSaving] = useState(false)
-    const [jsonMode, setJsonMode] = useState(false)
-    const [jsonText, setJsonText] = useState('')
-    const [jsonError, setJsonError] = useState('')
-    const [saveMessage, setSaveMessage] = useState('')
+  const matchedSkills = (job?.['Matched Skills'] || '')
+    .split(',')
+    .map((skill) => skill.trim())
+    .filter(Boolean)
 
-    // PDF Generation state
-    const [generating, setGenerating] = useState(false)
-    const [pdfUrl, setPdfUrl] = useState(null)
-    const [generateError, setGenerateError] = useState('')
+  const title = job?.Title || job?.['Search Query'] || ''
+  const location = job?.Location || ''
 
-    if (!job) return null
+  return {
+    ...GENERIC_TECH_STACK_TEMPLATE,
+    'Core Skills': matchedSkills,
+    'Domain Knowledge': title ? [title] : [],
+    'Workflow Strengths': location ? [location] : [],
+  }
+}
 
-    // Parse Analysis JSON and normalize format
-    let analysisData = null
+function parseAnalysisData(job) {
+  try {
+    if (job?.['Analysis Data']) {
+      return job['Analysis Data']
+    }
+
+    if (job?.['Analysis JSON']) {
+      return typeof job['Analysis JSON'] === 'string'
+        ? JSON.parse(job['Analysis JSON'])
+        : job['Analysis JSON']
+    }
+  } catch (error) {
+    console.error('Failed to parse analysis JSON:', error)
+  }
+
+  return null
+}
+
+function normalizeData(job, data) {
+  if (!job) {
+    return {
+      location: '',
+      tech_stack: {},
+      suggested_tech_stack: {},
+      points: [],
+      ats_score: 'N/A',
+    }
+  }
+
+  if (!data) {
+    return {
+      location: job.Location || '',
+      tech_stack: buildInitialTechStack(job),
+      suggested_tech_stack: {},
+      points: [],
+      ats_score: job.ats_score || 'N/A',
+    }
+  }
+
+  let atsScore = data.ats_score || data.ai_ats_score || job.ats_score || 'N/A'
+  if (atsScore !== 'N/A') {
+    atsScore = parseInt(atsScore, 10) || 0
+  }
+
+  let location = data.location || job.Location || ''
+  if (location && !location.toLowerCase().includes('relocate')) {
+    location += ' (Open to Relocate)'
+  }
+
+  let techStack = data.tech_stack || {}
+  let suggestedTechStack = data.suggested_tech_stack || {}
+
+  if (Object.keys(suggestedTechStack).length === 0) {
+    if (Object.keys(techStack).length > 0) {
+      suggestedTechStack = { ...techStack }
+    }
+    techStack = buildInitialTechStack(job)
+  }
+
+  let points = []
+  if (Array.isArray(data.points)) {
+    points = data.points
+  } else {
+    if (data.suggested_resume_point_1) points.push(data.suggested_resume_point_1)
+    if (data.suggested_resume_point_2) points.push(data.suggested_resume_point_2)
+  }
+
+  return {
+    location,
+    tech_stack: techStack,
+    suggested_tech_stack: suggestedTechStack,
+    points,
+    ats_score: atsScore,
+  }
+}
+
+function getCompanyMonogram(company) {
+  const initials = (company || 'Job')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join('')
+    .toUpperCase()
+
+  return initials || 'JA'
+}
+
+function getTimelineState(currentStatus, stepValue) {
+  if (currentStatus === 'skipped') {
+    return stepValue === 'skipped' ? 'current' : 'upcoming'
+  }
+
+  const orderedFlow = ['not_applied', 'applied', 'interviewing', 'accepted']
+  const currentIndex = Math.max(orderedFlow.indexOf(currentStatus), 0)
+  const stepIndex = orderedFlow.indexOf(stepValue)
+
+  if (stepValue === 'skipped') {
+    return 'upcoming'
+  }
+
+  if (stepIndex < currentIndex) return 'complete'
+  if (stepIndex === currentIndex) return 'current'
+  return 'upcoming'
+}
+
+function copyText(text, setMessage) {
+  navigator.clipboard.writeText(text || '')
+  setMessage('Copied to clipboard.')
+  window.setTimeout(() => setMessage(''), 1800)
+}
+
+function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, hasNext, hasPrev }) {
+  const analysisData = useMemo(() => parseAnalysisData(job), [job])
+  const normalizedData = useMemo(() => normalizeData(job, analysisData), [analysisData, job])
+
+  const [activeTab, setActiveTab] = useState('overview')
+  const [editMode, setEditMode] = useState(false)
+  const [editedData, setEditedData] = useState(normalizedData)
+  const [originalData, setOriginalData] = useState(normalizedData)
+  const [saving, setSaving] = useState(false)
+  const [jsonMode, setJsonMode] = useState(false)
+  const [jsonText, setJsonText] = useState('')
+  const [jsonError, setJsonError] = useState('')
+  const [saveMessage, setSaveMessage] = useState('')
+
+  const [generating, setGenerating] = useState(false)
+  const [pdfUrl, setPdfUrl] = useState(null)
+  const [generateError, setGenerateError] = useState('')
+
+  const [tailoring, setTailoring] = useState(false)
+  const [tailorError, setTailorError] = useState('')
+
+  const [isSpecialInterest, setIsSpecialInterest] = useState(false)
+  const [notesText, setNotesText] = useState('')
+  const [notesSaving, setNotesSaving] = useState(false)
+  const [notesError, setNotesError] = useState('')
+
+  useEffect(() => {
+    if (!job) return undefined
+
+    setActiveTab('overview')
+    setEditMode(false)
+    setJsonMode(false)
+    setJsonText('')
+    setJsonError('')
+    setSaveMessage('')
+    setGenerateError('')
+    setPdfUrl(null)
+    setTailorError('')
+    setIsSpecialInterest(Boolean(job['Special Interest']))
+    setNotesText(job['Notes'] || '')
+    setNotesSaving(false)
+    setNotesError('')
+    setEditedData(normalizedData)
+    setOriginalData(normalizedData)
+
+    return undefined
+  }, [job, normalizedData])
+
+  useEffect(() => {
+    if (!job) return undefined
+
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [job])
+
+  if (!job) return null
+
+  const currentStatus = normalizeStatus(job.Status)
+  const sourceLabel = getSourceLabel(job)
+  const matchedSkills = getMatchedSkills(job, 12)
+  const matchScore = editedData.ats_score !== 'N/A' ? Number(editedData.ats_score) || 0 : 'N/A'
+  const scoreForRing = typeof matchScore === 'number' ? Math.max(0, Math.min(matchScore, 100)) : 0
+  const companyMonogram = getCompanyMonogram(job.Company)
+  const stackEntries = Object.entries(editedData.tech_stack || {})
+  const suggestedEntries = Object.entries(editedData.suggested_tech_stack || {})
+  const rawPreview = JSON.stringify(
+    {
+      title: job.Title,
+      company: job.Company,
+      source: sourceLabel,
+      status: currentStatus,
+      link: job.Link,
+      analysis: editedData,
+      notes: notesText,
+      matched_skills: matchedSkills,
+    },
+    null,
+    2,
+  )
+
+  const summaryItems = [
+    { label: 'Location', value: editedData.location || job.Location || 'Remote / flexible' },
+    { label: 'Source', value: sourceLabel },
+    { label: 'Search', value: job['Search Query'] || 'Imported opportunity' },
+    { label: 'Saved', value: formatDisplayDate(job['Date Found']) },
+  ]
+
+  const handleEdit = () => {
+    setEditMode(true)
+    setJsonMode(false)
+    setActiveTab('match')
+    setSaveMessage('')
+  }
+
+  const handleCancel = () => {
+    setEditedData(originalData)
+    setEditMode(false)
+    setJsonMode(false)
+    setJsonText('')
+    setJsonError('')
+    setSaveMessage('')
+  }
+
+  const handleJsonToggle = () => {
+    if (!jsonMode) {
+      setJsonText(JSON.stringify(editedData, null, 2))
+      setJsonError('')
+      setActiveTab('data')
+      setJsonMode(true)
+      return
+    }
+
     try {
-        if (job['Analysis Data']) {
-            analysisData = job['Analysis Data']
-        } else if (job['Analysis JSON']) {
-            analysisData = typeof job['Analysis JSON'] === 'string'
-                ? JSON.parse(job['Analysis JSON'])
-                : job['Analysis JSON']
-        }
-    } catch (e) {
-        console.error('Failed to parse Analysis JSON:', e)
+      const parsed = JSON.parse(jsonText)
+      setEditedData(parsed)
+      setJsonError('')
+      setJsonMode(false)
+    } catch (error) {
+      setJsonError(`Invalid JSON: ${error.message}`)
     }
+  }
 
-    // Normalize old format to new format
-    const normalizeData = (data) => {
-        if (!data) return { location: job.Location || '', tech_stack: {}, suggested_tech_stack: {}, points: [], ats_score: 'N/A' }
+  const handleToggleSpecialInterest = async () => {
+    const nextValue = !isSpecialInterest
+    setIsSpecialInterest(nextValue)
 
-        // Handle ATS score (old: ai_ats_score, new: ats_score)
-        const atsScore = data.ats_score || data.ai_ats_score || 'N/A'
-
-        // Handle location
-        let location = data.location || job.Location || ''
-        if (location && !location.toLowerCase().includes('relocate')) {
-            location += ' (Open to Relocate)'
-        }
-
-        // Handle tech stack
-        let techStack = data.tech_stack || {}
-        let suggestedTechStack = data.suggested_tech_stack || {}
-
-        // Smart Stack Initialization (consistent with edit mode)
-        if (Object.keys(suggestedTechStack).length === 0) {
-            if (Object.keys(techStack).length > 0) {
-                suggestedTechStack = { ...techStack }
-            }
-            techStack = JSON.parse(JSON.stringify(FIXED_TECH_STACK_CONST))
-        }
-
-        // Handle points (old: suggested_resume_point_1/2, new: points array)
-        let points = []
-        if (data.points && Array.isArray(data.points)) {
-            points = data.points
-        } else {
-            // Convert old format
-            if (data.suggested_resume_point_1) points.push(data.suggested_resume_point_1)
-            if (data.suggested_resume_point_2) points.push(data.suggested_resume_point_2)
-        }
-
-        return { location, tech_stack: techStack, suggested_tech_stack: suggestedTechStack, points, ats_score: atsScore }
+    try {
+      await api.patch(`/api/jobs/${job.id}/interest`, null, {
+        params: { special_interest: nextValue },
+      })
+    } catch (error) {
+      console.error('Failed to update special interest:', error)
+      setIsSpecialInterest(!nextValue)
     }
+  }
 
-    const normalizedData = normalizeData(analysisData)
+  const handleSaveNotes = async () => {
+    setNotesSaving(true)
+    setNotesError('')
 
-    // Initialize editedData when job changes
-    useEffect(() => {
-        // Reset PDF state on new job
-        setPdfUrl(null)
-        setGenerateError('')
-        setSaveMessage('')
-
-        // Parse analysis data from job
-        let jobAnalysisData = null
-        try {
-            if (job['Analysis Data']) {
-                jobAnalysisData = job['Analysis Data']
-            } else if (job['Analysis JSON']) {
-                jobAnalysisData = typeof job['Analysis JSON'] === 'string'
-                    ? JSON.parse(job['Analysis JSON'])
-                    : job['Analysis JSON']
-            }
-        } catch (e) {
-            console.error('Failed to parse Analysis JSON in useEffect:', e)
-        }
-
-        // Normalize the data
-        const normalize = (data) => {
-            if (!data) return { location: job.Location || '', tech_stack: {}, suggested_tech_stack: {}, points: [], ats_score: 'N/A' }
-            const atsScore = data.ats_score || data.ai_ats_score || 'N/A'
-            let location = data.location || job.Location || ''
-            if (location && !location.toLowerCase().includes('relocate')) {
-                location += ' (Open to Relocate)'
-            }
-            let techStack = data.tech_stack || {}
-            let suggestedTechStack = data.suggested_tech_stack || {}
-            let points = []
-            if (data.points && Array.isArray(data.points)) {
-                points = data.points
-            } else {
-                if (data.suggested_resume_point_1) points.push(data.suggested_resume_point_1)
-                if (data.suggested_resume_point_2) points.push(data.suggested_resume_point_2)
-            }
-
-            // Smart Stack Initialization:
-            // If suggested_tech_stack is empty, this is either fresh data or a job without analysis
-            // - If tech_stack has items (from scraper), move it to suggested (Blue)
-            // - Always start user's stack (Green) with FIXED_TECH_STACK_CONST
-            if (Object.keys(suggestedTechStack).length === 0) {
-                // If there's tech_stack from analysis, use it as suggestions
-                if (Object.keys(techStack).length > 0) {
-                    suggestedTechStack = { ...techStack }
-                }
-                // Always initialize user's stack with their fixed skills
-                techStack = JSON.parse(JSON.stringify(FIXED_TECH_STACK_CONST))
-            }
-
-            return { location, tech_stack: techStack, suggested_tech_stack: suggestedTechStack, points, ats_score: atsScore }
-        }
-
-        const data = normalize(jobAnalysisData)
-        setEditedData(data)
-        // Store original suggested stack in separate state or keep in originalData
-        setOriginalData(data)
-    }, [job])
-
-    // Lock body scroll when sidebar is open
-    useEffect(() => {
-        document.body.style.overflow = 'hidden'
-        return () => {
-            document.body.style.overflow = 'unset'
-        }
-    }, [])
-
-    const toggleSection = (section) => {
-        setExpandedSections(prev => ({
-            ...prev,
-            [section]: !prev[section]
-        }))
+    try {
+      await api.patch(`/api/jobs/${job.id}/notes`, null, {
+        params: { notes: notesText },
+      })
+      setNotesError('Notes saved.')
+      window.setTimeout(() => setNotesError(''), 2200)
+    } catch (error) {
+      console.error('Failed to save notes:', error)
+      if (error?.response?.status === 403) {
+        setNotesError('Your session expired. Refresh and try again.')
+      } else {
+        setNotesError('Network error while saving notes.')
+      }
+    } finally {
+      setNotesSaving(false)
     }
+  }
 
-    const handleEdit = () => {
-        setEditMode(true)
-        setJsonMode(false) // Reset JSON mode
-        // Auto-expand editable sections
-        setExpandedSections(prev => ({
-            ...prev,
-            location: true,
-            techStack: true,
-            points: true
-        }))
-    }
+  const handleSave = async () => {
+    let dataToSave = editedData
 
-    const handleCancel = () => {
-        setEditedData(originalData)
-        setEditMode(false)
-        setJsonMode(false)
-        setSaveMessage('')
+    if (jsonMode) {
+      try {
+        dataToSave = JSON.parse(jsonText)
+        setEditedData(dataToSave)
         setJsonError('')
+      } catch {
+        setJsonError('Cannot save until the JSON is valid.')
+        return
+      }
     }
 
-    const handleJsonToggle = () => {
-        if (!jsonMode) {
-            // Enter JSON mode: Serialize current edited data
-            setJsonText(JSON.stringify(editedData, null, 2))
-            setJsonError('')
-        } else {
-            // Exit JSON mode: Parse back to object
-            try {
-                const parsed = JSON.parse(jsonText)
-                setEditedData(parsed)
-                setJsonError('')
-            } catch (e) {
-                setJsonError('Invalid JSON: ' + e.message)
-                return // Prevent toggle if invalid
-            }
-        }
-        setJsonMode(!jsonMode)
+    setSaving(true)
+    setSaveMessage('')
+
+    try {
+      await api.patch(`/api/jobs/${job.id}/analysis`, {
+        ats_score: dataToSave.ats_score !== 'N/A' ? parseInt(dataToSave.ats_score, 10) : null,
+        location: dataToSave.location,
+        tech_stack: dataToSave.tech_stack,
+        suggested_tech_stack: dataToSave.suggested_tech_stack,
+        points: dataToSave.points,
+      })
+
+      setOriginalData(dataToSave)
+      setEditedData(dataToSave)
+      setEditMode(false)
+      setJsonMode(false)
+      setSaveMessage('Workspace changes saved.')
+      window.setTimeout(() => setSaveMessage(''), 2600)
+    } catch (error) {
+      console.error('Save error:', error)
+      setSaveMessage(`Unable to save changes: ${error.response?.data?.detail || error.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleAutoTailor = async () => {
+    setTailoring(true)
+    setTailorError('')
+    setSaveMessage('')
+    setActiveTab('match')
+
+    try {
+      const response = await fetch(`${API_URL}/api/ai-tailor-resume`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          job_description: job['Job Description'] || '',
+          current_location: editedData.location,
+          current_tech_stack: editedData.tech_stack,
+          current_points: editedData.points,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        setTailorError(`Tailor failed: ${result.detail || 'Unknown error.'}`)
+        return
+      }
+
+      const tailoredData = result.tailored_data || {}
+      setEditedData((current) => ({
+        ...current,
+        ats_score: tailoredData.ats_score || current.ats_score,
+        location: tailoredData.location || current.location,
+        suggested_tech_stack: tailoredData.suggested_tech_stack || current.suggested_tech_stack,
+        points: tailoredData.points || current.points,
+      }))
+      setSaveMessage('New AI suggestions are ready to review.')
+    } catch (error) {
+      console.error('Auto tailor error:', error)
+      setTailorError(`Tailor failed: ${error.message}`)
+    } finally {
+      setTailoring(false)
+    }
+  }
+
+  const handleGenerateResume = async () => {
+    setGenerating(true)
+    setGenerateError('')
+    setPdfUrl(null)
+    setActiveTab('resume')
+
+    try {
+      if (!job._rowIndex && job._rowIndex !== 0) {
+        setGenerateError('PDF generation is still being migrated for the new user-facing web app.')
+        return
+      }
+      const response = await fetch(`${API_URL}/api/generate-resume`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          row_index: job._rowIndex || 0,
+          company_name: job.Company,
+          location: editedData.location,
+          tech_stack: editedData.tech_stack,
+          points: editedData.points,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        setGenerateError(`Resume generation failed: ${result.detail || 'Unknown error.'}`)
+        return
+      }
+
+      setPdfUrl(result.pdf_url)
+    } catch (error) {
+      console.error('Generate resume error:', error)
+      setGenerateError(`Resume generation failed: ${error.message}`)
+    } finally {
+      setGenerating(false)
+    }
+  }
+
+  const handleTechStackChange = (category, value) => {
+    const skills = value
+      .split(',')
+      .map((skill) => skill.trim())
+      .filter(Boolean)
+
+    setEditedData((current) => ({
+      ...current,
+      tech_stack: {
+        ...current.tech_stack,
+        [category]: skills,
+      },
+    }))
+  }
+
+  const handleTechStackKeyChange = (oldKey, nextKey) => {
+    const trimmed = nextKey.trim()
+
+    if (!trimmed || trimmed === oldKey || editedData.tech_stack[trimmed]) return
+
+    const nextStack = { ...editedData.tech_stack, [trimmed]: editedData.tech_stack[oldKey] }
+    delete nextStack[oldKey]
+
+    setEditedData((current) => ({
+      ...current,
+      tech_stack: nextStack,
+    }))
+  }
+
+  const handleTechStackDelete = (category) => {
+    const nextStack = { ...editedData.tech_stack }
+    delete nextStack[category]
+    setEditedData((current) => ({
+      ...current,
+      tech_stack: nextStack,
+    }))
+  }
+
+  const handleTechStackAdd = () => {
+    const existing = new Set(Object.keys(editedData.tech_stack || {}))
+    let index = 1
+    let nextName = 'New Category'
+
+    while (existing.has(nextName)) {
+      index += 1
+      nextName = `New Category ${index}`
     }
 
-    const handleSave = async () => {
-        let dataToSave = editedData
+    setEditedData((current) => ({
+      ...current,
+      tech_stack: {
+        ...current.tech_stack,
+        [nextName]: [],
+      },
+    }))
+  }
 
-        // If in JSON mode, try to parse first
-        if (jsonMode) {
-            try {
-                dataToSave = JSON.parse(jsonText)
-                setEditedData(dataToSave) // Sync back to state
-                setJsonError('')
-            } catch (e) {
-                setJsonError('Cannot Save: Invalid JSON')
-                return
-            }
-        }
+  const handleAddSuggestedSkill = (category, skill) => {
+    setEditedData((current) => {
+      const existing = current.tech_stack?.[category] || []
+      if (existing.includes(skill)) return current
 
-        setSaving(true)
-        setSaveMessage('')
+      return {
+        ...current,
+        tech_stack: {
+          ...current.tech_stack,
+          [category]: [...existing, skill],
+        },
+      }
+    })
+  }
 
-        try {
-            // Get the row index from job data
-            const rowIndex = job._rowIndex || 0
+  const handlePointChange = (index, value) => {
+    const nextPoints = [...editedData.points]
+    nextPoints[index] = value
+    setEditedData((current) => ({
+      ...current,
+      points: nextPoints,
+    }))
+  }
 
-            const response = await fetch('http://localhost:5001/api/update-analysis', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    row_index: rowIndex,
-                    location: dataToSave.location,
-                    tech_stack: dataToSave.tech_stack,
-                    suggested_tech_stack: dataToSave.suggested_tech_stack,
-                    points: dataToSave.points
-                })
-            })
+  const handlePointDelete = (index) => {
+    setEditedData((current) => ({
+      ...current,
+      points: current.points.filter((_, pointIndex) => pointIndex !== index),
+    }))
+  }
 
-            const result = await response.json()
+  const handlePointAdd = () => {
+    setEditedData((current) => ({
+      ...current,
+      points: [...current.points, '\\item Add a tailored impact bullet'],
+    }))
+  }
 
-            if (response.ok) {
-                setSaveMessage('✅ Changes saved successfully!')
-                setOriginalData(editedData)
-                setEditMode(false)
-                // Clear message after 3 seconds
-                setTimeout(() => setSaveMessage(''), 3000)
-            } else {
-                setSaveMessage(`❌ Error: ${result.detail || 'Failed to save'}`)
-            }
-        } catch (error) {
-            console.error('Save error:', error)
-            setSaveMessage(`❌ Error: ${error.message}`)
-        } finally {
-            setSaving(false)
-        }
-    }
+  return (
+    <div className="job-detail-overlay" onClick={onClose}>
+      <aside className="job-detail-panel" onClick={(event) => event.stopPropagation()}>
+        <header className="job-detail-header">
+          <div className="job-detail-title-row">
+            <div className="job-detail-nav">
+              <button type="button" className="detail-nav-button" onClick={onPrev} disabled={!hasPrev}>
+                Prev
+              </button>
+              <button type="button" className="detail-nav-button" onClick={onNext} disabled={!hasNext}>
+                Next
+              </button>
+            </div>
 
-    const handleGenerateResume = async () => {
-        setGenerating(true)
-        setGenerateError('')
-        setPdfUrl(null)
+            <div className="job-detail-avatar">{companyMonogram}</div>
 
-        try {
-            const rowIndex = job._rowIndex || 0
+            <div className="job-detail-heading-copy">
+              <span className="job-detail-kicker">{sourceLabel} role</span>
+              <h2>{job.Title || 'Untitled role'}</h2>
+              <p>
+                <strong>{job.Company || 'Unknown company'}</strong>
+                <span>{editedData.location || job.Location || 'Remote / flexible'}</span>
+              </p>
+            </div>
+          </div>
 
-            const response = await fetch('http://localhost:5001/api/generate-resume', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    row_index: rowIndex,
-                    company_name: job.Company,
-                    location: editedData.location,
-                    tech_stack: editedData.tech_stack,
-                    points: editedData.points
-                })
-            })
+          <div className="job-detail-actions">
+            <button
+              type="button"
+              className={`detail-chip ${isSpecialInterest ? 'active' : ''}`}
+              onClick={handleToggleSpecialInterest}
+            >
+              {isSpecialInterest ? 'Priority role' : 'Mark priority'}
+            </button>
 
-            const result = await response.json()
+            {editMode ? (
+              <>
+                <button type="button" className="detail-button subtle" onClick={handleJsonToggle}>
+                  {jsonMode ? 'Structured editor' : 'Raw JSON'}
+                </button>
+                {!jsonMode && (
+                  <button
+                    type="button"
+                    className="detail-button accent"
+                    onClick={handleAutoTailor}
+                    disabled={tailoring}
+                  >
+                    {tailoring ? 'Tailoring...' : 'AI tailor'}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="detail-button subtle"
+                  onClick={handleCancel}
+                  disabled={saving}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="detail-button primary"
+                  onClick={handleSave}
+                  disabled={saving}
+                >
+                  {saving ? 'Saving...' : 'Save changes'}
+                </button>
+              </>
+            ) : (
+              <>
+                <a
+                  href={job.Link || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="detail-button subtle"
+                >
+                  Open role
+                </a>
+                <button type="button" className="detail-button subtle" onClick={handleEdit}>
+                  Edit workspace
+                </button>
+                <button
+                  type="button"
+                  className="detail-button danger"
+                  onClick={() => {
+                    if (window.confirm('Delete this role from the board? This cannot be undone.')) {
+                      onDelete(job)
+                    }
+                  }}
+                >
+                  Delete
+                </button>
+              </>
+            )}
 
-            if (response.ok) {
-                setPdfUrl(result.pdf_url)
-            } else {
-                setGenerateError(`Generated Failed: ${result.detail || 'Unknown error'}`)
-            }
-        } catch (error) {
-            setGenerateError(`Network Error: ${error.message}`)
-        } finally {
-            setGenerating(false)
-        }
-    }
+            <button type="button" className="detail-close" onClick={onClose} aria-label="Close detail panel">
+              Close
+            </button>
+          </div>
+        </header>
 
-    // Handlers for tech stack edits
-    const handleTechStackChange = (category, value) => {
-        const skills = value.split(',').map(s => s.trim()).filter(s => s)
-        setEditedData(prev => ({
-            ...prev,
-            tech_stack: {
-                ...prev.tech_stack,
-                [category]: skills
-            }
-        }))
-    }
+        <section className="job-detail-meta-strip">
+          <article className="detail-stat">
+            <span>Match score</span>
+            <strong>{matchScore === 'N/A' ? 'N/A' : `${matchScore}%`}</strong>
+          </article>
+          <article className="detail-stat">
+            <span>Stage</span>
+            <strong>{STATUS_OPTIONS.find((option) => option.value === currentStatus)?.label || 'Saved'}</strong>
+          </article>
+          <article className="detail-stat">
+            <span>Saved on</span>
+            <strong>{formatDisplayDate(job['Date Found'])}</strong>
+          </article>
+          <article className="detail-stat">
+            <span>Search lane</span>
+            <strong>{job['Search Query'] || 'Imported opportunity'}</strong>
+          </article>
+        </section>
 
-    const handleTechStackKeyChange = (oldKey, newKey) => {
-        if (!newKey.trim()) return
-        const newStack = { ...editedData.tech_stack }
-        newStack[newKey] = newStack[oldKey]
-        delete newStack[oldKey]
-        setEditedData(prev => ({ ...prev, tech_stack: newStack }))
-    }
+        <nav className="job-detail-tabs" aria-label="Job detail tabs">
+          {WORKSPACE_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`job-detail-tab ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
 
-    const handleTechStackDelete = (category) => {
-        const newStack = { ...editedData.tech_stack }
-        delete newStack[category]
-        setEditedData(prev => ({ ...prev, tech_stack: newStack }))
-    }
+        <div className="job-detail-body">
+          <main className="job-detail-main">
+            {saveMessage && <div className="detail-alert success">{saveMessage}</div>}
+            {generateError && <div className="detail-alert error">{generateError}</div>}
+            {tailorError && <div className="detail-alert error">{tailorError}</div>}
+            {jsonError && <div className="detail-alert error">{jsonError}</div>}
 
-    const handleTechStackAdd = () => {
-        setEditedData(prev => ({
-            ...prev,
-            tech_stack: {
-                ...prev.tech_stack,
-                "New Category": []
-            }
-        }))
-    }
+            {activeTab === 'overview' && (
+              <div className="workspace-stack">
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Role summary</p>
+                      <h3>Overview</h3>
+                    </div>
+                    {job.Tier && <span className="tier-badge">{job.Tier}</span>}
+                  </div>
 
-    // Handlers for points edits
-    const handlePointChange = (index, value) => {
-        const newPoints = [...editedData.points]
-        newPoints[index] = value
-        setEditedData(prev => ({ ...prev, points: newPoints }))
-    }
+                  <div className="snapshot-grid">
+                    {summaryItems.map((item) => (
+                      <div key={item.label} className="snapshot-card">
+                        <span>{item.label}</span>
+                        <strong>{item.value}</strong>
+                      </div>
+                    ))}
+                  </div>
+                </section>
 
-    const handlePointDelete = (index) => {
-        const newPoints = editedData.points.filter((_, i) => i !== index)
-        setEditedData(prev => ({ ...prev, points: newPoints }))
-    }
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Fit signals</p>
+                      <h3>Matched skills</h3>
+                    </div>
+                    <span className="section-caption">{matchedSkills.length} captured</span>
+                  </div>
 
-    const handlePointAdd = () => {
-        setEditedData(prev => ({
-            ...prev,
-            points: [...prev.points, "\\item New point"]
-        }))
-    }
+                  {matchedSkills.length > 0 ? (
+                    <div className="skill-pill-row">
+                      {matchedSkills.map((skill) => (
+                        <span key={skill} className="skill-pill">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="empty-copy">
+                      No matched skills were captured yet for this role. Use AI tailoring or edit the
+                      match workspace to refine the fit.
+                    </p>
+                  )}
+                </section>
 
-    return (
-        <>
-            <div className="sidebar-overlay" onClick={onClose}>
-                <div className="sidebar" onClick={e => e.stopPropagation()}>
-                    <div className="sidebar-header">
-                        <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <h2 className="sidebar-title">{job.Title}</h2>
-                                <div className="nav-buttons">
-                                    <button
-                                        onClick={onPrev}
-                                        disabled={!hasPrev}
-                                        style={{ opacity: hasPrev ? 1 : 0.3, cursor: hasPrev ? 'pointer' : 'default', border: 'none', background: 'none', fontSize: '1.2rem' }}
-                                        title="Previous Job"
-                                    >
-                                        ⬅️
-                                    </button>
-                                    <button
-                                        onClick={onNext}
-                                        disabled={!hasNext}
-                                        style={{ opacity: hasNext ? 1 : 0.3, cursor: hasNext ? 'pointer' : 'default', border: 'none', background: 'none', fontSize: '1.2rem' }}
-                                        title="Next Job"
-                                    >
-                                        ➡️
-                                    </button>
-                                </div>
-                            </div>
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Job posting</p>
+                      <h3>Original description</h3>
+                    </div>
+                    <button
+                      type="button"
+                      className="mini-action"
+                      onClick={() => copyText(job['Job Description'] || '', setSaveMessage)}
+                    >
+                      Copy text
+                    </button>
+                  </div>
 
-                            <h3 className="sidebar-company">
-                                {job.Company}
-                                <a href={job.Link} target="_blank" rel="noopener noreferrer" className="job-link-icon" title="View Job Post">
-                                    🔗
-                                </a>
-                            </h3>
+                  <div className="job-description-panel">
+                    {job['Job Description'] || 'No job description has been saved for this role yet.'}
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {activeTab === 'match' && (
+              <div className="workspace-stack">
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Fit workspace</p>
+                      <h3>Resume fit</h3>
+                    </div>
+                    {!editMode && (
+                      <button type="button" className="mini-action" onClick={handleEdit}>
+                        Edit fit
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="match-summary-grid">
+                    <div className="score-panel">
+                      <span className="score-panel-label">ATS alignment</span>
+                      {editMode ? (
+                        <label className="score-editor">
+                          <span>Score</span>
+                          <input
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={editedData.ats_score === 'N/A' ? '' : editedData.ats_score}
+                            onChange={(event) =>
+                              setEditedData((current) => ({
+                                ...current,
+                                ats_score: event.target.value ? parseInt(event.target.value, 10) : 0,
+                              }))
+                            }
+                            placeholder="0"
+                          />
+                        </label>
+                      ) : (
+                        <div
+                          className="score-ring"
+                          style={{ '--score-progress': `${scoreForRing}%` }}
+                        >
+                          <span>{matchScore === 'N/A' ? 'N/A' : `${matchScore}%`}</span>
                         </div>
-                        <button className="close-btn" onClick={onClose}>&times;</button>
+                      )}
                     </div>
 
-                    <div className="sidebar-content">
-                        {/* Top Stats */}
-                        <div className="ats-score-section">
-                            <div className="score-badge" style={{
-                                background: `conic-gradient(#4caf50 ${normalizedData.ats_score || 0}%, #eee 0)`
-                            }}>
-                                <span className="score-text">{normalizedData.ats_score}</span>
-                            </div>
-                            <span className="score-label">ATS Score</span>
-                        </div>
+                    <div className="field-grid">
+                      <label className="form-field">
+                        <span>Target location</span>
+                        {editMode ? (
+                          <input
+                            type="text"
+                            value={editedData.location}
+                            onChange={(event) =>
+                              setEditedData((current) => ({
+                                ...current,
+                                location: event.target.value,
+                              }))
+                            }
+                          />
+                        ) : (
+                          <p>{editedData.location || 'Remote / flexible'}</p>
+                        )}
+                      </label>
 
-                        {/* Status Dropdown */}
-                        <div className="sidebar-status-section">
-                            <label className="sidebar-label">Application Status</label>
-                            <select
-                                value={job.Status || 'not_applied'}
-                                onChange={(e) => onStatusChange(job, e.target.value)}
-                                className="sidebar-status-select"
-                            >
-                                <option value="not_applied">❌ Not Applied</option>
-                                <option value="applied">✅ Applied</option>
-                                <option value="interviewing">💬 Interviewing</option>
-                                <option value="accepted">🎉 Accepted</option>
-                            </select>
-                        </div>
+                      <div className="form-field">
+                        <span>Source</span>
+                        <p>{sourceLabel}</p>
+                      </div>
 
-                        {/* Link Button */}
-                        <div style={{ marginBottom: '20px' }}>
-                            <a href={job.Link} target="_blank" rel="noopener noreferrer"
-                                style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    background: '#3182ce',
-                                    color: 'white',
-                                    padding: '8px 16px',
-                                    borderRadius: '6px',
-                                    textDecoration: 'none',
-                                    fontWeight: '500',
-                                    fontSize: '0.9rem'
-                                }}>
-                                View Job Posting ↗
-                            </a>
-                        </div>
+                      <div className="form-field">
+                        <span>Company</span>
+                        <p>{job.Company || 'Unknown company'}</p>
+                      </div>
 
-                        {/* Job Description Section */}
-                        <div className="detail-section">
-                            <div className="section-header" onClick={() => toggleSection('jobDescription')}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <h3>Job Description</h3>
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            navigator.clipboard.writeText(job['Job Description'] || "");
-                                            alert("Job Description copied!");
-                                        }}
-                                        style={{
-                                            border: 'none',
-                                            background: 'none',
-                                            cursor: 'pointer',
-                                            fontSize: '1rem',
-                                            padding: '4px',
-                                            display: 'flex',
-                                            alignItems: 'center'
-                                        }}
-                                        title="Copy Description"
-                                    >
-                                        📋
-                                    </button>
-                                </div>
-                                <span className={`arrow ${expandedSections.jobDescription ? 'expanded' : ''}`}>▼</span>
-                            </div>
-                            <div className={`section-content ${expandedSections.jobDescription ? 'expanded' : ''}`}>
-                                <div style={{
-                                    whiteSpace: 'pre-wrap',
-                                    fontSize: '0.85rem',
-                                    color: '#4a5568',
-                                    maxHeight: '400px',
-                                    overflowY: 'auto',
-                                    background: '#f7fafc',
-                                    padding: '12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #edf2f7'
-                                }}>
-                                    {job['Job Description'] || "No description available."}
-                                </div>
-                            </div>
-                        </div>
+                      <div className="form-field">
+                        <span>Search track</span>
+                        <p>{job['Search Query'] || 'Imported opportunity'}</p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
 
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Skill planning</p>
+                      <h3>Stack</h3>
+                    </div>
+                    {editMode && (
+                      <button type="button" className="mini-action" onClick={handleTechStackAdd}>
+                        Add category
+                      </button>
+                    )}
+                  </div>
 
+                  <div className="stack-grid">
+                    <div className="stack-surface">
+                      <div className="stack-surface-header">
+                        <h4>Your stack</h4>
+                        <span>What will feed resume tailoring and PDF generation.</span>
+                      </div>
 
-                        {/* JSON Editor Mode */}
-                        {editMode && jsonMode && (
-                            <div className="json-editor-container" style={{ marginTop: '20px' }}>
-                                <div style={{ marginBottom: '8px', fontSize: '0.85rem', color: '#718096' }}>
-                                    Directly edit the raw JSON data. Be careful with brackets!
-                                </div>
-                                <textarea
-                                    className="json-textarea"
-                                    value={jsonText}
-                                    onChange={(e) => setJsonText(e.target.value)}
-                                    style={{
-                                        width: '100%',
-                                        height: '400px',
-                                        fontFamily: 'monospace',
-                                        fontSize: '0.9rem',
-                                        padding: '12px',
-                                        borderRadius: '8px',
-                                        border: '1px solid #e2e8f0',
-                                        background: '#2d3748',
-                                        color: '#e2e8f0',
-                                        resize: 'vertical'
-                                    }}
+                      {stackEntries.length > 0 ? (
+                        stackEntries.map(([category, skills]) => (
+                          <div key={category} className="stack-block">
+                            <div className="stack-block-header">
+                              {editMode ? (
+                                <input
+                                  type="text"
+                                  className="stack-category-input"
+                                  defaultValue={category}
+                                  onBlur={(event) => handleTechStackKeyChange(category, event.target.value)}
+                                  onKeyDown={(event) => {
+                                    if (event.key === 'Enter') {
+                                      event.preventDefault()
+                                      event.currentTarget.blur()
+                                    }
+                                  }}
                                 />
-                                {jsonError && (
-                                    <div style={{ color: '#e53e3e', fontSize: '0.85rem', marginTop: '8px', fontWeight: 'bold' }}>
-                                        ⚠️ {jsonError}
-                                    </div>
-                                )}
+                              ) : (
+                                <h5>{category}</h5>
+                              )}
+
+                              {editMode && (
+                                <button
+                                  type="button"
+                                  className="stack-remove-button"
+                                  onClick={() => handleTechStackDelete(category)}
+                                >
+                                  Remove
+                                </button>
+                              )}
                             </div>
-                        )}
 
-                        {/* Standard Sections (Hide in JSON Mode) */}
-                        {(!editMode || !jsonMode) && (
-                            <>
-                                {/* Location Section */}
-                                <div className="detail-section">
-                                    <div
-                                        className="section-header"
-                                        onClick={() => toggleSection('location')}
-                                    >
-                                        <h3>Location</h3>
-                                        <span className={`arrow ${expandedSections.location ? 'expanded' : ''}`}>▼</span>
-                                    </div>
-                                    <div className={`section-content ${expandedSections.location ? 'expanded' : ''}`}>
-                                        {editMode ? (
-                                            <input
-                                                type="text"
-                                                className="edit-input"
-                                                value={editedData.location}
-                                                onChange={(e) => setEditedData(prev => ({
-                                                    ...prev,
-                                                    location: e.target.value
-                                                }))}
-                                            />
-                                        ) : (
-                                            <p>{editedData.location}</p>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Tech Stack Section */}
-                                <div className="detail-section">
-                                    <div
-                                        className="section-header"
-                                        onClick={() => toggleSection('techStack')}
-                                    >
-                                        <h3>Tech Stack</h3>
-                                        <span className={`arrow ${expandedSections.techStack ? 'expanded' : ''}`}>▼</span>
-                                    </div>
-                                    <div className={`section-content ${expandedSections.techStack ? 'expanded' : ''}`}>
-                                        {editMode ? (
-                                            <div className="tech-stack-merger">
-                                                {/* Intro Text */}
-                                                <div style={{ marginBottom: '16px', fontSize: '0.9rem', color: '#666' }}>
-                                                    Select skills from <strong>Suggested</strong> (Blue) to add to <strong>Your Stack</strong> (Green).
-                                                </div>
-
-                                                {/* Compute Union of Categories to ensure we show everything */}
-                                                {(() => {
-                                                    const myCategories = Object.keys(editedData.tech_stack || {})
-                                                    const suggestedCategories = originalData && originalData.suggested_tech_stack ? Object.keys(originalData.suggested_tech_stack) : []
-                                                    const allCategories = [...new Set([...myCategories, ...suggestedCategories])]
-
-                                                    return allCategories.map(category => {
-                                                        const finalSkills = (editedData.tech_stack && editedData.tech_stack[category]) || []
-                                                        const suggestedSkills = originalData && originalData.suggested_tech_stack ? (originalData.suggested_tech_stack[category] || []) : []
-
-                                                        // Skip if both are empty (rare)
-                                                        if (finalSkills.length === 0 && suggestedSkills.length === 0) return null
-
-
-                                                        // Provide function to add manual skill
-                                                        const handleManualAdd = (e) => {
-                                                            if (e.key === 'Enter') {
-                                                                const val = e.target.value.trim()
-                                                                if (val && !finalSkills.includes(val)) {
-                                                                    const newSkills = [...finalSkills, val]
-                                                                    setEditedData(prev => ({
-                                                                        ...prev,
-                                                                        tech_stack: { ...prev.tech_stack, [category]: newSkills }
-                                                                    }))
-                                                                    e.target.value = ''
-                                                                }
-                                                            }
-                                                        }
-
-                                                        return (
-                                                            <div key={category} className="merge-category-block" style={{ marginBottom: '24px', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '16px' }}>
-                                                                <h4 style={{ margin: '0 0 12px 0', fontSize: '1rem', color: '#2d3748' }}>{category}</h4>
-
-                                                                {/* Suggested (Source) */}
-                                                                <div className="merge-row" style={{ marginBottom: '12px' }}>
-                                                                    <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#4299e1', fontWeight: 'bold', marginBottom: '6px' }}>Suggested</div>
-                                                                    <div className="tech-skills">
-                                                                        {suggestedSkills.length > 0 ? suggestedSkills.map(skill => {
-                                                                            const isAdded = finalSkills.includes(skill)
-                                                                            return (
-                                                                                <button
-                                                                                    key={skill}
-                                                                                    className={`skill-chip suggested ${isAdded ? 'added' : ''}`}
-                                                                                    disabled={isAdded}
-                                                                                    onClick={() => {
-                                                                                        if (!isAdded) {
-                                                                                            const newSkills = [...finalSkills, skill]
-                                                                                            setEditedData(prev => ({
-                                                                                                ...prev,
-                                                                                                tech_stack: { ...prev.tech_stack, [category]: newSkills }
-                                                                                            }))
-                                                                                        }
-                                                                                    }}
-                                                                                    style={{
-                                                                                        background: isAdded ? '#edf2f7' : '#ebf8ff',
-                                                                                        color: isAdded ? '#a0aec0' : '#2b6cb0',
-                                                                                        border: isAdded ? '1px solid #e2e8f0' : '1px solid #bee3f8',
-                                                                                        borderRadius: '20px',
-                                                                                        padding: '4px 10px',
-                                                                                        fontSize: '0.85rem',
-                                                                                        cursor: isAdded ? 'default' : 'pointer',
-                                                                                        marginRight: '6px',
-                                                                                        marginBottom: '6px',
-                                                                                        opacity: isAdded ? 0.7 : 1
-                                                                                    }}
-                                                                                >
-                                                                                    {skill} {isAdded ? '✓' : <span style={{ fontWeight: 'bold' }}>+</span>}
-                                                                                </button>
-                                                                            )
-                                                                        }) : <span style={{ color: '#a0aec0', fontStyle: 'italic', fontSize: '0.85rem' }}>None available</span>}
-                                                                    </div>
-                                                                </div>
-
-                                                                {/* Final (Target) */}
-                                                                <div className="merge-row">
-                                                                    <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#48bb78', fontWeight: 'bold', marginBottom: '6px' }}>Yours (Final)</div>
-                                                                    <div className="tech-skills">
-                                                                        {finalSkills.map(skill => (
-                                                                            <button
-                                                                                key={skill}
-                                                                                className="skill-chip final"
-                                                                                onClick={() => {
-                                                                                    const newSkills = finalSkills.filter(s => s !== skill)
-                                                                                    setEditedData(prev => ({
-                                                                                        ...prev,
-                                                                                        tech_stack: { ...prev.tech_stack, [category]: newSkills }
-                                                                                    }))
-                                                                                }}
-                                                                                style={{
-                                                                                    background: '#f0fff4',
-                                                                                    color: '#2f855a',
-                                                                                    border: '1px solid #c6f6d5',
-                                                                                    borderRadius: '20px',
-                                                                                    padding: '4px 10px',
-                                                                                    fontSize: '0.85rem',
-                                                                                    cursor: 'pointer',
-                                                                                    marginRight: '6px',
-                                                                                    marginBottom: '6px'
-                                                                                }}
-                                                                            >
-                                                                                {skill} <span style={{ fontWeight: 'bold' }}>×</span>
-                                                                            </button>
-                                                                        ))}
-
-                                                                        {/* Manual Add Input */}
-                                                                        <input
-                                                                            type="text"
-                                                                            placeholder="+ Add Custom"
-                                                                            onKeyDown={handleManualAdd}
-                                                                            style={{
-                                                                                background: 'transparent',
-                                                                                border: '1px dashed #cbd5e0',
-                                                                                borderRadius: '16px',
-                                                                                padding: '4px 10px',
-                                                                                fontSize: '0.85rem',
-                                                                                width: '100px',
-                                                                                outline: 'none',
-                                                                                color: '#4a5568'
-                                                                            }}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    })
-                                                })()}
-                                            </div>
-                                        ) : (
-                                            <div className="tech-stack-display">
-                                                {editedData.tech_stack && Object.entries(editedData.tech_stack).map(([category, skills]) => (
-                                                    <div key={category} className="tech-category">
-                                                        <h4 className="category-title">{category}</h4>
-                                                        <div className="tech-skills">
-                                                            {Array.isArray(skills) && skills.map((skill, idx) => (
-                                                                <span key={idx} className="tech-skill-tag">{skill}</span>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Resume Points Section */}
-                                <div className="detail-section">
-                                    <div
-                                        className="section-header"
-                                        onClick={() => toggleSection('points')}
-                                    >
-                                        <h3>Resume Points</h3>
-                                        <span className={`arrow ${expandedSections.points ? 'expanded' : ''}`}>▼</span>
-                                    </div>
-                                    <div className={`section-content ${expandedSections.points ? 'expanded' : ''}`}>
-                                        {editMode ? (
-                                            <div className="points-editor">
-                                                {editedData.points.map((point, idx) => (
-                                                    <div key={idx} className="point-edit-row">
-                                                        <textarea
-                                                            value={point}
-                                                            onChange={(e) => handlePointChange(idx, e.target.value)}
-                                                            className="point-textarea"
-                                                        />
-                                                        <button
-                                                            className="delete-point-btn"
-                                                            onClick={() => handlePointDelete(idx)}
-                                                        >
-                                                            🗑️
-                                                        </button>
-                                                    </div>
-                                                ))}
-                                                <button className="add-point-btn" onClick={handlePointAdd}>
-                                                    ➕ Add Point
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <ul className="points-list">
-                                                {editedData.points && editedData.points.map((point, idx) => (
-                                                    <li key={idx}>
-                                                        {point.replace(/^\\item\s*/, '')}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                </div>
-                            </>
-                        )}
-
-                        {/* Action Buttons */}
-                        <div className="sidebar-footer">
                             {editMode ? (
-                                <>
-                                    <div style={{ display: 'flex', gap: '8px', flex: 1 }}>
-                                        <button
-                                            onClick={handleJsonToggle}
-                                            style={{
-                                                background: jsonMode ? '#4a5568' : '#cbd5e0',
-                                                color: jsonMode ? '#fff' : '#4a5568',
-                                                border: 'none',
-                                                borderRadius: '6px',
-                                                padding: '8px 12px',
-                                                cursor: 'pointer',
-                                                fontSize: '0.9rem'
-                                            }}
-                                        >
-                                            {jsonMode ? 'UI Mode' : '{ } JSON'}
-                                        </button>
-                                    </div>
-                                    <button className="cancel-btn" onClick={handleCancel} disabled={saving}>
-                                        Cancel
-                                    </button>
-                                    <button className="save-btn" onClick={handleSave} disabled={saving}>
-                                        {saving ? 'Saving...' : 'Save Changes'}
-                                    </button>
-                                </>
+                              <textarea
+                                className="stack-skills-input"
+                                value={(skills || []).join(', ')}
+                                onChange={(event) => handleTechStackChange(category, event.target.value)}
+                                placeholder="Add comma-separated skills"
+                              />
                             ) : (
-                                <>
-                                    <div style={{ display: 'flex', gap: '8px', flex: 1 }}>
-                                        <button className="edit-btn" onClick={handleEdit}>
-                                            Edit Data
-                                        </button>
-                                        <button
-                                            className="delete-btn"
-                                            onClick={() => {
-                                                if (window.confirm("Are you sure you want to delete this job? This cannot be undone.")) {
-                                                    onDelete(job);
-                                                }
-                                            }}
-                                            style={{
-                                                background: '#fee2e2',
-                                                color: '#ef4444',
-                                                border: '1px solid #fca5a5',
-                                                borderRadius: '6px',
-                                                padding: '8px 12px',
-                                                cursor: 'pointer',
-                                                fontSize: '0.9rem',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
-                                            }}
-                                            title="Delete Job"
-                                        >
-                                            🗑️
-                                        </button>
-                                    </div>
-                                    <button
-                                        className="generate-btn"
-                                        onClick={handleGenerateResume}
-                                        disabled={generating}
-                                    >
-                                        {generating ? 'Generating...' : 'Generate Resume PDF'}
-                                    </button>
-                                </>
+                              <div className="skill-pill-row muted">
+                                {(skills || []).length > 0 ? (
+                                  skills.map((skill) => (
+                                    <span key={`${category}-${skill}`} className="skill-pill secondary">
+                                      {skill}
+                                    </span>
+                                  ))
+                                ) : (
+                                  <p className="empty-copy">No skills recorded in this category yet.</p>
+                                )}
+                              </div>
                             )}
-                        </div>
-
-                        {saveMessage && <div className="save-message success">{saveMessage}</div>}
-                        {generateError && <div className="save-message error">{generateError}</div>}
-
-                        {pdfUrl && (
-                            <div className="pdf-success">
-                                <p>✅ Resume Generated Successfully!</p>
-                                <div className="pdf-actions">
-                                    <a href={`http://localhost:5001${pdfUrl}`} target="_blank" rel="noopener noreferrer" className="download-btn">
-                                        Download PDF
-                                    </a>
-                                    <button className="copy-path-btn" onClick={() => navigator.clipboard.writeText(pdfUrl)}>
-                                        Copy Link
-                                    </button>
-                                </div>
-                                <div className="pdf-preview" style={{ marginTop: '16px' }}>
-                                    <iframe
-                                        src={`http://localhost:5001${pdfUrl}`}
-                                        width="100%"
-                                        height="400px"
-                                        style={{ border: '1px solid #e2e8f0', borderRadius: '8px' }}
-                                        title="Resume Preview"
-                                    />
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Persisted Resumes Section */}
-                        {(job['Resume Path'] || job.pdf_path) && !pdfUrl && (
-                            <div className="pdf-success" style={{ marginTop: '20px', background: '#f0f9ff', borderColor: '#bee3f8' }}>
-                                <p style={{ color: '#2b6cb0' }}>📄 Saved Resume Available</p>
-                                <div className="pdf-actions">
-                                    {/* We need to extract filename from path */}
-                                    {(() => {
-                                        const path = job['Resume Path'] || job.pdf_path || '';
-                                        // Handle multiple paths if separated by semicolon
-                                        const paths = path.split(';').map(p => p.trim()).filter(p => p);
-                                        const latestPath = paths[0];
-                                        const filename = latestPath.split('/').pop();
-
-                                        return (
-                                            <>
-                                                <a href={`http://localhost:5001/api/download-resume/${filename}`} target="_blank" rel="noopener noreferrer" className="download-btn">
-                                                    Download Latest PDF
-                                                </a>
-                                                <div style={{ fontSize: '0.8rem', color: '#718096', marginTop: '8px' }}>
-                                                    {filename}
-                                                </div>
-                                            </>
-                                        )
-                                    })()}
-                                </div>
-                            </div>
-                        )}
+                          </div>
+                        ))
+                      ) : (
+                        <p className="empty-copy">No stack categories yet. Add one to start tailoring.</p>
+                      )}
                     </div>
+
+                    <div className="stack-surface accent-surface">
+                      <div className="stack-surface-header">
+                        <h4>Suggested additions</h4>
+                        <span>Click any suggestion to copy it into your stack.</span>
+                      </div>
+
+                      {suggestedEntries.length > 0 ? (
+                        suggestedEntries.map(([category, skills]) => (
+                          <div key={category} className="stack-block suggestion-block">
+                            <div className="stack-block-header">
+                              <h5>{category}</h5>
+                            </div>
+
+                            <div className="skill-pill-row">
+                              {(skills || []).length > 0 ? (
+                                skills.map((skill) => {
+                                  const alreadyAdded = (editedData.tech_stack?.[category] || []).includes(skill)
+                                  return (
+                                    <button
+                                      key={`${category}-${skill}`}
+                                      type="button"
+                                      className={`skill-pill-button ${alreadyAdded ? 'added' : ''}`}
+                                      onClick={() => handleAddSuggestedSkill(category, skill)}
+                                      disabled={alreadyAdded}
+                                    >
+                                      {skill}
+                                    </button>
+                                  )
+                                })
+                              ) : (
+                                <p className="empty-copy">No suggestions in this category yet.</p>
+                              )}
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="empty-copy">
+                          Suggested stack data will appear here after analysis or AI tailoring.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {activeTab === 'resume' && (
+              <div className="workspace-stack">
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Resume draft</p>
+                      <h3>Resume bullets</h3>
+                    </div>
+                    <div className="section-actions">
+                      <button
+                        type="button"
+                        className="mini-action"
+                        onClick={handleAutoTailor}
+                        disabled={tailoring}
+                      >
+                        {tailoring ? 'Tailoring...' : 'Refresh suggestions'}
+                      </button>
+                      <button
+                        type="button"
+                        className="mini-action primary"
+                        onClick={handleGenerateResume}
+                        disabled={generating}
+                      >
+                        {generating ? 'Generating...' : 'Generate PDF'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {editMode ? (
+                    <div className="points-editor">
+                      {editedData.points.map((point, index) => (
+                        <div key={`point-${index}`} className="point-edit-card">
+                          <textarea
+                            className="point-textarea"
+                            value={point}
+                            onChange={(event) => handlePointChange(index, event.target.value)}
+                          />
+                          <button
+                            type="button"
+                            className="stack-remove-button"
+                            onClick={() => handlePointDelete(index)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ))}
+
+                      <button type="button" className="mini-action" onClick={handlePointAdd}>
+                        Add bullet
+                      </button>
+                    </div>
+                  ) : editedData.points.length > 0 ? (
+                    <ol className="resume-points-list">
+                      {editedData.points.map((point, index) => (
+                        <li key={`resume-point-${index}`}>{point.replace(/^\\item\s*/, '')}</li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <p className="empty-copy">
+                      No tailored bullets yet. Use AI tailoring or edit the workspace to add them.
+                    </p>
+                  )}
+                </section>
+
+                {pdfUrl && (
+                  <section className="workspace-section">
+                    <div className="section-topline">
+                      <div>
+                        <p className="section-kicker">Generated asset</p>
+                        <h3>Latest resume PDF</h3>
+                      </div>
+                      <a
+                        href={`${API_URL}${pdfUrl}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mini-action primary"
+                      >
+                        Download PDF
+                      </a>
+                    </div>
+
+                    <iframe
+                      src={`${API_URL}${pdfUrl}`}
+                      title="Resume preview"
+                      className="resume-preview-frame"
+                    />
+                  </section>
+                )}
+
+                {(job['Resume Path'] || job.pdf_path) && !pdfUrl && (
+                  <section className="workspace-section">
+                    <div className="section-topline">
+                      <div>
+                        <p className="section-kicker">Stored asset</p>
+                        <h3>Saved resume</h3>
+                      </div>
+                    </div>
+
+                    {(() => {
+                      const pathValue = job['Resume Path'] || job.pdf_path || ''
+                      const latestPath = pathValue
+                        .split(';')
+                        .map((path) => path.trim())
+                        .filter(Boolean)[0]
+                      const filename = latestPath?.split('/').pop() || 'resume.pdf'
+
+                      return (
+                        <div className="saved-resume-row">
+                          <div>
+                            <strong>{filename}</strong>
+                            <p>Previously generated and stored for this job.</p>
+                          </div>
+                          <a
+                            href={`${API_URL}/api/download-resume/${filename}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mini-action"
+                          >
+                            Download
+                          </a>
+                        </div>
+                      )
+                    })()}
+                  </section>
+                )}
+              </div>
+            )}
+
+            {activeTab === 'data' && (
+              <div className="workspace-stack">
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Structured payload</p>
+                      <h3>Raw data</h3>
+                    </div>
+                    {editMode && (
+                      <button type="button" className="mini-action" onClick={handleJsonToggle}>
+                        {jsonMode ? 'Use structured editor' : 'Edit as JSON'}
+                      </button>
+                    )}
+                  </div>
+
+                  {editMode && jsonMode ? (
+                    <textarea
+                      className="json-editor"
+                      value={jsonText}
+                      onChange={(event) => setJsonText(event.target.value)}
+                    />
+                  ) : (
+                    <pre className="json-preview">{rawPreview}</pre>
+                  )}
+                </section>
+              </div>
+            )}
+          </main>
+
+          <aside className="job-detail-rail">
+            <section className="workspace-section rail-card">
+              <div className="section-topline">
+                <div>
+                  <p className="section-kicker">Pipeline</p>
+                  <h3>Application status</h3>
                 </div>
-            </div >
-        </>
-    )
+              </div>
+
+              <select
+                className="rail-select"
+                value={currentStatus}
+                onChange={(event) => onStatusChange(job, event.target.value)}
+              >
+                {STATUS_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+
+              <div className="status-timeline">
+                {STATUS_TIMELINE.map((step) => (
+                  <div
+                    key={step.value}
+                    className={`timeline-step ${getTimelineState(currentStatus, step.value)}`}
+                  >
+                    <span className="timeline-dot" />
+                    <div className="timeline-copy">
+                      <strong>{step.label}</strong>
+                      <p>{step.hint}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="workspace-section rail-card">
+              <div className="section-topline">
+                <div>
+                  <p className="section-kicker">Research</p>
+                  <h3>Notes</h3>
+                </div>
+                <button
+                  type="button"
+                  className="mini-action"
+                  onClick={handleSaveNotes}
+                  disabled={notesSaving}
+                >
+                  {notesSaving ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+
+              {notesError && <p className="inline-note">{notesError}</p>}
+
+              <textarea
+                className="rail-notes"
+                value={notesText}
+                onChange={(event) => setNotesText(event.target.value)}
+                placeholder="Capture recruiter names, interview prep, deadlines, or company research."
+              />
+            </section>
+
+            <section className="workspace-section rail-card">
+              <div className="section-topline">
+                <div>
+                  <p className="section-kicker">Shortcuts</p>
+                  <h3>Quick actions</h3>
+                </div>
+              </div>
+
+              <div className="rail-actions">
+                <button
+                  type="button"
+                  className="rail-action primary"
+                  onClick={() => onStatusChange(job, 'applied')}
+                >
+                  Mark applied
+                </button>
+                <button
+                  type="button"
+                  className="rail-action"
+                  onClick={() => onStatusChange(job, 'interviewing')}
+                >
+                  Move to interviewing
+                </button>
+                <button
+                  type="button"
+                  className="rail-action"
+                  onClick={handleGenerateResume}
+                  disabled={generating}
+                >
+                  {generating ? 'Generating PDF...' : 'Generate resume PDF'}
+                </button>
+                <button
+                  type="button"
+                  className="rail-action"
+                  onClick={handleAutoTailor}
+                  disabled={tailoring}
+                >
+                  {tailoring ? 'Refreshing...' : 'Refresh AI suggestions'}
+                </button>
+                <button
+                  type="button"
+                  className="rail-action danger"
+                  onClick={() => onStatusChange(job, 'skipped')}
+                >
+                  Archive role
+                </button>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </aside>
+    </div>
+  )
 }
 
 export default JobSidebar

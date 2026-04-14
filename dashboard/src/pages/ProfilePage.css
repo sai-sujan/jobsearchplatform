@@ -1,0 +1,225 @@
+.profile-shell {
+  gap: 1.25rem;
+}
+
+.profile-hero {
+  align-items: start;
+}
+
+.profile-banner {
+  padding: 0.95rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
+}
+
+.profile-banner.success {
+  border-color: rgba(18, 111, 82, 0.2);
+  background: rgba(240, 253, 250, 0.95);
+}
+
+.profile-banner.error {
+  border-color: rgba(220, 38, 38, 0.18);
+  background: rgba(254, 242, 242, 0.96);
+}
+
+.profile-workspace {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.profile-tabs {
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
+}
+
+.profile-tab {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.54);
+  color: var(--muted);
+  text-align: left;
+  font-weight: var(--weight-semibold);
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.profile-tab:hover {
+  border-color: rgba(59, 130, 246, 0.18);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.profile-tab.active {
+  border-color: rgba(59, 130, 246, 0.18);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.06);
+}
+
+.profile-content {
+  min-width: 0;
+}
+
+.profile-panel {
+  padding: 1.35rem;
+  border-radius: 1.4rem;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.profile-panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1.15rem;
+}
+
+.profile-panel-head h2 {
+  margin: 0 0 0.35rem;
+}
+
+.profile-panel-head p,
+.profile-muted {
+  margin: 0;
+  color: var(--muted);
+}
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.profile-form-grid label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.profile-form-grid span {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: var(--weight-semibold);
+}
+
+.profile-form-grid input,
+.profile-form-grid textarea,
+.profile-resume-editor {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(248, 250, 252, 0.95);
+  color: var(--ink);
+  padding: 0.9rem 1rem;
+  font: inherit;
+}
+
+.profile-form-grid textarea,
+.profile-resume-editor {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.profile-form-wide {
+  grid-column: 1 / -1;
+}
+
+.profile-checkbox {
+  display: flex;
+  gap: 0.85rem;
+  align-items: start;
+  padding: 0.25rem 0;
+}
+
+.profile-checkbox input {
+  width: auto;
+  margin-top: 0.3rem;
+}
+
+.profile-checkbox-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(248, 250, 252, 0.82);
+}
+
+.preset-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.preset-card {
+  padding: 1rem 1.05rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(248, 250, 252, 0.82);
+}
+
+.preset-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.preset-card p {
+  margin: 0;
+  color: var(--ink);
+}
+
+.preset-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.preset-pill {
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  font-size: 0.78rem;
+  font-weight: var(--weight-semibold);
+}
+
+.profile-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 980px) {
+  .profile-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-tabs {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-form-wide {
+    grid-column: auto;
+  }
+
+  .profile-panel-head {
+    flex-direction: column;
+  }
+}

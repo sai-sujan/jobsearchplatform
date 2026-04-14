@@ -103,3 +103,42 @@ def sanitize_company_name(name: str) -> str:
     if not name:
         return 'unknown'
     return re.sub(r'[^\w\s-]', '', name).replace(' ', '_')
+
+
+def sanitize_job_title(title: str) -> str:
+    """Normalize scraped job titles and remove common LinkedIn duplication artifacts."""
+    if not title:
+        return ''
+
+    text = str(title).replace('\r', '\n')
+    raw_lines = [re.sub(r'\s+', ' ', line).strip(" -\t") for line in text.split('\n')]
+    raw_lines = [line for line in raw_lines if line]
+
+    if not raw_lines:
+        return ''
+
+    cleaned_lines = []
+    for line in raw_lines:
+        candidate = re.sub(r'\s+with verification$', '', line, flags=re.IGNORECASE).strip()
+        if not candidate:
+            continue
+
+        if cleaned_lines:
+            previous = cleaned_lines[-1]
+            if candidate.casefold() == previous.casefold():
+                continue
+            if candidate.casefold().startswith(previous.casefold()):
+                suffix = candidate[len(previous):].strip(" -")
+                if not suffix:
+                    continue
+        cleaned_lines.append(candidate)
+
+    if not cleaned_lines:
+        return ''
+
+    unique_lines = []
+    for line in cleaned_lines:
+        if not any(line.casefold() == existing.casefold() for existing in unique_lines):
+            unique_lines.append(line)
+
+    return ' - '.join(unique_lines)

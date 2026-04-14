@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Single Resume Generator - Generates one customized resume from a JSON file.
-Works with the 2-column paracol LaTeX template.
+Works with the single-column tabular LaTeX template (Overleaf format).
 """
 
 import json
@@ -10,7 +10,13 @@ import re
 import sys
 from pathlib import Path
 
-from ..settings import settings
+# Support both module invocation (python -m src.resume.single_generator)
+# and direct script invocation (python src/resume/single_generator.py)
+try:
+    from ..settings import settings
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+    from src.settings import settings
 
 
 class SingleResumeGenerator:
@@ -31,7 +37,7 @@ class SingleResumeGenerator:
             return json.load(f)
 
     def _escape_latex(self, text: str) -> str:
-        """Escape special LaTeX characters (but NOT backslashes for \item)."""
+        """Escape special LaTeX characters (but NOT backslashes for \\\\item)."""
         if not isinstance(text, str):
             return str(text)
 
@@ -60,61 +66,55 @@ class SingleResumeGenerator:
         return text
 
     def _update_location(self, content: str, location: str) -> str:
-        """Update the location in the Contact section."""
-        # Pattern matches: \faMapMarker\ Springfield, MO, USA\\
-        pattern = r'(\\faMapMarker\\ )Springfield, MO, USA(\\\\)'
-
-        # Clean up the location - remove "open to relocate" since it's now hardcoded in template
+        """Update the location in the centered header contact line."""
+        # Template has: Springfield, MO, USA (Open to Relocate)
+        # We want to replace just the city/state part, keeping "(Open to Relocate)"
         clean_location = location.strip()
 
-        # Remove variations of "open to relocate" (case-insensitive)
-        # Handles: (Open to Relocate), Open to Relocate, open to relocate, etc.
+        # Remove variations of "open to relocate" from the input
         clean_location = re.sub(r'\s*\(?\s*open\s+to\s+relocat(e|ion)\s*\)?\s*', '', clean_location, flags=re.IGNORECASE)
-
-        # Clean up any trailing commas, dashes, or extra whitespace
         clean_location = re.sub(r'[,\-]\s*$', '', clean_location).strip()
 
-        replacement = f'\\1{clean_location}\\2'
+        # Replace the location in the header (keeps "Open to Relocate" suffix)
+        pattern = r'Springfield, MO, USA (\(Open to Relocate\))'
+        replacement = f'{clean_location} \\1'
         return re.sub(pattern, replacement, content)
 
     def _update_tech_stack(self, content: str, tech_stack: dict) -> str:
-        """Update the technical skills section with new itemize lists."""
-        # Build the new skills section
-        skills_sections = []
-
+        """Update the Technical Skills tabular section with new rows."""
+        # Build new tabular rows from the tech_stack dict
+        rows = []
         for category, skills in tech_stack.items():
             if skills:
-                # Escape & in category name
                 escaped_category = self._escape_latex(category)
+                escaped_skills = ', '.join([self._escape_latex(s) for s in skills])
+                rows.append(f"\\textbf{{{escaped_category}}} & {escaped_skills} \\\\")
 
-                # Build itemize list
-                items = "\n".join([f"  \\item {self._escape_latex(s)}" for s in skills])
+        new_rows = "\n".join(rows)
 
-                section = f"""\\textbf{{{escaped_category}}}
-\\begin{{itemize}}[leftmargin=2em]
-{items}
-\\end{{itemize}}"""
-                skills_sections.append(section)
-
-        new_skills = "\n\n".join(skills_sections)
-
-        # Pattern to match from \section*{TECHNICAL SKILLS} to \switchcolumn
-        pattern = r'(\\section\*\{TECHNICAL SKILLS\}\s*\\vspace\{0\.3em\}\s*)(.*?)(\\switchcolumn)'
+        # Pattern matches the tabular content between \begin{tabular} and \end{tabular}
+        # in the Technical Skills section
+        pattern = (
+            r'(\\begin\{tabular\}\{@\{\}p\{4\.9cm\} p\{13cm\}@\{\}\}\s*)'
+            r'(.*?)'
+            r'(\\end\{tabular\})'
+        )
 
         def replacer(match):
-            return match.group(1) + "\n" + new_skills + "\n\n" + match.group(3)
+            return match.group(1) + new_rows + "\n" + match.group(3)
 
         return re.sub(pattern, replacer, content, flags=re.DOTALL)
 
     def _update_experience_points(self, content: str, points: list) -> str:
         """Update the AI/ML Engineer experience bullet points."""
-        # Pattern to match the AI/ML Engineer section's itemize
+        # Pattern to match the first resumeSubheading for AI/ML Engineer
+        # followed by its resumeItemListStart...resumeItemListEnd block
         pattern = (
-            r'(\\textbf\{AI/ML Engineer\}.*?'
-            r'\{Grootan Technologies.*?\}\s*'
-            r'\\begin\{itemize\})'
+            r'(\\resumeSubheading\s*'
+            r'\{AI/ML Engineer\}.*?'
+            r'\\resumeItemListStart\s*)'
             r'(.*?)'
-            r'(\\end\{itemize\})'
+            r'(\\resumeItemListEnd)'
         )
 
         # Process points - handle both with and without \item prefix
@@ -133,7 +133,8 @@ class SingleResumeGenerator:
         def replacer(match):
             return match.group(1) + "\n" + new_points + "\n" + match.group(3)
 
-        return re.sub(pattern, replacer, content, flags=re.DOTALL)
+        # Only replace the FIRST match (AI/ML Engineer, not Intern)
+        return re.sub(pattern, replacer, content, count=1, flags=re.DOTALL)
 
     def _generate_pdf(self, latex_content: str, output_name: str) -> bool:
         """Generate PDF from LaTeX content using Tectonic."""
