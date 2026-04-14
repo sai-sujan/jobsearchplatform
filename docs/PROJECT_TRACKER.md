@@ -171,6 +171,14 @@ Reference:
 Reference:
 - [CHECKPOINT_16_WORKSPACE_ANALYSIS_ON_MATCHED_JOBS.md](./CHECKPOINT_16_WORKSPACE_ANALYSIS_ON_MATCHED_JOBS.md)
 
+### Checkpoint 17
+- Moved resume generation in the job detail workspace onto a matched-job-based API route
+- The sidebar no longer depends on `_rowIndex` to generate a PDF
+- Generated resume paths are now stored on the matched-job workspace so the user-facing object carries its own document output
+
+Reference:
+- [CHECKPOINT_17_MATCHED_JOB_RESUME_GENERATION.md](./CHECKPOINT_17_MATCHED_JOB_RESUME_GENERATION.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -180,6 +188,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - prefer internal delivery as the user-facing source of truth once it exists
 - keep user workflow state owned by `matched_jobs`, not the legacy `jobs` table
 - keep editable job-detail workspace state owned by `matched_jobs`, not the legacy `jobs` table
+- keep resume generation reachable from matched-job workspace APIs instead of legacy row-index APIs
 - continue deprecating or removing legacy Excel-only surfaces
 - improve application history and timeline UX
 
@@ -222,7 +231,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - Current canonical source is still the legacy user-owned `jobs` table, even though the web app now reads `matched_jobs`
 - Internal ingestion/matching boundary is not fully isolated yet
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
-- Resume generation and some old analysis/tailoring flows still assume legacy job-row data paths in parts of the stack
+- Some old tailoring and resume/version bookkeeping flows still exist in legacy routes even though the main workspace now has a matched-job-based generation path
 - Resume upload path now supports both file and text intake, but still needs stronger production hardening
 
 ## Operating rule

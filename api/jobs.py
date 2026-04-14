@@ -22,6 +22,10 @@ from src.crud import (
     update_matched_job,
 )
 from src.ai_match_service import AIMatchError, maybe_enrich_matched_job_with_ai
+from src.resume.workspace_service import (
+    WorkspaceResumeGenerationError,
+    generate_resume_from_workspace,
+)
 from src.models import MatchedJob, User
 from src.settings import settings
 
@@ -100,8 +104,8 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
         "Date Found": matched_job.delivered_at.isoformat() if matched_job.delivered_at else (job.date_added.isoformat() if job.date_added else None),
         "Job Description": job.job_description or "",
         "Link": job.job_link,
-        "Resume Path": job.resume_path or "",
-        "pdf_path": job.resume_path or "",
+        "Resume Path": matched_job.workspace_resume_path or job.resume_path or "",
+        "pdf_path": matched_job.workspace_resume_path or job.resume_path or "",
         "ats_score": int(display_ats_score or 0) if display_ats_score is not None else "N/A",
         "Analysis Data": analysis_data,
         "Match": f"{len(matched_skills)}/{max(len(matched_skills), len(job.missing_skills or []) + len(matched_skills), 1)} skills",
@@ -366,6 +370,46 @@ def update_job_analysis(
         raise HTTPException(status_code=404, detail="Job not found")
 
     return {"message": "Analysis updated", "job": serialize_matched_job(refreshed)}
+
+
+@router.post("/jobs/{job_id}/resume", dependencies=[Depends(require_csrf)])
+def generate_job_resume(
+    job_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Generate a resume PDF directly from the matched-job workspace."""
+    matched_job = require_matched_job(db, user.id, job_id)
+    workspace = matched_job.workspace_analysis or {}
+    location = matched_job.workspace_location or matched_job.job.location or ""
+    tech_stack = workspace.get("tech_stack") or {}
+    points = workspace.get("points") or []
+
+    try:
+        pdf_path, pdf_url = generate_resume_from_workspace(
+            company_name=matched_job.job.company or "Unknown company",
+            location=location,
+            tech_stack=tech_stack,
+            points=points,
+        )
+    except WorkspaceResumeGenerationError as error:
+        raise HTTPException(status_code=500, detail=str(error)) from error
+
+    updated = update_matched_job(
+        db,
+        job_id,
+        user.id,
+        workspace_resume_path=pdf_path,
+    )
+    if not updated:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    return {
+        "success": True,
+        "pdf_url": pdf_url,
+        "pdf_path": pdf_path,
+        "job": serialize_matched_job(updated),
+    }
 
 
 @router.delete("/jobs/{job_id}", dependencies=[Depends(require_csrf)])

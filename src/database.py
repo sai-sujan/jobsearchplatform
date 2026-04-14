@@ -52,6 +52,8 @@ def init_db():
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN workspace_matched_skills JSON"))
             if 'workspace_analysis' not in matched_columns:
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN workspace_analysis JSON"))
+            if 'workspace_resume_path' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN workspace_resume_path VARCHAR(500)"))
             if 'freshness_score' not in matched_columns:
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN freshness_score FLOAT"))
             if 'freshness_label' not in matched_columns:

@@ -507,33 +507,13 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     setActiveTab('resume')
 
     try {
-      if (!job._rowIndex && job._rowIndex !== 0) {
-        setGenerateError('PDF generation is still being migrated for the new user-facing web app.')
-        return
-      }
-      const response = await fetch(`${API_URL}/api/generate-resume`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          row_index: job._rowIndex || 0,
-          company_name: job.Company,
-          location: editedData.location,
-          tech_stack: editedData.tech_stack,
-          points: editedData.points,
-        }),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        setGenerateError(`Resume generation failed: ${result.detail || 'Unknown error.'}`)
-        return
-      }
-
-      setPdfUrl(result.pdf_url)
+      const response = await api.post(`/api/jobs/${job.id}/resume`)
+      setPdfUrl(response.data?.pdf_url || null)
     } catch (error) {
       console.error('Generate resume error:', error)
-      setGenerateError(`Resume generation failed: ${error.message}`)
+      setGenerateError(
+        `Resume generation failed: ${error?.response?.data?.detail || error.message || 'Unknown error.'}`,
+      )
     } finally {
       setGenerating(false)
     }

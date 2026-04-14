@@ -200,6 +200,7 @@ class MatchedJob(Base):
     workspace_ats_score = Column(Float, nullable=True)
     workspace_matched_skills = Column(JSON, nullable=True)
     workspace_analysis = Column(JSON, nullable=True)
+    workspace_resume_path = Column(String(500), nullable=True)
     delivered_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
