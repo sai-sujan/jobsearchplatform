@@ -9,7 +9,6 @@ const TABS = [
   { key: 'filters', label: 'Feed filters' },
   { key: 'presets', label: 'Search presets' },
   { key: 'resume', label: 'Resume' },
-  { key: 'automation', label: 'Automation' },
 ]
 
 const DEFAULT_PROFILE = {
@@ -505,36 +504,6 @@ function ProfilePage({ onboarding, onUpdated }) {
             </section>
           )}
 
-          {activeTab === 'automation' && (
-            <section className="profile-panel">
-              <div className="profile-panel-head">
-                <div>
-                  <h2>Automation connection</h2>
-                  <p>
-                    This web app stays user-facing only. Scraping and raw ingestion happen elsewhere and
-                    can be connected without exposing that complexity to end users.
-                  </p>
-                </div>
-                <button type="button" className="primary-action" onClick={saveProfile} disabled={saving}>
-                  {saving ? 'Saving...' : 'Save automation status'}
-                </button>
-              </div>
-
-              <label className="profile-checkbox profile-checkbox-card">
-                <input
-                  type="checkbox"
-                  checked={Boolean(profile.automation_connected)}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, automation_connected: event.target.checked }))
-                  }
-                />
-                <span>
-                  My account is already linked to an upstream matching pipeline, so matched jobs can be
-                  delivered automatically.
-                </span>
-              </label>
-            </section>
-          )}
         </div>
       </div>
     </section>

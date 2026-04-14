@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { api } from '../lib/api'
 import './OnboardingPage.css'
 
-const STEPS = ['welcome', 'resume', 'roles', 'preferences', 'presets', 'automation']
+const STEPS = ['welcome', 'resume', 'roles', 'preferences', 'presets']
 
 const SENIORITY_OPTIONS = ['Entry level', 'Mid level', 'Senior']
 const WORK_MODE_OPTIONS = ['Any', 'Remote', 'Hybrid', 'On-site']
@@ -124,7 +124,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
     step === 'welcome' ||
     (step === 'resume' && (resumeFile !== null || resumeFileName)) ||
     (step === 'roles' && profile.target_roles.length > 0 && profile.seniority) ||
-    ['preferences', 'presets', 'automation'].includes(step)
+    ['preferences', 'presets'].includes(step)
 
   const nextLabel = stepIndex === STEPS.length - 1 ? 'Finish setup' : 'Continue'
   const stepTitle = useMemo(() => {
@@ -138,9 +138,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
       case 'preferences':
         return 'Choose the job preferences you actually care about.'
       case 'presets':
-        return 'Review the searches we generated from your profile.'
-      case 'automation':
-        return 'Your account is ready. Automation can be connected later.'
+        return 'Review the searches we generated from your profile and finish setup.'
       default:
         return 'Set up your workspace'
     }
@@ -194,11 +192,9 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
       } else if (step === 'roles' || step === 'preferences') {
         await saveProfile(step === 'roles' ? 'preferences' : 'presets')
       } else if (step === 'presets') {
-        await saveProfile('automation')
-      } else if (step === 'automation') {
         const response = await api.post('/api/onboarding/complete', {
           onboarding_step: 'complete',
-          automation_connected: profile.automation_connected,
+          automation_connected: false,
         })
         onCompleted(response.data)
         return
@@ -266,10 +262,10 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
             {STEPS.map((item, index) => (
               <li key={item} className={index === stepIndex ? 'active' : index < stepIndex ? 'done' : ''}>
                 <span>{index + 1}</span>
-                <strong>{item === 'presets' ? 'Search setup' : item[0].toUpperCase() + item.slice(1)}</strong>
-              </li>
-            ))}
-          </ol>
+                  <strong>{item === 'presets' ? 'Search setup' : item[0].toUpperCase() + item.slice(1)}</strong>
+                </li>
+              ))}
+            </ol>
         </aside>
 
         <div className="onboarding-card">
@@ -626,7 +622,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
               <div className="onboarding-section-head">
                 <div>
                   <h2>Your generated search setup</h2>
-                  <p>These searches are derived from your profile and used by the matching pipeline.</p>
+                  <p>These are derived from your resume and preferences so your recommendations stay focused.</p>
                 </div>
               </div>
               <div className="preset-list">
@@ -640,33 +636,6 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
                 ) : (
                   <p className="empty-copy">Your presets will appear here after saving your profile.</p>
                 )}
-              </div>
-            </div>
-          )}
-
-          {step === 'automation' && (
-            <div className="onboarding-panel">
-              <div className="onboarding-section-head">
-                <div>
-                  <h2>You’re ready to start</h2>
-                  <p>
-                    This web app focuses on matched jobs only. Automation and ingestion stay behind the
-                    scenes and can be connected later without changing your account flow.
-                  </p>
-                </div>
-              </div>
-
-              <div className="automation-panel">
-                <label className="checkbox-choice">
-                  <input
-                    type="checkbox"
-                    checked={Boolean(profile.automation_connected)}
-                    onChange={(event) =>
-                      setProfile((current) => ({ ...current, automation_connected: event.target.checked }))
-                    }
-                  />
-                  <span>I already have an upstream automation or matching pipeline linked to this account.</span>
-                </label>
               </div>
             </div>
           )}
