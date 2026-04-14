@@ -147,8 +147,7 @@
 }
 
 .onboarding-callouts article,
-.onboarding-card-block,
-.automation-panel {
+.onboarding-card-block {
   padding: 1rem;
   border-radius: 1.1rem;
   border: 1px solid var(--line);
