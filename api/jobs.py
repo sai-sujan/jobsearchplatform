@@ -155,8 +155,61 @@ def load_match_intelligence(db: Session, user: User, matched_job: MatchedJob, fo
         }
 
 
+_STATUS_LABELS = {
+    "not_applied": "Saved",
+    "applied": "Applied",
+    "interviewing": "Interviewing",
+    "accepted": "Offer received",
+    "rejected": "Rejected",
+    "skipped": "Archived",
+}
+
+
+def _event_label_and_detail(event) -> tuple[str, str]:
+    """Return (label, detail) strings for a timeline event."""
+    etype = event.event_type or ""
+    meta = event.metadata_json or {}
+
+    if etype == "status_changed":
+        old = _STATUS_LABELS.get(event.old_status or "", event.old_status or "saved")
+        new = _STATUS_LABELS.get(event.new_status or "", event.new_status or "saved")
+        return f"Status changed to {new}", f"Previously: {old}"
+
+    if etype == "analysis_updated":
+        ats = meta.get("ats_score")
+        pts = meta.get("points_count", 0)
+        parts = []
+        if ats is not None:
+            parts.append(f"ATS score set to {ats}")
+        if pts:
+            parts.append(f"{pts} bullet point{'s' if pts != 1 else ''}")
+        return "Analysis updated", " · ".join(parts) if parts else "Workspace analysis saved"
+
+    if etype == "tailor_generated":
+        ats = meta.get("ats_score")
+        pts = meta.get("points_count", 0)
+        parts = []
+        if ats is not None:
+            parts.append(f"ATS score {ats}")
+        if pts:
+            parts.append(f"{pts} AI bullet point{'s' if pts != 1 else ''}")
+        return "AI tailoring applied", " · ".join(parts) if parts else "Resume workspace refreshed by AI"
+
+    if etype == "resume_generated":
+        version = meta.get("resume_version")
+        label = f"Resume v{version} generated" if version else "Resume generated"
+        return label, "PDF saved to workspace"
+
+    if etype == "notes_saved":
+        return "Notes saved", "Research notes updated"
+
+    # Fallback for unknown future event types
+    return etype.replace("_", " ").capitalize(), ""
+
+
 def serialize_application_event(event) -> dict:
     """Serialize timeline events for the job detail workspace."""
+    label, detail = _event_label_and_detail(event)
     return {
         "id": event.id,
         "event_type": event.event_type,
@@ -164,6 +217,8 @@ def serialize_application_event(event) -> dict:
         "new_status": event.new_status or "",
         "actor": event.actor,
         "metadata": event.metadata_json or {},
+        "label": label,
+        "detail": detail,
         "created_at": event.created_at.isoformat() if event.created_at else None,
     }
 

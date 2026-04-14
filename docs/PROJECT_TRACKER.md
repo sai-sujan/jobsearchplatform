@@ -1,6 +1,6 @@
 # Project Tracker
 
-Last updated: 2026-04-14
+Last updated: 2026-04-14 (Checkpoint 20)
 
 ## Product goal
 Build a production-ready user web app where each user sees only the jobs that genuinely fit them, based on their resume, role profile, experience level, and recommendation filters. Scraping and raw ingestion stay outside the user experience and feed matched opportunities into the database.
@@ -195,6 +195,15 @@ Reference:
 Reference:
 - [CHECKPOINT_19_DOCUMENT_HISTORY_AND_ACTIVITY.md](./CHECKPOINT_19_DOCUMENT_HISTORY_AND_ACTIVITY.md)
 
+### Checkpoint 20
+- Unified activity feed: all event types now render with a readable label, a detail line, and a colour-coded left accent border in the workspace
+- Backend `serialize_application_event` computes `label` and `detail` server-side for every event type (`status_changed`, `analysis_updated`, `tailor_generated`, `resume_generated`)
+- Frontend no longer tries to render `old_status → new_status` for non-status events
+- Activity cap raised from 4 to 8 events
+
+Reference:
+- [CHECKPOINT_20_UNIFIED_ACTIVITY_FEED.md](./CHECKPOINT_20_UNIFIED_ACTIVITY_FEED.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -218,7 +227,7 @@ Move delivery logic closer to a real recommendation pipeline:
    - cached resume tailoring
    - future async reranking only for top candidates
 4. Continue retiring legacy Excel/config endpoints from the runtime path
-5. Expand application history and notes into a more complete activity feed
+5. ~~Expand application history and notes into a more complete activity feed~~ ✓ done in CP20 — refresh events live after user actions is the remaining gap
 6. Start separating canonical/internal delivery from the legacy source store more explicitly
 
 ## Scoring direction notes
@@ -251,7 +260,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
 - Some old tailoring and resume/version bookkeeping flows still exist in legacy routes even though the main workspace path is now matched-job-based
 - Resume upload path now supports both file and text intake, but still needs stronger production hardening
-- The UI now exposes document history, but the broader workspace activity feed is still status-heavy and not yet a unified audit view
+- Activity feed now renders all event types correctly but does not yet refresh live after user actions — requires sidebar re-open to see new events
 
 ## Operating rule
 Every major execution slice should update:

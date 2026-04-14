@@ -1283,14 +1283,13 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
 
               {(statusEvents.length > 0 || eventsError) && (
                 <div className="timeline-history">
-                  <p className="section-kicker">Recent updates</p>
+                  <p className="section-kicker">Activity</p>
                   {eventsError && <p className="inline-note">{eventsError}</p>}
-                  {statusEvents.slice(0, 4).map((event) => (
-                    <div key={event.id} className="timeline-history-item">
-                      <strong>
-                        {(event.old_status || 'saved').replaceAll('_', ' ')} to {(event.new_status || 'saved').replaceAll('_', ' ')}
-                      </strong>
-                      <p>{formatDisplayDate(event.created_at)}</p>
+                  {statusEvents.slice(0, 8).map((event) => (
+                    <div key={event.id} className={`timeline-history-item timeline-event-${event.event_type || 'unknown'}`}>
+                      <strong>{event.label || event.event_type}</strong>
+                      {event.detail && <p className="timeline-event-detail">{event.detail}</p>}
+                      <p className="timeline-event-time">{formatDisplayDate(event.created_at)}</p>
                     </div>
                   ))}
                 </div>
