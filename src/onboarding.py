@@ -25,6 +25,24 @@ def _load_common_skills() -> list[str]:
 
 COMMON_SKILLS = _load_common_skills()
 
+ROLE_INFERENCE_RULES = [
+    ("AI Engineer", ["llm", "langchain", "rag", "generative ai", "agents", "openai", "ollama"]),
+    ("Machine Learning Engineer", ["machine learning", "pytorch", "tensorflow", "mlflow", "scikit-learn"]),
+    ("Data Scientist", ["data science", "analytics", "forecasting", "statistics", "experimentation"]),
+    ("Frontend Engineer", ["react", "typescript", "javascript", "frontend", "css", "ui"]),
+    ("Backend Engineer", ["fastapi", "django", "flask", "api", "backend", "microservice"]),
+    ("Full Stack Engineer", ["react", "node", "backend", "frontend", "full stack", "postgresql"]),
+    ("Product Engineer", ["product", "startup", "customer", "web application", "full stack"]),
+]
+
+INDUSTRY_RULES = [
+    ("Healthcare", ["healthcare", "clinical", "medical", "biomedical", "patient"]),
+    ("Fintech", ["fintech", "payments", "banking", "finance", "trading"]),
+    ("Developer Tools", ["developer tools", "platform", "api", "infrastructure", "saas"]),
+    ("E-commerce", ["e-commerce", "retail", "marketplace", "shopping"]),
+    ("Education", ["education", "learning", "student", "teaching"]),
+]
+
 
 def extract_skills_from_resume(resume_text: str) -> list[str]:
     """Extract likely skills from resume text using a curated dictionary."""
@@ -37,6 +55,73 @@ def extract_skills_from_resume(resume_text: str) -> list[str]:
         if re.search(rf"(?<!\w){re.escape(pattern)}(?!\w)", haystack):
             found.append(skill)
     return found[:40]
+
+
+def infer_profile_from_resume(resume_text: str, parsed_skills: list[str]) -> dict:
+    """Infer a role profile from resume text so onboarding feels confirmatory, not manual."""
+    lowered = resume_text.lower()
+    role_scores = []
+    for role, keywords in ROLE_INFERENCE_RULES:
+        score = 0
+        for keyword in keywords:
+            if keyword in lowered:
+                score += 2
+        for skill in parsed_skills:
+            if skill.lower() in lowered and any(token in skill.lower() for token in keywords):
+                score += 1
+        if score > 0:
+            role_scores.append((score, role))
+
+    role_scores.sort(reverse=True)
+    inferred_roles = [role for _score, role in role_scores[:3]]
+    if not inferred_roles:
+        inferred_roles = ["Software Engineer"]
+
+    seniority = "Mid level"
+    if any(token in lowered for token in ["intern", "student", "new grad", "graduate"]):
+        seniority = "Entry level"
+    else:
+        years_match = re.search(r"(\d+)\+?\s+years", lowered)
+        if years_match:
+            years = int(years_match.group(1))
+            if years >= 6:
+                seniority = "Senior"
+            elif years <= 1:
+                seniority = "Entry level"
+            else:
+                seniority = "Mid level"
+
+    work_modes = []
+    if "remote" in lowered:
+        work_modes.append("Remote")
+    if "hybrid" in lowered:
+        work_modes.append("Hybrid")
+    if "on-site" in lowered or "onsite" in lowered:
+        work_modes.append("On-site")
+    if not work_modes:
+        work_modes = ["Remote", "Hybrid"]
+
+    employment_types = ["Full-time"]
+    if "intern" in lowered or "internship" in lowered:
+        employment_types = ["Internship"]
+    elif "contract" in lowered:
+        employment_types = ["Contract"]
+
+    industries = [
+        label
+        for label, keywords in INDUSTRY_RULES
+        if any(keyword in lowered for keyword in keywords)
+    ][:3]
+
+    return {
+        "target_roles": inferred_roles,
+        "seniority": seniority,
+        "preferred_locations": ["Remote"] if "remote" in lowered else [],
+        "work_modes": work_modes,
+        "employment_types": employment_types,
+        "industries": industries,
+        "candidate_summary": summarize_candidate(resume_text, inferred_roles, parsed_skills),
+    }
 
 
 def summarize_candidate(resume_text: str, target_roles: list[str], parsed_skills: list[str]) -> str:

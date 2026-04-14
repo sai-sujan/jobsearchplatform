@@ -1,14 +1,26 @@
 import { useMemo, useState } from 'react'
+
 import { api } from '../lib/api'
 import './OnboardingPage.css'
 
-const STEPS = [
-  'welcome',
-  'resume',
-  'roles',
-  'preferences',
-  'presets',
-  'automation',
+const STEPS = ['welcome', 'resume', 'roles', 'preferences', 'presets', 'automation']
+
+const SENIORITY_OPTIONS = ['Entry level', 'Mid level', 'Senior']
+const WORK_MODE_OPTIONS = ['Remote', 'Hybrid', 'On-site']
+const EMPLOYMENT_OPTIONS = ['Full-time', 'Internship', 'Contract']
+const INDUSTRY_OPTIONS = ['Developer Tools', 'SaaS', 'Healthcare', 'Fintech', 'E-commerce', 'Education']
+const ROLE_LIBRARY = [
+  'Software Engineer',
+  'Frontend Engineer',
+  'Backend Engineer',
+  'Full Stack Engineer',
+  'Product Engineer',
+  'Data Analyst',
+  'Data Scientist',
+  'Machine Learning Engineer',
+  'AI Engineer',
+  'Product Manager',
+  'Designer',
 ]
 
 const DEFAULT_PROFILE = {
@@ -27,11 +39,39 @@ const DEFAULT_PROFILE = {
   automation_connected: false,
 }
 
-function splitCsv(value) {
-  return value
-    .split(',')
-    .map((item) => item.trim())
-    .filter(Boolean)
+function toggleValue(list, value) {
+  return list.includes(value) ? list.filter((item) => item !== value) : [...list, value]
+}
+
+function ChoiceChips({ options, values, onToggle, tone = 'neutral' }) {
+  return (
+    <div className={`choice-chips choice-chips-${tone}`}>
+      {options.map((option) => (
+        <button
+          key={option}
+          type="button"
+          className={`choice-chip ${values.includes(option) ? 'selected' : ''}`}
+          onClick={() => onToggle(option)}
+        >
+          {option}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function StepBadge({ stepIndex }) {
+  return (
+    <div className="onboarding-progress-row">
+      <span className="onboarding-step-badge">Step {stepIndex + 1} of {STEPS.length}</span>
+      <div className="onboarding-progress-track">
+        <div
+          className="onboarding-progress-fill"
+          style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }}
+        />
+      </div>
+    </div>
+  )
 }
 
 function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
@@ -42,32 +82,39 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
     full_name: onboarding?.user?.full_name || '',
     ...(onboarding?.profile || {}),
   })
+  const [customRole, setCustomRole] = useState('')
+  const [customLocation, setCustomLocation] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
   const step = STEPS[stepIndex]
   const presets = onboarding?.search_presets || []
+  const inferredRoleOptions = useMemo(
+    () => Array.from(new Set([...(profile.target_roles || []), ...ROLE_LIBRARY])),
+    [profile.target_roles],
+  )
+
   const canContinue =
     step === 'welcome' ||
     (step === 'resume' && resumeText.trim().length >= 50) ||
-    (step === 'roles' && profile.target_roles.length > 0) ||
+    (step === 'roles' && profile.target_roles.length > 0 && profile.seniority) ||
     ['preferences', 'presets', 'automation'].includes(step)
 
-  const nextLabel = stepIndex === STEPS.length - 1 ? 'Finish onboarding' : 'Continue'
+  const nextLabel = stepIndex === STEPS.length - 1 ? 'Finish setup' : 'Continue'
   const stepTitle = useMemo(() => {
     switch (step) {
       case 'welcome':
-        return 'Let’s set up your personalized job workspace.'
+        return 'We’ll build your job search workspace around your resume.'
       case 'resume':
-        return 'Paste your current resume so we can tailor recommendations.'
+        return 'Paste your resume once. We’ll detect your profile automatically.'
       case 'roles':
-        return 'Tell us what kind of roles actually fit you.'
+        return 'Confirm the roles and level we detected for you.'
       case 'preferences':
-        return 'Add location, work style, and career constraints.'
+        return 'Choose the job preferences you actually care about.'
       case 'presets':
-        return 'Review the search presets generated from your profile.'
+        return 'Review the searches we generated from your profile.'
       case 'automation':
-        return 'Choose how much automation you want right now.'
+        return 'Your account is ready. Automation can be connected later.'
       default:
         return 'Set up your workspace'
     }
@@ -82,7 +129,8 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
     onUpdated(response.data)
     setProfile((current) => ({
       ...current,
-      parsed_skills: response.data.profile.parsed_skills || [],
+      full_name: response.data.user?.full_name || current.full_name,
+      ...(response.data.profile || {}),
     }))
   }
 
@@ -92,6 +140,11 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
       onboarding_step: nextStep,
     })
     onUpdated(response.data)
+    setProfile((current) => ({
+      ...current,
+      ...(response.data.profile || {}),
+      full_name: response.data.user?.full_name || current.full_name,
+    }))
   }
 
   const handleNext = async () => {
@@ -126,6 +179,24 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
     setStepIndex((current) => Math.max(current - 1, 0))
   }
 
+  const addCustomRole = () => {
+    if (!customRole.trim()) return
+    setProfile((current) => ({
+      ...current,
+      target_roles: Array.from(new Set([...current.target_roles, customRole.trim()])),
+    }))
+    setCustomRole('')
+  }
+
+  const addCustomLocation = () => {
+    if (!customLocation.trim()) return
+    setProfile((current) => ({
+      ...current,
+      preferred_locations: Array.from(new Set([...current.preferred_locations, customLocation.trim()])),
+    }))
+    setCustomLocation('')
+  }
+
   return (
     <section className="onboarding-shell">
       <div className="onboarding-layout">
@@ -133,8 +204,8 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
           <span className="eyebrow">New account</span>
           <h1>{stepTitle}</h1>
           <p>
-            {session?.username ? `Welcome, ${session.username}.` : 'Welcome.'} We&apos;ll use this setup to
-            decide what jobs to show you, how to describe them, and how to tailor resumes later.
+            {session?.username ? `Welcome, ${session.username}.` : 'Welcome.'} Most of the setup should
+            be automatic. You’re mainly confirming what the app detected from your resume.
           </p>
 
           <ol>
@@ -148,21 +219,46 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
         </aside>
 
         <div className="onboarding-card">
+          <StepBadge stepIndex={stepIndex} />
+
           {step === 'welcome' && (
-            <div className="onboarding-panel">
-              <h2>What happens next</h2>
-              <ul>
-                <li>You add your resume and target roles once.</li>
-                <li>We generate role-aware search presets for your account.</li>
-                <li>You land in a web app that only shows matched jobs, not the full scraped pool.</li>
-              </ul>
+            <div className="onboarding-panel onboarding-hero-panel">
+              <div className="onboarding-intro-copy">
+                <h2>Here’s what happens in the next two minutes</h2>
+                <p>
+                  Paste your resume once, let the app infer your roles and skills, confirm the
+                  important parts, and land in a cleaner job workspace built around your fit.
+                </p>
+              </div>
+              <div className="onboarding-callouts">
+                <article>
+                  <strong>Automatic profile setup</strong>
+                  <p>We detect likely roles, seniority, and skills from your resume before you type anything.</p>
+                </article>
+                <article>
+                  <strong>No scraper noise</strong>
+                  <p>You only see matched jobs, not the full raw dataset or internal ingestion controls.</p>
+                </article>
+                <article>
+                  <strong>Easy to adjust later</strong>
+                  <p>You can edit your profile, resume, and search setup any time from the Profile page.</p>
+                </article>
+              </div>
             </div>
           )}
 
           {step === 'resume' && (
             <div className="onboarding-panel">
+              <div className="onboarding-section-head">
+                <div>
+                  <h2>Resume intake</h2>
+                  <p>Paste your current resume and we’ll prefill the rest of onboarding from it.</p>
+                </div>
+                <span className="onboarding-helper-pill">Auto-detect roles and skills</span>
+              </div>
+
               <label>
-                <span>Paste your resume text</span>
+                <span>Resume text</span>
                 <textarea
                   value={resumeText}
                   onChange={(event) => setResumeText(event.target.value)}
@@ -174,6 +270,39 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
 
           {step === 'roles' && (
             <div className="onboarding-grid">
+              <div className="onboarding-grid-wide onboarding-card-block">
+                <div className="onboarding-section-head">
+                  <div>
+                    <h2>Detected target roles</h2>
+                    <p>Select the roles that best represent what you want to see in your matched feed.</p>
+                  </div>
+                  <span className="onboarding-helper-pill">Suggested from your resume</span>
+                </div>
+
+                <ChoiceChips
+                  options={inferredRoleOptions}
+                  values={profile.target_roles}
+                  onToggle={(role) =>
+                    setProfile((current) => ({
+                      ...current,
+                      target_roles: toggleValue(current.target_roles, role),
+                    }))
+                  }
+                  tone="accent"
+                />
+
+                <div className="onboarding-inline-input">
+                  <input
+                    value={customRole}
+                    onChange={(event) => setCustomRole(event.target.value)}
+                    placeholder="Add another role"
+                  />
+                  <button type="button" className="secondary-action onboarding-inline-button" onClick={addCustomRole}>
+                    Add role
+                  </button>
+                </div>
+              </div>
+
               <label>
                 <span>Full name</span>
                 <input
@@ -181,79 +310,126 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
                   onChange={(event) => setProfile((current) => ({ ...current, full_name: event.target.value }))}
                 />
               </label>
-              <label>
-                <span>Target roles</span>
-                <input
-                  value={profile.target_roles.join(', ')}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, target_roles: splitCsv(event.target.value) }))
-                  }
-                  placeholder="Frontend Engineer, Product Designer, Data Analyst"
-                />
-              </label>
+
               <label>
                 <span>Seniority</span>
-                <input
-                  value={profile.seniority}
+                <select
+                  value={profile.seniority || ''}
                   onChange={(event) => setProfile((current) => ({ ...current, seniority: event.target.value }))}
-                  placeholder="Entry level, Mid level, Senior"
-                />
+                >
+                  <option value="">Select level</option>
+                  {SENIORITY_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
               </label>
-              <label>
-                <span>Parsed skills</span>
-                <input
-                  value={(profile.parsed_skills || []).join(', ')}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, parsed_skills: splitCsv(event.target.value) }))
-                  }
-                  placeholder="Skills found from your resume"
-                />
-              </label>
+
+              <div className="onboarding-grid-wide onboarding-card-block">
+                <div className="onboarding-section-head">
+                  <div>
+                    <h2>Detected skills</h2>
+                    <p>These will help decide what gets matched to you and how resume tailoring starts.</p>
+                  </div>
+                </div>
+                <div className="skill-chip-row">
+                  {(profile.parsed_skills || []).length > 0 ? (
+                    profile.parsed_skills.map((skill) => (
+                      <span key={skill} className="skill-chip">
+                        {skill}
+                      </span>
+                    ))
+                  ) : (
+                    <p className="onboarding-muted">No skills detected yet. Save your resume first.</p>
+                  )}
+                </div>
+              </div>
             </div>
           )}
 
           {step === 'preferences' && (
             <div className="onboarding-grid">
-              <label>
-                <span>Preferred locations</span>
-                <input
-                  value={profile.preferred_locations.join(', ')}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, preferred_locations: splitCsv(event.target.value) }))
+              <div className="onboarding-card-block onboarding-grid-wide">
+                <div className="onboarding-section-head">
+                  <div>
+                    <h2>Work mode</h2>
+                    <p>Choose how you want these roles to feel in practice.</p>
+                  </div>
+                </div>
+                <ChoiceChips
+                  options={WORK_MODE_OPTIONS}
+                  values={profile.work_modes}
+                  onToggle={(value) =>
+                    setProfile((current) => ({ ...current, work_modes: toggleValue(current.work_modes, value) }))
                   }
-                  placeholder="Chicago, Remote, New York"
                 />
-              </label>
-              <label>
-                <span>Work modes</span>
-                <input
-                  value={profile.work_modes.join(', ')}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, work_modes: splitCsv(event.target.value) }))
+              </div>
+
+              <div className="onboarding-card-block onboarding-grid-wide">
+                <div className="onboarding-section-head">
+                  <div>
+                    <h2>Employment type</h2>
+                    <p>We prefilled this from your resume where possible, but you can adjust it here.</p>
+                  </div>
+                </div>
+                <ChoiceChips
+                  options={EMPLOYMENT_OPTIONS}
+                  values={profile.employment_types}
+                  onToggle={(value) =>
+                    setProfile((current) => ({
+                      ...current,
+                      employment_types: toggleValue(current.employment_types, value),
+                    }))
                   }
-                  placeholder="Remote, Hybrid, On-site"
                 />
-              </label>
-              <label>
-                <span>Employment types</span>
-                <input
-                  value={profile.employment_types.join(', ')}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, employment_types: splitCsv(event.target.value) }))
+              </div>
+
+              <div className="onboarding-card-block onboarding-grid-wide">
+                <div className="onboarding-section-head">
+                  <div>
+                    <h2>Industries</h2>
+                    <p>Pick the spaces you want the matcher to prioritize.</p>
+                  </div>
+                </div>
+                <ChoiceChips
+                  options={INDUSTRY_OPTIONS}
+                  values={profile.industries}
+                  onToggle={(value) =>
+                    setProfile((current) => ({ ...current, industries: toggleValue(current.industries, value) }))
                   }
-                  placeholder="Full-time, Internship, Contract"
                 />
-              </label>
-              <label>
-                <span>Industries</span>
-                <input
-                  value={profile.industries.join(', ')}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, industries: splitCsv(event.target.value) }))
+              </div>
+
+              <div className="onboarding-card-block onboarding-grid-wide">
+                <div className="onboarding-section-head">
+                  <div>
+                    <h2>Preferred locations</h2>
+                    <p>Add a few places you care about. Remote is already suggested when it fits.</p>
+                  </div>
+                </div>
+                <ChoiceChips
+                  options={['Remote', 'United States', 'Chicago', 'New York', 'San Francisco', 'Austin']}
+                  values={profile.preferred_locations}
+                  onToggle={(value) =>
+                    setProfile((current) => ({
+                      ...current,
+                      preferred_locations: toggleValue(current.preferred_locations, value),
+                    }))
                   }
-                  placeholder="Fintech, Healthcare, Consumer"
                 />
-              </label>
+                <div className="onboarding-inline-input">
+                  <input
+                    value={customLocation}
+                    onChange={(event) => setCustomLocation(event.target.value)}
+                    placeholder="Add another location"
+                  />
+                  <button type="button" className="secondary-action onboarding-inline-button" onClick={addCustomLocation}>
+                    Add location
+                  </button>
+                </div>
+              </div>
+
               <label className="onboarding-grid-wide">
                 <span>Candidate summary</span>
                 <textarea
@@ -269,7 +445,12 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
 
           {step === 'presets' && (
             <div className="onboarding-panel">
-              <h2>Generated search presets</h2>
+              <div className="onboarding-section-head">
+                <div>
+                  <h2>Your generated search setup</h2>
+                  <p>These searches are derived from your profile and used by the matching pipeline.</p>
+                </div>
+              </div>
               <div className="preset-list">
                 {presets.length > 0 ? (
                   presets.map((preset) => (
@@ -287,31 +468,48 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
 
           {step === 'automation' && (
             <div className="onboarding-panel">
-              <h2>Automation is optional</h2>
-              <p>
-                This user web app only shows matched jobs. Scraping and ingestion can be connected later
-                by another service, so you can start with a clean recommendations workspace today.
-              </p>
-              <label className="checkbox-choice">
-                <input
-                  type="checkbox"
-                  checked={Boolean(profile.automation_connected)}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, automation_connected: event.target.checked }))
-                  }
-                />
-                <span>I already have automation connected for this account.</span>
-              </label>
+              <div className="onboarding-section-head">
+                <div>
+                  <h2>You’re ready to start</h2>
+                  <p>
+                    This web app focuses on matched jobs only. Automation and ingestion stay behind the
+                    scenes and can be connected later without changing your account flow.
+                  </p>
+                </div>
+              </div>
+
+              <div className="automation-panel">
+                <label className="checkbox-choice">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(profile.automation_connected)}
+                    onChange={(event) =>
+                      setProfile((current) => ({ ...current, automation_connected: event.target.checked }))
+                    }
+                  />
+                  <span>I already have an upstream automation or matching pipeline linked to this account.</span>
+                </label>
+              </div>
             </div>
           )}
 
           {error && <div className="auth-error">{error}</div>}
 
           <div className="onboarding-actions">
-            <button type="button" className="secondary-action" onClick={handleBack} disabled={stepIndex === 0 || submitting}>
+            <button
+              type="button"
+              className="secondary-action onboarding-nav-button"
+              onClick={handleBack}
+              disabled={stepIndex === 0 || submitting}
+            >
               Back
             </button>
-            <button type="button" className="primary-action" onClick={handleNext} disabled={!canContinue || submitting}>
+            <button
+              type="button"
+              className="primary-action onboarding-nav-button"
+              onClick={handleNext}
+              disabled={!canContinue || submitting}
+            >
               {submitting ? 'Saving...' : nextLabel}
             </button>
           </div>

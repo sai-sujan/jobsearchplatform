@@ -27,9 +27,18 @@ function App() {
       setOnboarding(onboardingResponse.data)
 
       if (onboardingResponse.data.profile?.onboarding_completed) {
-        const jobsResponse = await api.get('/api/jobs')
-        setJobs(jobsResponse.data.jobs || [])
-        setStats(jobsResponse.data.stats || {})
+        try {
+          const jobsResponse = await api.get('/api/jobs')
+          setJobs(jobsResponse.data.jobs || [])
+          setStats(jobsResponse.data.stats || {})
+        } catch (jobsError) {
+          if (jobsError.response?.status === 404) {
+            setJobs([])
+            setStats({ total: 0, good_matches: 0, perfect_matches: 0, last_updated: 'Pending' })
+          } else {
+            throw jobsError
+          }
+        }
       } else {
         setJobs([])
         setStats({})
@@ -115,6 +124,8 @@ function App() {
 
   const recommendedJobs = [...jobs].sort((left, right) => (right['Skill Score'] || 0) - (left['Skill Score'] || 0))
   const appliedCount = jobs.filter((job) => APPLIED_STATUSES.includes(normalizeStatus(job.Status))).length
+  const hasMatchedJobs = recommendedJobs.length > 0
+  const renderNavCount = (count) => (count > 0 ? <span>{count}</span> : null)
 
   if (loading) {
     return (
@@ -160,15 +171,15 @@ function App() {
         <nav className="topnav">
           <NavLink to="/jobs" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             Recommended
-            <span>{recommendedJobs.length}</span>
+            {renderNavCount(recommendedJobs.length)}
           </NavLink>
           <NavLink to="/applied" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             Applied
-            <span>{appliedCount}</span>
+            {renderNavCount(appliedCount)}
           </NavLink>
           <NavLink to="/tracker" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             Tracker
-            <span>{jobs.length}</span>
+            {renderNavCount(jobs.length)}
           </NavLink>
           <NavLink to="/profile" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             Profile
@@ -177,7 +188,7 @@ function App() {
 
         <div className="topbar-meta">
           <span>{session.full_name || session.username}</span>
-          <strong>{stats.total ? `${stats.total} matched roles` : 'Waiting for matched jobs'}</strong>
+          <strong>{hasMatchedJobs ? `${stats.total} matched roles` : 'Profile ready for recommendations'}</strong>
           <button type="button" className="secondary-action" onClick={handleLogout}>
             Log out
           </button>

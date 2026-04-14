@@ -112,7 +112,7 @@
 .topbar-meta {
   display: grid;
   justify-items: end;
-  gap: 0.12rem;
+  gap: 0.4rem;
 }
 
 .topbar-meta span {
@@ -142,6 +142,9 @@
 }
 
 .primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.86rem 1.14rem;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
@@ -153,6 +156,18 @@
 .primary-action:disabled {
   opacity: 0.65;
   cursor: not-allowed;
+}
+
+.secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.86rem 1.14rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
 }
 
 .app-state-shell {

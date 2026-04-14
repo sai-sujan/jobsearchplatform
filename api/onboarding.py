@@ -22,6 +22,7 @@ from src.onboarding import (
     build_generated_search_presets,
     build_role_prompt_context,
     extract_skills_from_resume,
+    infer_profile_from_resume,
     summarize_candidate,
 )
 
@@ -134,6 +135,7 @@ def save_resume_intake(
 ):
     """Save a pasted/uploaded resume and derive parsed skills."""
     parsed_skills = extract_skills_from_resume(request.resume_text)
+    inferred_profile = infer_profile_from_resume(request.resume_text, parsed_skills)
     resume_asset = create_resume_asset(
         db,
         user_id=user.id,
@@ -142,13 +144,34 @@ def save_resume_intake(
         filename=request.filename,
         content_type=request.content_type,
     )
+    current_profile = get_or_create_profile(db, user.id)
     profile = update_user_profile(
         db,
         user.id,
         parsed_skills=parsed_skills,
+        target_roles=current_profile.target_roles or inferred_profile["target_roles"],
+        seniority=current_profile.seniority or inferred_profile["seniority"],
+        preferred_locations=current_profile.preferred_locations or inferred_profile["preferred_locations"],
+        work_modes=current_profile.work_modes or inferred_profile["work_modes"],
+        employment_types=current_profile.employment_types or inferred_profile["employment_types"],
+        industries=current_profile.industries or inferred_profile["industries"],
+        candidate_summary=current_profile.candidate_summary or inferred_profile["candidate_summary"],
         onboarding_step="resume_review",
     )
-    presets = get_search_presets(db, user.id)
+    presets = replace_search_presets(
+        db,
+        user.id,
+        build_generated_search_presets(
+            {
+                "target_roles": profile.target_roles or [],
+                "seniority": profile.seniority or "",
+                "preferred_locations": profile.preferred_locations or [],
+                "work_modes": profile.work_modes or [],
+                "employment_types": profile.employment_types or [],
+                "industries": profile.industries or [],
+            }
+        ),
+    )
     return _serialize_profile(user, profile, resume_asset, presets)
 
 

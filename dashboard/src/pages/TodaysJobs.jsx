@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import JobCard from '../components/JobCard'
 import JobSidebar from '../components/JobSidebar'
 import { getJobId, getTierVariant } from '../lib/jobs'
@@ -40,27 +41,45 @@ const TodaysJobs = ({ jobs, onStatusChange, onDelete }) => {
           </p>
         </div>
 
-        <div className="hero-metrics">
-          <div className="hero-metric">
-            <strong>{summary.total}</strong>
-            <span>Recommended</span>
+        {todaysJobs.length > 0 ? (
+          <div className="hero-metrics">
+            <div className="hero-metric">
+              <strong>{summary.total}</strong>
+              <span>Recommended</span>
+            </div>
+            <div className="hero-metric">
+              <strong>{summary.perfect}</strong>
+              <span>Top-fit</span>
+            </div>
+            <div className="hero-metric">
+              <strong>{summary.good}</strong>
+              <span>Strong-fit</span>
+            </div>
           </div>
-          <div className="hero-metric">
-            <strong>{summary.perfect}</strong>
-            <span>Top-fit</span>
+        ) : (
+          <div className="hero-empty-note">
+            <strong>Your profile is ready.</strong>
+            <p>We’ll show recommendations here as soon as matched roles are delivered to your account.</p>
           </div>
-          <div className="hero-metric">
-            <strong>{summary.good}</strong>
-            <span>Strong-fit</span>
-          </div>
-        </div>
+        )}
       </header>
 
       {todaysJobs.length === 0 ? (
         <div className="empty-state">
-          <span className="empty-state-icon">No jobs yet</span>
-          <h2>No matched jobs have been delivered to your account yet.</h2>
-          <p>Your recommendations will appear here as soon as the matching service sends new roles.</p>
+          <span className="empty-state-icon">Recommendations are warming up</span>
+          <h2>Your matched job feed is ready for its first delivery.</h2>
+          <p>
+            Your account setup is complete. As soon as the matching service pushes roles into your
+            workspace, they’ll appear here ranked by fit.
+          </p>
+          <div className="empty-state-checklist">
+            <div>Profile completed</div>
+            <div>Resume saved</div>
+            <div>Search setup generated</div>
+          </div>
+          <Link to="/profile" className="secondary-action empty-state-action">
+            Review profile setup
+          </Link>
         </div>
       ) : (
         <div className={`job-board ${sidebarOpen ? 'with-sidebar' : ''}`}>
