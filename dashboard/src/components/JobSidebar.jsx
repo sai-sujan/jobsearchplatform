@@ -3,6 +3,7 @@ import './JobSidebar.css'
 import { api, API_URL } from '../lib/api'
 import {
   formatDisplayDate,
+  formatDisplayDateTime,
   getMatchedSkills,
   getSourceLabel,
   normalizeStatus,
@@ -206,6 +207,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   const [notesError, setNotesError] = useState('')
   const [statusEvents, setStatusEvents] = useState([])
   const [eventsError, setEventsError] = useState('')
+  const [resumeHistory, setResumeHistory] = useState([])
+  const [resumeHistoryError, setResumeHistoryError] = useState('')
 
   useEffect(() => {
     if (!job) return undefined
@@ -233,6 +236,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     setNotesError('')
     setStatusEvents([])
     setEventsError('')
+    setResumeHistory([])
+    setResumeHistoryError('')
     setEditedData(normalizedData)
     setOriginalData(normalizedData)
 
@@ -278,6 +283,27 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
       }
     }
     loadAiMatch()
+    return () => {
+      cancelled = true
+    }
+  }, [job])
+
+  useEffect(() => {
+    if (!job?.id) return undefined
+
+    let cancelled = false
+    const loadResumeHistory = async () => {
+      try {
+        const response = await api.get(`/api/jobs/${job.id}/resumes`)
+        if (cancelled) return
+        setResumeHistory(response.data?.resumes || [])
+      } catch (error) {
+        if (cancelled) return
+        setResumeHistoryError(error?.response?.data?.detail || 'Unable to load saved resume versions.')
+      }
+    }
+
+    loadResumeHistory()
     return () => {
       cancelled = true
     }
@@ -492,6 +518,21 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     try {
       const response = await api.post(`/api/jobs/${job.id}/resume`)
       setPdfUrl(response.data?.pdf_url || null)
+      setResumeHistory((current) => {
+        const latest = response.data?.job?.['Resume Path']
+        const version = response.data?.resume_version
+        if (!latest || !version) return current
+        const filename = latest.split('/').pop() || 'resume.pdf'
+        const nextEntry = {
+          id: `local-${version}-${filename}`,
+          version,
+          pdf_path: latest,
+          filename,
+          download_url: response.data?.pdf_url || `${API_URL}/api/download-resume/${filename}`,
+          created_at: new Date().toISOString(),
+        }
+        return [nextEntry, ...current.filter((entry) => entry.version !== version)]
+      })
     } catch (error) {
       console.error('Generate resume error:', error)
       setGenerateError(
@@ -1138,31 +1179,27 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                   </section>
                 )}
 
-                {(job['Resume Path'] || job.pdf_path) && !pdfUrl && (
+                {resumeHistory.length > 0 && (
                   <section className="workspace-section">
                     <div className="section-topline">
                       <div>
-                        <p className="section-kicker">Stored asset</p>
-                        <h3>Saved resume</h3>
+                        <p className="section-kicker">Stored assets</p>
+                        <h3>Resume history</h3>
                       </div>
                     </div>
 
-                    {(() => {
-                      const pathValue = job['Resume Path'] || job.pdf_path || ''
-                      const latestPath = pathValue
-                        .split(';')
-                        .map((path) => path.trim())
-                        .filter(Boolean)[0]
-                      const filename = latestPath?.split('/').pop() || 'resume.pdf'
-
-                      return (
-                        <div className="saved-resume-row">
+                    <div className="saved-resume-list">
+                      {resumeHistory.map((resume) => (
+                        <div key={resume.id} className="saved-resume-row">
                           <div>
-                            <strong>{filename}</strong>
-                            <p>Previously generated and stored for this job.</p>
+                            <strong>{resume.filename || `Resume v${resume.version}`}</strong>
+                            <p>
+                              Version {resume.version}
+                              {resume.created_at ? ` • ${formatDisplayDateTime(resume.created_at)}` : ''}
+                            </p>
                           </div>
                           <a
-                            href={`${API_URL}/api/download-resume/${filename}`}
+                            href={`${API_URL}${resume.download_url}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="mini-action"
@@ -1170,10 +1207,12 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                             Download
                           </a>
                         </div>
-                      )
-                    })()}
+                      ))}
+                    </div>
                   </section>
                 )}
+
+                {resumeHistoryError && <p className="empty-copy">{resumeHistoryError}</p>}
               </div>
             )}
 

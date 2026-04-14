@@ -15,6 +15,7 @@ from src.crud import (
     count_user_matched_jobs,
     get_matched_job,
     get_application_events,
+    get_job_resumes,
     get_or_create_profile,
     get_preferred_delivery_origin,
     get_user_matched_jobs,
@@ -167,6 +168,19 @@ def serialize_application_event(event) -> dict:
     }
 
 
+def serialize_resume(resume) -> dict:
+    """Serialize stored resume versions for the matched-job workspace."""
+    filename = (resume.pdf_path or "").split("/")[-1] if resume.pdf_path else ""
+    return {
+        "id": resume.id,
+        "version": resume.version,
+        "pdf_path": resume.pdf_path,
+        "filename": filename,
+        "download_url": f"/api/download-resume/{filename}" if filename else "",
+        "created_at": resume.created_at.isoformat() if resume.created_at else None,
+    }
+
+
 class JobUpdate(BaseModel):
     status: str = None
     special_interest: bool = None
@@ -288,6 +302,21 @@ def get_job_events(
     }
 
 
+@router.get("/jobs/{job_id}/resumes")
+def get_job_resume_versions(
+    job_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Return stored resume versions for one matched job."""
+    matched_job = require_matched_job(db, user.id, job_id)
+    resumes = get_job_resumes(db, matched_job.job_id)
+    return {
+        "job_id": matched_job.id,
+        "resumes": [serialize_resume(resume) for resume in resumes],
+    }
+
+
 @router.patch("/jobs/{job_id}/status", dependencies=[Depends(require_csrf)])
 def update_job_status(
     job_id: int,
@@ -370,6 +399,17 @@ def update_job_analysis(
     )
     if not refreshed:
         raise HTTPException(status_code=404, detail="Job not found")
+    create_application_event(
+        db,
+        matched_job.id,
+        event_type="analysis_updated",
+        actor="user",
+        metadata_json={
+            "location": payload.location,
+            "ats_score": payload.ats_score,
+            "points_count": len(payload.points or []),
+        },
+    )
 
     return {"message": "Analysis updated", "job": serialize_matched_job(refreshed)}
 
@@ -406,6 +446,16 @@ def generate_job_resume(
     if not updated:
         raise HTTPException(status_code=404, detail="Job not found")
     resume_record = create_resume(db, matched_job.job_id, pdf_path)
+    create_application_event(
+        db,
+        matched_job.id,
+        event_type="resume_generated",
+        actor="user",
+        metadata_json={
+            "resume_version": resume_record.version,
+            "pdf_path": pdf_path,
+        },
+    )
 
     return {
         "success": True,
@@ -462,6 +512,16 @@ def tailor_job_workspace(
     )
     if not updated:
         raise HTTPException(status_code=404, detail="Job not found")
+    create_application_event(
+        db,
+        matched_job.id,
+        event_type="tailor_generated",
+        actor="user",
+        metadata_json={
+            "ats_score": tailored_data.get("ats_score"),
+            "points_count": len(next_workspace.get("points") or []),
+        },
+    )
 
     return {
         "success": True,

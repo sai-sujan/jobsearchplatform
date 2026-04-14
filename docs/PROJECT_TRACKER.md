@@ -187,6 +187,14 @@ Reference:
 Reference:
 - [CHECKPOINT_18_MATCHED_JOB_TAILORING_AND_VERSIONS.md](./CHECKPOINT_18_MATCHED_JOB_TAILORING_AND_VERSIONS.md)
 
+### Checkpoint 19
+- Added matched-job document history API for stored resume versions
+- Resume generation, tailoring, and analysis saves now create matched-job timeline events
+- The job detail workspace now shows versioned resume history instead of relying only on one latest stored PDF path
+
+Reference:
+- [CHECKPOINT_19_DOCUMENT_HISTORY_AND_ACTIVITY.md](./CHECKPOINT_19_DOCUMENT_HISTORY_AND_ACTIVITY.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -200,6 +208,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - keep AI tailoring reachable from matched-job workspace APIs instead of legacy helper routes
 - continue deprecating or removing legacy Excel-only surfaces
 - improve application history and timeline UX
+- expand matched-job document history and activity visibility in the workspace
 
 ## Next implementation priorities
 1. Continue shrinking the legacy `jobs` table's role in recommendation delivery after internal delivery has been preferred in the feed and user state has been decoupled
@@ -242,6 +251,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
 - Some old tailoring and resume/version bookkeeping flows still exist in legacy routes even though the main workspace path is now matched-job-based
 - Resume upload path now supports both file and text intake, but still needs stronger production hardening
+- The UI now exposes document history, but the broader workspace activity feed is still status-heavy and not yet a unified audit view
 
 ## Operating rule
 Every major execution slice should update:
