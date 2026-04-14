@@ -40,6 +40,20 @@ def init_db():
             profile_columns = {column["name"] for column in inspector.get_columns('user_profiles')}
             if 'quality_filters' not in profile_columns:
                 connection.execute(text("ALTER TABLE user_profiles ADD COLUMN quality_filters JSON"))
+        if 'matched_jobs' in inspector.get_table_names():
+            matched_columns = {column["name"] for column in inspector.get_columns('matched_jobs')}
+            if 'ai_match_score' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_score FLOAT"))
+            if 'ai_match_confidence' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_confidence VARCHAR(20)"))
+            if 'ai_match_summary' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_summary TEXT"))
+            if 'ai_match_reasons' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_reasons JSON"))
+            if 'ai_match_cache_key' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_cache_key VARCHAR(80)"))
+            if 'ai_match_updated_at' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_updated_at DATETIME"))
 
 
 def get_db():

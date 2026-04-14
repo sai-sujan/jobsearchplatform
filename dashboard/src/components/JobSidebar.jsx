@@ -191,6 +191,14 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
 
   const [tailoring, setTailoring] = useState(false)
   const [tailorError, setTailorError] = useState('')
+  const [aiMatchLoading, setAiMatchLoading] = useState(false)
+  const [aiMatchError, setAiMatchError] = useState('')
+  const [aiMatch, setAiMatch] = useState({
+    score: job?.['AI Match Score'] ?? null,
+    confidence: job?.['AI Match Confidence'] || '',
+    summary: job?.['AI Match Summary'] || '',
+    reasons: job?.['AI Match Reasons'] || [],
+  })
 
   const [isSpecialInterest, setIsSpecialInterest] = useState(false)
   const [notesText, setNotesText] = useState('')
@@ -209,6 +217,14 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     setGenerateError('')
     setPdfUrl(null)
     setTailorError('')
+    setAiMatchLoading(false)
+    setAiMatchError('')
+    setAiMatch({
+      score: job?.['AI Match Score'] ?? null,
+      confidence: job?.['AI Match Confidence'] || '',
+      summary: job?.['AI Match Summary'] || '',
+      reasons: job?.['AI Match Reasons'] || [],
+    })
     setIsSpecialInterest(Boolean(job['Special Interest']))
     setNotesText(job['Notes'] || '')
     setNotesSaving(false)
@@ -225,6 +241,41 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = 'unset'
+    }
+  }, [job])
+
+  useEffect(() => {
+    if (!job?.id) return undefined
+
+    let cancelled = false
+    const loadAiMatch = async () => {
+      if (job['AI Match Summary']) {
+        return
+      }
+      setAiMatchLoading(true)
+      setAiMatchError('')
+      try {
+        const response = await api.get(`/api/jobs/${job.id}/match-intelligence`)
+        if (cancelled) return
+        const payload = response.data?.match_intelligence || {}
+        setAiMatch({
+          score: payload.ai_match_score ?? null,
+          confidence: payload.confidence || '',
+          summary: payload.summary || '',
+          reasons: payload.reasons || [],
+        })
+      } catch (error) {
+        if (cancelled) return
+        setAiMatchError(error?.response?.data?.detail || 'Unable to load AI match insights right now.')
+      } finally {
+        if (!cancelled) {
+          setAiMatchLoading(false)
+        }
+      }
+    }
+    loadAiMatch()
+    return () => {
+      cancelled = true
     }
   }, [job])
 
@@ -248,6 +299,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
       analysis: editedData,
       notes: notesText,
       matched_skills: matchedSkills,
+      ai_match: aiMatch,
     },
     null,
     2,
@@ -260,6 +312,13 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     { label: 'Search', value: job['Search Query'] || 'Imported opportunity' },
     { label: 'Saved', value: formatDisplayDate(job['Date Found']) },
   ]
+
+  const fitBreakdownItems = [
+    { label: 'Experience', value: job['Experience Fit'] },
+    { label: 'Resume', value: job['Resume Match'] },
+    { label: 'Role', value: job['Role Fit'] },
+    { label: 'Location', value: job['Location Fit'] },
+  ].filter((item) => typeof item.value === 'number')
 
   const handleEdit = () => {
     setEditMode(true)
@@ -717,10 +776,42 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                     <span className="section-caption">{matchedSkills.length} captured</span>
                   </div>
 
+                  {fitBreakdownItems.length > 0 && (
+                    <div className="snapshot-grid">
+                      {fitBreakdownItems.map((item) => (
+                        <div key={item.label} className="snapshot-card">
+                          <span>{item.label} fit</span>
+                          <strong>{item.value}%</strong>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
                   {job['Industry Fit'] && (
                     <p className="empty-copy">
                       <strong>{job['Industry Fit']}.</strong> {(job['Fit Reasons'] || []).join(' ')}
                     </p>
+                  )}
+
+                  {(aiMatch.summary || aiMatchLoading || aiMatchError) && (
+                    <div className="snapshot-card">
+                      <span>AI match read</span>
+                      <strong>
+                        {aiMatchLoading
+                          ? 'Reviewing fit...'
+                          : aiMatch.summary || 'AI match summary unavailable'}
+                      </strong>
+                      {!aiMatchLoading && aiMatch.score !== null && (
+                        <p className="empty-copy">
+                          {aiMatch.score}% confidence fit
+                          {aiMatch.confidence ? ` • ${aiMatch.confidence} confidence` : ''}
+                        </p>
+                      )}
+                      {!aiMatchLoading && aiMatch.reasons?.length > 0 && (
+                        <p className="empty-copy">{aiMatch.reasons.join(' ')}</p>
+                      )}
+                      {aiMatchError && <p className="empty-copy">{aiMatchError}</p>}
+                    </div>
                   )}
 
                   {matchedSkills.length > 0 ? (

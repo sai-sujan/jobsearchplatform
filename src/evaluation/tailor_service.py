@@ -1,6 +1,7 @@
 import json
 import random
 import os
+import hashlib
 from pathlib import Path
 from pydantic import BaseModel
 
@@ -20,77 +21,37 @@ except ImportError:
 class TailorServiceError(Exception):
     pass
 
-def generate_tailored_resume_data(job_description: str) -> dict:
-    """
-    Given a job description, uses the Groq LLM (with fallback rotation) 
-    to generate an ATS score, location, tailored tech stack, and points.
-    
-    Returns a dictionary matching the required JSON format.
-    Raises TailorServiceError if all keys/models fail.
-    """
-    if not hasattr(settings, 'GROQ_API_KEYS') or not settings.GROQ_API_KEYS:
-        raise TailorServiceError("GROQ_API_KEYS not configured in settings")
-        
-    prompt = f"""
-You are a Senior AI/ML Recruiter and ATS Optimization Specialist with 10+ years of experience. Your task is to analyze a candidate's resume against a job description and produce a tailored JSON output that maximizes ATS score while maintaining authenticity.
 
----
+def _truncate(text: str, limit: int) -> str:
+    text = (text or "").strip()
+    return text if len(text) <= limit else f"{text[:limit].rstrip()}..."
 
-## CANDIDATE PROFILE
 
-Name: Sujan Dora  
-Target Role: AI/ML Engineer (0-2 years experience)  
-Location: Springfield, MO, USA (Open to Relocate)
+def _cache_path(job_description: str) -> Path:
+    digest = hashlib.sha1(_truncate(job_description, settings.AI_TAILOR_MAX_JOB_CHARS).encode("utf-8")).hexdigest()
+    settings.ensure_directories()
+    return Path(settings.AI_CACHE_DIR) / f"tailor_{digest}.json"
 
----
 
-## MASTER RESUME - TECHNICAL SKILLS
+def _compact_tailor_prompt(job_description: str) -> str:
+    shortened_jd = _truncate(job_description, settings.AI_TAILOR_MAX_JOB_CHARS)
+    return f"""
+You are an ATS optimization assistant. Return only valid JSON.
 
-Programming Languages: Python, SQL  
-ML Frameworks & Libraries: TensorFlow, PyTorch, Scikit-learn, Hugging Face Transformers  
-LLM & NLP Tools: LangChain, LangGraph, LangSmith, LlamaIndex, Agents, Multi-Agents, LoRA, QLoRA, OpenAI, Ollama, RAG Systems  
-MLOps & Deployment: MLflow, Git, GitHub Actions, CI/CD Pipelines, Model Deployment  
-Cloud & Infrastructure: AWS (Lambda, S3, EC2, ECR, API Gateway)  
-Databases & AI Infrastructure: PostgreSQL, MySQL, Milvus, Weaviate, FAISS, MongoDB  
-Web & DevOps: FastAPI, Docker Containerization  
-ML Specializations: NLP, Computer Vision, Deep Learning, Anomaly Detection
+Candidate profile:
+- Target roles: AI Engineer, Machine Learning Engineer, Data Scientist
+- Seniority: early-career (0-2 years)
+- Core skills: Python, SQL, TensorFlow, PyTorch, Scikit-learn, Hugging Face, LangChain, LangGraph, RAG, MLflow, FastAPI, Docker, AWS, PostgreSQL
+- Domain strengths: NLP, LLM systems, anomaly detection, MLOps, experimentation
+- Location preference: use the job's location, otherwise Springfield, MO, USA (Open to relocate)
 
----
+Job description excerpt:
+{shortened_jd}
 
-## MASTER RESUME - EXPERIENCE BULLETS (AI/ML Engineer)
-
-1. Implemented a self-correcting RAG system using LangChain and Mistral 7B, improving answer reliability and mitigating context errors in document-level QA.
-2. Built a hybrid retrieval workflow combining dense embeddings and BM25 search, enhancing relevance and coverage of retrieved documents.
-3. Developed an LLM-as-Judge evaluation pipeline to assess faithfulness and relevance across hundreds of QA examples, ensuring production-ready reliability.
-4. Introduced batched query extraction, reducing LLM calls by ~80% per query and enabling faster, reliable production inference.
-5. Designed an ML-based anomaly detection system for MFA workflows, reducing redundant verification prompts by 25%, improving user experience while maintaining security coverage.
-
----
-
-## ADDITIONAL BULLETS (Use selectively based on JD focus)
-
-- Implemented CI/CD pipeline with GitHub Actions to automate model retraining and deployment to AWS (S3, ECR, API Gateway), ensuring reliable and repeatable ML releases.
-- Containerized and deployed ML solutions using Docker and AWS, enabling scalable production-ready pipelines for AI applications.
-- Built a multi-agent research workflow using CrewAI with PubMed retrieval via Model Context Protocol, enabling interactive biomedical QA.
-- Fine-tuned Llama-3.1-8B using QLoRA on domain-specific data with 4-bit quantization, gaining hands-on experience in parameter-efficient LLM training.
-- Built a National ID authentication system using YOLO object detection, MiDaS depth estimation, and GAN-generated synthetic samples for robust hologram verification.
-- Conducted exploratory data analysis on 30,000+ customer records to identify key features, achieving 87% model accuracy on predictive tasks.
-- Built end-to-end ML pipeline using ZenML and MLflow, deploying a REST API on AWS Lambda with Docker for automated training and inference.
-- Implemented a tool-using LLM agent (LangGraph/ReAct) with multi-channel frontends (Streamlit, Twilio WhatsApp) and integrated APIs for real-time outputs.
-
----
-
-## JOB DESCRIPTION
-
-{job_description}
-
----
-
-## OUTPUT FORMAT
-
+Return JSON with exactly these keys:
 {{
   "ats_score": <integer 55-95>,
-  "location": "<job location> (Open to relocate)",
+  "location": "<job location>",
   "tech_stack": {{
     "Programming Languages": [...],
     "ML Frameworks & Libraries": [...],
@@ -102,49 +63,38 @@ ML Specializations: NLP, Computer Vision, Deep Learning, Anomaly Detection
     "ML Specializations": [...]
   }},
   "points": [
-    "<bullet 1>",
-    "<bullet 2>",
-    "<bullet 3>",
-    "<bullet 4>",
-    "<bullet 5>"
+    "<bullet 1 under 115 chars>",
+    "<bullet 2 under 115 chars>",
+    "<bullet 3 under 115 chars>",
+    "<bullet 4 under 115 chars>",
+    "<bullet 5 under 115 chars>"
   ]
 }}
 
----
+Rules:
+- Reuse only skills that plausibly align with the candidate profile above.
+- Add JD keywords naturally, but keep bullets concise and specific.
+- Do not add explanation or markdown fences.
+""".strip()
 
-## DETAILED INSTRUCTIONS
+def generate_tailored_resume_data(job_description: str) -> dict:
+    """
+    Given a job description, uses the Groq LLM (with fallback rotation) 
+    to generate an ATS score, location, tailored tech stack, and points.
+    
+    Returns a dictionary matching the required JSON format.
+    Raises TailorServiceError if all keys/models fail.
+    """
+    if not hasattr(settings, 'GROQ_API_KEYS') or not settings.GROQ_API_KEYS:
+        raise TailorServiceError("GROQ_API_KEYS not configured in settings")
+    cache_path = _cache_path(job_description)
+    if cache_path.exists():
+        try:
+            return json.loads(cache_path.read_text())
+        except json.JSONDecodeError:
+            pass
 
-### 1. ATS SCORE CALCULATION
-- High (85-95): LLM/RAG/GenAI/Agentic AI roles, NLP-focused, LangChain/OpenAI mentioned, production ML
-- Medium (70-84): General ML Engineer, Data Science with some NLP, MLOps roles
-- Low (55-69): Pure CV (non-NLP), heavy Spark/Big Data, security red team, supply chain, roles requiring tech we don't have
-
-### 2. TECH STACK RULES — ATS OPTIMIZATION
-- Keep the exact 8 headings from the MASTER RESUME.
-- Base the lists on the candidate's existing skills.
-- CRITICAL: You MUST ADD all specific tools, libraries, frameworks, and methodologies mentioned in the JD (e.g., Vertix, DML, Sagemaker, Causal Inference) to the most logical category to ensure they pass the ATS keyword scanner.
-- Keep the original skills, but feel free to remove skills that are completely irrelevant to the JD to make room.
-
-### 3. BULLET POINT RULES
-- OVERRIDING GOAL: Maximize ATS Score (hit 90+) by embedding 3 to 5 highly specific JD keywords into the bullets.
-- STRICT ANTI-FLUFF RULE: Do NOT append generic buzzwords. Extract the EXACT specific hard tools, libraries, and methodologies from the JD and embed them naturally.
-- CRITICAL LENGTH CONSTRAINT: EVERY single bullet point MUST be UNDER 115 CHARACTERS TOTAL. This is a hard limit. Count the characters. If any bullet exceeds 115 characters, it will overflow the PDF and the resume is RUINED.
-- NO run-on sentences. NO orphan words. Remove all filler words. Be brutally concise. Prioritize technical impact.
-- Foundation: Use the 5 original experience bullets as your starting point.
-- For Bullets 1-4: Keep the underlying project, but dramatically shorten the phrasing and inject 2-3 JD-specific hard keywords.
-- For Bullet 5 (Flex Point): You have TOTAL FREEDOM. Rewrite it to target the most critical JD requirements not covered by bullets 1-4. Keep it under 115 characters.
-
-### 4. LOCATION RULE
-- Set the output "location" to the exact city/state from the JOB DESCRIPTION (e.g., "Austin, TX", "Seattle, WA").
-- Do NOT output the candidate's current location. Output the job's location.
-- If "Remote" or no location given, default to "Springfield, MO, USA (Open to relocate)".
-
-### 5. JSON RULES
-- Return ONLY valid JSON. No markdown code fences. No explanation text outside the JSON.
-- All keys (ats_score, location, tech_stack, points) MUST be present.
-- "points" must be exactly 5 strings, each under 115 characters.
-- Do NOT prepend \\item to the points.
-"""
+    prompt = _compact_tailor_prompt(job_description)
     import re
 
     # Reasoning models (like gpt-oss-120b) don't support response_format=json_object
@@ -177,7 +127,7 @@ ML Specializations: NLP, Computer Vision, Deep Learning, Anomaly Detection
         return None
 
     # Use 120B reasoning model as primary, 70B as reliable fallback
-    models_to_try = ["openai/gpt-oss-120b", settings.GROQ_MODEL]
+    models_to_try = [settings.GROQ_LIGHT_MODEL, "openai/gpt-oss-120b", settings.GROQ_MODEL]
     last_exception = None
     
     for model_name in models_to_try:
@@ -202,8 +152,8 @@ ML Specializations: NLP, Computer Vision, Deep Learning, Anomaly Detection
                         }
                     ],
                     "model": model_name,
-                    "temperature": 0.3,
-                    "max_tokens": 2000
+                    "temperature": 0.15,
+                    "max_tokens": settings.AI_TAILOR_MAX_TOKENS
                 }
                 
                 # Reasoning models don't support response_format
@@ -227,6 +177,11 @@ ML Specializations: NLP, Computer Vision, Deep Learning, Anomaly Detection
                 if not required_keys.issubset(tailored_data.keys()):
                     missing = required_keys - tailored_data.keys()
                     raise ValueError(f"Missing required keys in response: {missing}")
+
+                try:
+                    cache_path.write_text(json.dumps(tailored_data))
+                except OSError:
+                    pass
                 
                 print(f"[tailor_service] Success with model {model_name}")
                 return tailored_data

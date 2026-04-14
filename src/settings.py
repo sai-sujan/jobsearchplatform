@@ -68,6 +68,7 @@ class Settings:
     RESUMES_DIR = DATA_DIR / 'resumes'
     BACKUPS_DIR = DATA_DIR / 'backups'
     TEMP_LATEX_DIR = DATA_DIR / 'temp_latex'
+    AI_CACHE_DIR = DATA_DIR / 'ai_cache'
     LOCK_FILE = DATA_DIR / '.jobs_master.lock'
 
     # Config files
@@ -165,6 +166,15 @@ class Settings:
         k.strip() for k in _getenv('GROQ_API_KEYS', '').split(',') if k.strip()
     ]
     GROQ_MODEL = _getenv('GROQ_MODEL', 'llama-3.3-70b-versatile')
+    GROQ_LIGHT_MODEL = _getenv('GROQ_LIGHT_MODEL', 'llama-3.1-8b-instant')
+    AI_MATCH_ENABLED = _getenv('AI_MATCH_ENABLED', 'True').lower() == 'true'
+    AI_MATCH_MODEL = _getenv('AI_MATCH_MODEL', '')
+    AI_MATCH_MAX_RESUME_CHARS = int(_getenv('AI_MATCH_MAX_RESUME_CHARS', '1400'))
+    AI_MATCH_MAX_JOB_CHARS = int(_getenv('AI_MATCH_MAX_JOB_CHARS', '1800'))
+    AI_MATCH_MAX_SKILLS = int(_getenv('AI_MATCH_MAX_SKILLS', '12'))
+    AI_MATCH_MAX_TOKENS = int(_getenv('AI_MATCH_MAX_TOKENS', '350'))
+    AI_TAILOR_MAX_JOB_CHARS = int(_getenv('AI_TAILOR_MAX_JOB_CHARS', '2200'))
+    AI_TAILOR_MAX_TOKENS = int(_getenv('AI_TAILOR_MAX_TOKENS', '700'))
 
     # === API SERVER ===
     API_HOST = _getenv('API_HOST', '0.0.0.0')
@@ -195,7 +205,7 @@ class Settings:
         """Create all required data directories."""
         for d in [self.DATA_DIR, self.ANALYSIS_DIR, self.JOB_DESC_DIR,
                   self.RESUMES_DIR, self.BACKUPS_DIR, self.TEMP_LATEX_DIR,
-                  self.LOGS_DIR]:
+                  self.LOGS_DIR, self.AI_CACHE_DIR]:
             d.mkdir(parents=True, exist_ok=True)
 
 

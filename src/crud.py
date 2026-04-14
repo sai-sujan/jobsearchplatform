@@ -223,7 +223,11 @@ def count_user_jobs(
     )
 
 
-def job_passes_quality_filters(job: Job, quality_filters: Optional[Dict]) -> bool:
+def job_passes_quality_filters(
+    job: Job,
+    quality_filters: Optional[Dict],
+    match_score_override: Optional[int] = None,
+) -> bool:
     """Apply user-controlled quality filters to candidate jobs."""
     if not quality_filters:
         return True
@@ -242,7 +246,7 @@ def job_passes_quality_filters(job: Job, quality_filters: Optional[Dict]) -> boo
     if preferred_sources and normalized_source not in preferred_sources:
         return False
 
-    match_score = int(job.skill_score or job.ats_score or 0)
+    match_score = int(match_score_override if match_score_override is not None else (job.skill_score or job.ats_score or 0))
     minimum_match_score = int(quality_filters.get("minimum_match_score") or 0)
     if match_score < minimum_match_score:
         return False
@@ -422,6 +426,7 @@ def count_user_matched_jobs(
 def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
     """Materialize the user-facing matched_jobs read model from legacy jobs."""
     profile = get_or_create_profile(db, user_id)
+    resume_asset = get_active_resume_asset(db, user_id)
     quality_filters = profile.quality_filters or {}
     all_jobs = get_user_jobs(
         db,
@@ -437,8 +442,12 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
     active_job_ids = set()
 
     for job in all_jobs:
-        fit_snapshot = build_current_fit_snapshot(job, profile)
-        passes_filters = job_passes_quality_filters(job, quality_filters)
+        fit_snapshot = build_current_fit_snapshot(job, profile, resume_asset=resume_asset)
+        passes_filters = job_passes_quality_filters(
+            job,
+            quality_filters,
+            match_score_override=fit_snapshot["overall_fit_score"],
+        )
         matched_job = existing.get(job.id)
         active_job_ids.add(job.id)
 
@@ -456,6 +465,10 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
         matched_job.fit_score = float(fit_snapshot["overall_fit_score"])
         matched_job.base_skill_score = float(fit_snapshot["base_skill_score"])
         matched_job.industry_boost = float(fit_snapshot["industry_boost"])
+        matched_job.experience_fit_score = float(fit_snapshot["experience_fit_score"])
+        matched_job.resume_match_score = float(fit_snapshot["resume_match_score"])
+        matched_job.role_fit_score = float(fit_snapshot["role_fit_score"])
+        matched_job.location_fit_score = float(fit_snapshot["location_fit_score"])
         matched_job.industry_fit_label = fit_snapshot["industry_fit_label"] or None
         matched_job.job_industries = fit_snapshot["job_industries"]
         matched_job.matched_industries = fit_snapshot["matched_industries"]

@@ -82,25 +82,43 @@ Reference:
 Reference:
 - [CHECKPOINT_06_MATCHED_JOBS.md](./CHECKPOINT_06_MATCHED_JOBS.md)
 
+### Checkpoint 07
+- Kept recommendation feeds deterministic and cheap while adding on-demand AI match enrichment for a single opened job
+- Added cached `ai_match_*` fields to `matched_jobs` so repeat views do not spend tokens again
+- Reduced resume-tailoring prompt size and added file-backed cache reuse to cut model cost and latency
+
+Reference:
+- [CHECKPOINT_07_AI_OPTIMIZATION.md](./CHECKPOINT_07_AI_OPTIMIZATION.md)
+
+### Checkpoint 08
+- Added composite deterministic scoring to `matched_jobs`
+- Stored explicit component scores for:
+  - experience fit
+  - resume match
+  - role fit
+  - location fit
+- Moved minimum-match suppression to use the delivered overall fit score instead of the raw legacy job score
+- Surfaced the component fit breakdown in the job detail view
+
+Reference:
+- [CHECKPOINT_08_DETERMINISTIC_SCORING.md](./CHECKPOINT_08_DETERMINISTIC_SCORING.md)
+
 ## Current active slice
-Expand delivery scoring inside `matched_jobs`:
-- add explicit experience-fit
-- add explicit resume-match
-- preserve industry affinity as a stored fit component
-- add richer why-it-matched reasons
-- prepare for canonical ingestion to write directly into the delivery model
+Move delivery logic closer to a real recommendation pipeline:
+- preserve deterministic composite scoring inside `matched_jobs`
+- keep AI enrichment secondary, cached, and detail-only
+- add stronger delivery-time freshness and suppression rules
+- prepare canonical ingestion to write directly into the delivery model
 
 ## Next implementation priorities
-1. Add `matched_jobs` as the real delivery/read model
-2. Build deterministic candidate scoring:
-   - experience fit
-   - resume match
-   - role/skills fit
-   - industry affinity
-   - location/work mode fit
-3. Move current quality filters from read-time filtering into delivery-time scoring and suppression
-4. Switch user-facing feed APIs to read from `matched_jobs`
-5. Surface clearer “why this matched” signals in the UI
+1. Add delivery-time freshness and staleness rules so stale jobs decay or suppress automatically
+2. Preserve richer deterministic “why this matched” signals across the UI
+3. Keep AI token spend limited to:
+   - single-job match intelligence
+   - cached resume tailoring
+   - future async reranking only for top candidates
+4. Prepare canonical ingestion to write directly into `matched_jobs`
+5. Add application-event history instead of status-only overwrites
 
 ## Scoring direction notes
 - Industry affinity should be a first-class positive signal in recommendation scoring.
@@ -111,6 +129,20 @@ Expand delivery scoring inside `matched_jobs`:
   - onboarding-selected industries
   - company/domain signals from the canonical job record
 - The future `matched_jobs` scoring breakdown should explicitly store whether industry affinity contributed to the match.
+
+## AI optimization notes
+- Feed ranking should remain deterministic by default so list views stay fast, predictable, and cheap.
+- AI should not run for every job in the feed.
+- AI should be used only for:
+  - on-demand match intelligence for one opened job
+  - cached resume tailoring / PDF preparation
+  - future async reranking for only the strongest candidates if needed
+- Any AI enrichment must cache by compact profile + resume excerpt + job excerpt hash so repeated views reuse the same result.
+- Token budgets should be explicit and conservative:
+  - compact resume excerpt
+  - compact job description excerpt
+  - bounded skills list
+  - short JSON-only output
 
 ## Open risks
 - Current canonical source is still the legacy user-owned `jobs` table, even though the web app now reads `matched_jobs`

@@ -18,6 +18,7 @@ from src.crud import (
     update_job,
     update_matched_job,
 )
+from src.ai_match_service import AIMatchError, maybe_enrich_matched_job_with_ai
 from src.models import MatchedJob, User
 
 router = APIRouter(prefix="/api", tags=["jobs"])
@@ -59,11 +60,19 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
         "Skill Score": match_score,
         "Fit Score": match_score,
         "Base Skill Score": int(matched_job.base_skill_score or 0),
+        "Experience Fit": int(matched_job.experience_fit_score or 0) if matched_job.experience_fit_score is not None else None,
+        "Resume Match": int(matched_job.resume_match_score or 0) if matched_job.resume_match_score is not None else None,
+        "Role Fit": int(matched_job.role_fit_score or 0) if matched_job.role_fit_score is not None else None,
+        "Location Fit": int(matched_job.location_fit_score or 0) if matched_job.location_fit_score is not None else None,
         "Industry": ", ".join(matched_job.job_industries or []),
         "Industry Fit": matched_job.industry_fit_label or "",
         "Industry Boost": int(matched_job.industry_boost or 0),
         "Matched Industries": ", ".join(matched_job.matched_industries or []),
         "Fit Reasons": matched_job.fit_reasons or [],
+        "AI Match Score": int(matched_job.ai_match_score or 0) if matched_job.ai_match_score is not None else None,
+        "AI Match Confidence": matched_job.ai_match_confidence or "",
+        "AI Match Summary": matched_job.ai_match_summary or "",
+        "AI Match Reasons": matched_job.ai_match_reasons or [],
         "Tier": job.tier or tier,
         "Delivery Status": matched_job.delivery_status,
         "Special Interest": bool(matched_job.special_interest),
@@ -92,6 +101,22 @@ def require_matched_job(db: Session, user_id: int, matched_job_id: int) -> Match
     if not matched_job:
         raise HTTPException(status_code=404, detail="Job not found")
     return matched_job
+
+
+def load_match_intelligence(db: Session, user: User, matched_job: MatchedJob, force: bool = False) -> dict:
+    """Return cached or freshly generated AI match intelligence for one matched job."""
+    profile = get_or_create_profile(db, user.id)
+    resume_asset = next((asset for asset in user.resume_assets if asset.is_active), None)
+    try:
+        return maybe_enrich_matched_job_with_ai(db, profile, resume_asset, matched_job, force=force)
+    except AIMatchError as error:
+        return {
+            "ai_match_score": int(matched_job.fit_score or 0),
+            "confidence": "low",
+            "summary": str(error),
+            "reasons": matched_job.fit_reasons or [],
+            "cached": False,
+        }
 
 
 class JobUpdate(BaseModel):
@@ -177,6 +202,23 @@ def get_single_job(job_id: int, db: Session = Depends(get_db), user: User = Depe
     refresh_user_delivery(db, user.id)
     matched_job = require_matched_job(db, user.id, job_id)
     return serialize_matched_job(matched_job)
+
+
+@router.get("/jobs/{job_id}/match-intelligence")
+def get_match_intelligence(
+    job_id: int,
+    force: bool = Query(False),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Return low-token cached AI match intelligence for a single delivered job."""
+    refresh_user_delivery(db, user.id)
+    matched_job = require_matched_job(db, user.id, job_id)
+    result = load_match_intelligence(db, user, matched_job, force=force)
+    return {
+        "job_id": matched_job.id,
+        "match_intelligence": result,
+    }
 
 
 @router.patch("/jobs/{job_id}/status", dependencies=[Depends(require_csrf)])
