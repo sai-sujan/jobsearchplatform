@@ -423,6 +423,41 @@ def count_user_matched_jobs(
     return query.count()
 
 
+def _apply_fit_snapshot_to_matched_job(
+    matched_job: MatchedJob,
+    job: Job,
+    fit_snapshot: Dict,
+    quality_filters: Optional[Dict],
+) -> MatchedJob:
+    """Apply scoring and delivery-state decisions to a matched job."""
+    passes_filters = job_passes_quality_filters(
+        job,
+        quality_filters,
+        match_score_override=fit_snapshot["overall_fit_score"],
+    )
+    stale_for_delivery = fit_snapshot.get("stale_for_delivery", False)
+    keep_visible = matched_job.user_status in {'applied', 'interviewing', 'accepted'}
+    if stale_for_delivery and not keep_visible:
+        matched_job.delivery_status = 'stale'
+    else:
+        matched_job.delivery_status = 'active' if passes_filters else 'suppressed'
+
+    matched_job.fit_score = float(fit_snapshot["overall_fit_score"])
+    matched_job.base_skill_score = float(fit_snapshot["base_skill_score"])
+    matched_job.industry_boost = float(fit_snapshot["industry_boost"])
+    matched_job.experience_fit_score = float(fit_snapshot["experience_fit_score"])
+    matched_job.resume_match_score = float(fit_snapshot["resume_match_score"])
+    matched_job.role_fit_score = float(fit_snapshot["role_fit_score"])
+    matched_job.location_fit_score = float(fit_snapshot["location_fit_score"])
+    matched_job.freshness_score = float(fit_snapshot["freshness_score"])
+    matched_job.freshness_label = fit_snapshot["freshness_label"] or None
+    matched_job.industry_fit_label = fit_snapshot["industry_fit_label"] or None
+    matched_job.job_industries = fit_snapshot["job_industries"]
+    matched_job.matched_industries = fit_snapshot["matched_industries"]
+    matched_job.fit_reasons = fit_snapshot["fit_reasons"]
+    return matched_job
+
+
 def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
     """Materialize the user-facing matched_jobs read model from legacy jobs."""
     profile = get_or_create_profile(db, user_id)
@@ -443,11 +478,6 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
 
     for job in all_jobs:
         fit_snapshot = build_current_fit_snapshot(job, profile, resume_asset=resume_asset)
-        passes_filters = job_passes_quality_filters(
-            job,
-            quality_filters,
-            match_score_override=fit_snapshot["overall_fit_score"],
-        )
         matched_job = existing.get(job.id)
         active_job_ids.add(job.id)
 
@@ -461,25 +491,7 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
             db.add(matched_job)
 
         matched_job.user_status = job.status or matched_job.user_status or 'not_applied'
-        stale_for_delivery = fit_snapshot.get("stale_for_delivery", False)
-        keep_visible = matched_job.user_status in {'applied', 'interviewing', 'accepted'}
-        if stale_for_delivery and not keep_visible:
-            matched_job.delivery_status = 'stale'
-        else:
-            matched_job.delivery_status = 'active' if passes_filters else 'suppressed'
-        matched_job.fit_score = float(fit_snapshot["overall_fit_score"])
-        matched_job.base_skill_score = float(fit_snapshot["base_skill_score"])
-        matched_job.industry_boost = float(fit_snapshot["industry_boost"])
-        matched_job.experience_fit_score = float(fit_snapshot["experience_fit_score"])
-        matched_job.resume_match_score = float(fit_snapshot["resume_match_score"])
-        matched_job.role_fit_score = float(fit_snapshot["role_fit_score"])
-        matched_job.location_fit_score = float(fit_snapshot["location_fit_score"])
-        matched_job.freshness_score = float(fit_snapshot["freshness_score"])
-        matched_job.freshness_label = fit_snapshot["freshness_label"] or None
-        matched_job.industry_fit_label = fit_snapshot["industry_fit_label"] or None
-        matched_job.job_industries = fit_snapshot["job_industries"]
-        matched_job.matched_industries = fit_snapshot["matched_industries"]
-        matched_job.fit_reasons = fit_snapshot["fit_reasons"]
+        _apply_fit_snapshot_to_matched_job(matched_job, job, fit_snapshot, quality_filters)
         matched_job.special_interest = bool(job.special_interest)
         matched_job.notes = job.notes or matched_job.notes or ""
 
@@ -528,6 +540,148 @@ def create_application_event(
     db.commit()
     db.refresh(event)
     return event
+
+
+def upsert_delivered_job_for_user(
+    db: Session,
+    user_id: int,
+    job_data: Dict,
+    *,
+    preserve_user_state: bool = True,
+) -> MatchedJob:
+    """Create or update one delivered job for a user via the internal pipeline boundary."""
+    profile = get_or_create_profile(db, user_id)
+    resume_asset = get_active_resume_asset(db, user_id)
+    quality_filters = profile.quality_filters or {}
+
+    job_link = (job_data.get("job_link") or "").strip()
+    if not job_link:
+        raise ValueError("job_link is required")
+
+    job = (
+        db.query(Job)
+        .filter(Job.user_id == user_id, Job.job_link == job_link)
+        .first()
+    )
+    if job is None:
+        job = Job(
+            user_id=user_id,
+            job_link=job_link,
+            source=(job_data.get("source") or "web").lower(),
+            company=job_data.get("company") or "Unknown company",
+            title=job_data.get("title") or "Untitled role",
+        )
+        db.add(job)
+        db.flush()
+
+    simple_fields = [
+        "company",
+        "title",
+        "location",
+        "job_description",
+        "role_type",
+        "search_query",
+        "tier",
+        "ai_evaluation",
+        "resume_path",
+    ]
+    for field in simple_fields:
+        if field in job_data and job_data[field] is not None:
+            setattr(job, field, job_data[field])
+
+    if job_data.get("source") is not None:
+        job.source = str(job_data["source"]).lower()
+
+    for field in ["skill_score", "ats_score"]:
+        if field in job_data and job_data[field] is not None:
+            setattr(job, field, float(job_data[field]))
+
+    for field in ["matched_skills", "missing_skills", "premium_indicators"]:
+        if field in job_data and job_data[field] is not None:
+            setattr(job, field, job_data[field])
+
+    for field in ["is_premium", "special_interest", "is_new"]:
+        if field in job_data and job_data[field] is not None:
+            setattr(job, field, bool(job_data[field]))
+
+    if job_data.get("posting_date") is not None:
+        job.posting_date = job_data["posting_date"]
+    if job_data.get("date_added") is not None:
+        job.date_added = job_data["date_added"]
+
+    incoming_status = job_data.get("status") or "not_applied"
+    if not preserve_user_state or not job.status:
+        job.status = incoming_status
+    if not preserve_user_state and "notes" in job_data:
+        job.notes = job_data.get("notes") or ""
+    elif job_data.get("notes") and not job.notes:
+        job.notes = job_data.get("notes") or ""
+
+    matched_job = (
+        db.query(MatchedJob)
+        .filter(MatchedJob.user_id == user_id, MatchedJob.job_id == job.id)
+        .first()
+    )
+    if matched_job is None:
+        matched_job = MatchedJob(
+            user_id=user_id,
+            job_id=job.id,
+            user_status=job.status or incoming_status,
+            special_interest=bool(job.special_interest),
+            notes=job.notes or "",
+        )
+        db.add(matched_job)
+        db.flush()
+    elif not preserve_user_state:
+        matched_job.user_status = incoming_status
+        matched_job.special_interest = bool(job.special_interest)
+        matched_job.notes = job.notes or ""
+
+    fit_snapshot = build_current_fit_snapshot(job, profile, resume_asset=resume_asset)
+    _apply_fit_snapshot_to_matched_job(matched_job, job, fit_snapshot, quality_filters)
+    matched_job.special_interest = bool(job.special_interest)
+    matched_job.notes = job.notes or matched_job.notes or ""
+
+    db.commit()
+    db.refresh(job)
+    db.refresh(matched_job)
+    return matched_job
+
+
+def sync_delivered_jobs_for_user(
+    db: Session,
+    user_id: int,
+    delivered_jobs: List[Dict],
+    *,
+    replace_existing: bool = False,
+    preserve_user_state: bool = True,
+) -> List[MatchedJob]:
+    """Upsert a batch of delivered jobs and optionally archive missing active deliveries."""
+    upserted = []
+    delivered_links = set()
+    for job_data in delivered_jobs:
+        matched_job = upsert_delivered_job_for_user(
+            db,
+            user_id,
+            job_data,
+            preserve_user_state=preserve_user_state,
+        )
+        upserted.append(matched_job)
+        delivered_links.add(matched_job.job.job_link)
+
+    if replace_existing:
+        existing_rows = (
+            db.query(MatchedJob)
+            .join(Job, MatchedJob.job_id == Job.id)
+            .filter(MatchedJob.user_id == user_id, MatchedJob.delivery_status.in_(["active", "suppressed", "stale"]))
+            .all()
+        )
+        for row in existing_rows:
+            if row.job.job_link not in delivered_links and row.user_status not in {"applied", "interviewing", "accepted"}:
+                row.delivery_status = "archived"
+        db.commit()
+
+    return upserted
 
 
 def get_application_events(db: Session, matched_job_id: int) -> List[ApplicationEvent]:

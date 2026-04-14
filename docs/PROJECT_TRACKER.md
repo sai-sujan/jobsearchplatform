@@ -122,17 +122,26 @@ Reference:
 Reference:
 - [CHECKPOINT_10_SECURITY_AND_TIMELINE.md](./CHECKPOINT_10_SECURITY_AND_TIMELINE.md)
 
+### Checkpoint 11
+- Added an internal delivery API at `/internal/v1/jobs/deliver`
+- Internal pipeline calls can now upsert delivered jobs for a user directly into the recommendation path
+- Added service-token protection for internal endpoints using `X-Internal-Token`
+- This provides a cleaner write boundary for ingestion/matching without changing the live user-facing feed APIs
+
+Reference:
+- [CHECKPOINT_11_INTERNAL_DELIVERY_API.md](./CHECKPOINT_11_INTERNAL_DELIVERY_API.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
 - keep AI enrichment secondary, cached, and detail-only
 - keep stronger delivery-time freshness and suppression rules stable
-- prepare canonical ingestion to write directly into the delivery model
+- use the new internal delivery API as the path toward canonical ingestion
 - continue deprecating or removing legacy Excel-only surfaces
 - improve application history and timeline UX
 
 ## Next implementation priorities
-1. Prepare canonical ingestion to write directly into `matched_jobs`
+1. Continue reducing runtime dependence on legacy Excel refresh paths
 2. Preserve richer deterministic “why this matched” signals across the UI
 3. Keep AI token spend limited to:
    - single-job match intelligence

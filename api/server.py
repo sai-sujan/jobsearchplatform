@@ -20,6 +20,7 @@ from src.utils import sanitize_job_title
 from src.database import init_db
 from api.auth import router as auth_router
 from api.deps import get_current_user, require_csrf
+from api.internal import router as internal_router
 from api.jobs import router as jobs_router
 from api.onboarding import router as onboarding_router
 from src.models import User
@@ -31,6 +32,7 @@ app = FastAPI()
 
 # Include routers
 app.include_router(auth_router)
+app.include_router(internal_router)
 app.include_router(onboarding_router)
 app.include_router(jobs_router)
 

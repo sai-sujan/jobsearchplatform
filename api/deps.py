@@ -4,6 +4,7 @@ FastAPI shared dependencies for auth-aware routes.
 
 from datetime import datetime, timedelta, timezone
 import secrets
+import secrets as secrets_compare
 
 from fastapi import Cookie, Depends, Header, HTTPException, Request, Response, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -138,12 +139,22 @@ def require_csrf(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid CSRF token")
 
 
+def require_internal_token(x_internal_token: str = Header(default="", alias="X-Internal-Token")):
+    """Validate internal service-to-service requests."""
+    configured = settings.INTERNAL_API_TOKEN or ""
+    if not configured:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Internal API token is not configured")
+    if not x_internal_token or not secrets_compare.compare_digest(x_internal_token, configured):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid internal token")
+
+
 __all__ = [
     "clear_session_cookies",
     "create_access_token",
     "get_current_user",
     "get_db",
     "get_session_payload",
+    "require_internal_token",
     "require_csrf",
     "set_session_cookies",
 ]

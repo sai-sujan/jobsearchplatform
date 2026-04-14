@@ -190,6 +190,7 @@ class Settings:
     SESSION_EXPIRES_HOURS = int(_getenv('SESSION_EXPIRES_HOURS', '24'))
     COOKIE_SECURE = _getenv('COOKIE_SECURE', 'False').lower() == 'true'
     COOKIE_SAMESITE = _getenv('COOKIE_SAMESITE', 'lax')
+    INTERNAL_API_TOKEN = _getenv('INTERNAL_API_TOKEN', '')
 
     # === DATABASE ===
     DB_PATH = DATA_DIR / 'jobs.db'
