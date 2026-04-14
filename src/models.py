@@ -181,6 +181,8 @@ class MatchedJob(Base):
     resume_match_score = Column(Float, nullable=True)
     role_fit_score = Column(Float, nullable=True)
     location_fit_score = Column(Float, nullable=True)
+    freshness_score = Column(Float, nullable=True)
+    freshness_label = Column(String(120), nullable=True)
     industry_fit_label = Column(String(120), nullable=True)
     job_industries = Column(JSON, nullable=False, default=list)
     matched_industries = Column(JSON, nullable=False, default=list)
@@ -198,6 +200,23 @@ class MatchedJob(Base):
 
     user = relationship('User', back_populates='matched_jobs')
     job = relationship('Job', back_populates='matched_jobs')
+    application_events = relationship('ApplicationEvent', back_populates='matched_job', cascade='all, delete-orphan')
+
+
+class ApplicationEvent(Base):
+    """Timeline events for a delivered matched job."""
+    __tablename__ = 'application_events'
+
+    id = Column(Integer, primary_key=True)
+    matched_job_id = Column(Integer, ForeignKey('matched_jobs.id'), nullable=False, index=True)
+    event_type = Column(String(50), nullable=False, default='status_changed')
+    old_status = Column(String(50), nullable=True)
+    new_status = Column(String(50), nullable=True)
+    actor = Column(String(50), nullable=False, default='user')
+    metadata_json = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+    matched_job = relationship('MatchedJob', back_populates='application_events')
 
 
 class Resume(Base):

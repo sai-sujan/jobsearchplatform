@@ -103,22 +103,43 @@ Reference:
 Reference:
 - [CHECKPOINT_08_DETERMINISTIC_SCORING.md](./CHECKPOINT_08_DETERMINISTIC_SCORING.md)
 
+### Checkpoint 09
+- Added freshness scoring and stale-delivery handling
+- Fresh jobs now receive a boost inside the delivered fit score
+- Old untouched jobs can be marked `stale` so they stop crowding the active recommendations feed
+
+Reference:
+- [CHECKPOINT_09_FRESHNESS_AND_STALENESS.md](./CHECKPOINT_09_FRESHNESS_AND_STALENESS.md)
+
+### Checkpoint 10
+- Added application-event timeline storage for matched jobs
+- Status changes now create real history instead of only overwriting the latest state
+- Locked down legacy high-risk endpoints in `api/server.py`:
+  - unauthenticated config access blocked
+  - unauthenticated Excel mutation endpoints blocked
+  - resume-download traversal blocked
+
+Reference:
+- [CHECKPOINT_10_SECURITY_AND_TIMELINE.md](./CHECKPOINT_10_SECURITY_AND_TIMELINE.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
 - keep AI enrichment secondary, cached, and detail-only
-- add stronger delivery-time freshness and suppression rules
+- keep stronger delivery-time freshness and suppression rules stable
 - prepare canonical ingestion to write directly into the delivery model
+- continue deprecating or removing legacy Excel-only surfaces
+- improve application history and timeline UX
 
 ## Next implementation priorities
-1. Add delivery-time freshness and staleness rules so stale jobs decay or suppress automatically
+1. Prepare canonical ingestion to write directly into `matched_jobs`
 2. Preserve richer deterministic “why this matched” signals across the UI
 3. Keep AI token spend limited to:
    - single-job match intelligence
    - cached resume tailoring
    - future async reranking only for top candidates
-4. Prepare canonical ingestion to write directly into `matched_jobs`
-5. Add application-event history instead of status-only overwrites
+4. Continue retiring legacy Excel/config endpoints from the runtime path
+5. Expand application history and notes into a more complete activity feed
 
 ## Scoring direction notes
 - Industry affinity should be a first-class positive signal in recommendation scoring.

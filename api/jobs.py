@@ -10,8 +10,10 @@ from sqlalchemy.orm import Session
 
 from api.deps import get_current_user, get_db, require_csrf
 from src.crud import (
+    create_application_event,
     count_user_matched_jobs,
     get_matched_job,
+    get_application_events,
     get_or_create_profile,
     get_user_matched_jobs,
     sync_user_matched_jobs,
@@ -64,6 +66,8 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
         "Resume Match": int(matched_job.resume_match_score or 0) if matched_job.resume_match_score is not None else None,
         "Role Fit": int(matched_job.role_fit_score or 0) if matched_job.role_fit_score is not None else None,
         "Location Fit": int(matched_job.location_fit_score or 0) if matched_job.location_fit_score is not None else None,
+        "Freshness Score": int(matched_job.freshness_score or 0) if matched_job.freshness_score is not None else None,
+        "Freshness": matched_job.freshness_label or "",
         "Industry": ", ".join(matched_job.job_industries or []),
         "Industry Fit": matched_job.industry_fit_label or "",
         "Industry Boost": int(matched_job.industry_boost or 0),
@@ -117,6 +121,19 @@ def load_match_intelligence(db: Session, user: User, matched_job: MatchedJob, fo
             "reasons": matched_job.fit_reasons or [],
             "cached": False,
         }
+
+
+def serialize_application_event(event) -> dict:
+    """Serialize timeline events for the job detail workspace."""
+    return {
+        "id": event.id,
+        "event_type": event.event_type,
+        "old_status": event.old_status or "",
+        "new_status": event.new_status or "",
+        "actor": event.actor,
+        "metadata": event.metadata_json or {},
+        "created_at": event.created_at.isoformat() if event.created_at else None,
+    }
 
 
 class JobUpdate(BaseModel):
@@ -221,6 +238,21 @@ def get_match_intelligence(
     }
 
 
+@router.get("/jobs/{job_id}/events")
+def get_job_events(
+    job_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Return application timeline events for one delivered job."""
+    matched_job = require_matched_job(db, user.id, job_id)
+    events = get_application_events(db, matched_job.id)
+    return {
+        "job_id": matched_job.id,
+        "events": [serialize_application_event(event) for event in events],
+    }
+
+
 @router.patch("/jobs/{job_id}/status", dependencies=[Depends(require_csrf)])
 def update_job_status(
     job_id: int,
@@ -230,8 +262,18 @@ def update_job_status(
 ):
     """Update application status for a delivered matched job."""
     matched_job = require_matched_job(db, user.id, job_id)
+    old_status = matched_job.user_status
     update_job(db, matched_job.job_id, user.id, status=status)
     update_matched_job(db, job_id, user.id, user_status=status)
+    if old_status != status:
+        create_application_event(
+            db,
+            matched_job.id,
+            event_type="status_changed",
+            old_status=old_status,
+            new_status=status,
+            actor="user",
+        )
     return {"message": "Status updated"}
 
 

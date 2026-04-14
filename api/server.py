@@ -3,7 +3,7 @@ FastAPI Backend for Job Dashboard
 Watches jobs_master.xlsx and serves data via REST API
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -19,8 +19,10 @@ from src.settings import settings
 from src.utils import sanitize_job_title
 from src.database import init_db
 from api.auth import router as auth_router
+from api.deps import get_current_user, require_csrf
 from api.jobs import router as jobs_router
 from api.onboarding import router as onboarding_router
+from src.models import User
 
 # Initialize database
 init_db()
@@ -42,6 +44,11 @@ app.add_middleware(
 )
 
 EXCEL_FILE = str(settings.MASTER_EXCEL)
+
+
+def reject_legacy_endpoint(_user: User = Depends(get_current_user)):
+    """Block deprecated legacy endpoints from the new user-facing product."""
+    raise HTTPException(status_code=410, detail="Legacy endpoint retired. Use the user web app APIs instead.")
 
 
 def build_job_id(job: dict, fallback_index: int) -> str:
@@ -108,7 +115,7 @@ def get_file_modified_time():
     return None
 
 @app.get("/api/legacy/jobs")
-def get_legacy_jobs():
+def get_legacy_jobs(_legacy_block: None = Depends(reject_legacy_endpoint)):
     """Get all jobs from Excel file"""
     try:
         if not os.path.exists(EXCEL_FILE):
@@ -377,8 +384,8 @@ class UpdateStatusRequest(BaseModel):
     row_index: int
     status: str
 
-@app.post("/api/update-status")
-def update_status(request: UpdateStatusRequest):
+@app.post("/api/update-status", dependencies=[Depends(require_csrf)])
+def update_status(request: UpdateStatusRequest, _legacy_block: None = Depends(reject_legacy_endpoint)):
     """Update job status in Excel"""
     try:
         # Read Excel file
@@ -406,8 +413,8 @@ class UpdateSpecialInterestRequest(BaseModel):
     row_index: int
     special_interest: bool
 
-@app.post("/api/update-special-interest")
-def update_special_interest(request: UpdateSpecialInterestRequest):
+@app.post("/api/update-special-interest", dependencies=[Depends(require_csrf)])
+def update_special_interest(request: UpdateSpecialInterestRequest, _legacy_block: None = Depends(reject_legacy_endpoint)):
     """Update job special interest flag in Excel"""
     try:
         df = pd.read_excel(EXCEL_FILE, sheet_name=0)
@@ -427,8 +434,8 @@ class UpdateNotesRequest(BaseModel):
     row_index: int
     notes: str
 
-@app.post("/api/update-notes")
-def update_notes(request: UpdateNotesRequest):
+@app.post("/api/update-notes", dependencies=[Depends(require_csrf)])
+def update_notes(request: UpdateNotesRequest, _legacy_block: None = Depends(reject_legacy_endpoint)):
     """Update job notes in Excel"""
     try:
         df = pd.read_excel(EXCEL_FILE, sheet_name=0)
@@ -599,12 +606,21 @@ def generate_resume(request: GenerateResumeRequest):
 def download_resume(filename: str):
     """Download generated resume PDF"""
     from fastapi.responses import FileResponse
-    
-    pdf_path = settings.RESUMES_DIR / filename
-    
+
+    requested = Path(filename)
+    if requested.name != filename or ".." in requested.parts:
+        raise HTTPException(status_code=404, detail="PDF not found")
+
+    base_dir = settings.RESUMES_DIR.resolve()
+    pdf_path = (base_dir / filename).resolve()
+    try:
+        pdf_path.relative_to(base_dir)
+    except ValueError:
+        raise HTTPException(status_code=404, detail="PDF not found")
+
     if not pdf_path.exists():
         raise HTTPException(status_code=404, detail="PDF not found")
-    
+
     return FileResponse(
         path=pdf_path,
         media_type='application/pdf',
@@ -688,7 +704,7 @@ def list_backups():
 # ==================== CONFIGURATION ENDPOINTS ====================
 
 @app.get("/api/config")
-def get_config():
+def get_config(_legacy_block: None = Depends(reject_legacy_endpoint)):
     """Get all configuration"""
     try:
         config_data = {}
@@ -742,8 +758,8 @@ class UpdateConfigRequest(BaseModel):
     content: str = None  # For text files
     data: dict = None  # For JSON files
 
-@app.post("/api/config")
-def update_config(request: UpdateConfigRequest):
+@app.post("/api/config", dependencies=[Depends(require_csrf)])
+def update_config(request: UpdateConfigRequest, _legacy_block: None = Depends(reject_legacy_endpoint)):
     """Update configuration files"""
     try:
         if request.config_type == 'env':

@@ -204,6 +204,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   const [notesText, setNotesText] = useState('')
   const [notesSaving, setNotesSaving] = useState(false)
   const [notesError, setNotesError] = useState('')
+  const [statusEvents, setStatusEvents] = useState([])
+  const [eventsError, setEventsError] = useState('')
 
   useEffect(() => {
     if (!job) return undefined
@@ -229,6 +231,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     setNotesText(job['Notes'] || '')
     setNotesSaving(false)
     setNotesError('')
+    setStatusEvents([])
+    setEventsError('')
     setEditedData(normalizedData)
     setOriginalData(normalizedData)
 
@@ -279,6 +283,27 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     }
   }, [job])
 
+  useEffect(() => {
+    if (!job?.id) return undefined
+
+    let cancelled = false
+    const loadEvents = async () => {
+      try {
+        const response = await api.get(`/api/jobs/${job.id}/events`)
+        if (cancelled) return
+        setStatusEvents(response.data?.events || [])
+      } catch (error) {
+        if (cancelled) return
+        setEventsError(error?.response?.data?.detail || 'Unable to load recent status updates.')
+      }
+    }
+
+    loadEvents()
+    return () => {
+      cancelled = true
+    }
+  }, [job])
+
   if (!job) return null
 
   const currentStatus = normalizeStatus(job.Status)
@@ -309,6 +334,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     { label: 'Location', value: editedData.location || job.Location || 'Remote / flexible' },
     { label: 'Source', value: sourceLabel },
     { label: 'Industry', value: job.Industry || 'Generalist role' },
+    { label: 'Freshness', value: job.Freshness || 'Recently delivered' },
     { label: 'Search', value: job['Search Query'] || 'Imported opportunity' },
     { label: 'Saved', value: formatDisplayDate(job['Date Found']) },
   ]
@@ -318,6 +344,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     { label: 'Resume', value: job['Resume Match'] },
     { label: 'Role', value: job['Role Fit'] },
     { label: 'Location', value: job['Location Fit'] },
+    { label: 'Freshness', value: job['Freshness Score'] },
   ].filter((item) => typeof item.value === 'number')
 
   const handleEdit = () => {
@@ -1251,6 +1278,21 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                   </div>
                 ))}
               </div>
+
+              {(statusEvents.length > 0 || eventsError) && (
+                <div className="timeline-history">
+                  <p className="section-kicker">Recent updates</p>
+                  {eventsError && <p className="inline-note">{eventsError}</p>}
+                  {statusEvents.slice(0, 4).map((event) => (
+                    <div key={event.id} className="timeline-history-item">
+                      <strong>
+                        {(event.old_status || 'saved').replaceAll('_', ' ')} to {(event.new_status || 'saved').replaceAll('_', ' ')}
+                      </strong>
+                      <p>{formatDisplayDate(event.created_at)}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
 
             <section className="workspace-section rail-card">

@@ -5,6 +5,7 @@ Recommendation scoring helpers for the current user-facing feed.
 from __future__ import annotations
 
 import re
+from datetime import datetime, timezone
 from typing import Any
 
 from src.onboarding import ROLE_INFERENCE_RULES, infer_industries_from_text
@@ -305,6 +306,67 @@ def compute_location_fit(profile: Any, job: Any) -> dict:
     }
 
 
+def compute_freshness(job: Any) -> dict:
+    """Score how fresh and likely still-actionable the job is."""
+    job_date = (
+        getattr(job, "posting_date", None)
+        or getattr(job, "date_added", None)
+    )
+    if not job_date:
+        return {
+            "freshness_score": 70,
+            "freshness_label": "Freshness unknown",
+            "delivery_boost": 0,
+            "stale_for_delivery": False,
+            "fit_reasons": [],
+        }
+
+    if getattr(job_date, "tzinfo", None) is not None:
+        age_days = max(0, int((datetime.now(timezone.utc) - job_date).total_seconds() // 86400))
+    else:
+        age_days = max(0, int((datetime.utcnow() - job_date).total_seconds() // 86400))
+
+    if age_days <= 3:
+        return {
+            "freshness_score": 98,
+            "freshness_label": "Very fresh",
+            "delivery_boost": 5,
+            "stale_for_delivery": False,
+            "fit_reasons": ["This role was posted recently, which improves the odds it is still actionable."],
+        }
+    if age_days <= 7:
+        return {
+            "freshness_score": 90,
+            "freshness_label": "Fresh this week",
+            "delivery_boost": 3,
+            "stale_for_delivery": False,
+            "fit_reasons": ["This role is still fresh enough to prioritize in your feed."],
+        }
+    if age_days <= 14:
+        return {
+            "freshness_score": 75,
+            "freshness_label": "Still active",
+            "delivery_boost": 0,
+            "stale_for_delivery": False,
+            "fit_reasons": [],
+        }
+    if age_days <= 30:
+        return {
+            "freshness_score": 52,
+            "freshness_label": "Aging listing",
+            "delivery_boost": -5,
+            "stale_for_delivery": False,
+            "fit_reasons": ["This job is getting older, so it should be treated as lower-priority."],
+        }
+    return {
+        "freshness_score": 20,
+        "freshness_label": "Stale listing",
+        "delivery_boost": -12,
+        "stale_for_delivery": True,
+        "fit_reasons": ["This listing looks stale, so it should not crowd out fresher opportunities."],
+    }
+
+
 def compute_industry_affinity(profile_industries: list[str] | None, job: Any) -> dict:
     """Compute a sector-affinity boost from the user's background to the job's industry."""
     user_industries = profile_industries or []
@@ -357,20 +419,23 @@ def build_current_fit_snapshot(job: Any, profile: Any, resume_asset: Any | None 
     resume_match = compute_resume_match(profile, resume_asset, job)
     role_fit = compute_role_fit(profile, job, base_skill_score)
     location_fit = compute_location_fit(profile, job)
+    freshness = compute_freshness(job)
     affinity = compute_industry_affinity(getattr(profile, "industries", []) or [], job)
     weighted_fit = (
         (experience_fit["experience_fit_score"] * 0.30)
         + (resume_match["resume_match_score"] * 0.30)
         + (role_fit["role_fit_score"] * 0.25)
         + (location_fit["location_fit_score"] * 0.10)
+        + (freshness["freshness_score"] * 0.05)
     )
-    overall_fit_score = clamp_score(weighted_fit + affinity["industry_boost"])
+    overall_fit_score = clamp_score(weighted_fit + affinity["industry_boost"] + freshness["delivery_boost"])
 
     fit_reasons = [
         *experience_fit["fit_reasons"],
         *resume_match["fit_reasons"],
         *role_fit["fit_reasons"],
         *location_fit["fit_reasons"],
+        *freshness["fit_reasons"],
         *affinity["fit_reasons"],
     ][:5]
 
@@ -381,6 +446,9 @@ def build_current_fit_snapshot(job: Any, profile: Any, resume_asset: Any | None 
         "resume_match_score": resume_match["resume_match_score"],
         "role_fit_score": role_fit["role_fit_score"],
         "location_fit_score": location_fit["location_fit_score"],
+        "freshness_score": freshness["freshness_score"],
+        "freshness_label": freshness["freshness_label"],
+        "stale_for_delivery": freshness["stale_for_delivery"],
         "candidate_years": experience_fit["candidate_years"],
         "job_year_band": experience_fit["job_year_band"],
         **affinity,

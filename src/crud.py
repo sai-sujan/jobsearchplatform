@@ -20,7 +20,7 @@ from passlib.context import CryptContext
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from src.models import Job, MatchedJob, Resume, ResumeAsset, ScrapeRun, SearchConfig, SearchPreset, User, UserProfile
+from src.models import ApplicationEvent, Job, MatchedJob, Resume, ResumeAsset, ScrapeRun, SearchConfig, SearchPreset, User, UserProfile
 from src.recommendations import build_current_fit_snapshot
 
 # Password hashing
@@ -460,8 +460,13 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
             )
             db.add(matched_job)
 
-        matched_job.delivery_status = 'active' if passes_filters else 'suppressed'
         matched_job.user_status = job.status or matched_job.user_status or 'not_applied'
+        stale_for_delivery = fit_snapshot.get("stale_for_delivery", False)
+        keep_visible = matched_job.user_status in {'applied', 'interviewing', 'accepted'}
+        if stale_for_delivery and not keep_visible:
+            matched_job.delivery_status = 'stale'
+        else:
+            matched_job.delivery_status = 'active' if passes_filters else 'suppressed'
         matched_job.fit_score = float(fit_snapshot["overall_fit_score"])
         matched_job.base_skill_score = float(fit_snapshot["base_skill_score"])
         matched_job.industry_boost = float(fit_snapshot["industry_boost"])
@@ -469,6 +474,8 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
         matched_job.resume_match_score = float(fit_snapshot["resume_match_score"])
         matched_job.role_fit_score = float(fit_snapshot["role_fit_score"])
         matched_job.location_fit_score = float(fit_snapshot["location_fit_score"])
+        matched_job.freshness_score = float(fit_snapshot["freshness_score"])
+        matched_job.freshness_label = fit_snapshot["freshness_label"] or None
         matched_job.industry_fit_label = fit_snapshot["industry_fit_label"] or None
         matched_job.job_industries = fit_snapshot["job_industries"]
         matched_job.matched_industries = fit_snapshot["matched_industries"]
@@ -497,6 +504,40 @@ def update_matched_job(db: Session, matched_job_id: int, user_id: int, **update_
     db.commit()
     db.refresh(matched_job)
     return matched_job
+
+
+def create_application_event(
+    db: Session,
+    matched_job_id: int,
+    event_type: str,
+    old_status: Optional[str] = None,
+    new_status: Optional[str] = None,
+    actor: str = "user",
+    metadata_json: Optional[Dict] = None,
+) -> ApplicationEvent:
+    """Create a timeline event for a matched job."""
+    event = ApplicationEvent(
+        matched_job_id=matched_job_id,
+        event_type=event_type,
+        old_status=old_status,
+        new_status=new_status,
+        actor=actor,
+        metadata_json=metadata_json or {},
+    )
+    db.add(event)
+    db.commit()
+    db.refresh(event)
+    return event
+
+
+def get_application_events(db: Session, matched_job_id: int) -> List[ApplicationEvent]:
+    """Return timeline events for a matched job, newest first."""
+    return (
+        db.query(ApplicationEvent)
+        .filter(ApplicationEvent.matched_job_id == matched_job_id)
+        .order_by(desc(ApplicationEvent.created_at))
+        .all()
+    )
 
 
 def update_job(db: Session, job_id: int, user_id: int, **update_data) -> Job:

@@ -42,6 +42,10 @@ def init_db():
                 connection.execute(text("ALTER TABLE user_profiles ADD COLUMN quality_filters JSON"))
         if 'matched_jobs' in inspector.get_table_names():
             matched_columns = {column["name"] for column in inspector.get_columns('matched_jobs')}
+            if 'freshness_score' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN freshness_score FLOAT"))
+            if 'freshness_label' not in matched_columns:
+                connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN freshness_label VARCHAR(120)"))
             if 'ai_match_score' not in matched_columns:
                 connection.execute(text("ALTER TABLE matched_jobs ADD COLUMN ai_match_score FLOAT"))
             if 'ai_match_confidence' not in matched_columns:
