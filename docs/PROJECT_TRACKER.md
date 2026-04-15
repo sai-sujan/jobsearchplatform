@@ -221,8 +221,18 @@ Reference:
 Reference:
 - [CHECKPOINT_22_TEST_AND_INPUT_HARDENING.md](./CHECKPOINT_22_TEST_AND_INPUT_HARDENING.md)
 
+### Checkpoint 23
+- Fixed the fresh-user empty feed problem for data science, machine learning, analytics, and AI profiles
+- Fresh data-domain users with no jobs now receive a capped set of relevant user-owned recommendations from the existing launcher/admin job pool
+- Bootstrap is intentionally a temporary bridge: users still see only matched/user-owned jobs, while scraping and launcher complexity stay hidden
+- Bootstrap inserts are idempotent under concurrent first-page requests, so duplicate delivery races do not return `500`
+
+Reference:
+- [CHECKPOINT_23_DATA_DOMAIN_BOOTSTRAP.md](./CHECKPOINT_23_DATA_DOMAIN_BOOTSTRAP.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
+- keep fresh data-domain users away from empty zero-state by temporarily bootstrapping from the launcher pool
 - preserve deterministic composite scoring inside `matched_jobs`
 - keep AI enrichment secondary, cached, and detail-only
 - keep stronger delivery-time freshness and suppression rules stable
@@ -237,7 +247,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - expand matched-job document history and activity visibility in the workspace
 
 ## Next implementation priorities
-1. Continue shrinking the legacy `jobs` table's role in recommendation delivery after internal delivery has been preferred in the feed and user state has been decoupled
+1. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
 2. Preserve richer deterministic “why this matched” signals across the UI
 3. Keep AI token spend limited to:
    - single-job match intelligence
@@ -275,6 +285,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - Current canonical source is still the legacy user-owned `jobs` table, even though the web app now reads `matched_jobs`
 - Internal ingestion/matching boundary is not fully isolated yet
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
+- Data-domain fresh users now get a useful feed from a capped legacy bootstrap, but this must not become the long-term production matching architecture
 - Some old tailoring and resume/version bookkeeping flows still exist in legacy routes even though the main workspace path is now matched-job-based
 - Resume upload path now supports both file and text intake with clean validation responses, but still needs object-storage-backed production handling
 - Activity feed renders all event types correctly and now refreshes live after user actions

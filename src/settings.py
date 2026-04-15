@@ -192,6 +192,7 @@ class Settings:
     COOKIE_SAMESITE = _getenv('COOKIE_SAMESITE', 'lax')
     INTERNAL_API_TOKEN = _getenv('INTERNAL_API_TOKEN', '')
     LEGACY_DELIVERY_FALLBACK_ENABLED = _getenv('LEGACY_DELIVERY_FALLBACK_ENABLED', 'True').lower() == 'true'
+    LEGACY_BOOTSTRAP_MAX_JOBS = int(_getenv('LEGACY_BOOTSTRAP_MAX_JOBS', '80'))
 
     # === DATABASE ===
     DB_PATH = DATA_DIR / 'jobs.db'

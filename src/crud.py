@@ -17,16 +17,53 @@ from datetime import datetime
 from typing import Callable, Dict, List, Optional, Union
 
 from passlib.context import CryptContext
-from sqlalchemy import desc
+from sqlalchemy import desc, func
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from src.models import ApplicationEvent, Job, MatchedJob, Resume, ResumeAsset, ScrapeRun, SearchConfig, SearchPreset, User, UserProfile
 from src.recommendations import build_current_fit_snapshot
+from src.settings import settings
 
 # Password hashing
 # Use pbkdf2_sha256 for compatibility with local Python environments where
 # bcrypt wheels can be unavailable or mismatched.
 pwd_context = CryptContext(schemes=['pbkdf2_sha256'], deprecated='auto')
+
+
+DATA_DOMAIN_PROFILE_TERMS = (
+    "ai engineer",
+    "artificial intelligence",
+    "analytics",
+    "applied scientist",
+    "data analyst",
+    "data science",
+    "data scientist",
+    "deep learning",
+    "machine learning",
+    "ml engineer",
+    "nlp",
+    "research scientist",
+)
+
+DATA_DOMAIN_JOB_TERMS = (
+    "ai engineer",
+    "artificial intelligence",
+    "analytics",
+    "applied ai",
+    "applied scientist",
+    "computer vision",
+    "data analyst",
+    "data science",
+    "data scientist",
+    "deep learning",
+    "forecasting",
+    "generative ai",
+    "machine learning",
+    "ml engineer",
+    "nlp",
+    "research scientist",
+)
 
 
 # ============ USER CRUD ============
@@ -221,6 +258,143 @@ def count_user_jobs(
             quality_filters=quality_filters,
         )
     )
+
+
+def _joined_lower(parts: List[str]) -> str:
+    return " ".join(str(part or "") for part in parts).lower()
+
+
+def profile_targets_data_domain(profile: UserProfile) -> bool:
+    """Return true when a profile is clearly targeting data/ML/AI work."""
+    profile_text = _joined_lower([
+        " ".join(profile.target_roles or []),
+        " ".join(profile.parsed_skills or []),
+        profile.candidate_summary or "",
+    ])
+    return any(term in profile_text for term in DATA_DOMAIN_PROFILE_TERMS)
+
+
+def job_matches_data_domain(job: Job) -> bool:
+    """Return true when a legacy job belongs in the data/ML/AI bootstrap pool."""
+    job_text = _joined_lower([
+        job.title or "",
+        job.search_query or "",
+        job.job_description or "",
+    ])
+    return any(term in job_text for term in DATA_DOMAIN_JOB_TERMS)
+
+
+def get_largest_legacy_job_owner(db: Session, user_id: int) -> Optional[int]:
+    """Find the most useful legacy launcher pool while excluding the requesting user."""
+    job_count = func.count(Job.id).label("job_count")
+    row = (
+        db.query(Job.user_id, job_count)
+        .filter(Job.user_id != user_id)
+        .group_by(Job.user_id)
+        .order_by(desc(job_count))
+        .first()
+    )
+    return row[0] if row else None
+
+
+def _clone_legacy_job_for_user(db: Session, user_id: int, source_job: Job) -> Job:
+    """Copy a launcher job into a user's own job space so workspace state stays isolated."""
+    cloned_job = Job(
+        user_id=user_id,
+        source=(source_job.source or "web").lower(),
+        company=source_job.company or "Unknown company",
+        title=source_job.title or "Untitled role",
+        job_link=source_job.job_link,
+        location=source_job.location,
+        # Treat bootstrap delivery as newly discovered by this app. Real freshness
+        # should come from the internal matcher once that pipeline is connected.
+        posting_date=None,
+        date_added=datetime.utcnow(),
+        job_description=source_job.job_description,
+        role_type=source_job.role_type,
+        search_query=source_job.search_query,
+        is_premium=bool(source_job.is_premium),
+        premium_indicators=source_job.premium_indicators,
+        skill_score=source_job.skill_score,
+        matched_skills=source_job.matched_skills,
+        missing_skills=source_job.missing_skills,
+        tier=source_job.tier,
+        ats_score=source_job.ats_score,
+        ai_evaluation=source_job.ai_evaluation,
+        status="not_applied",
+        special_interest=False,
+        notes="",
+        is_new=True,
+        resume_path=None,
+    )
+    db.add(cloned_job)
+    return cloned_job
+
+
+def bootstrap_data_domain_jobs_from_legacy_pool(db: Session, user_id: int) -> List[Job]:
+    """Seed a fresh data/ML/AI user's feed from the current launcher-owned job pool."""
+    profile = get_or_create_profile(db, user_id)
+    if not profile_targets_data_domain(profile):
+        return []
+
+    if db.query(Job.id).filter(Job.user_id == user_id).first():
+        return []
+
+    source_user_id = get_largest_legacy_job_owner(db, user_id)
+    if not source_user_id:
+        return []
+
+    resume_asset = get_active_resume_asset(db, user_id)
+    quality_filters = profile.quality_filters or {}
+    existing_links = {
+        link
+        for (link,) in db.query(Job.job_link).filter(Job.user_id == user_id).all()
+        if link
+    }
+    candidates = []
+    source_jobs = (
+        db.query(Job)
+        .filter(Job.user_id == source_user_id)
+        .order_by(desc(Job.date_added), desc(Job.id))
+        .limit(3000)
+        .all()
+    )
+
+    for source_job in source_jobs:
+        if not source_job.job_link or source_job.job_link in existing_links:
+            continue
+        if not job_matches_data_domain(source_job):
+            continue
+
+        fit_snapshot = build_current_fit_snapshot(source_job, profile, resume_asset=resume_asset)
+        candidate_score = max(
+            int(fit_snapshot.get("overall_fit_score") or 0),
+            int(source_job.skill_score or 0),
+            int(source_job.ats_score or 0),
+        )
+        if not job_passes_quality_filters(source_job, quality_filters, match_score_override=candidate_score):
+            continue
+
+        candidates.append((candidate_score, source_job.date_added or datetime.min, source_job))
+
+    candidates.sort(key=lambda item: (item[0], item[1]), reverse=True)
+    cloned_jobs = []
+    for _score, _date_added, source_job in candidates[: settings.LEGACY_BOOTSTRAP_MAX_JOBS]:
+        if db.query(Job.id).filter(Job.user_id == user_id, Job.job_link == source_job.job_link).first():
+            continue
+
+        try:
+            with db.begin_nested():
+                cloned_job = _clone_legacy_job_for_user(db, user_id, source_job)
+                db.flush()
+            cloned_jobs.append(cloned_job)
+        except IntegrityError:
+            # Concurrent first-page requests can both try to bootstrap the same
+            # fresh account. The unique user/job link constraint is the source
+            # of truth; skip duplicates and keep the request healthy.
+            continue
+        existing_links.add(source_job.job_link)
+    return cloned_jobs
 
 
 def job_passes_quality_filters(
@@ -503,6 +677,16 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
         skip=0,
         limit=100000,
     )
+    if not all_jobs:
+        bootstrap_data_domain_jobs_from_legacy_pool(db, user_id)
+        all_jobs = get_user_jobs(
+            db,
+            user_id,
+            quality_filters=None,
+            skip=0,
+            limit=100000,
+        )
+
     existing = {
         matched.job_id: matched
         for matched in db.query(MatchedJob).filter(MatchedJob.user_id == user_id).all()
