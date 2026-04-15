@@ -1,6 +1,6 @@
 # Project Tracker
 
-Last updated: 2026-04-14 (Checkpoint 20)
+Last updated: 2026-04-15 (Checkpoint 22)
 
 ## Product goal
 Build a production-ready user web app where each user sees only the jobs that genuinely fit them, based on their resume, role profile, experience level, and recommendation filters. Scraping and raw ingestion stay outside the user experience and feed matched opportunities into the database.
@@ -204,6 +204,23 @@ Reference:
 Reference:
 - [CHECKPOINT_20_UNIFIED_ACTIVITY_FEED.md](./CHECKPOINT_20_UNIFIED_ACTIVITY_FEED.md)
 
+### Checkpoint 21
+- Activity feed and resume history now refresh live after user actions without requiring a sidebar re-open
+- `activityTick` counter triggers re-fetch of events and resume history after analysis save, tailoring, resume generation, and notes save
+- Backend `update_job_notes` now creates a `notes_saved` application event (serialiser already handled it)
+
+Reference:
+- [CHECKPOINT_21_LIVE_ACTIVITY_REFRESH.md](./CHECKPOINT_21_LIVE_ACTIVITY_REFRESH.md)
+
+### Checkpoint 22
+- Stabilized the Claude-written Playwright suites and fixed the product bugs they exposed
+- Test helpers now create isolated API contexts correctly and allow `API_URL` / `FRONTEND_URL` overrides
+- Auth validation now rejects control-character usernames and oversized login payloads cleanly
+- Resume onboarding now returns clean `4xx` errors for invalid input and accepts valid multipart text resumes
+
+Reference:
+- [CHECKPOINT_22_TEST_AND_INPUT_HARDENING.md](./CHECKPOINT_22_TEST_AND_INPUT_HARDENING.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -227,7 +244,7 @@ Move delivery logic closer to a real recommendation pipeline:
    - cached resume tailoring
    - future async reranking only for top candidates
 4. Continue retiring legacy Excel/config endpoints from the runtime path
-5. ~~Expand application history and notes into a more complete activity feed~~ ✓ done in CP20 — refresh events live after user actions is the remaining gap
+5. ~~Expand application history and notes into a more complete activity feed~~ ✓ done in CP20/CP21 — feed renders correctly and refreshes live after all user actions
 6. Start separating canonical/internal delivery from the legacy source store more explicitly
 
 ## Scoring direction notes
@@ -259,8 +276,9 @@ Move delivery logic closer to a real recommendation pipeline:
 - Internal ingestion/matching boundary is not fully isolated yet
 - Recommendation filtering is now enforced through matched-job materialization, but still originates from the legacy source store
 - Some old tailoring and resume/version bookkeeping flows still exist in legacy routes even though the main workspace path is now matched-job-based
-- Resume upload path now supports both file and text intake, but still needs stronger production hardening
-- Activity feed now renders all event types correctly but does not yet refresh live after user actions — requires sidebar re-open to see new events
+- Resume upload path now supports both file and text intake with clean validation responses, but still needs object-storage-backed production handling
+- Activity feed renders all event types correctly and now refreshes live after user actions
+- End-to-end tests are in place; local scoring tests skip until `pytest` is installed
 
 ## Operating rule
 Every major execution slice should update:

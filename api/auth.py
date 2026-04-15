@@ -5,7 +5,7 @@ Authentication and session endpoints for the user-facing web app.
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy.orm import Session
 
 from api.deps import (
@@ -26,10 +26,24 @@ class SignupRequest(BaseModel):
     password: str = Field(min_length=8, max_length=120)
     full_name: Optional[str] = Field(default=None, max_length=120)
 
+    @field_validator("username")
+    @classmethod
+    def username_must_be_plain_text(cls, value: str) -> str:
+        if any(ord(char) < 32 for char in value):
+            raise ValueError("Username contains invalid characters")
+        return value
+
 
 class LoginRequest(BaseModel):
-    username: str
-    password: str
+    username: str = Field(min_length=1, max_length=50)
+    password: str = Field(min_length=1, max_length=120)
+
+    @field_validator("username")
+    @classmethod
+    def username_must_be_plain_text(cls, value: str) -> str:
+        if any(ord(char) < 32 for char in value):
+            raise ValueError("Username contains invalid characters")
+        return value
 
 
 def _serialize_session_user(user: User, db: Session) -> dict:

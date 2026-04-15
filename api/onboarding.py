@@ -5,7 +5,7 @@ Onboarding, profile, resume, and search preset endpoints.
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 from sqlalchemy.orm import Session
 
 from api.deps import get_current_user, get_db, require_csrf
@@ -240,7 +240,7 @@ async def save_resume_intake(
     if "multipart/form-data" in content_type:
         form = await request.form()
         file = form.get("file")
-        if not isinstance(file, UploadFile):
+        if not file or not hasattr(file, "filename") or not hasattr(file, "read"):
             raise HTTPException(status_code=400, detail="Please upload a resume file.")
 
         contents = await file.read()
@@ -251,7 +251,10 @@ async def save_resume_intake(
         resume_text = await extract_text_from_file(file)
         return process_resume_payload(db, user, resume_text, file.filename, file.content_type)
 
-    payload = ResumeIntakeRequest(**await request.json())
+    try:
+        payload = ResumeIntakeRequest(**await request.json())
+    except ValidationError as error:
+        raise HTTPException(status_code=422, detail=error.errors()) from None
     return process_resume_payload(db, user, payload.resume_text, payload.filename, payload.content_type)
 
 

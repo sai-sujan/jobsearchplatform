@@ -418,6 +418,7 @@ def update_job_notes(
     """Update notes for a delivered matched job."""
     matched_job = require_matched_job(db, user.id, job_id)
     update_matched_job(db, job_id, user.id, notes=notes)
+    create_application_event(db, matched_job.id, "notes_saved")
     return {"message": "Notes updated"}
 
 

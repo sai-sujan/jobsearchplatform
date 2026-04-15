@@ -209,6 +209,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   const [eventsError, setEventsError] = useState('')
   const [resumeHistory, setResumeHistory] = useState([])
   const [resumeHistoryError, setResumeHistoryError] = useState('')
+  const [activityTick, setActivityTick] = useState(0)
 
   useEffect(() => {
     if (!job) return undefined
@@ -307,7 +308,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     return () => {
       cancelled = true
     }
-  }, [job])
+  }, [job, activityTick])
 
   useEffect(() => {
     if (!job?.id) return undefined
@@ -328,7 +329,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     return () => {
       cancelled = true
     }
-  }, [job])
+  }, [job, activityTick])
 
   if (!job) return null
 
@@ -432,6 +433,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
       })
       setNotesError('Notes saved.')
       window.setTimeout(() => setNotesError(''), 2200)
+      setActivityTick((t) => t + 1)
     } catch (error) {
       console.error('Failed to save notes:', error)
       if (error?.response?.status === 403) {
@@ -476,6 +478,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
       setJsonMode(false)
       setSaveMessage('Workspace changes saved.')
       window.setTimeout(() => setSaveMessage(''), 2600)
+      setActivityTick((t) => t + 1)
     } catch (error) {
       console.error('Save error:', error)
       setSaveMessage(`Unable to save changes: ${error.response?.data?.detail || error.message}`)
@@ -501,6 +504,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
         points: tailoredData.points || current.points,
       }))
       setSaveMessage('New AI suggestions are ready to review.')
+      setActivityTick((t) => t + 1)
     } catch (error) {
       console.error('Auto tailor error:', error)
       setTailorError(`Tailor failed: ${error?.response?.data?.detail || error.message}`)
@@ -518,21 +522,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     try {
       const response = await api.post(`/api/jobs/${job.id}/resume`)
       setPdfUrl(response.data?.pdf_url || null)
-      setResumeHistory((current) => {
-        const latest = response.data?.job?.['Resume Path']
-        const version = response.data?.resume_version
-        if (!latest || !version) return current
-        const filename = latest.split('/').pop() || 'resume.pdf'
-        const nextEntry = {
-          id: `local-${version}-${filename}`,
-          version,
-          pdf_path: latest,
-          filename,
-          download_url: response.data?.pdf_url || `${API_URL}/api/download-resume/${filename}`,
-          created_at: new Date().toISOString(),
-        }
-        return [nextEntry, ...current.filter((entry) => entry.version !== version)]
-      })
+      setActivityTick((t) => t + 1)
     } catch (error) {
       console.error('Generate resume error:', error)
       setGenerateError(

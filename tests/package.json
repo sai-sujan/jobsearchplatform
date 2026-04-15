@@ -1,0 +1,20 @@
+{
+  "name": "job-dashboard-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:auth": "playwright test auth.spec.js",
+    "test:onboarding": "playwright test onboarding.spec.js",
+    "test:jobs": "playwright test jobs.spec.js",
+    "test:security": "playwright test security.spec.js",
+    "test:scoring": "playwright test scoring.spec.js",
+    "test:ui": "playwright test ui.spec.js",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}
