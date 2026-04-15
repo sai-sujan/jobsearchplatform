@@ -4,18 +4,43 @@
   --surface: rgba(255, 255, 255, 0.92);
   --surface-strong: #ffffff;
   --surface-muted: #f3f4f6;
+  --surface-0: #f8f9fb;
+  --surface-1: #ffffff;
+  --surface-2: #f1f5f9;
+  --surface-3: rgba(248, 250, 252, 0.86);
   --line: rgba(15, 23, 42, 0.08);
   --line-strong: rgba(15, 23, 42, 0.14);
+  --border-subtle: rgba(15, 23, 42, 0.07);
+  --border-default: rgba(15, 23, 42, 0.11);
+  --border-strong: rgba(15, 23, 42, 0.17);
   --ink: #1a1a2e;
   --muted: #6b7280;
   --muted-strong: #4b5563;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
   --accent: #4f46e5;
   --accent-strong: #3730a3;
   --accent-soft: rgba(79, 70, 229, 0.09);
+  --accent-border: rgba(79, 70, 229, 0.22);
   --warm: #4f46e5;
   --success: #059669;
   --warning: #d97706;
   --danger: #dc2626;
+  --status-saved: #64748b;
+  --status-applied: #3b82f6;
+  --status-applied-bg: rgba(59, 130, 246, 0.09);
+  --status-interviewing: #f59e0b;
+  --status-interviewing-bg: rgba(245, 158, 11, 0.09);
+  --status-offer: #10b981;
+  --status-offer-bg: rgba(16, 185, 129, 0.09);
+  --status-rejected: #ef4444;
+  --status-rejected-bg: rgba(239, 68, 68, 0.07);
+  --tier-perfect: #10b981;
+  --tier-good: #3b82f6;
+  --tier-stretch: #f59e0b;
+  --tier-skip: #94a3b8;
   --font-sans:
     'Inter',
     'SF Pro Text',

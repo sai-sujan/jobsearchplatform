@@ -11,6 +11,34 @@ import TrackerBoard from './pages/TrackerBoard'
 import { api, storeToken } from './lib/api'
 import { APPLIED_STATUSES, normalizeStatus } from './lib/jobs'
 
+const NAV_ICONS = {
+  recommended: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v11A2.5 2.5 0 0 1 16.5 20h-9A2.5 2.5 0 0 1 5 17.5v-11Z" />
+      <path d="m8.5 12 2.2 2.2 4.8-5.1" />
+    </svg>
+  ),
+  applied: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4.5 12.5 19 5.5l-4.4 13-3.1-5-7-1Z" />
+      <path d="m11.5 13.5 7.5-8" />
+    </svg>
+  ),
+  tracker: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 5.5h4.5v13H5v-13Z" />
+      <path d="M14.5 5.5H19v7h-4.5v-7Z" />
+      <path d="M14.5 16H19v2.5h-4.5V16Z" />
+    </svg>
+  ),
+  profile: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+      <path d="M5.5 20a6.5 6.5 0 0 1 13 0" />
+    </svg>
+  ),
+}
+
 function App() {
   const [session, setSession] = useState(null)
   const [onboarding, setOnboarding] = useState(null)
@@ -170,22 +198,22 @@ function App() {
 
         <nav className="topnav" aria-label="Primary navigation">
           <NavLink to="/jobs" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            <span className="nav-icon" aria-hidden="true">R</span>
+            <span className="nav-icon">{NAV_ICONS.recommended}</span>
             <span className="nav-label">Recommended</span>
             {renderNavCount(recommendedJobs.length)}
           </NavLink>
           <NavLink to="/applied" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            <span className="nav-icon" aria-hidden="true">A</span>
+            <span className="nav-icon">{NAV_ICONS.applied}</span>
             <span className="nav-label">Applied</span>
             {renderNavCount(appliedCount)}
           </NavLink>
           <NavLink to="/tracker" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            <span className="nav-icon" aria-hidden="true">T</span>
+            <span className="nav-icon">{NAV_ICONS.tracker}</span>
             <span className="nav-label">Tracker</span>
             {renderNavCount(jobs.length)}
           </NavLink>
           <NavLink to="/profile" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            <span className="nav-icon" aria-hidden="true">P</span>
+            <span className="nav-icon">{NAV_ICONS.profile}</span>
             <span className="nav-label">Profile</span>
           </NavLink>
         </nav>

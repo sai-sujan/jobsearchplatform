@@ -239,8 +239,19 @@ Reference:
 Reference:
 - [CHECKPOINT_24_REFERENCE_UI_REFRESH.md](./CHECKPOINT_24_REFERENCE_UI_REFRESH.md)
 
+### Checkpoint 25
+- Replaced prototype nav letters with inline SVG icons
+- Promoted match score from a tiny pill into an SVG score ring on every job card
+- Replaced native card-level status selects with compact status pill pickers
+- Added deterministic company monogram colors and semantic design tokens for status/tier/surface systems
+- Enabled a two-column recommended feed on wide screens for faster decision scanning
+
+Reference:
+- [CHECKPOINT_25_PREMIUM_DECISION_UI.md](./CHECKPOINT_25_PREMIUM_DECISION_UI.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
+- keep applying the premium SaaS design critique in visible vertical slices, starting with global nav and job-card decision speed
 - keep user-facing UI polished enough that fresh users trust the product before automation/internal delivery is fully complete
 - keep fresh data-domain users away from empty zero-state by temporarily bootstrapping from the launcher pool
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -257,7 +268,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - expand matched-job document history and activity visibility in the workspace
 
 ## Next implementation priorities
-1. Continue refining the reference-inspired UI on the tracker/detail surfaces so the whole product feels cohesive
+1. Continue the premium UI pass on tracker columns and the job detail workspace
 2. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
 3. Preserve richer deterministic “why this matched” signals across the UI
 4. Keep AI token spend limited to:

@@ -103,6 +103,16 @@
   font-weight: var(--weight-bold);
 }
 
+.nav-icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .nav-label {
   min-width: 0;
 }

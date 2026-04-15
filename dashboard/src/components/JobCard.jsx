@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   formatCompactDate,
   getDisplayMatchScore,
@@ -11,14 +12,51 @@ import {
 import './JobCard.css'
 
 const STATUS_OPTIONS = [
-  { value: 'not_applied', label: 'Not applied' },
-  { value: 'skipped', label: 'Skipped' },
+  { value: 'not_applied', label: 'Saved' },
   { value: 'applied', label: 'Applied' },
   { value: 'interviewing', label: 'Interviewing' },
-  { value: 'accepted', label: 'Accepted' },
+  { value: 'accepted', label: 'Offer' },
+  { value: 'skipped', label: 'Archived' },
 ]
 
+const COMPANY_THEMES = ['indigo', 'sky', 'emerald', 'amber', 'rose', 'slate', 'violet', 'cyan']
+
+function getCompanyTheme(company = '') {
+  const input = company || 'job'
+  let hash = 0
+  for (let index = 0; index < input.length; index += 1) {
+    hash = (hash * 31 + input.charCodeAt(index)) % COMPANY_THEMES.length
+  }
+  return COMPANY_THEMES[Math.abs(hash)]
+}
+
+function getStatusLabel(status) {
+  return STATUS_OPTIONS.find((option) => option.value === status)?.label || 'Saved'
+}
+
+function ScoreRing({ score }) {
+  const safeScore = Math.max(0, Math.min(100, Number(score) || 0))
+
+  return (
+    <div className="score-ring" aria-label={`${safeScore}% match`}>
+      <svg viewBox="0 0 36 36" className="score-ring-svg" aria-hidden="true">
+        <circle className="score-ring-track" cx="18" cy="18" r="15.9" />
+        <circle
+          className="score-ring-fill"
+          cx="18"
+          cy="18"
+          r="15.9"
+          pathLength="100"
+          strokeDasharray={`${safeScore} 100`}
+        />
+      </svg>
+      <span>{safeScore}</span>
+    </div>
+  )
+}
+
 function JobCard({ job, onClick, onStatusChange }) {
+  const [statusPickerOpen, setStatusPickerOpen] = useState(false)
   const skills = getMatchedSkills(job, 3)
   const tierVariant = getTierVariant(job)
   const status = normalizeStatus(job.Status)
@@ -40,16 +78,18 @@ function JobCard({ job, onClick, onStatusChange }) {
       tabIndex={0}
     >
       <div className="job-card-topline">
-        <span className="job-source-badge">{getSourceLabel(job)}</span>
-        <span className="job-date-pill">{formatCompactDate(job['Date Found'])}</span>
+        <div className="job-card-topline-left">
+          <span className="job-source-badge">{getSourceLabel(job)}</span>
+          <span className="job-date-pill">{formatCompactDate(job['Date Found'])}</span>
+        </div>
+        <ScoreRing score={displayScore} />
       </div>
 
       <div className="job-card-heading">
-        <span className="company-monogram" aria-hidden="true">{companyInitial}</span>
+        <span className={`company-monogram theme-${getCompanyTheme(job.Company)}`} aria-hidden="true">{companyInitial}</span>
         <div className="job-card-heading-copy">
           <div className="job-card-heading-row">
             <h3>{job.Title || 'Untitled role'}</h3>
-            <span className="job-score-pill">{displayScore}% fit</span>
           </div>
           <p>{job.Company || 'Unknown company'}</p>
         </div>
@@ -72,24 +112,42 @@ function JobCard({ job, onClick, onStatusChange }) {
       )}
 
       <div className="job-card-footer">
-        <label className="job-status-field">
-          <span>Status</span>
-          <select
-            value={status}
-            onChange={(event) => {
-              event.stopPropagation()
-              onStatusChange?.(job, event.target.value)
-            }}
-            onClick={(event) => event.stopPropagation()}
-            className="job-status-select"
+        <div
+          className="job-status-menu"
+          onClick={(event) => event.stopPropagation()}
+          onKeyDown={(event) => event.stopPropagation()}
+        >
+          <button
+            type="button"
+            className={`job-status-pill status-pill-${status}`}
+            aria-expanded={statusPickerOpen}
+            onClick={() => setStatusPickerOpen((isOpen) => !isOpen)}
           >
-            {STATUS_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
+            <span aria-hidden="true" />
+            {getStatusLabel(status)}
+          </button>
+
+          {statusPickerOpen && (
+            <div className="job-status-popover">
+              {STATUS_OPTIONS.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  className={`job-status-option status-pill-${option.value} ${status === option.value ? 'active' : ''}`}
+                  onClick={() => {
+                    setStatusPickerOpen(false)
+                    if (option.value !== status) {
+                      onStatusChange?.(job, option.value)
+                    }
+                  }}
+                >
+                  <span aria-hidden="true" />
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <a
           href={job.Link || '#'}
@@ -98,7 +156,8 @@ function JobCard({ job, onClick, onStatusChange }) {
           className="job-open-link"
           onClick={(event) => event.stopPropagation()}
         >
-          Open role
+          View
+          <span aria-hidden="true">→</span>
         </a>
       </div>
     </article>
