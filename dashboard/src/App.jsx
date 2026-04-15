@@ -159,41 +159,57 @@ function App() {
 
   return (
     <div className="app-frame">
-      <header className="topbar">
+      <aside className="app-sidebar">
         <div className="brand-block">
           <span className="brand-mark">JA</span>
           <div>
-            <p className="brand-kicker">Matched opportunities</p>
-            <h1>Only the jobs that fit your profile.</h1>
+            <p className="brand-kicker">Career workspace</p>
+            <h1>JobMatch</h1>
           </div>
         </div>
 
-        <nav className="topnav">
+        <nav className="topnav" aria-label="Primary navigation">
           <NavLink to="/jobs" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            Recommended
+            <span className="nav-icon" aria-hidden="true">R</span>
+            <span className="nav-label">Recommended</span>
             {renderNavCount(recommendedJobs.length)}
           </NavLink>
           <NavLink to="/applied" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            Applied
+            <span className="nav-icon" aria-hidden="true">A</span>
+            <span className="nav-label">Applied</span>
             {renderNavCount(appliedCount)}
           </NavLink>
           <NavLink to="/tracker" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            Tracker
+            <span className="nav-icon" aria-hidden="true">T</span>
+            <span className="nav-label">Tracker</span>
             {renderNavCount(jobs.length)}
           </NavLink>
           <NavLink to="/profile" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
-            Profile
+            <span className="nav-icon" aria-hidden="true">P</span>
+            <span className="nav-label">Profile</span>
           </NavLink>
         </nav>
 
+        <div className="sidebar-insight">
+          <span>Matched feed</span>
+          <p>
+            {hasMatchedJobs
+              ? `${stats.total || recommendedJobs.length} roles are ready for review.`
+              : 'Your profile is ready. We are preparing your first matched roles.'}
+          </p>
+        </div>
+
         <div className="topbar-meta">
-          <span>{session.full_name || session.username}</span>
-          <strong>{hasMatchedJobs ? `${stats.total} matched roles` : 'Profile ready for recommendations'}</strong>
+          <div className="user-avatar">{(session.full_name || session.username || 'U').trim().charAt(0).toUpperCase()}</div>
+          <div>
+            <span>{session.full_name || session.username}</span>
+            <strong>{hasMatchedJobs ? 'Active workspace' : 'Profile ready'}</strong>
+          </div>
           <button type="button" className="secondary-action" onClick={handleLogout}>
             Log out
           </button>
         </div>
-      </header>
+      </aside>
 
       <main className="app-main">
         {error && (

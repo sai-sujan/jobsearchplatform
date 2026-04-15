@@ -230,8 +230,18 @@ Reference:
 Reference:
 - [CHECKPOINT_23_DATA_DOMAIN_BOOTSTRAP.md](./CHECKPOINT_23_DATA_DOMAIN_BOOTSTRAP.md)
 
+### Checkpoint 24
+- Refreshed the app UI using the external reference app as inspiration only; the reference repo was inspected in `/tmp` and not added to this project
+- Replaced the large topbar with a persistent left workspace sidebar
+- Reworked the recommended jobs page into a compact feed with search, source, and minimum-match controls
+- Tightened job cards into cleaner horizontal recommendation rows
+
+Reference:
+- [CHECKPOINT_24_REFERENCE_UI_REFRESH.md](./CHECKPOINT_24_REFERENCE_UI_REFRESH.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
+- keep user-facing UI polished enough that fresh users trust the product before automation/internal delivery is fully complete
 - keep fresh data-domain users away from empty zero-state by temporarily bootstrapping from the launcher pool
 - preserve deterministic composite scoring inside `matched_jobs`
 - keep AI enrichment secondary, cached, and detail-only
@@ -247,15 +257,16 @@ Move delivery logic closer to a real recommendation pipeline:
 - expand matched-job document history and activity visibility in the workspace
 
 ## Next implementation priorities
-1. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
-2. Preserve richer deterministic “why this matched” signals across the UI
-3. Keep AI token spend limited to:
+1. Continue refining the reference-inspired UI on the tracker/detail surfaces so the whole product feels cohesive
+2. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
+3. Preserve richer deterministic “why this matched” signals across the UI
+4. Keep AI token spend limited to:
    - single-job match intelligence
    - cached resume tailoring
    - future async reranking only for top candidates
-4. Continue retiring legacy Excel/config endpoints from the runtime path
-5. ~~Expand application history and notes into a more complete activity feed~~ ✓ done in CP20/CP21 — feed renders correctly and refreshes live after all user actions
-6. Start separating canonical/internal delivery from the legacy source store more explicitly
+5. Continue retiring legacy Excel/config endpoints from the runtime path
+6. ~~Expand application history and notes into a more complete activity feed~~ ✓ done in CP20/CP21 — feed renders correctly and refreshes live after all user actions
+7. Start separating canonical/internal delivery from the legacy source store more explicitly
 
 ## Scoring direction notes
 - Industry affinity should be a first-class positive signal in recommendation scoring.

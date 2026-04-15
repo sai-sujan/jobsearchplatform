@@ -1,15 +1,40 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import JobCard from '../components/JobCard'
 import JobSidebar from '../components/JobSidebar'
-import { getJobId, getTierVariant } from '../lib/jobs'
+import { getJobId, getSourceLabel, getTierVariant } from '../lib/jobs'
 import './TodaysJobs.css'
 
 const TodaysJobs = ({ jobs, onStatusChange, onDelete }) => {
   const [selectedJob, setSelectedJob] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [searchText, setSearchText] = useState('')
+  const [sourceFilter, setSourceFilter] = useState('all')
+  const [minMatch, setMinMatch] = useState('0')
 
-  const todaysJobs = [...jobs].sort((a, b) => (b['Skill Score'] || 0) - (a['Skill Score'] || 0))
+  const visibleSources = [...new Set(jobs.map((job) => getSourceLabel(job)))].sort()
+
+  const todaysJobs = [...jobs]
+    .filter((job) => {
+      const query = searchText.trim().toLowerCase()
+      if (query) {
+        const haystack = [
+          job.Title,
+          job.Company,
+          job.Location,
+          job['Matched Skills'],
+          job['Search Query'],
+        ]
+          .join(' ')
+          .toLowerCase()
+
+        if (!haystack.includes(query)) return false
+      }
+
+      if (sourceFilter !== 'all' && getSourceLabel(job) !== sourceFilter) return false
+      if ((job['Skill Score'] || 0) < Number(minMatch)) return false
+      return true
+    })
+    .sort((a, b) => (b['Skill Score'] || 0) - (a['Skill Score'] || 0))
 
   const summary = todaysJobs.reduce(
     (accumulator, job) => {
@@ -31,14 +56,11 @@ const TodaysJobs = ({ jobs, onStatusChange, onDelete }) => {
 
   return (
     <section className="page-shell">
-      <header className="page-hero">
+      <header className="jobs-page-header">
         <div>
-          <span className="eyebrow">Recommended for you</span>
-          <h1>Your matched roles, ranked by fit and ready to review.</h1>
-          <p>
-            This feed only shows roles already matched to your profile. Open a role to review the fit,
-            track your progress, and refine your application notes.
-          </p>
+          <span className="eyebrow">Recommended</span>
+          <h1>Matched jobs</h1>
+          <p>{todaysJobs.length} roles ready to review, ranked by profile fit.</p>
         </div>
 
         {todaysJobs.length > 0 ? (
@@ -56,30 +78,55 @@ const TodaysJobs = ({ jobs, onStatusChange, onDelete }) => {
               <span>Strong-fit</span>
             </div>
           </div>
-        ) : (
-          <div className="hero-empty-note">
-            <strong>Your profile is ready.</strong>
-            <p>We’ll show recommendations here as soon as matched roles are delivered to your account.</p>
-          </div>
-        )}
+        ) : null}
       </header>
+
+      <section className="jobs-toolbar">
+        <label className="jobs-search">
+          <span>Search</span>
+          <input
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+            placeholder="Search roles, companies, skills..."
+          />
+        </label>
+
+        <label>
+          <span>Source</span>
+          <select value={sourceFilter} onChange={(event) => setSourceFilter(event.target.value)}>
+            <option value="all">All sources</option>
+            {visibleSources.map((source) => (
+              <option key={source} value={source}>
+                {source}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <span>Minimum match</span>
+          <select value={minMatch} onChange={(event) => setMinMatch(event.target.value)}>
+            <option value="0">Any match</option>
+            <option value="60">60%+</option>
+            <option value="75">75%+</option>
+            <option value="90">90%+</option>
+          </select>
+        </label>
+      </section>
 
       {todaysJobs.length === 0 ? (
         <div className="empty-state">
-          <span className="empty-state-icon">Recommendations are warming up</span>
-          <h2>Your matched job feed is ready for its first delivery.</h2>
+          <span className="empty-state-icon">No roles in this view</span>
+          <h2>Your feed is ready, but these filters are too narrow.</h2>
           <p>
-            Your account setup is complete. As soon as the matching service pushes roles into your
-            workspace, they’ll appear here ranked by fit.
+            Try clearing search or lowering the match threshold. If this is a brand-new account,
+            matched roles will appear here as soon as delivery finishes.
           </p>
           <div className="empty-state-checklist">
             <div>Profile completed</div>
             <div>Resume saved</div>
             <div>Search setup generated</div>
           </div>
-          <Link to="/profile" className="secondary-action empty-state-action">
-            Review profile setup
-          </Link>
         </div>
       ) : (
         <div className={`job-board ${sidebarOpen ? 'with-sidebar' : ''}`}>
