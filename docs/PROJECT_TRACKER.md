@@ -1,6 +1,6 @@
 # Project Tracker
 
-Last updated: 2026-04-15 (Checkpoint 22)
+Last updated: 2026-04-15 (Checkpoint 28)
 
 ## Product goal
 Build a production-ready user web app where each user sees only the jobs that genuinely fit them, based on their resume, role profile, experience level, and recommendation filters. Scraping and raw ingestion stay outside the user experience and feed matched opportunities into the database.
@@ -266,8 +266,19 @@ Reference:
 Reference:
 - [CHECKPOINT_27_REFINED_PLATFORM_POLISH.md](./CHECKPOINT_27_REFINED_PLATFORM_POLISH.md)
 
+### Checkpoint 28
+- Adopted the user-approved CareerOS screenshot style as the preferred visual direction
+- Renamed the visible app shell brand to `CareerOS`
+- Reworked the left sidebar, active nav state, global background, and AI Resume Tailor promo card toward the reference style
+- Restyled recommended job cards with larger company monograms, calmer white surfaces, deterministic company tile colors, and more readable spacing
+
+Reference:
+- [CHECKPOINT_28_CAREEROS_SCREENSHOT_STYLE.md](./CHECKPOINT_28_CAREEROS_SCREENSHOT_STYLE.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
+- keep the UI moving toward the user-approved CareerOS screenshot style: light grey workspace, white cards, left navigation, restrained purple accent, and premium readable job rows
+- next visual pass should apply the same style to Applied, Tracker, Settings/Profile, and the job detail workspace
 - keep balancing visual polish with serious job-platform restraint
 - keep the UI aligned with serious job-platform conventions rather than playful AI-dashboard styling
 - keep applying the premium SaaS design critique in visible vertical slices, starting with global nav and job-card decision speed

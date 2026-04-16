@@ -19,6 +19,17 @@ const STATUS_OPTIONS = [
   { value: 'skipped', label: 'Archived' },
 ]
 
+const COMPANY_THEMES = ['purple', 'black', 'coral', 'blue', 'green', 'slate']
+
+function getCompanyTheme(company = '') {
+  const input = company || 'job'
+  let hash = 0
+  for (let index = 0; index < input.length; index += 1) {
+    hash = (hash * 33 + input.charCodeAt(index)) % COMPANY_THEMES.length
+  }
+  return COMPANY_THEMES[Math.abs(hash)]
+}
+
 function getStatusLabel(status) {
   return STATUS_OPTIONS.find((option) => option.value === status)?.label || 'Saved'
 }
@@ -65,7 +76,7 @@ function JobCard({ job, onClick, onStatusChange }) {
       </div>
 
       <div className="job-card-heading">
-        <span className="company-monogram" aria-hidden="true">{companyInitial}</span>
+        <span className={`company-monogram company-${getCompanyTheme(job.Company)}`} aria-hidden="true">{companyInitial}</span>
         <div className="job-card-heading-copy">
           <div className="job-card-heading-row">
             <h3>{job.Title || 'Untitled role'}</h3>

@@ -191,15 +191,14 @@ function App() {
         <div className="brand-block">
           <span className="brand-mark">JA</span>
           <div>
-            <p className="brand-kicker">Career workspace</p>
-            <h1>JobMatch</h1>
+            <h1>CareerOS</h1>
           </div>
         </div>
 
         <nav className="topnav" aria-label="Primary navigation">
           <NavLink to="/jobs" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.recommended}</span>
-            <span className="nav-label">Recommended</span>
+            <span className="nav-label">All Jobs</span>
             {renderNavCount(recommendedJobs.length)}
           </NavLink>
           <NavLink to="/applied" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
@@ -214,16 +213,16 @@ function App() {
           </NavLink>
           <NavLink to="/profile" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.profile}</span>
-            <span className="nav-label">Profile</span>
+            <span className="nav-label">Settings</span>
           </NavLink>
         </nav>
 
         <div className="sidebar-insight">
-          <span>Matched feed</span>
+          <span>AI Resume Tailor</span>
           <p>
             {hasMatchedJobs
-              ? `${stats.total || recommendedJobs.length} roles are ready for review.`
-              : 'Your profile is ready. We are preparing your first matched roles.'}
+              ? `Tailor your resume for ${stats.total || recommendedJobs.length} matched roles.`
+              : 'Auto-tailor your resume for each application with AI.'}
           </p>
         </div>
 

@@ -1,16 +1,14 @@
 .job-card {
   position: relative;
   display: grid;
-  gap: 0.78rem;
-  padding: 1.05rem 1.12rem 1.05rem 1.25rem;
-  border-radius: 0.82rem;
+  gap: 0.9rem;
+  padding: 1.45rem 1.55rem;
+  border-radius: 1rem;
   background:
     linear-gradient(180deg, #ffffff, #fcfdff),
     #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.075);
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.035),
-    0 12px 30px rgba(15, 23, 42, 0.035);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.035);
   transition:
     background 160ms ease,
     border-color 160ms ease,
@@ -18,17 +16,11 @@
 }
 
 .job-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  border-radius: 0.82rem 0 0 0.82rem;
-  background: var(--tier-accent, rgba(100, 116, 139, 0.42));
-  opacity: 0.7;
+  content: none;
 }
 
 .job-card:hover {
-  border-color: rgba(10, 102, 194, 0.26);
+  border-color: rgba(99, 91, 255, 0.22);
   background:
     linear-gradient(180deg, #ffffff, #f8fbff),
     #ffffff;
@@ -56,6 +48,7 @@
 .job-card-topline {
   justify-content: space-between;
   gap: 0.85rem;
+  order: -2;
 }
 
 .job-card-topline-left {
@@ -81,24 +74,48 @@
 
 .job-card-heading {
   display: grid;
-  grid-template-columns: 2.4rem minmax(0, 1fr);
-  gap: 0.8rem;
+  grid-template-columns: 3.35rem minmax(0, 1fr);
+  gap: 1rem;
   align-items: start;
 }
 
 .company-monogram {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 3rem;
+  height: 3rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.52rem;
-  color: #334155;
-  background: linear-gradient(180deg, #f8fafc, #e8eef5);
-  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 0.72rem;
+  color: #ffffff;
+  background: #635bff;
+  border: 0;
   font-family: var(--font-sans);
   font-weight: var(--weight-bold);
-  font-size: 0.86rem;
+  font-size: 1rem;
+}
+
+.company-purple {
+  background: #635bff;
+}
+
+.company-black {
+  background: #030712;
+}
+
+.company-coral {
+  background: #ff4f5e;
+}
+
+.company-blue {
+  background: #2563eb;
+}
+
+.company-green {
+  background: #059669;
+}
+
+.company-slate {
+  background: #64748b;
 }
 
 .job-card-heading-copy {
@@ -110,7 +127,7 @@
 .job-card-heading h3 {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.28;
   letter-spacing: -0.018em;
   color: var(--text-primary, #0f172a);
@@ -124,7 +141,7 @@
 .job-card-heading p {
   margin: 0;
   color: var(--text-muted, #64748b);
-  font-size: 0.87rem;
+  font-size: 0.9rem;
   font-weight: var(--weight-medium);
 }
 
@@ -133,8 +150,8 @@
   align-items: baseline;
   gap: 0.24rem;
   min-height: 2rem;
-  padding: 0 0.68rem;
-  border-radius: 999px;
+  padding: 0 0.72rem;
+  border-radius: 0.65rem;
   color: #0f172a;
   background: color-mix(in srgb, var(--match-color, #64748b) 7%, #ffffff);
   border: 1px solid color-mix(in srgb, var(--match-color, #64748b) 18%, rgba(15, 23, 42, 0.08));
@@ -142,7 +159,7 @@
 }
 
 .match-badge strong {
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1;
   font-weight: 720;
   color: var(--match-color, #475569);
@@ -173,7 +190,7 @@
 
 .job-card-meta {
   color: var(--text-muted, #64748b);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
 }
 
 .job-card-meta span + span::before {
@@ -189,7 +206,7 @@
 }
 
 .job-skill-chip {
-  padding: 0.3rem 0.52rem;
+  padding: 0.36rem 0.62rem;
   color: #334155;
   background: linear-gradient(180deg, #f8fafc, #f1f5f9);
   border: 1px solid rgba(15, 23, 42, 0.045);
@@ -197,7 +214,7 @@
 
 .job-card-footer {
   justify-content: space-between;
-  padding-top: 0.12rem;
+  padding-top: 0.18rem;
 }
 
 .job-status-menu {
@@ -218,8 +235,8 @@
 }
 
 .job-status-pill {
-  min-height: 2.1rem;
-  padding: 0 0.72rem;
+  min-height: 2.15rem;
+  padding: 0 0.78rem;
   border: 1px solid color-mix(in srgb, var(--status-color, #64748b) 14%, transparent);
 }
 
@@ -287,10 +304,10 @@
   align-items: center;
   justify-content: center;
   gap: 0.34rem;
-  min-height: 2.1rem;
-  padding: 0 0.76rem;
+  min-height: 2.15rem;
+  padding: 0 0.82rem;
   border-radius: 999px;
-  color: #0a66c2;
+  color: var(--accent);
   background: transparent;
   border: 1px solid rgba(10, 102, 194, 0.14);
   text-decoration: none;
@@ -299,8 +316,8 @@
 }
 
 .job-open-link:hover {
-  background: rgba(10, 102, 194, 0.08);
-  border-color: rgba(10, 102, 194, 0.12);
+  background: rgba(99, 91, 255, 0.08);
+  border-color: rgba(99, 91, 255, 0.14);
 }
 
 .tier-perfect {
