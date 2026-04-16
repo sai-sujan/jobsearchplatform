@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 
+import AllJobs from './pages/AllJobs'
 import AppliedJobs from './pages/AppliedJobs'
 import AuthPage from './pages/AuthPage'
 import OnboardingPage from './pages/OnboardingPage'
@@ -12,10 +13,23 @@ import { api, storeToken } from './lib/api'
 import { APPLIED_STATUSES, normalizeStatus } from './lib/jobs'
 
 const NAV_ICONS = {
+  today: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3.5v2" />
+      <path d="M12 18.5v2" />
+      <path d="M4.5 12h2" />
+      <path d="M17.5 12h2" />
+      <path d="m6.6 6.6 1.4 1.4" />
+      <path d="m16 16 1.4 1.4" />
+      <path d="m17.4 6.6-1.4 1.4" />
+      <path d="m8 16-1.4 1.4" />
+      <path d="M12 8.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5Z" />
+    </svg>
+  ),
   recommended: (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v11A2.5 2.5 0 0 1 16.5 20h-9A2.5 2.5 0 0 1 5 17.5v-11Z" />
-      <path d="m8.5 12 2.2 2.2 4.8-5.1" />
+      <path d="M10.5 18.5a8 8 0 1 0 0-13 8 8 0 0 0 0 13Z" />
+      <path d="m16.4 16.4 3.1 3.1" />
     </svg>
   ),
   applied: (
@@ -33,8 +47,14 @@ const NAV_ICONS = {
   ),
   profile: (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
-      <path d="M5.5 20a6.5 6.5 0 0 1 13 0" />
+      <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 0 1 7.04 4.3l.06.06A1.65 1.65 0 0 0 8.92 4a1.65 1.65 0 0 0 1-1.51V2.4a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.18.39.57.64 1 .64H20.5a2 2 0 0 1 0 4h-.09c-.43 0-.82.25-1.01.64Z" />
+    </svg>
+  ),
+  sparkles: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" />
+      <path d="m18 15 .8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8L18 15Z" />
     </svg>
   ),
 }
@@ -189,13 +209,23 @@ function App() {
     <div className="app-frame">
       <aside className="app-sidebar">
         <div className="brand-block">
-          <span className="brand-mark">JA</span>
+          <span className="brand-mark">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6.5 7.5h11A2.5 2.5 0 0 1 20 10v7.5A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5V10a2.5 2.5 0 0 1 2.5-2.5Z" />
+              <path d="M9 7.5V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8v1.7" />
+              <path d="M9 13.5h6" />
+            </svg>
+          </span>
           <div>
             <h1>CareerOS</h1>
           </div>
         </div>
 
         <nav className="topnav" aria-label="Primary navigation">
+          <NavLink to="/today" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
+            <span className="nav-icon">{NAV_ICONS.today}</span>
+            <span className="nav-label">Today</span>
+          </NavLink>
           <NavLink to="/jobs" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.recommended}</span>
             <span className="nav-label">All Jobs</span>
@@ -211,14 +241,14 @@ function App() {
             <span className="nav-label">Tracker</span>
             {renderNavCount(jobs.length)}
           </NavLink>
-          <NavLink to="/profile" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
+          <NavLink to="/settings" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.profile}</span>
             <span className="nav-label">Settings</span>
           </NavLink>
         </nav>
 
         <div className="sidebar-insight">
-          <span>AI Resume Tailor</span>
+          <span>{NAV_ICONS.sparkles} AI Resume Tailor</span>
           <p>
             {hasMatchedJobs
               ? `Tailor your resume for ${stats.total || recommendedJobs.length} matched roles.`
@@ -247,11 +277,12 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Navigate to="/jobs" replace />} />
-          <Route path="/jobs" element={<TodaysJobs jobs={recommendedJobs} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
+          <Route path="/today" element={<TodaysJobs jobs={recommendedJobs} session={session} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
+          <Route path="/jobs" element={<AllJobs jobs={jobs} stats={stats} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
           <Route path="/applied" element={<AppliedJobs jobs={jobs} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
           <Route path="/tracker" element={<TrackerBoard jobs={jobs} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
           <Route
-            path="/profile"
+            path="/settings"
             element={(
               <ProfilePage
                 onboarding={onboarding}
@@ -264,6 +295,7 @@ function App() {
               />
             )}
           />
+          <Route path="/profile" element={<Navigate to="/settings" replace />} />
           <Route path="*" element={<Navigate to="/jobs" replace />} />
         </Routes>
       </main>

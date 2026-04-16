@@ -1,6 +1,6 @@
 # Project Tracker
 
-Last updated: 2026-04-15 (Checkpoint 28)
+Last updated: 2026-04-15 (Checkpoint 29)
 
 ## Product goal
 Build a production-ready user web app where each user sees only the jobs that genuinely fit them, based on their resume, role profile, experience level, and recommendation filters. Scraping and raw ingestion stay outside the user experience and feed matched opportunities into the database.
@@ -275,10 +275,20 @@ Reference:
 Reference:
 - [CHECKPOINT_28_CAREEROS_SCREENSHOT_STYLE.md](./CHECKPOINT_28_CAREEROS_SCREENSHOT_STYLE.md)
 
+### Checkpoint 29
+- Used the provided `Aijobsearchplatformui` GitHub repo as the strict visual source of truth instead of approximating from screenshots
+- Ported the reference page structure into the live app: Today, All Jobs, Applied, Tracker, and Settings
+- Rebuilt the shell, job cards, all-jobs filters, applied table, tracker board, and settings panels to match the reference UI style closely while preserving real backend data and auth
+- Kept compatibility routes where needed: `/jobs` remains the default test-safe landing route, `/today` provides the reference Today page, and `/profile` redirects to `/settings`
+
+Reference:
+- [CHECKPOINT_29_EXACT_REFERENCE_UI_PORT.md](./CHECKPOINT_29_EXACT_REFERENCE_UI_PORT.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - keep the UI moving toward the user-approved CareerOS screenshot style: light grey workspace, white cards, left navigation, restrained purple accent, and premium readable job rows
-- next visual pass should apply the same style to Applied, Tracker, Settings/Profile, and the job detail workspace
+- the provided GitHub UI repo is now the strict visual reference for the app shell and major pages
+- next visual pass should tighten the job detail workspace/sheet to match the reference detail panel exactly
 - keep balancing visual polish with serious job-platform restraint
 - keep the UI aligned with serious job-platform conventions rather than playful AI-dashboard styling
 - keep applying the premium SaaS design critique in visible vertical slices, starting with global nav and job-card decision speed
