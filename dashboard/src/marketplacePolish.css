@@ -1,32 +1,34 @@
 :root {
-  --zr-ink: #062f2b;
-  --zr-ink-soft: #244844;
-  --zr-muted: #50635f;
-  --zr-border: #9dafab;
-  --zr-border-soft: #d8e1df;
-  --zr-card: #ffffff;
-  --zr-page: #fbfcfa;
-  --zr-mint: #d3f2ed;
-  --zr-mint-hover: #bfe9e2;
-  --zr-mint-deep: #0b3b36;
-  --zr-purple: #9b63df;
-  --zr-purple-soft: #f0e7ff;
+  --market-ink: #171a2f;
+  --market-ink-soft: #34415f;
+  --market-muted: #657084;
+  --market-border: #c6cfdd;
+  --market-border-soft: #e4e8f0;
+  --market-card: #ffffff;
+  --market-page: #f7f8fb;
+  --market-action: #ddf4ef;
+  --market-action-hover: #c9ece5;
+  --market-action-ink: #184e45;
+  --market-primary: #6957f5;
+  --market-primary-soft: #efedff;
+  --market-primary-border: #d8d2ff;
 }
 
 body,
 .app-main {
   background:
-    radial-gradient(circle at 8% 0%, rgba(211, 242, 237, 0.55), transparent 28rem),
-    linear-gradient(180deg, #ffffff 0%, var(--zr-page) 48%, #f6faf8 100%);
+    radial-gradient(circle at 10% -4%, rgba(105, 87, 245, 0.08), transparent 28rem),
+    radial-gradient(circle at 92% 4%, rgba(221, 244, 239, 0.72), transparent 24rem),
+    linear-gradient(180deg, #ffffff 0%, var(--market-page) 48%, #f8fafc 100%);
 }
 
 .app-sidebar {
-  border-right-color: var(--zr-border-soft);
+  border-right-color: var(--market-border-soft);
   background: rgba(255, 255, 255, 0.98);
 }
 
 .brand-mark {
-  background: var(--zr-ink);
+  background: var(--market-ink);
 }
 
 .brand-block h1,
@@ -40,35 +42,35 @@ body,
 .application-position p,
 .tracker-card-copy h3,
 .settings-card-title h2 {
-  color: var(--zr-ink);
+  color: var(--market-ink);
 }
 
 .topnav-link.active {
-  background: var(--zr-ink);
+  background: var(--market-ink);
   color: #ffffff;
 }
 
 .topnav-link:hover:not(.active) {
-  background: #eef4f2;
-  color: var(--zr-ink);
+  background: #f0f2f7;
+  color: var(--market-ink);
 }
 
 .topnav-link > span:last-child:not(.nav-label):not(.nav-icon) {
-  background: rgba(211, 242, 237, 0.86);
-  color: var(--zr-ink);
+  background: rgba(221, 244, 239, 0.9);
+  color: var(--market-ink);
 }
 
 .sidebar-insight {
-  border-color: rgba(155, 99, 223, 0.34);
+  border-color: var(--market-primary-border);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(240, 231, 255, 0.62)),
-    radial-gradient(circle at 30% 20%, rgba(155, 99, 223, 0.26), transparent 9rem),
-    #f7f1ff;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(239, 237, 255, 0.72)),
+    radial-gradient(circle at 26% 14%, rgba(105, 87, 245, 0.2), transparent 9rem),
+    #f8f6ff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
 }
 
 .sidebar-insight span {
-  color: #6936a8;
+  color: var(--market-primary);
 }
 
 .today-stat-card,
@@ -77,20 +79,20 @@ body,
 .applications-table,
 .applied-stage-card,
 .settings-card {
-  border-color: var(--zr-border-soft);
-  background: var(--zr-card);
+  border-color: var(--market-border-soft);
+  background: var(--market-card);
 }
 
 .job-card,
 .top-match-card {
-  border-color: var(--zr-border);
+  border-color: var(--market-border);
   box-shadow: none;
 }
 
 .job-card:hover,
 .top-match-card:hover {
-  border-color: var(--zr-ink-soft);
-  box-shadow: 0 8px 20px rgba(6, 47, 43, 0.08);
+  border-color: var(--market-ink-soft);
+  box-shadow: 0 10px 22px rgba(23, 26, 47, 0.075);
 }
 
 .job-card {
@@ -105,7 +107,7 @@ body,
 .applied-header p,
 .tracker-page-header p,
 .settings-page-header p {
-  color: var(--zr-muted);
+  color: var(--market-muted);
 }
 
 .job-card-skills {
@@ -115,14 +117,14 @@ body,
 .job-skill-chip,
 .inactive-filter,
 .settings-chip {
-  background: #f1f5f3;
-  color: var(--zr-muted);
+  background: #f1f4f7;
+  color: var(--market-muted);
 }
 
 .active-filter,
 .settings-chip.purple {
-  background: var(--zr-purple-soft);
-  color: #6d35af;
+  background: var(--market-primary-soft);
+  color: var(--market-primary);
 }
 
 .job-card-cta {
@@ -132,8 +134,8 @@ body,
   width: 100%;
   min-height: 2.65rem;
   border-radius: 0.45rem;
-  background: var(--zr-mint);
-  color: var(--zr-mint-deep);
+  background: var(--market-action);
+  color: var(--market-action-ink);
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -143,14 +145,14 @@ body,
 }
 
 .job-card:hover .job-card-cta {
-  background: var(--zr-mint-hover);
+  background: var(--market-action-hover);
 }
 
 .match-badge.score-great,
 .match-badge.score-good,
 .match-badge.score-warm {
-  background: var(--zr-mint);
-  color: var(--zr-mint-deep);
+  background: var(--market-action);
+  color: var(--market-action-ink);
 }
 
 .stage-badge,
@@ -160,18 +162,26 @@ body,
 
 .top-match-card-head span,
 .user-avatar {
-  background: linear-gradient(135deg, var(--zr-purple), #6c5ce7);
+  background: linear-gradient(135deg, var(--market-primary), #8a6df7);
 }
 
 .top-match-card-head strong,
 .today-stat-card .stat-green,
 .tracker-card-bottom span:last-child {
-  color: #0f7a59;
+  color: #0f8b61;
+}
+
+.today-stat-card .stat-blue {
+  color: #2563eb;
+}
+
+.today-stat-card .stat-violet {
+  color: #7c3aed;
 }
 
 .alljobs-header,
 .tracker-page-header {
-  border-bottom-color: var(--zr-border-soft);
+  border-bottom-color: var(--market-border-soft);
   background: rgba(255, 255, 255, 0.94);
 }
 
@@ -181,7 +191,7 @@ body,
 .salary-row input,
 .profile-grid-simple input,
 .resume-editor {
-  border-color: var(--zr-border-soft);
+  border-color: var(--market-border-soft);
   background: #ffffff;
 }
 
@@ -191,8 +201,8 @@ body,
 .salary-row input:focus,
 .profile-grid-simple input:focus,
 .resume-editor:focus {
-  border-color: var(--zr-ink-soft);
-  box-shadow: 0 0 0 3px rgba(211, 242, 237, 0.75);
+  border-color: var(--market-primary);
+  box-shadow: 0 0 0 3px rgba(105, 87, 245, 0.12);
 }
 
 .alljobs-filter-button,
@@ -201,41 +211,41 @@ body,
 .settings-inline-input button,
 .secondary-action,
 .topbar-meta .secondary-action {
-  border-color: var(--zr-border);
+  border-color: var(--market-border);
   background: #ffffff;
-  color: var(--zr-ink);
+  color: var(--market-ink);
 }
 
 .settings-save,
 .primary-action {
-  background: var(--zr-ink);
+  background: var(--market-ink);
   color: #ffffff;
 }
 
 .applications-table-head {
-  border-bottom-color: var(--zr-border-soft);
-  background: #fbfcfa;
+  border-bottom-color: var(--market-border-soft);
+  background: #fbfcff;
 }
 
 .application-row:hover {
-  background: #f6faf8;
+  background: #f7f9fc;
 }
 
 .tracker-column-body {
-  border: 1px solid rgba(157, 175, 171, 0.32);
+  border: 1px solid rgba(198, 207, 221, 0.52);
 }
 
 .tracker-card {
-  border-color: var(--zr-border);
+  border-color: var(--market-border);
 }
 
 .tracker-card:hover {
-  box-shadow: 0 8px 18px rgba(6, 47, 43, 0.08);
+  box-shadow: 0 8px 18px rgba(23, 26, 47, 0.075);
 }
 
 .column-blue,
 .column-emerald {
-  background: rgba(211, 242, 237, 0.68);
+  background: rgba(221, 244, 239, 0.68);
 }
 
 .column-amber {
@@ -243,16 +253,16 @@ body,
 }
 
 .column-violet {
-  background: rgba(240, 231, 255, 0.82);
+  background: rgba(239, 237, 255, 0.86);
 }
 
 .company-purple,
 .company-indigo,
 .company-blue {
-  background: var(--zr-ink);
+  background: var(--market-ink);
 }
 
 .company-coral,
 .company-violet {
-  background: var(--zr-purple);
+  background: var(--market-primary);
 }

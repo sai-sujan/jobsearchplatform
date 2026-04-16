@@ -1,6 +1,6 @@
 # Project Tracker
 
-Last updated: 2026-04-15 (Checkpoint 30)
+Last updated: 2026-04-15 (Checkpoint 31)
 
 ## Product goal
 Build a production-ready user web app where each user sees only the jobs that genuinely fit them, based on their resume, role profile, experience level, and recommendation filters. Scraping and raw ingestion stay outside the user experience and feed matched opportunities into the database.
@@ -292,11 +292,20 @@ Reference:
 Reference:
 - [CHECKPOINT_30_ZIPRECRUITER_POLISH.md](./CHECKPOINT_30_ZIPRECRUITER_POLISH.md)
 
+### Checkpoint 31
+- Refined the color system away from exact ZipRecruiter colors into an ownable CareerOS marketplace palette
+- Chose midnight navy, periwinkle, soft seafoam, warm white, and blue-grey borders as the new visual combination
+- Kept the clean stats cards from the reference screenshot intact
+- Renamed the polish layer to `marketplacePolish.css` to reflect the broader visual direction
+
+Reference:
+- [CHECKPOINT_31_MARKETPLACE_PALETTE_REFINEMENT.md](./CHECKPOINT_31_MARKETPLACE_PALETTE_REFINEMENT.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - keep the UI moving toward the user-approved CareerOS screenshot style: light grey workspace, white cards, left navigation, restrained purple accent, and premium readable job rows
 - the provided GitHub UI repo is now the strict visual reference for the app shell and major pages
-- the visual palette now combines the CareerOS reference structure with a ZipRecruiter-inspired dark-teal, mint-action, strong-border treatment
+- the visual palette now combines the CareerOS reference structure with an ownable marketplace palette: midnight navy, periwinkle, soft seafoam, warm white, and blue-grey borders
 - next visual pass should tighten the job detail workspace/sheet to match this exact visual language
 - keep balancing visual polish with serious job-platform restraint
 - keep the UI aligned with serious job-platform conventions rather than playful AI-dashboard styling
