@@ -74,27 +74,29 @@ function JobCard({ job, onClick, compact = false }) {
           </div>
 
           {!compact && (
-            <>
-              <div className="job-card-meta">
-                <span>{location}</span>
-                {salary ? <span>{salary}</span> : null}
-                <span>{posted}</span>
-              </div>
+            <div className="job-card-details-row">
+              <div className="job-card-details">
+                <div className="job-card-meta">
+                  <span>{location}</span>
+                  {salary ? <span>{salary}</span> : null}
+                  <span>{posted}</span>
+                </div>
 
-              <div className="job-card-skills">
-                <span className="job-skill-chip">{type}</span>
-                {skills.map((skill) => (
-                  <span key={`${getJobId(job)}-${skill}`} className="job-skill-chip">
-                    {skill}
-                  </span>
-                ))}
-                {source && <span className="job-skill-chip source-chip">{source}</span>}
+                <div className="job-card-skills">
+                  <span className="job-skill-chip">{type}</span>
+                  {skills.map((skill) => (
+                    <span key={`${getJobId(job)}-${skill}`} className="job-skill-chip">
+                      {skill}
+                    </span>
+                  ))}
+                  {source && <span className="job-skill-chip source-chip">{source}</span>}
+                </div>
               </div>
 
               <span className="job-card-cta" aria-hidden="true">
-                View match
+                View →
               </span>
-            </>
+            </div>
           )}
         </div>
       </div>

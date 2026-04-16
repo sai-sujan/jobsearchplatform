@@ -1,6 +1,6 @@
 # Project Tracker
 
-Last updated: 2026-04-15 (Checkpoint 31)
+Last updated: 2026-04-15 (Checkpoint 32)
 
 ## Product goal
 Build a production-ready user web app where each user sees only the jobs that genuinely fit them, based on their resume, role profile, experience level, and recommendation filters. Scraping and raw ingestion stay outside the user experience and feed matched opportunities into the database.
@@ -300,6 +300,14 @@ Reference:
 
 Reference:
 - [CHECKPOINT_31_MARKETPLACE_PALETTE_REFINEMENT.md](./CHECKPOINT_31_MARKETPLACE_PALETTE_REFINEMENT.md)
+
+### Checkpoint 32
+- Removed the oversized full-width job-card action bars
+- Replaced them with compact right-aligned `View ->` pills so job cards feel lighter and more professional
+- Kept the marketplace palette and card click behavior intact
+
+Reference:
+- [CHECKPOINT_32_COMPACT_CARD_CTA.md](./CHECKPOINT_32_COMPACT_CARD_CTA.md)
 
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
