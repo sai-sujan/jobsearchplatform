@@ -10,7 +10,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1.2rem;
   align-items: center;
-  padding: 0.35rem 0.1rem 0.85rem;
+  padding: 0.55rem 0.1rem 1rem;
   border-bottom: 1px solid var(--line);
 }
 
@@ -72,8 +72,11 @@
   min-width: 8rem;
   padding: 0.78rem 0.9rem;
   border-radius: 0.65rem;
-  background: #ffffff;
-  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, #ffffff, #fbfdff),
+    #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.075);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.045);
 }
 
 .hero-metric strong {
@@ -97,8 +100,11 @@
   align-items: end;
   padding: 0.9rem;
   border-radius: 0.72rem;
-  background: #ffffff;
-  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96)),
+    #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.075);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.045);
 }
 
 .jobs-toolbar label {
@@ -117,7 +123,7 @@
   padding: 0 0.88rem;
   border-radius: 0.5rem;
   border: 1px solid var(--line-strong);
-  background: #f8f9fb;
+  background: #ffffff;
   color: var(--ink);
   font: inherit;
   font-size: 0.9rem;
@@ -132,7 +138,7 @@
 .job-board {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.72rem;
+  gap: 0.82rem;
   transition: none;
 }
 

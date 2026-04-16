@@ -13,9 +13,11 @@
   flex-direction: column;
   gap: 0.9rem;
   padding: 1rem;
-  border-right: 1px solid var(--line);
-  background: #ffffff;
-  box-shadow: none;
+  border-right: 1px solid rgba(15, 23, 42, 0.075);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96)),
+    #ffffff;
+  box-shadow: 12px 0 34px rgba(15, 23, 42, 0.035);
   z-index: 30;
 }
 
@@ -38,11 +40,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
-  background: #0f172a;
+  background: linear-gradient(145deg, #0f172a, #1e293b);
   color: #f8fbff;
   font-weight: var(--weight-bold);
   letter-spacing: 0.04em;
-  box-shadow: none;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
 }
 
 .brand-kicker {
@@ -82,6 +84,7 @@
   text-decoration: none;
   font-weight: var(--weight-semibold);
   font-size: 0.88rem;
+  border: 1px solid transparent;
   transition:
     background 180ms ease,
     color 180ms ease,
@@ -130,11 +133,13 @@
 
 .topnav-link:hover {
   background: #f4f6f8;
+  border-color: rgba(15, 23, 42, 0.04);
   color: var(--ink);
 }
 
 .topnav-link.active {
-  background: #eef5fc;
+  background: linear-gradient(135deg, #eef5fc, #f7fbff);
+  border-color: rgba(10, 102, 194, 0.14);
   color: var(--accent);
   transform: none;
   box-shadow: none;
@@ -157,7 +162,10 @@
   padding: 0.9rem;
   border-radius: 0.65rem;
   border: 1px solid var(--border-subtle);
-  background: #f8fafc;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 250, 252, 0.92)),
+    #f8fafc;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .sidebar-insight span {
@@ -209,14 +217,13 @@
   background: #eef2f6;
   border: 1px solid var(--border-subtle);
   color: #334155;
-  color: #ffffff;
   font-size: 0.78rem;
   font-weight: var(--weight-bold);
 }
 
 .app-main {
   width: 100%;
-  max-width: 1480px;
+  max-width: 1240px;
   min-width: 0;
   margin: 0 auto;
   padding: 1.35rem 1.55rem 2rem;

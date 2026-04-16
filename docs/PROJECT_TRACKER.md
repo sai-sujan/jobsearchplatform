@@ -258,8 +258,17 @@ Reference:
 Reference:
 - [CHECKPOINT_26_PROFESSIONAL_JOB_PLATFORM_STYLE.md](./CHECKPOINT_26_PROFESSIONAL_JOB_PLATFORM_STYLE.md)
 
+### Checkpoint 27
+- Added visual polish back without returning to playful/dashboard styling
+- Added subtle page atmosphere, sidebar depth, refined nav states, elevated toolbar/metric surfaces, and understated card depth
+- Added subtle tier edge accents and contextual match badge tinting while keeping neutral employer marks and one-column job-platform scanning
+
+Reference:
+- [CHECKPOINT_27_REFINED_PLATFORM_POLISH.md](./CHECKPOINT_27_REFINED_PLATFORM_POLISH.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
+- keep balancing visual polish with serious job-platform restraint
 - keep the UI aligned with serious job-platform conventions rather than playful AI-dashboard styling
 - keep applying the premium SaaS design critique in visible vertical slices, starting with global nav and job-card decision speed
 - keep user-facing UI polished enough that fresh users trust the product before automation/internal delivery is fully complete

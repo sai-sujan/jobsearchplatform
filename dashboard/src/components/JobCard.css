@@ -2,20 +2,39 @@
   position: relative;
   display: grid;
   gap: 0.78rem;
-  padding: 1rem 1.1rem;
-  border-radius: 0.72rem;
-  background: #ffffff;
-  border: 1px solid var(--border-subtle, rgba(15, 23, 42, 0.07));
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.035);
+  padding: 1.05rem 1.12rem 1.05rem 1.25rem;
+  border-radius: 0.82rem;
+  background:
+    linear-gradient(180deg, #ffffff, #fcfdff),
+    #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.075);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.035),
+    0 12px 30px rgba(15, 23, 42, 0.035);
   transition:
     background 160ms ease,
     border-color 160ms ease,
     box-shadow 160ms ease;
 }
 
+.job-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: 0.82rem 0 0 0.82rem;
+  background: var(--tier-accent, rgba(100, 116, 139, 0.42));
+  opacity: 0.7;
+}
+
 .job-card:hover {
   border-color: rgba(10, 102, 194, 0.26);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
+  background:
+    linear-gradient(180deg, #ffffff, #f8fbff),
+    #ffffff;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 16px 38px rgba(15, 23, 42, 0.085);
 }
 
 .job-card:focus-visible {
@@ -75,7 +94,7 @@
   justify-content: center;
   border-radius: 0.52rem;
   color: #334155;
-  background: #eef2f6;
+  background: linear-gradient(180deg, #f8fafc, #e8eef5);
   border: 1px solid rgba(15, 23, 42, 0.06);
   font-family: var(--font-sans);
   font-weight: var(--weight-bold);
@@ -117,8 +136,8 @@
   padding: 0 0.68rem;
   border-radius: 999px;
   color: #0f172a;
-  background: #f8fafc;
-  border: 1px solid var(--border-default, rgba(15, 23, 42, 0.11));
+  background: color-mix(in srgb, var(--match-color, #64748b) 7%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--match-color, #64748b) 18%, rgba(15, 23, 42, 0.08));
   white-space: nowrap;
 }
 
@@ -172,7 +191,8 @@
 .job-skill-chip {
   padding: 0.3rem 0.52rem;
   color: #334155;
-  background: #f4f6f8;
+  background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+  border: 1px solid rgba(15, 23, 42, 0.045);
 }
 
 .job-card-footer {
@@ -272,7 +292,7 @@
   border-radius: 999px;
   color: #0a66c2;
   background: transparent;
-  border: 1px solid transparent;
+  border: 1px solid rgba(10, 102, 194, 0.14);
   text-decoration: none;
   font-size: 0.84rem;
   font-weight: var(--weight-semibold);
@@ -284,20 +304,20 @@
 }
 
 .tier-perfect {
-  --tier-accent: transparent;
+  --tier-accent: rgba(4, 120, 87, 0.5);
 }
 
 .tier-good {
-  --tier-accent: transparent;
+  --tier-accent: rgba(10, 102, 194, 0.48);
 }
 
 .tier-stretch {
-  --tier-accent: transparent;
+  --tier-accent: rgba(180, 83, 9, 0.46);
 }
 
 .tier-skip,
 .tier-neutral {
-  --tier-accent: transparent;
+  --tier-accent: rgba(100, 116, 139, 0.34);
 }
 
 .status-skipped {
