@@ -19,38 +19,17 @@ const STATUS_OPTIONS = [
   { value: 'skipped', label: 'Archived' },
 ]
 
-const COMPANY_THEMES = ['indigo', 'sky', 'emerald', 'amber', 'rose', 'slate', 'violet', 'cyan']
-
-function getCompanyTheme(company = '') {
-  const input = company || 'job'
-  let hash = 0
-  for (let index = 0; index < input.length; index += 1) {
-    hash = (hash * 31 + input.charCodeAt(index)) % COMPANY_THEMES.length
-  }
-  return COMPANY_THEMES[Math.abs(hash)]
-}
-
 function getStatusLabel(status) {
   return STATUS_OPTIONS.find((option) => option.value === status)?.label || 'Saved'
 }
 
-function ScoreRing({ score }) {
+function MatchBadge({ score, tierVariant }) {
   const safeScore = Math.max(0, Math.min(100, Number(score) || 0))
 
   return (
-    <div className="score-ring" aria-label={`${safeScore}% match`}>
-      <svg viewBox="0 0 36 36" className="score-ring-svg" aria-hidden="true">
-        <circle className="score-ring-track" cx="18" cy="18" r="15.9" />
-        <circle
-          className="score-ring-fill"
-          cx="18"
-          cy="18"
-          r="15.9"
-          pathLength="100"
-          strokeDasharray={`${safeScore} 100`}
-        />
-      </svg>
-      <span>{safeScore}</span>
+    <div className={`match-badge match-${tierVariant}`} aria-label={`${safeScore}% match`}>
+      <strong>{safeScore}%</strong>
+      <span>match</span>
     </div>
   )
 }
@@ -82,11 +61,11 @@ function JobCard({ job, onClick, onStatusChange }) {
           <span className="job-source-badge">{getSourceLabel(job)}</span>
           <span className="job-date-pill">{formatCompactDate(job['Date Found'])}</span>
         </div>
-        <ScoreRing score={displayScore} />
+        <MatchBadge score={displayScore} tierVariant={tierVariant} />
       </div>
 
       <div className="job-card-heading">
-        <span className={`company-monogram theme-${getCompanyTheme(job.Company)}`} aria-hidden="true">{companyInitial}</span>
+        <span className="company-monogram" aria-hidden="true">{companyInitial}</span>
         <div className="job-card-heading-copy">
           <div className="job-card-heading-row">
             <h3>{job.Title || 'Untitled role'}</h3>

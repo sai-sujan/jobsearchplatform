@@ -1,5 +1,5 @@
 :root {
-  --bg: #f8f9fb;
+  --bg: #f3f5f7;
   --bg-soft: #ffffff;
   --surface: rgba(255, 255, 255, 0.92);
   --surface-strong: #ffffff;
@@ -13,33 +13,33 @@
   --border-subtle: rgba(15, 23, 42, 0.07);
   --border-default: rgba(15, 23, 42, 0.11);
   --border-strong: rgba(15, 23, 42, 0.17);
-  --ink: #1a1a2e;
-  --muted: #6b7280;
-  --muted-strong: #4b5563;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --muted-strong: #334155;
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
   --text-faint: #94a3b8;
-  --accent: #4f46e5;
-  --accent-strong: #3730a3;
-  --accent-soft: rgba(79, 70, 229, 0.09);
-  --accent-border: rgba(79, 70, 229, 0.22);
-  --warm: #4f46e5;
+  --accent: #0a66c2;
+  --accent-strong: #004182;
+  --accent-soft: rgba(10, 102, 194, 0.08);
+  --accent-border: rgba(10, 102, 194, 0.2);
+  --warm: #0a66c2;
   --success: #059669;
   --warning: #d97706;
   --danger: #dc2626;
   --status-saved: #64748b;
-  --status-applied: #3b82f6;
-  --status-applied-bg: rgba(59, 130, 246, 0.09);
-  --status-interviewing: #f59e0b;
-  --status-interviewing-bg: rgba(245, 158, 11, 0.09);
-  --status-offer: #10b981;
-  --status-offer-bg: rgba(16, 185, 129, 0.09);
-  --status-rejected: #ef4444;
-  --status-rejected-bg: rgba(239, 68, 68, 0.07);
-  --tier-perfect: #10b981;
-  --tier-good: #3b82f6;
-  --tier-stretch: #f59e0b;
+  --status-applied: #0a66c2;
+  --status-applied-bg: rgba(10, 102, 194, 0.08);
+  --status-interviewing: #b45309;
+  --status-interviewing-bg: rgba(180, 83, 9, 0.08);
+  --status-offer: #047857;
+  --status-offer-bg: rgba(4, 120, 87, 0.08);
+  --status-rejected: #b91c1c;
+  --status-rejected-bg: rgba(185, 28, 28, 0.06);
+  --tier-perfect: #047857;
+  --tier-good: #0a66c2;
+  --tier-stretch: #b45309;
   --tier-skip: #94a3b8;
   --font-sans:
     'Inter',
@@ -72,10 +72,7 @@
   line-height: 1.55;
   font-weight: var(--weight-regular);
   color: var(--ink);
-  background:
-    radial-gradient(circle at top left, rgba(79, 70, 229, 0.08), transparent 28rem),
-    radial-gradient(circle at top right, rgba(14, 165, 233, 0.08), transparent 24rem),
-    linear-gradient(180deg, #fbfcff 0%, #f8f9fb 100%);
+  background: #f3f5f7;
   font-synthesis: none;
   font-optical-sizing: auto;
   text-rendering: optimizeLegibility;
@@ -97,9 +94,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 45% -10%, rgba(79, 70, 229, 0.08), transparent 24rem),
-    linear-gradient(180deg, #fbfcff 0%, #f8f9fb 58%, #ffffff 100%);
+  background: #f3f5f7;
 }
 
 body,

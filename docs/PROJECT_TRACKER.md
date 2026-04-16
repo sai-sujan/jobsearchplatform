@@ -249,8 +249,18 @@ Reference:
 Reference:
 - [CHECKPOINT_25_PREMIUM_DECISION_UI.md](./CHECKPOINT_25_PREMIUM_DECISION_UI.md)
 
+### Checkpoint 26
+- Corrected the visual direction after the CP25 cards felt too playful
+- Removed colorful company tiles, circular score rings, gradient shell treatment, and two-column billboard cards
+- Moved toward a restrained job-platform style: neutral employer marks, text match badges, one-column result list, and subdued blue accent
+- Kept the functional improvements from CP25 where useful, including real nav icons and status pill picker behavior
+
+Reference:
+- [CHECKPOINT_26_PROFESSIONAL_JOB_PLATFORM_STYLE.md](./CHECKPOINT_26_PROFESSIONAL_JOB_PLATFORM_STYLE.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
+- keep the UI aligned with serious job-platform conventions rather than playful AI-dashboard styling
 - keep applying the premium SaaS design critique in visible vertical slices, starting with global nav and job-card decision speed
 - keep user-facing UI polished enough that fresh users trust the product before automation/internal delivery is fully complete
 - keep fresh data-domain users away from empty zero-state by temporarily bootstrapping from the launcher pool
@@ -268,7 +278,7 @@ Move delivery logic closer to a real recommendation pipeline:
 - expand matched-job document history and activity visibility in the workspace
 
 ## Next implementation priorities
-1. Continue the premium UI pass on tracker columns and the job detail workspace
+1. Continue the mature job-platform style pass on tracker columns and the job detail workspace
 2. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
 3. Preserve richer deterministic “why this matched” signals across the UI
 4. Keep AI token spend limited to:
