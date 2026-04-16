@@ -90,6 +90,10 @@ function JobCard({ job, onClick, compact = false }) {
                 ))}
                 {source && <span className="job-skill-chip source-chip">{source}</span>}
               </div>
+
+              <span className="job-card-cta" aria-hidden="true">
+                View match
+              </span>
             </>
           )}
         </div>

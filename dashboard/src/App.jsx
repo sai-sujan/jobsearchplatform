@@ -11,6 +11,7 @@ import TodaysJobs from './pages/TodaysJobs'
 import TrackerBoard from './pages/TrackerBoard'
 import { api, storeToken } from './lib/api'
 import { APPLIED_STATUSES, normalizeStatus } from './lib/jobs'
+import './zipRecruiterPolish.css'
 
 const NAV_ICONS = {
   today: (

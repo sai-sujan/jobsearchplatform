@@ -1,6 +1,6 @@
 # Project Tracker
 
-Last updated: 2026-04-15 (Checkpoint 29)
+Last updated: 2026-04-15 (Checkpoint 30)
 
 ## Product goal
 Build a production-ready user web app where each user sees only the jobs that genuinely fit them, based on their resume, role profile, experience level, and recommendation filters. Scraping and raw ingestion stay outside the user experience and feed matched opportunities into the database.
@@ -284,11 +284,20 @@ Reference:
 Reference:
 - [CHECKPOINT_29_EXACT_REFERENCE_UI_PORT.md](./CHECKPOINT_29_EXACT_REFERENCE_UI_PORT.md)
 
+### Checkpoint 30
+- Added a ZipRecruiter-inspired visual polish layer on top of the reference UI
+- Tuned card borders, page backgrounds, button surfaces, and typography toward a dark-teal plus pale-mint job-board combination
+- Added full-width mint CTA bars to job cards so the cards feel more action-oriented without changing backend behavior
+
+Reference:
+- [CHECKPOINT_30_ZIPRECRUITER_POLISH.md](./CHECKPOINT_30_ZIPRECRUITER_POLISH.md)
+
 ## Current active slice
 Move delivery logic closer to a real recommendation pipeline:
 - keep the UI moving toward the user-approved CareerOS screenshot style: light grey workspace, white cards, left navigation, restrained purple accent, and premium readable job rows
 - the provided GitHub UI repo is now the strict visual reference for the app shell and major pages
-- next visual pass should tighten the job detail workspace/sheet to match the reference detail panel exactly
+- the visual palette now combines the CareerOS reference structure with a ZipRecruiter-inspired dark-teal, mint-action, strong-border treatment
+- next visual pass should tighten the job detail workspace/sheet to match this exact visual language
 - keep balancing visual polish with serious job-platform restraint
 - keep the UI aligned with serious job-platform conventions rather than playful AI-dashboard styling
 - keep applying the premium SaaS design critique in visible vertical slices, starting with global nav and job-card decision speed
