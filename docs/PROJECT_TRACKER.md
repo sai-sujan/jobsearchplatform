@@ -327,6 +327,15 @@ Reference:
 Reference:
 - [CHECKPOINT_34_UX_PILOT_AUTH_ONBOARDING.md](./CHECKPOINT_34_UX_PILOT_AUTH_ONBOARDING.md)
 
+### Checkpoint 35
+- Fixed the first onboarding screen after visual review because it felt too congested
+- Shortened the hero headings, reduced oversized typography, hid the duplicate step-chip row, simplified the welcome copy, and made the callouts scan as rows instead of cramped columns
+- Reduced right-side preview density by shrinking the illustration/card and hiding summary cards on the welcome step
+- Verified the frontend with build and lint
+
+Reference:
+- [CHECKPOINT_35_ONBOARDING_DENSITY_FIX.md](./CHECKPOINT_35_ONBOARDING_DENSITY_FIX.md)
+
 ## Current active slice
 Design 2 UX Pilot rebuild:
 - make UX Pilot visual implementation the top priority before new product breadth
@@ -339,6 +348,7 @@ Design 2 UX Pilot rebuild:
 - redesign Applied as an operations page with metric cards, history table, interview rail, and recent activity
 - redesign AI Resume Tailor as a two-pane editor/workbench with ATS score, suggestions, and final preview
 - avoid oversized full-width CTA bars inside job cards
+- keep onboarding screens sparse: one heading, one progress treatment, one clear action, and no cramped explanatory card grids
 - avoid exposing scraping, automation, or internal pipeline complexity to normal users
 - keep user-facing UI polished enough that fresh users trust the product before automation/internal delivery is fully complete
 - keep fresh data-domain users away from empty zero-state by temporarily bootstrapping from the launcher pool

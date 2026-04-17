@@ -152,20 +152,22 @@ function OnboardingPreview({ step, profile, resumeFileName }) {
         </div>
       </div>
 
-      <div className="onboarding-preview-summary">
-        <div>
-          <span>Resume</span>
-          <strong>{resumeFileName || 'Not uploaded yet'}</strong>
+      {step !== 'welcome' && (
+        <div className="onboarding-preview-summary">
+          <div>
+            <span>Resume</span>
+            <strong>{resumeFileName || 'Not uploaded yet'}</strong>
+          </div>
+          <div>
+            <span>Target roles</span>
+            <strong>{selectedRoles.length ? selectedRoles.join(', ') : 'Auto-detected after resume'}</strong>
+          </div>
+          <div>
+            <span>Skills</span>
+            <strong>{selectedSkills.length ? selectedSkills.join(', ') : 'Waiting for extraction'}</strong>
+          </div>
         </div>
-        <div>
-          <span>Target roles</span>
-          <strong>{selectedRoles.length ? selectedRoles.join(', ') : 'Auto-detected after resume'}</strong>
-        </div>
-        <div>
-          <span>Skills</span>
-          <strong>{selectedSkills.length ? selectedSkills.join(', ') : 'Waiting for extraction'}</strong>
-        </div>
-      </div>
+      )}
     </aside>
   )
 }
@@ -202,15 +204,15 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
   const stepTitle = useMemo(() => {
     switch (step) {
       case 'welcome':
-        return 'We’ll build your job search workspace around your resume.'
+        return 'Your career command center.'
       case 'resume':
-        return 'Paste your resume once. We’ll detect your profile automatically.'
+        return 'Upload your resume.'
       case 'roles':
-        return 'Confirm the roles and level we detected for you.'
+        return 'Confirm your targets.'
       case 'preferences':
-        return 'Choose the job preferences you actually care about.'
+        return 'Fine-tune your search.'
       case 'presets':
-        return 'Review the searches we generated from your profile and finish setup.'
+        return 'Review and launch.'
       default:
         return 'Set up your workspace'
     }
@@ -352,8 +354,8 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
               <span className="eyebrow">New account</span>
               <h1>{stepTitle}</h1>
               <p>
-                {session?.username ? `Welcome, ${session.username}.` : 'Welcome.'} Most setup should
-                be automatic. You’re mainly confirming what the app detected from your resume.
+                {session?.username ? `Welcome, ${session.username}.` : 'Welcome.'} We’ll use your resume
+                to suggest roles, skills, and preferences so setup stays quick.
               </p>
             </div>
 
@@ -372,24 +374,23 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
           {step === 'welcome' && (
             <div className="onboarding-panel onboarding-hero-panel">
               <div className="onboarding-intro-copy">
-                <h2>Here’s what happens in the next two minutes</h2>
+                <h2>Set up once. Review better matches.</h2>
                 <p>
-                  Paste your resume once, let the app infer your roles and skills, confirm the
-                  important parts, and land in a cleaner job workspace built around your fit.
+                  Confirm the profile we infer from your resume, then land in a focused workspace.
                 </p>
               </div>
               <div className="onboarding-callouts">
                 <article>
-                  <strong>Automatic profile setup</strong>
-                  <p>We detect likely roles, seniority, and skills from your resume before you type anything.</p>
+                  <strong>Auto profile</strong>
+                  <p>Roles, level, and skills are suggested from your resume.</p>
                 </article>
                 <article>
-                  <strong>No scraper noise</strong>
-                  <p>You only see matched jobs, not the full raw dataset or internal ingestion controls.</p>
+                  <strong>Matched jobs only</strong>
+                  <p>No raw scraping controls or irrelevant job dumps.</p>
                 </article>
                 <article>
-                  <strong>Easy to adjust later</strong>
-                  <p>You can edit your profile, resume, and search setup any time from the Profile page.</p>
+                  <strong>Edit anytime</strong>
+                  <p>Preferences stay flexible after onboarding.</p>
                 </article>
               </div>
             </div>
