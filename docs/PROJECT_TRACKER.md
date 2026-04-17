@@ -336,6 +336,14 @@ Reference:
 Reference:
 - [CHECKPOINT_35_ONBOARDING_DENSITY_FIX.md](./CHECKPOINT_35_ONBOARDING_DENSITY_FIX.md)
 
+### Checkpoint 36
+- Re-aligned onboarding spacing more closely to the UX Pilot reference artboards
+- Expanded the main stage to fill the viewport, reduced dead outer margins, balanced the split panes, and converted welcome callouts from heavy boxes into lightweight feature rows
+- Verified build and targeted lint for the edited onboarding component
+
+Reference:
+- [CHECKPOINT_36_REFERENCE_SPACING_ALIGNMENT.md](./CHECKPOINT_36_REFERENCE_SPACING_ALIGNMENT.md)
+
 ## Current active slice
 Design 2 UX Pilot rebuild:
 - make UX Pilot visual implementation the top priority before new product breadth
@@ -348,7 +356,7 @@ Design 2 UX Pilot rebuild:
 - redesign Applied as an operations page with metric cards, history table, interview rail, and recent activity
 - redesign AI Resume Tailor as a two-pane editor/workbench with ATS score, suggestions, and final preview
 - avoid oversized full-width CTA bars inside job cards
-- keep onboarding screens sparse: one heading, one progress treatment, one clear action, and no cramped explanatory card grids
+- keep onboarding screens sparse and close to the UX Pilot references: one heading, one progress treatment, one clear action, split-panel layout, and lightweight feature rows instead of cramped explanatory card grids
 - avoid exposing scraping, automation, or internal pipeline complexity to normal users
 - keep user-facing UI polished enough that fresh users trust the product before automation/internal delivery is fully complete
 - keep fresh data-domain users away from empty zero-state by temporarily bootstrapping from the launcher pool
