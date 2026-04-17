@@ -25,6 +25,34 @@ const ROLE_LIBRARY = [
   'Designer',
 ]
 
+const PREVIEW_COPY = {
+  welcome: {
+    title: 'Your career command center',
+    body: 'A guided setup that turns your resume into matched roles, search rules, and resume-tailoring context.',
+    badge: 'Profile setup',
+  },
+  resume: {
+    title: 'Awaiting resume',
+    body: 'Upload or paste your resume and we will preview detected roles, skills, and seniority.',
+    badge: 'Auto parsing',
+  },
+  roles: {
+    title: 'Target profile preview',
+    body: 'Selections update the matcher live, so your feed stays focused on roles you actually want.',
+    badge: 'Updating live',
+  },
+  preferences: {
+    title: 'Preference summary',
+    body: 'Location, salary, source, and quality filters help remove noisy listings before they reach you.',
+    badge: 'Filters active',
+  },
+  presets: {
+    title: 'Ready to launch',
+    body: 'Your workspace is configured. Matched jobs can now flow into the web app without showing raw scraping controls.',
+    badge: 'Setup complete',
+  },
+}
+
 const DEFAULT_PROFILE = {
   full_name: '',
   target_roles: [],
@@ -88,13 +116,57 @@ function StepBadge({ stepIndex }) {
   return (
     <div className="onboarding-progress-row">
       <span className="onboarding-step-badge">Step {stepIndex + 1} of {STEPS.length}</span>
-      <div className="onboarding-progress-track">
-        <div
-          className="onboarding-progress-fill"
-          style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }}
-        />
+      <div className="onboarding-segment-track">
+        {STEPS.map((item, index) => (
+          <span
+            key={item}
+            className={index <= stepIndex ? 'active' : ''}
+            aria-hidden="true"
+          />
+        ))}
       </div>
     </div>
+  )
+}
+
+function OnboardingPreview({ step, profile, resumeFileName }) {
+  const copy = PREVIEW_COPY[step] || PREVIEW_COPY.welcome
+  const selectedRoles = profile.target_roles?.slice(0, 3) || []
+  const selectedSkills = profile.parsed_skills?.slice(0, 5) || []
+
+  return (
+    <aside className="onboarding-preview" aria-label="Setup preview">
+      <div className="onboarding-preview-card">
+        <span className="preview-status-pill">{copy.badge}</span>
+        <div className="preview-illustration" aria-hidden="true">
+          <span className="preview-person-head" />
+          <span className="preview-person-body" />
+          <span className="preview-laptop" />
+        </div>
+        <h2>{copy.title}</h2>
+        <p>{copy.body}</p>
+        <div className="preview-dots" aria-hidden="true">
+          {STEPS.map((item) => (
+            <span key={item} className={item === step ? 'active' : ''} />
+          ))}
+        </div>
+      </div>
+
+      <div className="onboarding-preview-summary">
+        <div>
+          <span>Resume</span>
+          <strong>{resumeFileName || 'Not uploaded yet'}</strong>
+        </div>
+        <div>
+          <span>Target roles</span>
+          <strong>{selectedRoles.length ? selectedRoles.join(', ') : 'Auto-detected after resume'}</strong>
+        </div>
+        <div>
+          <span>Skills</span>
+          <strong>{selectedSkills.length ? selectedSkills.join(', ') : 'Waiting for extraction'}</strong>
+        </div>
+      </div>
+    </aside>
   )
 }
 
@@ -249,26 +321,52 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
 
   return (
     <section className="onboarding-shell">
-      <div className="onboarding-layout">
-        <aside className="onboarding-steps">
-          <span className="eyebrow">New account</span>
-          <h1>{stepTitle}</h1>
-          <p>
-            {session?.username ? `Welcome, ${session.username}.` : 'Welcome.'} Most of the setup should
-            be automatic. You’re mainly confirming what the app detected from your resume.
-          </p>
+      <div className="onboarding-stage">
+        <div className="onboarding-topbar">
+          <StepBadge stepIndex={stepIndex} />
+          <div className="onboarding-top-actions">
+            <span>Step {stepIndex + 1} of {STEPS.length}</span>
+            <button type="button" onClick={handleBack} disabled={stepIndex === 0 || submitting}>
+              Back
+            </button>
+            <button type="button" disabled>
+              Skip for now
+            </button>
+          </div>
+        </div>
 
-          <ol>
-            {STEPS.map((item, index) => (
-              <li key={item} className={index === stepIndex ? 'active' : index < stepIndex ? 'done' : ''}>
-                <span>{index + 1}</span>
+        <div className="onboarding-layout">
+          <div className="onboarding-flow">
+            <div className="onboarding-brand">
+              <span className="onboarding-brand-mark">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6.5 7.5h11A2.5 2.5 0 0 1 20 10v7.5A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5V10a2.5 2.5 0 0 1 2.5-2.5Z" />
+                  <path d="M9 7.5V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8v1.7" />
+                  <path d="M9 13.5h6" />
+                </svg>
+              </span>
+              <strong>CareerOS</strong>
+            </div>
+
+            <div className="onboarding-heading">
+              <span className="eyebrow">New account</span>
+              <h1>{stepTitle}</h1>
+              <p>
+                {session?.username ? `Welcome, ${session.username}.` : 'Welcome.'} Most setup should
+                be automatic. You’re mainly confirming what the app detected from your resume.
+              </p>
+            </div>
+
+            <ol className="onboarding-step-list">
+              {STEPS.map((item, index) => (
+                <li key={item} className={index === stepIndex ? 'active' : index < stepIndex ? 'done' : ''}>
+                  <span>{index + 1}</span>
                   <strong>{item === 'presets' ? 'Search setup' : item[0].toUpperCase() + item.slice(1)}</strong>
                 </li>
               ))}
             </ol>
-        </aside>
 
-        <div className="onboarding-card">
+            <div className="onboarding-card">
           <StepBadge stepIndex={stepIndex} />
 
           {step === 'welcome' && (
@@ -660,6 +758,10 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
               {submitting ? 'Saving...' : nextLabel}
             </button>
           </div>
+            </div>
+          </div>
+
+          <OnboardingPreview step={step} profile={profile} resumeFileName={resumeFileName} />
         </div>
       </div>
     </section>

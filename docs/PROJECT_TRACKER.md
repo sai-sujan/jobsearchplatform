@@ -318,13 +318,22 @@ Reference:
 Reference:
 - [CHECKPOINT_33_DESIGN_2_UX_PILOT_PRIORITY.md](./CHECKPOINT_33_DESIGN_2_UX_PILOT_PRIORITY.md)
 
+### Checkpoint 34
+- Rebuilt login/signup around the UX Pilot split-screen direction
+- Added a polished brand header, tabbed auth switcher, centered welcome block, stronger rounded inputs, blue primary CTA, and social-provider placeholders
+- Reworked onboarding into the Design 2 visual language with a framed stage, segmented progress, compact step list, resume-first forms, and live preview panel
+- Verified the frontend with build and lint
+
+Reference:
+- [CHECKPOINT_34_UX_PILOT_AUTH_ONBOARDING.md](./CHECKPOINT_34_UX_PILOT_AUTH_ONBOARDING.md)
+
 ## Current active slice
 Design 2 UX Pilot rebuild:
 - make UX Pilot visual implementation the top priority before new product breadth
 - use `design-2` for the new redesign while keeping `design-1` untouched as the previous approved style checkpoint
-- rebuild auth and onboarding first because fresh-user trust starts before the dashboard
-- turn onboarding into a polished 5-step guided setup with resume upload/paste, role targets, preferences, final setup, and clear progress
-- keep the right-side preview/illustration panel from the UX Pilot screens so onboarding feels guided instead of form-heavy
+- rebuild auth and onboarding first because fresh-user trust starts before the dashboard ✓ checkpoint 34
+- turn onboarding into a polished 5-step guided setup with resume upload/paste, role targets, preferences, final setup, and clear progress ✓ checkpoint 34
+- keep the right-side preview/illustration panel from the UX Pilot screens so onboarding feels guided instead of form-heavy ✓ checkpoint 34
 - redesign the logged-in shell around the UX Pilot left navigation and calm workspace surfaces
 - move job discovery toward a split list/detail layout with compact filters, selected-job context, visible match reasoning, and restrained actions
 - redesign Applied as an operations page with metric cards, history table, interview rail, and recent activity
@@ -347,12 +356,12 @@ Design 2 UX Pilot rebuild:
 - expand matched-job document history and activity visibility in the workspace
 
 ## Next implementation priorities
-1. Implement the Design 2 auth/login split screen from the UX Pilot references
-2. Implement the Design 2 onboarding shell and resume-first setup flow
-3. Implement the Design 2 app shell with stable left navigation and calm workspace surfaces
-4. Implement the Design 2 job discovery split list/detail workspace
-5. Implement the Design 2 Applied Jobs operations dashboard
-6. Implement the Design 2 AI Resume Tailor workbench and final preview styling
+1. Implement the Design 2 app shell with stable left navigation and calm workspace surfaces
+2. Implement the Design 2 job discovery split list/detail workspace
+3. Implement the Design 2 Applied Jobs operations dashboard
+4. Implement the Design 2 AI Resume Tailor workbench and final preview styling
+5. Implement the Design 2 final preview / save-to-job-card resume screen
+6. Tighten tracker/settings after the core discovery and resume workflows match Design 2
 7. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
 8. Preserve richer deterministic “why this matched” signals across the UI
 9. Keep AI token spend limited to:
