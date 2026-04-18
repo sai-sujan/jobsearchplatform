@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import JobSidebar from '../components/JobSidebar'
 import TrackerCard from '../components/TrackerCard'
 import { getJobId, normalizeStatus } from '../lib/jobs'
@@ -19,6 +20,7 @@ function getColumnStatus(job) {
 }
 
 function TrackerBoard({ jobs, onStatusChange, onDelete }) {
+  const navigate = useNavigate()
   const [selectedJob, setSelectedJob] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [draggedJobId, setDraggedJobId] = useState(null)
@@ -66,7 +68,7 @@ function TrackerBoard({ jobs, onStatusChange, onDelete }) {
                   <h2>{column.label}</h2>
                   <strong>{column.jobs.length}</strong>
                 </div>
-                <button type="button">+</button>
+                <button type="button" title="Browse Discover to add jobs" onClick={() => navigate('/jobs')}>+</button>
               </header>
 
               <div className={`tracker-column-body column-${column.dot}`}>

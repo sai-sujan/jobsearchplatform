@@ -15,9 +15,11 @@ Models:
   - ScrapeRun: Background scraper execution history
 """
 
+import uuid
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, JSON, Float, UniqueConstraint
 from sqlalchemy.orm import relationship
+from pgvector.sqlalchemy import Vector
 from src.database import Base
 
 
@@ -25,7 +27,7 @@ class User(Base):
     """User account for authentication."""
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     username = Column(String(50), unique=True, nullable=False, index=True)
     hashed_password = Column(String(255), nullable=False)
     full_name = Column(String(120), nullable=True)
@@ -35,19 +37,20 @@ class User(Base):
     # Relationships
     profile = relationship('UserProfile', back_populates='user', uselist=False, cascade='all, delete-orphan')
     resume_assets = relationship('ResumeAsset', back_populates='user', cascade='all, delete-orphan')
-    search_presets = relationship('SearchPreset', back_populates='user', cascade='all, delete-orphan')
     jobs = relationship('Job', back_populates='user', cascade='all, delete-orphan')
     matched_jobs = relationship('MatchedJob', back_populates='user', cascade='all, delete-orphan')
     search_configs = relationship('SearchConfig', back_populates='user', cascade='all, delete-orphan')
+    search_presets = relationship('SearchPreset', back_populates='user', cascade='all, delete-orphan')
     scrape_runs = relationship('ScrapeRun', back_populates='user', cascade='all, delete-orphan')
+    notifications = relationship('EmailNotification', back_populates='user', cascade='all, delete-orphan')
 
 
 class UserProfile(Base):
     """Role-aware onboarding profile and job preferences."""
     __tablename__ = 'user_profiles'
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, unique=True, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, unique=True, index=True)
     target_roles = Column(JSON, nullable=False, default=list)
     seniority = Column(String(50), nullable=True)
     preferred_locations = Column(JSON, nullable=False, default=list)
@@ -62,6 +65,7 @@ class UserProfile(Base):
     onboarding_step = Column(String(50), nullable=False, default='welcome')
     onboarding_completed = Column(Boolean, nullable=False, default=False)
     automation_connected = Column(Boolean, nullable=False, default=False)
+    embedding = Column(Vector(384), nullable=True)  # Semantic search vector
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -72,8 +76,8 @@ class ResumeAsset(Base):
     """Stored resume text/assets owned by a user."""
     __tablename__ = 'resume_assets'
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
     filename = Column(String(255), nullable=True)
     content_type = Column(String(120), nullable=True)
     original_text = Column(Text, nullable=False)
@@ -88,8 +92,8 @@ class SearchPreset(Base):
     """User-facing search presets generated from onboarding preferences."""
     __tablename__ = 'search_presets'
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
     label = Column(String(120), nullable=False)
     role = Column(String(120), nullable=False)
     keywords = Column(JSON, nullable=False, default=list)
@@ -111,8 +115,8 @@ class Job(Base):
         UniqueConstraint('user_id', 'job_link', name='uq_user_job_link'),
     )
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
 
     # Job metadata
     source = Column(String(20), nullable=False)  # linkedin, indeed, glassdoor
@@ -139,6 +143,7 @@ class Job(Base):
     tier = Column(String(20), nullable=True)  # premium, standard, lower, etc.
     ats_score = Column(Float, nullable=True)  # 0-100 ATS compatibility
     ai_evaluation = Column(JSON, nullable=True)  # Full AI evaluation result (inlines old sidecar JSON)
+    embedding = Column(Vector(384), nullable=True)  # Semantic search vector
 
     # Application status
     status = Column(
@@ -169,9 +174,9 @@ class MatchedJob(Base):
         UniqueConstraint('user_id', 'job_id', name='uq_user_matched_job'),
     )
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
-    job_id = Column(Integer, ForeignKey('jobs.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
+    job_id = Column(String(36), ForeignKey('jobs.id'), nullable=False, index=True)
     delivery_origin = Column(String(30), nullable=False, default='legacy_sync', index=True)
     delivery_status = Column(String(30), nullable=False, default='active', index=True)
     user_status = Column(String(50), nullable=False, default='not_applied', index=True)
@@ -213,8 +218,8 @@ class ApplicationEvent(Base):
     """Timeline events for a delivered matched job."""
     __tablename__ = 'application_events'
 
-    id = Column(Integer, primary_key=True)
-    matched_job_id = Column(Integer, ForeignKey('matched_jobs.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    matched_job_id = Column(String(36), ForeignKey('matched_jobs.id'), nullable=False, index=True)
     event_type = Column(String(50), nullable=False, default='status_changed')
     old_status = Column(String(50), nullable=True)
     new_status = Column(String(50), nullable=True)
@@ -229,8 +234,8 @@ class Resume(Base):
     """Generated resume for a specific job."""
     __tablename__ = 'resumes'
 
-    id = Column(Integer, primary_key=True)
-    job_id = Column(Integer, ForeignKey('jobs.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    job_id = Column(String(36), ForeignKey('jobs.id'), nullable=False, index=True)
     pdf_path = Column(String(500), nullable=False)
     version = Column(Integer, default=1)  # Resume version number
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -243,8 +248,8 @@ class SearchConfig(Base):
     """Saved search configurations for scraping."""
     __tablename__ = 'search_configs'
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
     name = Column(String(100), nullable=False)
     keywords = Column(JSON, nullable=False)  # List of search keywords
     sources = Column(String(100), nullable=False)  # Comma-separated: linkedin,indeed,glassdoor
@@ -260,8 +265,8 @@ class ScrapeRun(Base):
     """Record of a scraping execution."""
     __tablename__ = 'scrape_runs'
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
     status = Column(String(20), nullable=False)  # pending, running, done, failed
     source = Column(String(20), nullable=False)  # linkedin, indeed, glassdoor
     started_at = Column(DateTime, default=datetime.utcnow)
@@ -272,3 +277,20 @@ class ScrapeRun(Base):
 
     # Relationship
     user = relationship('User', back_populates='scrape_runs')
+
+
+class EmailNotification(Base):
+    """Extracted notifications from job-related emails."""
+    __tablename__ = 'email_notifications'
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
+    subject = Column(String(255), nullable=False)
+    sender = Column(String(255), nullable=True)
+    received_at = Column(DateTime, nullable=False)
+    category = Column(String(50), nullable=False)  # Interview, Rejection, Generic
+    summary = Column(Text, nullable=True)
+    is_read = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship('User', back_populates='notifications')

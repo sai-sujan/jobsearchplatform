@@ -31,8 +31,35 @@ outsourcing
 offshore
 nearshore
 
-# NOTE: Removed major IT companies (Infosys, Wipro, TCS, Cognizant, HCL, Tech Mahindra)
-# as they are legitimate good companies
+# IT Services / IT Consulting companies
+infosys
+wipro
+tcs
+tata consultancy
+cognizant
+hcl
+tech mahindra
+accenture
+capgemini
+atos
+dxc technology
+unisys
+mphasis
+persistent systems
+ltimindtree
+lti
+mindtree
+hexaware
+zensar
+cyient
+birlasoft
+coforge
+niit
+l&t infotech
+sonata software
+mastech
+igate
+syntel
 
 # Global services
 global services
@@ -68,3 +95,8 @@ contracting
 body shop
 staff augmentation
 augmentation
+
+# Job aggregators / staffing platforms
+emonics
+jobright
+joinrs

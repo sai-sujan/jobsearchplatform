@@ -131,7 +131,7 @@ def refresh_user_delivery(db: Session, user_id: int) -> None:
     sync_user_matched_jobs(db, user_id)
 
 
-def require_matched_job(db: Session, user_id: int, matched_job_id: int) -> MatchedJob:
+def require_matched_job(db: Session, user_id: str, matched_job_id: str) -> MatchedJob:
     """Return a user's matched job or raise 404."""
     matched_job = get_matched_job(db, matched_job_id, user_id)
     if not matched_job:
@@ -318,7 +318,7 @@ def list_jobs(
 
 
 @router.get("/jobs/{job_id}")
-def get_single_job(job_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+def get_single_job(job_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """Get a single delivered matched job by ID."""
     refresh_user_delivery(db, user.id)
     matched_job = require_matched_job(db, user.id, job_id)
@@ -327,7 +327,7 @@ def get_single_job(job_id: int, db: Session = Depends(get_db), user: User = Depe
 
 @router.get("/jobs/{job_id}/match-intelligence")
 def get_match_intelligence(
-    job_id: int,
+    job_id: str,
     force: bool = Query(False),
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
@@ -344,7 +344,7 @@ def get_match_intelligence(
 
 @router.get("/jobs/{job_id}/events")
 def get_job_events(
-    job_id: int,
+    job_id: str,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
@@ -359,7 +359,7 @@ def get_job_events(
 
 @router.get("/jobs/{job_id}/resumes")
 def get_job_resume_versions(
-    job_id: int,
+    job_id: str,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
@@ -374,7 +374,7 @@ def get_job_resume_versions(
 
 @router.patch("/jobs/{job_id}/status", dependencies=[Depends(require_csrf)])
 def update_job_status(
-    job_id: int,
+    job_id: str,
     status: str,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
@@ -397,7 +397,7 @@ def update_job_status(
 
 @router.patch("/jobs/{job_id}/interest", dependencies=[Depends(require_csrf)])
 def toggle_job_interest(
-    job_id: int,
+    job_id: str,
     special_interest: bool,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
@@ -410,7 +410,7 @@ def toggle_job_interest(
 
 @router.patch("/jobs/{job_id}/notes", dependencies=[Depends(require_csrf)])
 def update_job_notes(
-    job_id: int,
+    job_id: str,
     notes: str,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
@@ -424,7 +424,7 @@ def update_job_notes(
 
 @router.patch("/jobs/{job_id}/analysis", dependencies=[Depends(require_csrf)])
 def update_job_analysis(
-    job_id: int,
+    job_id: str,
     payload: JobAnalysisUpdate,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
@@ -472,7 +472,7 @@ def update_job_analysis(
 
 @router.post("/jobs/{job_id}/resume", dependencies=[Depends(require_csrf)])
 def generate_job_resume(
-    job_id: int,
+    job_id: str,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
@@ -482,6 +482,7 @@ def generate_job_resume(
     location = matched_job.workspace_location or matched_job.job.location or ""
     tech_stack = workspace.get("tech_stack") or {}
     points = workspace.get("points") or []
+    user_name = user.full_name or "Candidate"
 
     try:
         pdf_path, pdf_url = generate_resume_from_workspace(
@@ -489,6 +490,7 @@ def generate_job_resume(
             location=location,
             tech_stack=tech_stack,
             points=points,
+            user_name=user_name,
         )
     except WorkspaceResumeGenerationError as error:
         raise HTTPException(status_code=500, detail=str(error)) from error
@@ -524,7 +526,7 @@ def generate_job_resume(
 
 @router.post("/jobs/{job_id}/tailor", dependencies=[Depends(require_csrf)])
 def tailor_job_workspace(
-    job_id: int,
+    job_id: str,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
@@ -532,11 +534,14 @@ def tailor_job_workspace(
     matched_job = require_matched_job(db, user.id, job_id)
     profile = get_or_create_profile(db, user.id)
     current_workspace = matched_job.workspace_analysis or {}
+    resume_asset = next((a for a in user.resume_assets if a.is_active), None)
+    resume_text = resume_asset.original_text if resume_asset else ""
 
     try:
         tailored_data = generate_tailored_resume_data(
             matched_job.job.job_description or "",
             candidate_summary=profile.candidate_summary or "",
+            resume_text=resume_text,
             current_location=matched_job.workspace_location or matched_job.job.location or "",
             current_tech_stack=current_workspace.get("tech_stack") or {},
             target_roles=profile.target_roles or [],
@@ -587,7 +592,7 @@ def tailor_job_workspace(
 
 
 @router.delete("/jobs/{job_id}", dependencies=[Depends(require_csrf)])
-def delete_single_job(job_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+def delete_single_job(job_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """Archive a delivered matched job so it no longer appears in the feed."""
     matched_job = update_matched_job(db, job_id, user.id, delivery_status="archived")
     if not matched_job:

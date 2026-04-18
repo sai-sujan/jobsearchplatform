@@ -48,6 +48,7 @@ def generate_resume_from_workspace(
     location: str,
     tech_stack: dict,
     points: list[str],
+    user_name: str = "Candidate",
 ) -> tuple[str, str]:
     """Generate a PDF resume from the matched-job workspace and return path + download URL."""
     script_path = settings.BASE_DIR / "src" / "resume" / "single_generator.py"
@@ -81,14 +82,16 @@ def generate_resume_from_workspace(
         ]
     )
 
+    safe_name = re.sub(r"[^\w\s-]", "", user_name).replace(" ", "") or "Candidate"
     safe_company = re.sub(r"[^\w\s-]", "", company_name).replace(" ", "_") or "Unknown"
+    output_stem = f"{safe_name}_resume_{safe_company}"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    original_pdf = settings.RESUMES_DIR / f"SujanDora_resume_{safe_company}.pdf"
-    versioned_pdf = settings.RESUMES_DIR / f"SujanDora_resume_{safe_company}_v{timestamp}.pdf"
+    original_pdf = settings.RESUMES_DIR / f"{output_stem}.pdf"
+    versioned_pdf = settings.RESUMES_DIR / f"{output_stem}_v{timestamp}.pdf"
 
     try:
         result = subprocess.run(
-            [str(venv_python), str(script_path), str(temp_json_path), company_name],
+            [str(venv_python), str(script_path), str(temp_json_path), company_name, output_stem],
             capture_output=True,
             text=True,
             timeout=60,

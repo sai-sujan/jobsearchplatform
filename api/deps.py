@@ -106,10 +106,9 @@ def get_current_user(
 ) -> User:
     """Resolve the authenticated user from the bearer token or session cookie."""
     payload, _auth_mode = session_data
-    try:
-        user_id = int(payload.get("sub", "0"))
-    except ValueError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid session user") from None
+    user_id = payload.get("sub", "")
+    if not user_id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid session user")
 
     user = get_user(db, user_id)
     if not user or not user.is_active:

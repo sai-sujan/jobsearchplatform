@@ -1,13 +1,5 @@
-import { formatCompactDate, getDisplayMatchScore, getJobId, getSourceLabel, normalizeStatus } from '../lib/jobs'
+import { formatCompactDate, getDisplayMatchScore, getJobId, getSourceLabel } from '../lib/jobs'
 import './JobCard.css'
-
-const STATUS_LABELS = {
-  not_applied: 'Saved',
-  applied: 'Applied',
-  interviewing: 'Interview',
-  accepted: 'Offer',
-  skipped: 'Rejected',
-}
 
 const COMPANY_THEMES = ['purple', 'black', 'violet', 'coral', 'black', 'indigo', 'blue', 'ink']
 
@@ -20,87 +12,114 @@ function getCompanyTheme(company = '') {
   return COMPANY_THEMES[Math.abs(hash)]
 }
 
-function getScoreClass(score) {
-  if (score >= 90) return 'score-great'
-  if (score >= 80) return 'score-good'
-  if (score >= 70) return 'score-warm'
-  return 'score-muted'
+/** Human-readable match label instead of raw % */
+function getMatchLabel(score) {
+  if (score >= 90) return { label: 'Top match', cls: 'score-great' }
+  if (score >= 75) return { label: 'Strong fit', cls: 'score-good' }
+  return { label: 'Good fit', cls: 'score-warm' }
 }
 
-function getSkills(job) {
+/** Return up to `limit` skill strings from the job, deduplicated */
+function getSkills(job, limit = 2) {
   return String(job['Matched Skills'] || job['Tech Stack'] || '')
     .split(/[,|]/)
-    .map((skill) => skill.trim())
+    .map((s) => s.trim())
     .filter(Boolean)
-    .slice(0, 4)
+    .slice(0, limit)
 }
 
-function JobCard({ job, onClick, compact = false }) {
+function truncatePreview(text = '', length = 140) {
+  if (!text) return ''
+  const t = text.trim()
+  if (t.length <= length) return t
+  return t.substring(0, length).trim() + '…'
+}
+
+function JobCard({ job, onClick, compact = false, selected = false }) {
   const companyInitial = (job.Company || 'J').trim().charAt(0).toUpperCase()
-  const status = normalizeStatus(job.Status)
-  const score = getDisplayMatchScore(job)
-  const skills = getSkills(job)
-  const source = getSourceLabel(job)
-  const location = job.Location || 'Remote'
-  const salary = job.Salary || job.salary || ''
-  const posted = formatCompactDate(job['Date Found'])
-  const type = job['Job Type'] || job.remote || 'Remote'
+  const score         = getDisplayMatchScore(job)
+  const skills        = getSkills(job, 1)          // max 1 skill tag now
+  const source        = getSourceLabel(job)
+  const location      = job.Location || 'Remote'
+  const posted        = formatCompactDate(job['Date Found'])
+  const jobType       = job['Job Type'] || job.remote || 'Full-time'
+  const salary        = job.Salary || job.salary || ''
+  const level         = job.Level || 'Mid-Senior'
+
+  // Build meta lines
+  const metaLine1 = [job.Company || 'Unknown company', location].filter(Boolean)
+  const metaLine2 = [salary, jobType, level].filter(Boolean)
+
+  const preview = truncatePreview(job.Description || job.description || 'We are looking for a talented professional to join our team and lead initiatives across our core products...')
+
+  const timeSignal = posted ? `Posted ${posted}` : ''
+
+  // Tags (max 3): work-mode, top-skill, source
+  const workMode  = location?.toLowerCase().includes('remote') ? 'Remote' : (jobType?.toLowerCase().includes('hybrid') ? 'Hybrid' : null)
+  const meta_tags = [workMode].filter(Boolean).slice(0, 1)
+  const src_tag   = source ? [source] : []
+  const allTags   = [...meta_tags, ...skills, ...src_tag].slice(0, 3)
 
   return (
-    <button
-      type="button"
-      className={`job-card ${compact ? 'job-card-compact' : ''}`}
+    <article
+      className={`job-card animate-reveal ${compact ? 'job-card-compact' : ''} ${selected ? 'job-card-selected' : ''}`}
       onClick={() => onClick?.(job)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick?.(job) } }}
       data-job-id={getJobId(job)}
+      role="button"
+      tabIndex={0}
+      aria-pressed={selected}
     >
       <div className="job-card-main">
-        <span className={`company-monogram company-${getCompanyTheme(job.Company)}`} aria-hidden="true">
+        {/* Company logo */}
+        <span
+          className={`company-monogram company-${getCompanyTheme(job.Company)}`}
+          aria-hidden="true"
+        >
           {companyInitial}
         </span>
 
+        {/* Content */}
         <div className="job-card-copy">
+          {/* Row 1: Title + Match Badge */}
           <div className="job-card-title-row">
-            <div className="job-card-title-copy">
-              <h3>{job.Title || 'Untitled role'}</h3>
-              <p>{job.Company || 'Unknown company'}</p>
-            </div>
-
-            <div className="job-card-badges">
-              {status !== 'not_applied' && (
-                <span className={`stage-badge stage-${status}`}>{STATUS_LABELS[status] || 'Saved'}</span>
-              )}
-              <span className={`match-badge ${getScoreClass(score)}`}>{score}%</span>
-            </div>
+            <h3 className="job-card-title">{job.Title || 'Untitled role'}</h3>
+            {(() => { const m = getMatchLabel(score); return <span className={`jc-match-badge ${m.cls}`}>{m.label}</span> })()}
           </div>
 
           {!compact && (
-            <div className="job-card-details-row">
-              <div className="job-card-details">
-                <div className="job-card-meta">
-                  <span>{location}</span>
-                  {salary ? <span>{salary}</span> : null}
-                  <span>{posted}</span>
-                </div>
+            <>
+              {/* Row 2: Company + Location */}
+              <p className="job-card-company">
+                <span>{job.Company || 'Discovery'}</span>
+                <span className="jc-sep">·</span>
+                <span>{location}</span>
+              </p>
 
-                <div className="job-card-skills">
-                  <span className="job-skill-chip">{type}</span>
-                  {skills.map((skill) => (
-                    <span key={`${getJobId(job)}-${skill}`} className="job-skill-chip">
-                      {skill}
-                    </span>
-                  ))}
-                  {source && <span className="job-skill-chip source-chip">{source}</span>}
+              {/* Row 3: Salary (PRIORITIZED) */}
+              {salary && (
+                <p className="job-card-salary">{salary}</p>
+              )}
+
+              {/* Row 4: 1-Line Summary */}
+              {preview && (
+                <p className="job-card-summary">{preview}</p>
+              )}
+
+              {/* Row 5: Metadata Footer (Time Signal + Source) */}
+              <div className="job-card-footer-row">
+                <div className="jc-metadata">
+                  {timeSignal && <span className="jc-time-point">{timeSignal}</span>}
+                  <span className="jc-sep">·</span>
+                  <span>{jobType}</span>
                 </div>
+                {source && <span className="jc-source-tag">{source}</span>}
               </div>
-
-              <span className="job-card-cta" aria-hidden="true">
-                View →
-              </span>
-            </div>
+            </>
           )}
         </div>
       </div>
-    </button>
+    </article>
   )
 }
 

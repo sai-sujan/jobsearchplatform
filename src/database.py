@@ -13,11 +13,13 @@ from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from src.settings import settings
 
-# Create database engine
+# Create PostgreSQL database engine with connection pooling
 engine = create_engine(
     settings.DATABASE_URL,
-    connect_args={'check_same_thread': False},  # SQLite requirement
-    echo=False,  # Set to True for SQL query logging
+    pool_size=10,          # Standard pool size for FastAPI workers
+    max_overflow=20,       # Max extended connections during spikes
+    pool_pre_ping=True,    # Test connections before using (defends against dropped connections)
+    echo=False,            # Set to True for SQL query logging
 )
 
 # Session factory

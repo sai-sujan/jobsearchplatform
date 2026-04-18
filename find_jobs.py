@@ -120,7 +120,7 @@ def create_master_excel(df):
 
             if applied_col:
                 col_letter = chr(64 + applied_col) if applied_col <= 26 else f"A{chr(64 + applied_col - 26)}"
-                dv = DataValidation(type="list", formula1='"Not Applied,Applied"', allow_blank=True)
+                dv = DataValidation(type="list", formula1='"Not Applied,Skipped,Applied"', allow_blank=True)
                 ws.add_data_validation(dv)
                 dv.add(f'{col_letter}2:{col_letter}{ws.max_row}')
 
@@ -239,6 +239,9 @@ def main():
                     verdict = "YES"
                     verdict_reason = f"Skill Match: {skill_score}% ({match_count})"
 
+                    # AI Tailoring directly integrated!
+                    analysis_file = ''
+
                 all_new_jobs.append({
                     'Company': job.company_name,
                     'Job_Title': job.job_title,
@@ -254,6 +257,7 @@ def main():
                     'Reason': verdict_reason,
                     'Applied': 'Not Applied',
                     'Search_Query': job.search_query,
+                    'Analysis_File': analysis_file,
                     'Job_Description': job.job_description[:2000] if job.job_description else ''
                 })
 

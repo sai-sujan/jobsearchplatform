@@ -82,7 +82,7 @@ def create_user(db: Session, username: str, password: str, full_name: str = None
     return user
 
 
-def get_user(db: Session, user_id: int) -> User:
+def get_user(db: Session, user_id: str) -> User:
     """Get user by ID."""
     return db.query(User).filter(User.id == user_id).first()
 
@@ -100,7 +100,7 @@ def authenticate_user(db: Session, username: str, password: str) -> User:
     return user
 
 
-def get_or_create_profile(db: Session, user_id: int) -> UserProfile:
+def get_or_create_profile(db: Session, user_id: str) -> UserProfile:
     """Return a user's profile, creating a blank one when needed."""
     profile = db.query(UserProfile).filter(UserProfile.user_id == user_id).first()
     if profile:
@@ -151,7 +151,7 @@ def create_resume_asset(
     return asset
 
 
-def get_active_resume_asset(db: Session, user_id: int) -> Optional[ResumeAsset]:
+def get_active_resume_asset(db: Session, user_id: str) -> Optional[ResumeAsset]:
     """Return the active resume asset for a user."""
     return (
         db.query(ResumeAsset)
@@ -533,7 +533,7 @@ def has_salary_signal(job: Job) -> bool:
     return bool(re.search(r"\$\s?\d", haystack) or re.search(r"\b\d{2,3}k\b", haystack))
 
 
-def get_matched_job(db: Session, matched_job_id: int, user_id: int) -> Optional[MatchedJob]:
+def get_matched_job(db: Session, matched_job_id: str, user_id: str) -> Optional[MatchedJob]:
     """Get a delivered matched job owned by the user."""
     return (
         db.query(MatchedJob)
@@ -544,7 +544,7 @@ def get_matched_job(db: Session, matched_job_id: int, user_id: int) -> Optional[
 
 def get_user_matched_jobs(
     db: Session,
-    user_id: int,
+    user_id: str,
     status: str = None,
     source: str = None,
     delivery_status: str = 'active',
@@ -578,7 +578,7 @@ def get_user_matched_jobs(
 
 def count_user_matched_jobs(
     db: Session,
-    user_id: int,
+    user_id: str,
     status: str = None,
     source: str = None,
     delivery_status: str = 'active',
@@ -603,7 +603,7 @@ def count_user_matched_jobs(
     return query.count()
 
 
-def get_preferred_delivery_origin(db: Session, user_id: int) -> Optional[str]:
+def get_preferred_delivery_origin(db: Session, user_id: str) -> Optional[str]:
     """Prefer internal delivery when present; otherwise fall back to legacy sync rows."""
     has_internal = (
         db.query(MatchedJob.id)
@@ -665,7 +665,7 @@ def _apply_fit_snapshot_to_matched_job(
     return matched_job
 
 
-def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
+def sync_user_matched_jobs(db: Session, user_id: str) -> List[MatchedJob]:
     """Materialize the user-facing matched_jobs read model from legacy jobs."""
     profile = get_or_create_profile(db, user_id)
     resume_asset = get_active_resume_asset(db, user_id)
@@ -738,7 +738,7 @@ def sync_user_matched_jobs(db: Session, user_id: int) -> List[MatchedJob]:
     return get_user_matched_jobs(db, user_id, delivery_status='active', skip=0, limit=100000)
 
 
-def update_matched_job(db: Session, matched_job_id: int, user_id: int, **update_data) -> Optional[MatchedJob]:
+def update_matched_job(db: Session, matched_job_id: str, user_id: str, **update_data) -> Optional[MatchedJob]:
     """Update a matched job row."""
     matched_job = get_matched_job(db, matched_job_id, user_id)
     if not matched_job:
@@ -755,7 +755,7 @@ def update_matched_job(db: Session, matched_job_id: int, user_id: int, **update_
 
 def create_application_event(
     db: Session,
-    matched_job_id: int,
+    matched_job_id: str,
     event_type: str,
     old_status: Optional[str] = None,
     new_status: Optional[str] = None,
@@ -983,7 +983,7 @@ def job_exists_by_link(db: Session, user_id: int, job_link: str) -> bool:
 
 # ============ RESUME CRUD ============
 
-def create_resume(db: Session, job_id: int, pdf_path: str) -> Resume:
+def create_resume(db: Session, job_id: str, pdf_path: str) -> Resume:
     """Create a versioned resume record for a job."""
     latest = get_latest_resume(db, job_id)
     next_version = (latest.version + 1) if latest else 1
@@ -994,19 +994,19 @@ def create_resume(db: Session, job_id: int, pdf_path: str) -> Resume:
     return resume
 
 
-def get_job_resumes(db: Session, job_id: int) -> list[Resume]:
+def get_job_resumes(db: Session, job_id: str) -> list[Resume]:
     """Get all resumes for a job."""
     return db.query(Resume).filter(Resume.job_id == job_id).order_by(desc(Resume.version)).all()
 
 
-def get_latest_resume(db: Session, job_id: int) -> Resume:
+def get_latest_resume(db: Session, job_id: str) -> Resume:
     """Get the latest resume for a job."""
     return db.query(Resume).filter(Resume.job_id == job_id).order_by(desc(Resume.version)).first()
 
 
 # ============ SEARCH CONFIG CRUD ============
 
-def create_search_config(db: Session, user_id: int, **config_data) -> SearchConfig:
+def create_search_config(db: Session, user_id: str, **config_data) -> SearchConfig:
     """Create a new search configuration."""
     config = SearchConfig(user_id=user_id, **config_data)
     db.add(config)

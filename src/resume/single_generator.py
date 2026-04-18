@@ -20,11 +20,12 @@ except ImportError:
 
 
 class SingleResumeGenerator:
-    def __init__(self):
+    def __init__(self, output_name: str = None):
         self.base_dir = settings.BASE_DIR
         self.template_path = settings.LATEX_TEMPLATE
         self.resumes_dir = settings.RESUMES_DIR
         self.resumes_dir.mkdir(exist_ok=True)
+        self._output_name = output_name
 
     def _read_template(self) -> str:
         """Read the LaTeX template."""
@@ -212,9 +213,9 @@ class SingleResumeGenerator:
             content = self._update_experience_points(content, config['points'])
             print(f"Updated experience with {len(config['points'])} bullet points")
 
-        # Generate PDF
+        # Generate PDF — use explicit output_name if provided, else derive from company
         safe_company = re.sub(r'[^\w\s-]', '', company_name).replace(' ', '_')
-        output_name = f"SujanDora_resume_{safe_company}"
+        output_name = self._output_name or f"SujanDora_resume_{safe_company}"
 
         success = self._generate_pdf(content, output_name)
 
@@ -234,12 +235,13 @@ def main():
 
     json_path = sys.argv[1]
     company_name = sys.argv[2] if len(sys.argv) > 2 else None
+    output_name = sys.argv[3] if len(sys.argv) > 3 else None
 
     if not Path(json_path).exists():
         print(f"Error: JSON file not found: {json_path}")
         sys.exit(1)
 
-    generator = SingleResumeGenerator()
+    generator = SingleResumeGenerator(output_name=output_name)
     success = generator.generate(json_path, company_name)
 
     sys.exit(0 if success else 1)

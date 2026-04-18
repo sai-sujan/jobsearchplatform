@@ -309,15 +309,55 @@ Reference:
 Reference:
 - [CHECKPOINT_32_COMPACT_CARD_CTA.md](./CHECKPOINT_32_COMPACT_CARD_CTA.md)
 
+### Checkpoint 33
+- Created the `design-2` execution branch for the UX Pilot visual direction
+- Promoted the UX Pilot screens in `design_help/` to the top product priority for the next UI pass
+- Defined the new design thesis: split auth/onboarding, soft slate-blue workspace, polished left-nav SaaS shell, split job discovery, applied operations dashboard, and two-pane resume tailor
+- Preserved `design-1` as the previous marketplace/CareerOS checkpoint so we can compare or roll back without losing it
+
+Reference:
+- [CHECKPOINT_33_DESIGN_2_UX_PILOT_PRIORITY.md](./CHECKPOINT_33_DESIGN_2_UX_PILOT_PRIORITY.md)
+
+### Checkpoint 34
+- Rebuilt login/signup around the UX Pilot split-screen direction
+- Added a polished brand header, tabbed auth switcher, centered welcome block, stronger rounded inputs, blue primary CTA, and social-provider placeholders
+- Reworked onboarding into the Design 2 visual language with a framed stage, segmented progress, compact step list, resume-first forms, and live preview panel
+- Verified the frontend with build and lint
+
+Reference:
+- [CHECKPOINT_34_UX_PILOT_AUTH_ONBOARDING.md](./CHECKPOINT_34_UX_PILOT_AUTH_ONBOARDING.md)
+
+### Checkpoint 35
+- Fixed the first onboarding screen after visual review because it felt too congested
+- Shortened the hero headings, reduced oversized typography, hid the duplicate step-chip row, simplified the welcome copy, and made the callouts scan as rows instead of cramped columns
+- Reduced right-side preview density by shrinking the illustration/card and hiding summary cards on the welcome step
+- Verified the frontend with build and lint
+
+Reference:
+- [CHECKPOINT_35_ONBOARDING_DENSITY_FIX.md](./CHECKPOINT_35_ONBOARDING_DENSITY_FIX.md)
+
+### Checkpoint 36
+- Re-aligned onboarding spacing more closely to the UX Pilot reference artboards
+- Expanded the main stage to fill the viewport, reduced dead outer margins, balanced the split panes, and converted welcome callouts from heavy boxes into lightweight feature rows
+- Verified build and targeted lint for the edited onboarding component
+
+Reference:
+- [CHECKPOINT_36_REFERENCE_SPACING_ALIGNMENT.md](./CHECKPOINT_36_REFERENCE_SPACING_ALIGNMENT.md)
+
 ## Current active slice
-Move delivery logic closer to a real recommendation pipeline:
-- keep the UI moving toward the user-approved CareerOS screenshot style: light grey workspace, white cards, left navigation, restrained purple accent, and premium readable job rows
-- the provided GitHub UI repo is now the strict visual reference for the app shell and major pages
-- the visual palette now combines the CareerOS reference structure with an ownable marketplace palette: midnight navy, periwinkle, soft seafoam, warm white, and blue-grey borders
-- next visual pass should tighten the job detail workspace/sheet to match this exact visual language
-- keep balancing visual polish with serious job-platform restraint
-- keep the UI aligned with serious job-platform conventions rather than playful AI-dashboard styling
-- keep applying the premium SaaS design critique in visible vertical slices, starting with global nav and job-card decision speed
+Design 2 UX Pilot rebuild:
+- make UX Pilot visual implementation the top priority before new product breadth
+- use `design-2` for the new redesign while keeping `design-1` untouched as the previous approved style checkpoint
+- rebuild auth and onboarding first because fresh-user trust starts before the dashboard ✓ checkpoint 34
+- turn onboarding into a polished 5-step guided setup with resume upload/paste, role targets, preferences, final setup, and clear progress ✓ checkpoint 34
+- keep the right-side preview/illustration panel from the UX Pilot screens so onboarding feels guided instead of form-heavy ✓ checkpoint 34
+- redesign the logged-in shell around the UX Pilot left navigation and calm workspace surfaces
+- move job discovery toward a split list/detail layout with compact filters, selected-job context, visible match reasoning, and restrained actions
+- redesign Applied as an operations page with metric cards, history table, interview rail, and recent activity
+- redesign AI Resume Tailor as a two-pane editor/workbench with ATS score, suggestions, and final preview
+- avoid oversized full-width CTA bars inside job cards
+- keep onboarding screens sparse and close to the UX Pilot references: one heading, one progress treatment, one clear action, split-panel layout, and lightweight feature rows instead of cramped explanatory card grids
+- avoid exposing scraping, automation, or internal pipeline complexity to normal users
 - keep user-facing UI polished enough that fresh users trust the product before automation/internal delivery is fully complete
 - keep fresh data-domain users away from empty zero-state by temporarily bootstrapping from the launcher pool
 - preserve deterministic composite scoring inside `matched_jobs`
@@ -334,16 +374,21 @@ Move delivery logic closer to a real recommendation pipeline:
 - expand matched-job document history and activity visibility in the workspace
 
 ## Next implementation priorities
-1. Continue the mature job-platform style pass on tracker columns and the job detail workspace
-2. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
-3. Preserve richer deterministic “why this matched” signals across the UI
-4. Keep AI token spend limited to:
+1. Implement the Design 2 app shell with stable left navigation and calm workspace surfaces
+2. Implement the Design 2 job discovery split list/detail workspace
+3. Implement the Design 2 Applied Jobs operations dashboard
+4. Implement the Design 2 AI Resume Tailor workbench and final preview styling
+5. Implement the Design 2 final preview / save-to-job-card resume screen
+6. Tighten tracker/settings after the core discovery and resume workflows match Design 2
+7. Replace the data-domain bootstrap bridge with canonical internal matcher delivery once the pipeline can upsert enough recommendations directly into user workspaces
+8. Preserve richer deterministic “why this matched” signals across the UI
+9. Keep AI token spend limited to:
    - single-job match intelligence
    - cached resume tailoring
    - future async reranking only for top candidates
-5. Continue retiring legacy Excel/config endpoints from the runtime path
-6. ~~Expand application history and notes into a more complete activity feed~~ ✓ done in CP20/CP21 — feed renders correctly and refreshes live after all user actions
-7. Start separating canonical/internal delivery from the legacy source store more explicitly
+10. Continue retiring legacy Excel/config endpoints from the runtime path
+11. ~~Expand application history and notes into a more complete activity feed~~ ✓ done in CP20/CP21 — feed renders correctly and refreshes live after all user actions
+12. Start separating canonical/internal delivery from the legacy source store more explicitly
 
 ## Scoring direction notes
 - Industry affinity should be a first-class positive signal in recommendation scoring.
