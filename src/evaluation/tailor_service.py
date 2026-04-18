@@ -44,6 +44,7 @@ def _compact_tailor_prompt(
     job_description: str,
     *,
     candidate_summary: str = "",
+    resume_text: str = "",
     current_location: str = "",
     current_tech_stack: Optional[Dict] = None,
     target_roles: Optional[List[str]] = None,
@@ -57,6 +58,7 @@ def _compact_tailor_prompt(
         for category, skills in current_tech_stack.items()
         if isinstance(skills, list) and skills
     }
+    resume_section = f"\nCandidate's resume (use this to write grounded, specific bullet points):\n{_truncate(resume_text, 1500)}" if resume_text.strip() else ""
     return f"""
 You are an ATS optimization assistant. Return only valid JSON.
 
@@ -65,7 +67,7 @@ Candidate profile:
 - Seniority: {seniority or "Infer from the profile and keep suggestions realistic"}
 - Candidate summary: {_truncate(candidate_summary, 400) or "Not provided"}
 - Current workspace location: {current_location or "Use the job's location if it helps"}
-- Current tech stack: {json.dumps(compact_stack) if compact_stack else "Not provided"}
+- Current tech stack: {json.dumps(compact_stack) if compact_stack else "Not provided"}{resume_section}
 
 Job description excerpt:
 {shortened_jd}
@@ -103,15 +105,16 @@ def generate_tailored_resume_data(
     job_description: str,
     *,
     candidate_summary: str = "",
+    resume_text: str = "",
     current_location: str = "",
     current_tech_stack: Optional[Dict] = None,
     target_roles: Optional[List[str]] = None,
     seniority: str = "",
 ) -> dict:
     """
-    Given a job description, uses the Groq LLM (with fallback rotation) 
+    Given a job description, uses the Groq LLM (with fallback rotation)
     to generate an ATS score, location, tailored tech stack, and points.
-    
+
     Returns a dictionary matching the required JSON format.
     Raises TailorServiceError if all keys/models fail.
     """
@@ -120,6 +123,7 @@ def generate_tailored_resume_data(
     context_signature = json.dumps(
         {
             "candidate_summary": _truncate(candidate_summary, 400),
+            "resume_text": _truncate(resume_text, 1500),
             "current_location": current_location,
             "current_tech_stack": current_tech_stack or {},
             "target_roles": target_roles or [],
@@ -137,6 +141,7 @@ def generate_tailored_resume_data(
     prompt = _compact_tailor_prompt(
         job_description,
         candidate_summary=candidate_summary,
+        resume_text=resume_text,
         current_location=current_location,
         current_tech_stack=current_tech_stack,
         target_roles=target_roles,

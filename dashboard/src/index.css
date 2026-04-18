@@ -1,45 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --font-size: 16px;
-  --background: #f8f9fb;
-  --foreground: #1a1a2e;
+  --font-size: 14.4px;
+  --background: #f1f4fa;
+  --foreground: #0f172a;
   --card: #ffffff;
-  --primary: #030213;
-  --muted: #ececf0;
-  --muted-foreground: #717182;
-  --accent: #e9ebef;
-  --border: rgba(0, 0, 0, 0.1);
-  --input-background: #f3f3f5;
-  --radius: 0.625rem;
+  --primary: #2f45d6;
+  --border: rgba(15, 23, 42, 0.08);
+  --input-background: #ffffff;
+  --radius: 0.55rem;
 
-  --bg: #f8f9fb;
+  --bg: #f8fafc;
   --bg-soft: #ffffff;
   --surface: #ffffff;
   --surface-strong: #ffffff;
-  --surface-muted: #f8f9fb;
-  --line: #e8eaed;
-  --line-strong: #dfe3e8;
-  --ink: #1a1a2e;
-  --muted-text: #6b7280;
-  --muted: #6b7280;
-  --muted-strong: #4b5563;
-  --text-primary: #1a1a2e;
+  --surface-muted: #f8fafc;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --ink: #0b1220;            /* darkest text token — titles, headings */
+  --muted: #64748b;
+  --muted-text: #64748b;
+  --muted-strong: #475467;
+  --muted-foreground: #64748b;
+  --text-primary: #0b1220;   /* stronger than #0f172a — more decisive */
   --text-secondary: #374151;
-  --text-muted: #6b7280;
+  --text-muted: #64748b;
   --text-faint: #9ca3af;
-  --accent-brand: #6366f1;
-  --accent-brand-soft: #eef0ff;
-  --accent-brand-hover: #e0e4ff;
-  --success: #059669;
-  --warning: #d97706;
+
+  /* CareerOS brand palette */
+  --accent: #4f46e5;
+  --accent-strong: #4338ca;
+  --accent-soft: #eef1ff;
+  --accent-hover: #4338ca;
+  --accent-brand: #4f46e5;
+  --accent-brand-soft: #eef1ff;
+  --accent-brand-hover: #4338ca;
+
+  --success: #16a34a;
+  --warning: #f59e0b;
   --danger: #dc2626;
+
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
+  --weight-display: 800;
+
+  --tracking-label: 0.08em;
+  --tracking-headline: -0.02em;
+  --tracking-tight: -0.015em;
 }
 
 * {
@@ -49,15 +61,15 @@
 html {
   min-height: 100%;
   font-size: var(--font-size);
-  background: #f8f9fb;
+  background: var(--bg);
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  color: #1a1a2e;
-  background: #f8f9fb;
+  color: var(--ink);
+  background: var(--bg);
   font-family: var(--font-sans);
   font-weight: 400;
   font-synthesis: none;
@@ -83,11 +95,39 @@ select {
 
 button {
   cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 button:disabled {
   cursor: not-allowed;
   opacity: 0.65;
+}
+
+/* Systemic Motion Foundations */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-reveal {
+  opacity: 0; 
+  animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: var(--radius-sm);
 }
 
 a {
@@ -98,59 +138,34 @@ a {
   min-height: 100vh;
 }
 
-.primary-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.25rem;
-  padding: 0 1rem;
-  border: 0;
-  border-radius: 0.5rem;
-  background: #1a1a2e;
-  color: #ffffff;
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-.secondary-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.25rem;
-  padding: 0 1rem;
-  border: 1px solid #e8eaed;
-  border-radius: 0.5rem;
-  background: #ffffff;
-  color: #374151;
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
 .eyebrow {
-  color: #6366f1;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
 .empty-state {
-  border: 1px solid #e8eaed;
-  border-radius: 0.75rem;
-  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
   padding: 2rem;
-  color: #6b7280;
+  color: var(--muted);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
 }
 
 .empty-state h2 {
-  margin: 0.4rem 0 0.35rem;
-  color: #1a1a2e;
-  font-size: 1rem;
-  font-weight: 600;
+  margin: 0.4rem 0 0.4rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
 }
 
 .empty-state p {
   margin: 0;
-  color: #9ca3af;
-  font-size: 0.8125rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
 }

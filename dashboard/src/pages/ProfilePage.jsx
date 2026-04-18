@@ -11,6 +11,30 @@ const DEFAULT_PROFILE = {
   salary_expectations: '',
 }
 
+const NOTIFICATION_KEYS = ['new_matches', 'application_updates', 'interview_reminders', 'weekly_summary', 'ai_recommendations']
+const NOTIFICATION_LABELS = {
+  new_matches: { label: 'New job matches', sub: 'Get notified when new jobs match your criteria' },
+  application_updates: { label: 'Application updates', sub: 'Status changes and recruiter responses' },
+  interview_reminders: { label: 'Interview reminders', sub: 'Reminders before scheduled interviews' },
+  weekly_summary: { label: 'Weekly summary', sub: 'Weekly digest of your application pipeline' },
+  ai_recommendations: { label: 'AI recommendations', sub: 'Personalized job and resume suggestions' },
+}
+
+function loadNotifications() {
+  try {
+    const stored = localStorage.getItem('notificationPrefs')
+    if (stored) return JSON.parse(stored)
+  } catch {}
+  return { new_matches: true, application_updates: true, interview_reminders: true, weekly_summary: false, ai_recommendations: true }
+}
+
+function parseSalaryRange(str) {
+  if (!str) return { min: '', max: '' }
+  const parts = str.split(/\s*[-–]\s*/)
+  if (parts.length >= 2) return { min: parts[0].trim(), max: parts[1].trim() }
+  return { min: '', max: str.trim() }
+}
+
 function splitCsv(value) {
   return value
     .split(',')
@@ -25,6 +49,10 @@ function ProfilePage({ onboarding, onUpdated }) {
     full_name: onboarding?.user?.full_name || '',
     ...(onboarding?.profile || {}),
   })
+  const salaryRange = parseSalaryRange(profile.salary_expectations)
+  const [salaryMin, setSalaryMin] = useState(salaryRange.min || '$140,000')
+  const [salaryMax, setSalaryMax] = useState(salaryRange.max || profile.salary_expectations || '$220,000')
+  const [notifications, setNotifications] = useState(loadNotifications)
   const [newTitle, setNewTitle] = useState('')
   const [newSkill, setNewSkill] = useState('')
   const [resumeText, setResumeText] = useState(onboarding?.resume?.original_text || '')
@@ -36,9 +64,11 @@ function ProfilePage({ onboarding, onUpdated }) {
   const saveProfile = async () => {
     setSaving(true)
     setMessage('')
+    const combinedSalary = salaryMin && salaryMax ? `${salaryMin} – ${salaryMax}` : salaryMax || salaryMin || ''
     try {
       const response = await api.put('/api/onboarding/profile', {
         ...profile,
+        salary_expectations: combinedSalary,
         onboarding_step: 'complete',
       })
       onUpdated(response.data)
@@ -46,6 +76,14 @@ function ProfilePage({ onboarding, onUpdated }) {
     } finally {
       setSaving(false)
     }
+  }
+
+  const saveNotifications = () => {
+    try {
+      localStorage.setItem('notificationPrefs', JSON.stringify(notifications))
+      setMessage('Notification preferences saved')
+      setTimeout(() => setMessage(''), 3000)
+    } catch {}
   }
 
   const saveResume = async () => {
@@ -173,12 +211,12 @@ function ProfilePage({ onboarding, onUpdated }) {
             <div className="salary-row">
               <label>
                 <span>Minimum</span>
-                <input defaultValue="$140,000" />
+                <input value={salaryMin} onChange={(event) => setSalaryMin(event.target.value)} placeholder="$140,000" />
               </label>
               <span>—</span>
               <label>
                 <span>Maximum</span>
-                <input value={profile.salary_expectations || '$220,000'} onChange={(event) => setProfile((current) => ({ ...current, salary_expectations: event.target.value }))} />
+                <input value={salaryMax} onChange={(event) => setSalaryMax(event.target.value)} placeholder="$220,000" />
               </label>
             </div>
           </section>
@@ -247,15 +285,22 @@ function ProfilePage({ onboarding, onUpdated }) {
 
       {activeTab === 'notifications' && (
         <section className="settings-card notification-card">
-          {['New job matches', 'Application updates', 'Interview reminders', 'Weekly summary', 'AI recommendations'].map((title, index) => (
-            <label key={title} className="notification-row">
+          {NOTIFICATION_KEYS.map((key) => (
+            <label key={key} className="notification-row">
               <span>
-                <strong>{title}</strong>
-                <small>{index === 0 ? 'Get notified when new jobs match your criteria' : 'Manage this notification preference'}</small>
+                <strong>{NOTIFICATION_LABELS[key].label}</strong>
+                <small>{NOTIFICATION_LABELS[key].sub}</small>
               </span>
-              <input type="checkbox" defaultChecked={index !== 3} />
+              <input
+                type="checkbox"
+                checked={!!notifications[key]}
+                onChange={(event) => setNotifications((prev) => ({ ...prev, [key]: event.target.checked }))}
+              />
             </label>
           ))}
+          <button type="button" className="settings-save" onClick={saveNotifications} style={{ marginTop: 12 }}>
+            Save preferences
+          </button>
         </section>
       )}
 

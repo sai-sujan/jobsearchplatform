@@ -19,12 +19,17 @@ Bash
 
 # ML/AI Frameworks & Libraries
 PyTorch
+Torch
 TensorFlow
+TF
 Keras
 scikit-learn
+sklearn
+sci-kit learn
 XGBoost
 LightGBM
 Hugging Face
+HuggingFace
 Transformers
 spaCy
 NLTK
@@ -36,13 +41,17 @@ Django
 
 # ML/AI Concepts
 Machine Learning
+ML
 Deep Learning
+DL
 Natural Language Processing
 NLP
 Computer Vision
+CV
 Large Language Models
 LLM
 Generative AI
+Gen AI
 Reinforcement Learning
 Transfer Learning
 Fine-tuning
@@ -187,3 +196,32 @@ Optimization
 Scalability
 Performance
 Production
+
+# Advanced GenAI & LLM Training
+Agentic AI
+Agentic Workflows
+Multi-Agent Systems
+MCP
+Model Context Protocol
+GraphRAG
+Advanced RAG
+LLM Evaluation
+LLM-as-a-Judge
+RLHF
+DPO
+PPO
+SFT
+Token Optimization
+KV Cache
+vLLM
+TGI
+Ollama
+TRT-LLM
+Text Generation Inference
+Llama 3
+Claude 3
+Mistral
+Qwen
+Qdrant
+Milvus
+Prompt Optimization

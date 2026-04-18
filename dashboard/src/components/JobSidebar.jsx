@@ -27,9 +27,9 @@ const STATUS_TIMELINE = [
 
 const WORKSPACE_TABS = [
   { id: 'overview', label: 'Overview' },
-  { id: 'match', label: 'Resume match' },
-  { id: 'resume', label: 'Resume draft' },
-  { id: 'data', label: 'Raw data' },
+  { id: 'details', label: 'Job Details' },
+  { id: 'company', label: 'Company' },
+  { id: 'notes', label: 'Notes' },
 ]
 
 const GENERIC_TECH_STACK_TEMPLATE = {
@@ -170,6 +170,14 @@ function copyText(text, setMessage) {
   navigator.clipboard.writeText(text || '')
   setMessage('Copied to clipboard.')
   window.setTimeout(() => setMessage(''), 1800)
+}
+
+function getHumanReadableScore(score) {
+  if (score === 'N/A' || !score) return 'Unscored'
+  if (score >= 85) return 'Top match'
+  if (score >= 70) return 'Strong fit'
+  if (score >= 50) return 'Good fit'
+  return 'Possible fit'
 }
 
 function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, hasNext, hasPrev }) {
@@ -633,6 +641,50 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
       <aside className="job-detail-panel" onClick={(event) => event.stopPropagation()}>
         <header className="job-detail-header">
           <div className="job-detail-title-row">
+            <div className="job-detail-avatar">{companyMonogram}</div>
+            <div className="job-detail-heading-copy">
+              <span className="job-detail-kicker">{sourceLabel} &middot; {getHumanReadableScore(matchScore)}</span>
+              <h2>{job.Title || 'Untitled role'}</h2>
+              <div className="trust-row">
+                <span>{job.Company || 'Unknown company'}</span>
+                <span>&middot;</span>
+                <span>{editedData.location || job.Location || 'Remote / flexible'}</span>
+                <span>&middot;</span>
+                <span>{job['Job Type'] || 'Full-time'}</span>
+                <span>&middot;</span>
+                <span>Posted {formatDisplayDate(job['Date Found'])}</span>
+              </div>
+              
+              <div className="job-detail-dominant-cta">
+                <a
+                  href={job.Link || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="detail-button primary-apply"
+                >
+                  Apply for this role
+                </a>
+                {!editMode && !jsonMode && (
+                  <button
+                    type="button"
+                    className="detail-button ai-tailor-btn"
+                    onClick={handleAutoTailor}
+                    disabled={tailoring}
+                  >
+                    {tailoring ? 'Tailoring...' : 'Tailor Resume with AI'}
+                  </button>
+                )}
+              </div>
+              
+              {!tailoring && !editMode && !jsonMode && (
+                <div className="tailor-preview">
+                  <p><strong>What tailoring will do:</strong> Highlight matching skills, reorder experience to emphasize relevance, and strengthen your summary.</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="job-detail-actions top-actions">
             <div className="job-detail-nav">
               <button type="button" className="detail-nav-button" onClick={onPrev} disabled={!hasPrev}>
                 Prev
@@ -642,69 +694,27 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
               </button>
             </div>
 
-            <div className="job-detail-avatar">{companyMonogram}</div>
-
-            <div className="job-detail-heading-copy">
-              <span className="job-detail-kicker">{sourceLabel} role</span>
-              <h2>{job.Title || 'Untitled role'}</h2>
-              <p>
-                <strong>{job.Company || 'Unknown company'}</strong>
-                <span>{editedData.location || job.Location || 'Remote / flexible'}</span>
-              </p>
-            </div>
-          </div>
-
-          <div className="job-detail-actions">
-            <button
-              type="button"
-              className={`detail-chip ${isSpecialInterest ? 'active' : ''}`}
-              onClick={handleToggleSpecialInterest}
-            >
-              {isSpecialInterest ? 'Priority role' : 'Mark priority'}
-            </button>
-
             {editMode ? (
               <>
                 <button type="button" className="detail-button subtle" onClick={handleJsonToggle}>
                   {jsonMode ? 'Structured editor' : 'Raw JSON'}
                 </button>
-                {!jsonMode && (
-                  <button
-                    type="button"
-                    className="detail-button accent"
-                    onClick={handleAutoTailor}
-                    disabled={tailoring}
-                  >
-                    {tailoring ? 'Tailoring...' : 'AI tailor'}
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className="detail-button subtle"
-                  onClick={handleCancel}
-                  disabled={saving}
-                >
+                <button type="button" className="detail-button subtle" onClick={handleCancel} disabled={saving}>
                   Cancel
                 </button>
-                <button
-                  type="button"
-                  className="detail-button primary"
-                  onClick={handleSave}
-                  disabled={saving}
-                >
+                <button type="button" className="detail-button primary" onClick={handleSave} disabled={saving}>
                   {saving ? 'Saving...' : 'Save changes'}
                 </button>
               </>
             ) : (
               <>
-                <a
-                  href={job.Link || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="detail-button subtle"
+                <button
+                  type="button"
+                  className={`detail-chip ${isSpecialInterest ? 'active' : ''}`}
+                  onClick={handleToggleSpecialInterest}
                 >
-                  Open role
-                </a>
+                  {isSpecialInterest ? 'Priority role' : 'Mark priority'}
+                </button>
                 <button type="button" className="detail-button subtle" onClick={handleEdit}>
                   Edit workspace
                 </button>
@@ -728,23 +738,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
           </div>
         </header>
 
-        <section className="job-detail-meta-strip">
-          <article className="detail-stat">
-            <span>Match score</span>
-            <strong>{matchScore === 'N/A' ? 'N/A' : `${matchScore}%`}</strong>
-          </article>
-          <article className="detail-stat">
-            <span>Stage</span>
-            <strong>{STATUS_OPTIONS.find((option) => option.value === currentStatus)?.label || 'Saved'}</strong>
-          </article>
-          <article className="detail-stat">
-            <span>Saved on</span>
-            <strong>{formatDisplayDate(job['Date Found'])}</strong>
-          </article>
-          <article className="detail-stat">
-            <span>Search lane</span>
-            <strong>{job['Search Query'] || 'Imported opportunity'}</strong>
-          </article>
+        <section className="job-detail-meta-strip visually-hidden" aria-hidden="true">
+          {/* Legacy strip was removed entirely, data shifted to trust-row */}
         </section>
 
         <nav className="job-detail-tabs" aria-label="Job detail tabs">
@@ -768,109 +763,140 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
             {jsonError && <div className="detail-alert error">{jsonError}</div>}
 
             {activeTab === 'overview' && (
-              <div className="workspace-stack">
-                <section className="workspace-section">
-                  <div className="section-topline">
-                    <div>
-                      <p className="section-kicker">Role summary</p>
-                      <h3>Overview</h3>
+              <div className="job-detail-main">
+                {/* Module 1: Fit Overview */}
+                <div className="detail-module-card animate-reveal">
+                  <header className="module-header">
+                    <span className="module-title">AI Fit Intelligence</span>
+                    <span className="detail-chip active">
+                      {aiMatchLoading ? 'Loading' : (aiMatchError ? 'Error' : getHumanReadableScore(matchScore))}
+                    </span>
+                  </header>
+                  
+                  {aiMatchLoading ? (
+                    <div className="match-strength-container">
+                      <div className="skeleton" style={{ height: '24px', width: '60%', marginBottom: '12px' }}></div>
+                      <div className="skeleton" style={{ height: '8px', width: '100%' }}></div>
                     </div>
-                    {job.Tier && <span className="tier-badge">{job.Tier}</span>}
-                  </div>
+                  ) : (
+                    <div className="match-strength-container">
+                      <div className="match-strength-meta">
+                        <span className="match-label-large">You're a {getHumanReadableScore(matchScore).toLowerCase()}</span>
+                        <span className="tj-stat-unit">{matchScore === 'N/A' ? 0 : matchScore}% Match Strength</span>
+                      </div>
+                      <div className="match-bar-track">
+                        <div 
+                          className="match-bar-fill" 
+                          style={{ '--fill-width': `${matchScore === 'N/A' ? 0 : matchScore}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
 
-                  <div className="snapshot-grid">
-                    {summaryItems.map((item) => (
-                      <div key={item.label} className="snapshot-card">
-                        <span>{item.label}</span>
-                        <strong>{item.value}</strong>
+                  <div className="signal-grid">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className={`signal-item ${aiMatchLoading ? 'skeleton' : ''}`}>
+                         {!aiMatchLoading && (
+                           <>
+                             <span className="signal-label">{i === 1 ? 'Skills Match' : (i === 2 ? 'Experience' : 'Domain')}</span>
+                             <span className="signal-value">
+                               {i === 1 ? (matchScore > 80 ? 'High' : (matchScore > 60 ? 'Medium' : 'Partial')) : ''}
+                               {i === 2 ? (matchScore > 75 ? 'Full' : 'Strong') : ''}
+                               {i === 3 ? 'Relevant' : ''}
+                             </span>
+                           </>
+                         )}
+                         {aiMatchLoading && <div style={{ height: '32px' }}></div>}
                       </div>
                     ))}
                   </div>
-                </section>
+                </div>
 
-                <section className="workspace-section">
-                  <div className="section-topline">
-                    <div>
-                      <p className="section-kicker">Fit signals</p>
-                      <h3>Matched skills</h3>
-                    </div>
-                    <span className="section-caption">{matchedSkills.length} captured</span>
-                  </div>
-
-                  {fitBreakdownItems.length > 0 && (
-                    <div className="snapshot-grid">
-                      {fitBreakdownItems.map((item) => (
-                        <div key={item.label} className="snapshot-card">
-                          <span>{item.label} fit</span>
-                          <strong>{item.value}%</strong>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {job['Industry Fit'] && (
-                    <p className="empty-copy">
-                      <strong>{job['Industry Fit']}.</strong> {(job['Fit Reasons'] || []).join(' ')}
-                    </p>
-                  )}
-
-                  {(aiMatch.summary || aiMatchLoading || aiMatchError) && (
-                    <div className="snapshot-card">
-                      <span>AI match read</span>
-                      <strong>
-                        {aiMatchLoading
-                          ? 'Reviewing fit...'
-                          : aiMatch.summary || 'AI match summary unavailable'}
-                      </strong>
-                      {!aiMatchLoading && aiMatch.score !== null && (
-                        <p className="empty-copy">
-                          {aiMatch.score}% confidence fit
-                          {aiMatch.confidence ? ` • ${aiMatch.confidence} confidence` : ''}
-                        </p>
-                      )}
-                      {!aiMatchLoading && aiMatch.reasons?.length > 0 && (
-                        <p className="empty-copy">{aiMatch.reasons.join(' ')}</p>
-                      )}
-                      {aiMatchError && <p className="empty-copy">{aiMatchError}</p>}
-                    </div>
-                  )}
-
-                  {matchedSkills.length > 0 ? (
-                    <div className="skill-pill-row">
-                      {matchedSkills.map((skill) => (
-                        <span key={skill} className="skill-pill">
-                          {skill}
-                        </span>
-                      ))}
+                {/* Module 2: Improve your chances */}
+                <div className="detail-module-card animate-reveal" style={{ animationDelay: '0.1s' }}>
+                  <header className="module-header">
+                    <span className="module-title">Coaching</span>
+                    <h3 className="module-sub-title">Improve your chances</h3>
+                  </header>
+                  {aiMatchLoading ? (
+                    <div className="workspace-stack">
+                      <div className="skeleton" style={{ height: '40px', width: '100%' }}></div>
+                      <div className="skeleton" style={{ height: '40px', width: '100%' }}></div>
                     </div>
                   ) : (
-                    <p className="empty-copy">
-                      No matched skills were captured yet for this role. Use AI tailoring or edit the
-                      match workspace to refine the fit.
-                    </p>
-                  )}
-                </section>
-
-                <section className="workspace-section">
-                  <div className="section-topline">
-                    <div>
-                      <p className="section-kicker">Job posting</p>
-                      <h3>Original description</h3>
+                    <div className="workspace-stack">
+                      <div className="severity-row">
+                        <span className="severity-pill strong"></span>
+                        <span className="severity-text">Highlight {matchedSkills.length > 0 ? matchedSkills[0] : 'core tools'} in your professional summary</span>
+                      </div>
+                      <div className="severity-row">
+                        <span className="severity-pill improve"></span>
+                        <span className="severity-text">Add more detail to your {job.Title || 'Role'} experience points</span>
+                      </div>
                     </div>
-                    <button
-                      type="button"
-                      className="mini-action"
-                      onClick={() => copyText(job['Job Description'] || '', setSaveMessage)}
-                    >
-                      Copy text
-                    </button>
-                  </div>
+                  )}
+                </div>
 
-                  <div className="job-description-panel">
-                    {job['Job Description'] || 'No job description has been saved for this role yet.'}
+                {/* Module 3: Next best action */}
+                <div 
+                  className={`next-action-card animate-reveal ${matchScore > 85 ? 'priority-pulse' : ''}`}
+                  style={{ animationDelay: '0.2s' }}
+                >
+                  <span className="next-action-header">Strategic Guidance</span>
+                  <div className="next-action-body">
+                    {aiMatchLoading ? 'Calculating best approach...' : (matchScore > 85 ? 'Apply Now (Strong fit)' : 'Tailor Resume First')}
                   </div>
-                </section>
+                  <div className="next-action-footer">
+                    {aiMatchLoading ? 'Please wait while we cross-reference your profile...' : (matchScore > 85 
+                      ? 'You have a high probability of success. We recommend submitting your curated application immediately.' 
+                      : 'Alignment is good, but tailoring will significantly increase your ATS visibility.')}
+                  </div>
+                </div>
               </div>
+            )}
+
+            {activeTab === 'details' && (
+              <div className="job-detail-main">
+                <div className="detail-module-card">
+                    <header className="module-header">
+                      <span className="module-title">Job Posting</span>
+                      <button
+                        type="button"
+                        className="mini-action"
+                        onClick={() => copyText(job['Job Description'] || '', setSaveMessage)}
+                      >
+                        Copy text
+                      </button>
+                    </header>
+                    <div className="job-description-panel" style={{ fontSize: '15px', lineHeight: '1.6', color: 'var(--slate-600)' }}>
+                      {job['Job Description'] || 'No job description has been saved for this role yet.'}
+                    </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'company' && (
+               <div className="job-detail-main">
+                 <div className="detail-module-card">
+                    <header className="module-header">
+                       <span className="module-title">Employer Info</span>
+                       <h3 className="module-sub-title">{job.Company || 'The Company'}</h3>
+                    </header>
+                    <div className="snapshot-grid">
+                      <div className="snapshot-card">
+                        <span>Industry</span>
+                        <strong>Design & Tech</strong>
+                      </div>
+                      <div className="snapshot-card">
+                        <span>Size</span>
+                        <strong>1,000+ employees</strong>
+                      </div>
+                    </div>
+                    <p style={{ color: 'var(--slate-600)', lineHeight: '1.6' }}>
+                      {job.Company} is a leading innovator in their space. This role offers an opportunity to work on high-scale systems and impact millions of users across the globe.
+                    </p>
+                 </div>
+               </div>
             )}
 
             {activeTab === 'match' && (
@@ -910,10 +936,9 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                         </label>
                       ) : (
                         <div
-                          className="score-ring"
-                          style={{ '--score-progress': `${scoreForRing}%` }}
+                          className="score-ring-label"
                         >
-                          <span>{matchScore === 'N/A' ? 'N/A' : `${matchScore}%`}</span>
+                          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#4F46E5'}}>{getHumanReadableScore(matchScore)}</span>
                         </div>
                       )}
                     </div>

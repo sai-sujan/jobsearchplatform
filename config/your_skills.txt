@@ -1,494 +1,158 @@
-# Your Skills - Ultra-Comprehensive List with All Variations
-# Extracted from resume with extensive synonyms and related terms
+# Your Skills - AI/ML Engineer Optimized List
+# Pruned to focus ONLY on AI, ML, Data Engineering, and Backend skills
+# (Removed frontend, generic devops, and analyst fluff to prevent false positives)
 
 # ========================================
-# PROGRAMMING LANGUAGES & SCRIPTING
+# PROGRAMMING LANGUAGES & CORE TECH
 # ========================================
 Python
-Python Programming
-Python Development
 SQL
-Structured Query Language
-T-SQL
-MySQL
-PostgreSQL
 Bash
 Shell
-Shell Scripting
-Bash Scripting
-Command Line
-Terminal
 Linux
-Unix
 
 # ========================================
 # ML/AI FRAMEWORKS & LIBRARIES
 # ========================================
 TensorFlow
-Tensor Flow
 TF
 PyTorch
 Torch
 Scikit-learn
-scikit learn
 sklearn
 sci-kit learn
 Hugging Face
 HuggingFace
 Hugging Face Transformers
 Transformers
-Transformer Models
 OpenCV
-Open CV
-Computer Vision Library
+CV
 YOLO
-You Only Look Once
-Object Detection
 Keras
-Deep Learning Framework
 
 # ========================================
-# LLM & NLP TOOLS
+# LLM, RAG & AGENTIC AI
 # ========================================
 LangChain
-Lang Chain
 LangGraph
-Lang Graph
-LangSmith
-Lang Smith
 LlamaIndex
-Llama Index
-Llama-Index
 Agents
 AI Agents
 LLM Agents
-Multi-Agents
-Multi Agent
 Multi-Agent Systems
-LoRA
-Low-Rank Adaptation
-QLoRA
-Quantized LoRA
-OpenAI
-OpenAI API
-GPT
-ChatGPT
-Ollama
+MCP
+Model Context Protocol
 RAG
-RAG Systems
 Retrieval Augmented Generation
-Retrieval-Augmented Generation
-Retrieval System
-Self-correcting RAG
-Hybrid Retrieval
-Dense Embeddings
-Embedding Models
-BM25
-Sparse Retrieval
-LLM-as-Judge
-LLM Judge
-Batched Query Extraction
+GraphRAG
+Advanced RAG
+Agentic RAG
+LoRA
+QLoRA
 Prompt Engineering
-Prompting
-Few-shot Learning
-Few-shot
-Zero-shot Learning
-Zero-shot
+Prompt Optimization
 Fine-tuning
-Fine tuning
-Model Fine-tuning
-Parameter-Efficient Fine-Tuning
 PEFT
-Model Training
-Training Models
+SFT
+RLHF
+DPO
+LLM Evaluation
+LLM-as-a-Judge
 LLM
-LLMs
 Large Language Models
-Large Language Model
 Generative AI
+GenAI
 Gen AI
-Generative Models
 
 # ========================================
-# ML SPECIALIZATIONS & CONCEPTS
+# LLM INFERENCE & SERVING
+# ========================================
+KV Cache
+Token Optimization
+Context Window Optimization
+vLLM
+TGI
+Text Generation Inference
+TensorRT-LLM
+Ollama
+Llama 3
+Claude 3
+Mistral
+
+# ========================================
+# ML CONCEPTS & SPECIALIZATIONS
 # ========================================
 NLP
 Natural Language Processing
-Natural Language Understanding
-NLU
-Text Processing
 Computer Vision
-CV
-Image Processing
 Deep Learning
 DL
-Deep Neural Networks
 Machine Learning
 ML
 ML Engineering
-Anomaly Detection
-Outlier Detection
 Transfer Learning
 Pre-trained Models
 Object Detection
-Image Detection
-Depth Estimation
-3D Vision
-GAN
-Generative Adversarial Networks
-Generative Models
-Synthetic Data
-Data Augmentation
-MiDaS
-Depth Prediction
 Neural Networks
-NN
-Artificial Neural Networks
 CNN
-Convolutional Neural Networks
-Convolution
 RNN
-Recurrent Neural Networks
-LSTM
-Long Short-Term Memory
-Transformer
 Transformer Architecture
 Attention Mechanism
-Self-Attention
-Multi-Head Attention
-Model Deployment
-Production Deployment
-Model Serving
-Model Evaluation
-Model Assessment
-Performance Metrics
 Feature Engineering
-Feature Extraction
-Data Preprocessing
-Data Preparation
 Data Pipeline
 
 # ========================================
-# MLOPS & DEPLOYMENT
+# MLOPS & CLOUD INFRASTRUCTURE
 # ========================================
 MLOps
-ML Ops
-Machine Learning Operations
 MLflow
-ML Flow
 Experiment Tracking
 Model Registry
-Git
-GitHub
-Git Version Control
-Version Control
-Source Control
-GitHub Actions
-GitHub CI/CD
-CI/CD
-CI CD
-Continuous Integration
-Continuous Deployment
-Continuous Delivery
-CI/CD Pipelines
-Build Pipelines
 Docker
 Containerization
-Container
-Docker Compose
-Dockerfile
-Model Monitoring
-Model Performance Monitoring
-Model Versioning
-Version Management
-ZenML
-Workflow Orchestration
-Pipeline Orchestration
-
-# ========================================
-# CLOUD & INFRASTRUCTURE
-# ========================================
+Kubernetes
+K8s
 AWS
 Amazon Web Services
-Cloud Computing
-Lambda
-AWS Lambda
-Serverless
-Function as a Service
-FaaS
-S3
-AWS S3
-Object Storage
-Cloud Storage
 EC2
-AWS EC2
-Virtual Machines
-Compute
-ECR
-AWS ECR
-Container Registry
-API Gateway
-AWS API Gateway
-REST API Gateway
-Cloud
-Cloud Platform
-Cloud Infrastructure
-Heroku
-Platform as a Service
-PaaS
-CircleCI
-Circle CI
-Continuous Integration
+S3
+CI/CD
+GitHub Actions
+Model Deployment
 
 # ========================================
 # DATABASES & VECTOR STORES
 # ========================================
 PostgreSQL
-Postgres
-SQL Database
 MySQL
-My SQL
-Relational Database
-RDBMS
-Milvus
-Vector Database
-Weaviate
-Vector Search
-FAISS
-Facebook AI Similarity Search
-Similarity Search
 MongoDB
-Mongo
-NoSQL
-Document Database
+Milvus
+Weaviate
+FAISS
+Qdrant
+ChromaDB
 Vector Database
 Vector Store
-Vector Search Engine
 Embeddings
-Vector Embeddings
 Semantic Search
 
 # ========================================
-# WEB & API DEVELOPMENT
+# BACKEND & API DEVELOPMENT
 # ========================================
 FastAPI
-Fast API
-Python Web Framework
+Flask
+Streamlit
 REST API
-RESTful API
-API
 API Development
 Backend Development
-Web Services
-Streamlit
-Streamlit App
-Web App
-Dashboard
-Twilio
-SMS API
-WhatsApp Integration
-Messaging API
 
 # ========================================
-# DATA SCIENCE & ANALYTICS
+# DATA ENGINEERING & SCIENCE
 # ========================================
-Data Analysis
-Data Analytics
-Exploratory Data Analysis
-EDA
-Data Exploration
-Data Visualization
-Visualization
-Charts
-Graphs
-Pandas
-Data Manipulation
-NumPy
-Numerical Computing
-Array Processing
-Matplotlib
-Plotting
-Seaborn
-Statistical Visualization
-Statistical Analysis
-Statistics
-Hypothesis Testing
-A/B Testing
-Experimentation
-Data Cleaning
-Data Wrangling
-ETL
-Extract Transform Load
 Data Engineering
-
-# ========================================
-# SPECIFIC TECHNIQUES & PROJECTS
-# ========================================
-Credit Card Default Prediction
-Predictive Modeling
-Classification
-Wine Quality Prediction
-Regression
-Document QA
-Question Answering
-QA Systems
-Identity Verification
-Authentication
-Hologram Detection
-Image Classification
-Mental Health AI
-Conversational AI
-Chatbot
-Biomedical Research
-Healthcare AI
-Medical AI
-Multi-Agent Systems
-Agent Orchestration
-CrewAI
-Crew AI
-Agent Framework
-PubMed
-Medical Literature
-Research Papers
-Model Context Protocol
-MCP
-Context Management
-
-# ========================================
-# SOFT SKILLS & METHODOLOGIES
-# ========================================
-Problem Solving
-Analytical Thinking
-End-to-End ML Pipelines
-Full Stack ML
-Production-Ready Solutions
-Production ML
-Research
-Research and Development
-R&D
-Publications
-Academic Writing
-Agile
-Agile Methodology
-Scrum
-Team Collaboration
-Collaboration
-Communication
-
-# ========================================
-# ADDITIONAL TOOLS & PLATFORMS
-# ========================================
-Jupyter
-Jupyter Notebook
-Jupyter Lab
-Notebook
-Interactive Computing
-Git Version Control
-GitHub
-GitLab
-Bitbucket
-Linux
-Ubuntu
-Command Line
-CLI
-Terminal
-Bash Terminal
-VS Code
-Visual Studio Code
-IDE
-Development Environment
-
-# ========================================
-# ADDITIONAL ML/AI CONCEPTS
-# ========================================
-Supervised Learning
-Unsupervised Learning
-Semi-Supervised Learning
-Reinforcement Learning
-Classification
-Binary Classification
-Multi-Class Classification
-Regression
-Linear Regression
-Logistic Regression
-Clustering
-K-Means
-Model Optimization
-Hyperparameter Tuning
-Cross-Validation
-Train Test Split
-Overfitting
-Underfitting
-Regularization
-Batch Processing
-Real-Time Inference
-Inference
-Prediction
-Model Accuracy
-Precision
-Recall
-F1 Score
-ROC AUC
-Confusion Matrix
-Loss Function
-Optimizer
-Adam
-SGD
-Learning Rate
-
-# ========================================
-# ADDITIONAL CLOUD & DEVOPS
-# ========================================
-Serverless Computing
-Microservices
-API Design
-Scalability
-High Availability
-Load Balancing
-Monitoring
-Logging
-Debugging
-Testing
-Unit Testing
-Integration Testing
-Automation
-Infrastructure as Code
-IaC
-Configuration Management
-
-# ========================================
-# ADDITIONAL DATA TOOLS
-# ========================================
+ETL
+Pandas
+NumPy
 Data Pipelines
-Batch Processing
-Stream Processing
-Data Ingestion
-Data Storage
-Data Warehousing
-Big Data
-Distributed Computing
-
-# ========================================
-# ADDITIONAL KEYWORDS (User Requested)
-# ========================================
-Optimization
-Model Optimization
-Code Optimization
-Performance
-Performance Tuning
-Performance Optimization
-System Performance
-Production
-Production Environment
-Production Systems
-Production Deployment
-Production-Ready
-Metrics
-Performance Metrics
-KPIs
-Key Performance Indicators
-Monitoring Metrics
-React
-ReactJS
-React.js
-Frontend Development
+Data Analysis
+Predictive Modeling

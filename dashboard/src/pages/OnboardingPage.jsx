@@ -5,63 +5,28 @@ import './OnboardingPage.css'
 
 const STEPS = ['welcome', 'resume', 'roles', 'preferences', 'presets']
 
-const SENIORITY_OPTIONS = ['Entry level', 'Mid level', 'Senior']
-const WORK_MODE_OPTIONS = ['Any', 'Remote', 'Hybrid', 'On-site']
-const EMPLOYMENT_OPTIONS = ['Any', 'Full-time', 'Internship', 'Contract']
-const INDUSTRY_OPTIONS = ['Any', 'Developer Tools', 'SaaS', 'Healthcare', 'Fintech', 'E-commerce', 'Education']
-const LOCATION_OPTIONS = ['Any', 'Remote', 'United States', 'Chicago', 'New York', 'San Francisco', 'Austin']
-const SOURCE_OPTIONS = ['LinkedIn', 'Indeed', 'Glassdoor', 'Company Site']
+const SENIORITY_OPTIONS = ['Junior', 'Mid-Level', 'Senior', 'Lead', 'Exec']
+const EMPLOYMENT_OPTIONS = ['Full-time', 'Contract', 'Freelance']
+const WORK_AUTH_OPTIONS = ['US Citizen / Greencard', 'Require Sponsorship']
+const INDUSTRY_OPTIONS = ['SaaS', 'Fintech', 'Healthcare', 'E-commerce', 'Developer Tools', 'Education']
 const ROLE_LIBRARY = [
-  'Software Engineer',
-  'Frontend Engineer',
-  'Backend Engineer',
-  'Full Stack Engineer',
-  'Product Engineer',
-  'Data Analyst',
-  'Data Scientist',
-  'Machine Learning Engineer',
-  'AI Engineer',
-  'Product Manager',
-  'Designer',
+  'Product Manager', 'Software Engineer', 'Frontend Engineer', 'Backend Engineer',
+  'Full Stack Engineer', 'Data Analyst', 'Data Scientist', 'ML Engineer',
+  'AI Engineer', 'Product Designer', 'UX Researcher',
 ]
-
-const PREVIEW_COPY = {
-  welcome: {
-    title: 'Your career command center',
-    body: 'A guided setup that turns your resume into matched roles, search rules, and resume-tailoring context.',
-    badge: 'Profile setup',
-  },
-  resume: {
-    title: 'Awaiting resume',
-    body: 'Upload or paste your resume and we will preview detected roles, skills, and seniority.',
-    badge: 'Auto parsing',
-  },
-  roles: {
-    title: 'Target profile preview',
-    body: 'Selections update the matcher live, so your feed stays focused on roles you actually want.',
-    badge: 'Updating live',
-  },
-  preferences: {
-    title: 'Preference summary',
-    body: 'Location, salary, source, and quality filters help remove noisy listings before they reach you.',
-    badge: 'Filters active',
-  },
-  presets: {
-    title: 'Ready to launch',
-    body: 'Your workspace is configured. Matched jobs can now flow into the web app without showing raw scraping controls.',
-    badge: 'Setup complete',
-  },
-}
+const DEFAULT_SKILL_LIBRARY = [
+  'Agile Methodology', 'Data Analysis', 'Roadmapping', 'User Research', 'JIRA', 'Product Strategy',
+]
 
 const DEFAULT_PROFILE = {
   full_name: '',
   target_roles: [],
   seniority: '',
   preferred_locations: [],
-  work_modes: [],
-  employment_types: [],
+  work_modes: ['Remote'],
+  employment_types: ['Full-time'],
   industries: [],
-  visa_preferences: {},
+  visa_preferences: { work_authorization: 'US Citizen / Greencard' },
   quality_filters: {
     preferred_sources: ['LinkedIn', 'Indeed', 'Company Site'],
     minimum_match_score: 65,
@@ -70,105 +35,78 @@ const DEFAULT_PROFILE = {
     hide_suspicious_jobs: true,
     require_salary_visibility: false,
     exclude_recruiter_posts: true,
-    exclude_keywords: [],
+    exclude_keywords: ['Meta', 'Crypto'],
   },
+  salary_min: 90000,
+  salary_max: 150000,
   salary_expectations: '',
   candidate_summary: '',
   parsed_skills: [],
   onboarding_step: 'welcome',
   automation_connected: false,
+  integrations: { linkedin: false, job_board_sync: true },
+  tracking_defaults: { auto_status_updates: true },
+  saved_searches: [
+    { id: 'default', label: 'Product Designer – Remote', role: 'Product Designer', location: 'Remote (US)', salary: '$120k+' },
+  ],
 }
 
 function toggleValue(list, value) {
   return list.includes(value) ? list.filter((item) => item !== value) : [...list, value]
 }
 
-function toggleWithAny(list, value) {
-  // If toggling "Any" on, it becomes the only selection. If toggling off, clear.
-  if (value === 'Any') {
-    return list.includes('Any') ? [] : ['Any']
-  }
-  // If toggling any other value on, remove "Any" from the list.
-  const withoutAny = list.filter((item) => item !== 'Any')
-  return withoutAny.includes(value)
-    ? withoutAny.filter((item) => item !== value)
-    : [...withoutAny, value]
-}
-
-function ChoiceChips({ options, values, onToggle, tone = 'neutral' }) {
+function Chip({ children, active, onClick, onRemove, tone }) {
   return (
-    <div className={`choice-chips choice-chips-${tone}`}>
-      {options.map((option) => (
-        <button
-          key={option}
-          type="button"
-          className={`choice-chip ${values.includes(option) ? 'selected' : ''}`}
-          onClick={() => onToggle(option)}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  )
-}
-
-function StepBadge({ stepIndex }) {
-  return (
-    <div className="onboarding-progress-row">
-      <span className="onboarding-step-badge">Step {stepIndex + 1} of {STEPS.length}</span>
-      <div className="onboarding-segment-track">
-        {STEPS.map((item, index) => (
-          <span
-            key={item}
-            className={index <= stepIndex ? 'active' : ''}
-            aria-hidden="true"
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function OnboardingPreview({ step, profile, resumeFileName }) {
-  const copy = PREVIEW_COPY[step] || PREVIEW_COPY.welcome
-  const selectedRoles = profile.target_roles?.slice(0, 3) || []
-  const selectedSkills = profile.parsed_skills?.slice(0, 5) || []
-
-  return (
-    <aside className="onboarding-preview" aria-label="Setup preview">
-      <div className="onboarding-preview-card">
-        <span className="preview-status-pill">{copy.badge}</span>
-        <div className="preview-illustration" aria-hidden="true">
-          <span className="preview-person-head" />
-          <span className="preview-person-body" />
-          <span className="preview-laptop" />
-        </div>
-        <h2>{copy.title}</h2>
-        <p>{copy.body}</p>
-        <div className="preview-dots" aria-hidden="true">
-          {STEPS.map((item) => (
-            <span key={item} className={item === step ? 'active' : ''} />
-          ))}
-        </div>
-      </div>
-
-      {step !== 'welcome' && (
-        <div className="onboarding-preview-summary">
-          <div>
-            <span>Resume</span>
-            <strong>{resumeFileName || 'Not uploaded yet'}</strong>
-          </div>
-          <div>
-            <span>Target roles</span>
-            <strong>{selectedRoles.length ? selectedRoles.join(', ') : 'Auto-detected after resume'}</strong>
-          </div>
-          <div>
-            <span>Skills</span>
-            <strong>{selectedSkills.length ? selectedSkills.join(', ') : 'Waiting for extraction'}</strong>
-          </div>
-        </div>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`co-chip ${active ? 'co-chip-active' : ''} ${tone ? `co-chip-${tone}` : ''}`}
+    >
+      <span>{children}</span>
+      {onRemove && (
+        <span
+          className="co-chip-x"
+          role="button"
+          tabIndex={0}
+          onClick={(e) => { e.stopPropagation(); onRemove() }}
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); onRemove() } }}
+          aria-label="Remove"
+        >×</span>
       )}
-    </aside>
+    </button>
+  )
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="co-check" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" fill="#10b981" />
+      <path d="M8 12.5l2.8 2.8L16.5 9.5" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function LogoMark() {
+  return (
+    <span className="co-logo-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="7" width="18" height="13" rx="2.2" />
+        <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7" />
+        <path d="M3 12h18" />
+      </svg>
+    </span>
+  )
+}
+
+function BusinessFigure() {
+  return (
+    <div className="co-figure" aria-hidden="true">
+      <span className="co-figure-head" />
+      <span className="co-figure-glasses" />
+      <span className="co-figure-body" />
+      <span className="co-figure-laptop" />
+      <span className="co-figure-arm" />
+    </div>
   )
 }
 
@@ -176,58 +114,39 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
   const [stepIndex, setStepIndex] = useState(() => Math.max(STEPS.indexOf(onboarding?.profile?.onboarding_step || 'welcome'), 0))
   const [resumeFile, setResumeFile] = useState(null)
   const [resumeFileName, setResumeFileName] = useState(onboarding?.resume?.filename || '')
+  const [pasteMode, setPasteMode] = useState(false)
+  const [pastedResume, setPastedResume] = useState('')
+  const [termsAccepted, setTermsAccepted] = useState(false)
   const [profile, setProfile] = useState({
     ...DEFAULT_PROFILE,
     full_name: onboarding?.user?.full_name || '',
     ...(onboarding?.profile || {}),
   })
   const [customRole, setCustomRole] = useState('')
-  const [customLocation, setCustomLocation] = useState('')
-  const [customExcludeKeyword, setCustomExcludeKeyword] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [dragOver, setDragOver] = useState(false)
 
   const step = STEPS[stepIndex]
   const presets = onboarding?.search_presets || []
-  const inferredRoleOptions = useMemo(
-    () => Array.from(new Set([...(profile.target_roles || []), ...ROLE_LIBRARY])),
-    [profile.target_roles],
-  )
+  const inferredSkills = (profile.parsed_skills && profile.parsed_skills.length ? profile.parsed_skills : DEFAULT_SKILL_LIBRARY)
 
   const canContinue =
     step === 'welcome' ||
-    (step === 'resume' && (resumeFile !== null || resumeFileName)) ||
+    (step === 'resume' && (resumeFile !== null || resumeFileName || pastedResume.trim().length > 50) && termsAccepted) ||
     (step === 'roles' && profile.target_roles.length > 0 && profile.seniority) ||
     ['preferences', 'presets'].includes(step)
 
-  const nextLabel = stepIndex === STEPS.length - 1 ? 'Finish setup' : 'Continue'
-  const stepTitle = useMemo(() => {
-    switch (step) {
-      case 'welcome':
-        return 'Your career command center.'
-      case 'resume':
-        return 'Upload your resume.'
-      case 'roles':
-        return 'Confirm your targets.'
-      case 'preferences':
-        return 'Fine-tune your search.'
-      case 'presets':
-        return 'Review and launch.'
-      default:
-        return 'Set up your workspace'
-    }
+  const nextLabel = useMemo(() => {
+    if (step === 'welcome') return 'Start Setup'
+    if (step === 'presets') return 'Finish & Go to Today Feed'
+    return 'Next Step'
   }, [step])
 
   const saveResume = async () => {
-    // If a new file was picked, upload it. Otherwise, if a resume is already
-    // on file (resumeFileName came from onboarding state), skip re-upload.
-    if (!resumeFile) {
-      return Boolean(resumeFileName)
-    }
-
+    if (!resumeFile) return Boolean(resumeFileName || pastedResume.trim())
     const formData = new FormData()
     formData.append('file', resumeFile)
-
     const response = await api.post('/api/onboarding/resume', formData)
     onUpdated(response.data)
     setResumeFileName(response.data.resume?.filename || '')
@@ -259,10 +178,7 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
     try {
       if (step === 'resume') {
         const ok = await saveResume()
-        if (!ok) {
-          setError('Please upload a resume file.')
-          return
-        }
+        if (!ok) { setError('Please upload a resume file or paste your resume text.'); return }
       } else if (step === 'roles' || step === 'preferences') {
         await saveProfile(step === 'roles' ? 'preferences' : 'presets')
       } else if (step === 'presets') {
@@ -273,12 +189,9 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
         onCompleted(response.data)
         return
       }
-
-      setStepIndex((current) => Math.min(current + 1, STEPS.length - 1))
+      setStepIndex((c) => Math.min(c + 1, STEPS.length - 1))
     } catch (requestError) {
-      const errorMsg = requestError.response?.data?.detail || requestError.message || 'Unable to save this step right now.'
-      console.error(`[${step}] Error:`, errorMsg, requestError)
-      setError(errorMsg)
+      setError(requestError.response?.data?.detail || requestError.message || 'Unable to save this step right now.')
     } finally {
       setSubmitting(false)
     }
@@ -286,487 +199,703 @@ function OnboardingPage({ session, onboarding, onCompleted, onUpdated }) {
 
   const handleBack = () => {
     setError('')
-    setStepIndex((current) => Math.max(current - 1, 0))
+    setStepIndex((c) => Math.max(c - 1, 0))
+  }
+
+  const handleSkip = () => {
+    setError('')
+    setStepIndex((c) => Math.min(c + 1, STEPS.length - 1))
   }
 
   const addCustomRole = () => {
-    if (!customRole.trim()) return
+    const trimmed = customRole.trim()
+    if (!trimmed) return
     setProfile((current) => ({
       ...current,
-      target_roles: Array.from(new Set([...current.target_roles, customRole.trim()])),
+      target_roles: Array.from(new Set([...(current.target_roles || []), trimmed])),
     }))
     setCustomRole('')
   }
 
-  const addCustomLocation = () => {
-    if (!customLocation.trim()) return
-    setProfile((current) => ({
-      ...current,
-      preferred_locations: Array.from(new Set([...current.preferred_locations, customLocation.trim()])),
-    }))
-    setCustomLocation('')
-  }
-
-  const addExcludeKeyword = () => {
-    if (!customExcludeKeyword.trim()) return
-    setProfile((current) => ({
-      ...current,
-      quality_filters: {
-        ...(current.quality_filters || {}),
-        exclude_keywords: Array.from(
-          new Set([...(current.quality_filters?.exclude_keywords || []), customExcludeKeyword.trim()]),
-        ),
-      },
-    }))
-    setCustomExcludeKeyword('')
+  const onFilePicked = (file) => {
+    if (!file) return
+    setResumeFile(file)
+    setResumeFileName(file.name)
   }
 
   return (
-    <section className="onboarding-shell">
-      <div className="onboarding-stage">
-        <div className="onboarding-topbar">
-          <StepBadge stepIndex={stepIndex} />
-          <div className="onboarding-top-actions">
-            <span>Step {stepIndex + 1} of {STEPS.length}</span>
-            <button type="button" onClick={handleBack} disabled={stepIndex === 0 || submitting}>
-              Back
+    <section className="co-shell">
+      {/* Top-right floating controls */}
+      <div className="co-topbar-float">
+        <span className="co-step-pill">Step {stepIndex + 1} of 5</span>
+        <button className="co-topbar-btn" onClick={handleBack} disabled={stepIndex === 0 || submitting}>Back</button>
+        <button className="co-topbar-btn" onClick={handleSkip} disabled={stepIndex === STEPS.length - 1 || submitting}>Skip for now</button>
+      </div>
+
+      <div className="co-grid">
+        {/* LEFT PANEL */}
+        <div className="co-panel co-panel-left">
+          {/* Progress segments */}
+          <div className="co-progress">
+            {STEPS.map((_, i) => (
+              <span key={i} className={i <= stepIndex ? 'active' : ''} />
+            ))}
+          </div>
+
+          {/* Brand */}
+          <div className="co-brand">
+            <LogoMark />
+            <strong>CareerOS</strong>
+          </div>
+
+          {step === 'welcome' && <WelcomeStep />}
+          {step === 'resume' && (
+            <ResumeStep
+              resumeFileName={resumeFileName}
+              onFilePicked={onFilePicked}
+              onClear={() => { setResumeFile(null); setResumeFileName('') }}
+              dragOver={dragOver}
+              setDragOver={setDragOver}
+              pasteMode={pasteMode}
+              setPasteMode={setPasteMode}
+              pastedResume={pastedResume}
+              setPastedResume={setPastedResume}
+              termsAccepted={termsAccepted}
+              setTermsAccepted={setTermsAccepted}
+            />
+          )}
+          {step === 'roles' && (
+            <RolesStep
+              profile={profile}
+              setProfile={setProfile}
+              inferredSkills={inferredSkills}
+              roleLibrary={ROLE_LIBRARY}
+              customRole={customRole}
+              setCustomRole={setCustomRole}
+              addCustomRole={addCustomRole}
+            />
+          )}
+          {step === 'preferences' && <PreferencesStep profile={profile} setProfile={setProfile} />}
+          {step === 'presets' && <PresetsStep profile={profile} setProfile={setProfile} presets={presets} />}
+
+          {error && <div className="co-error">{error}</div>}
+
+          {/* Footer CTA */}
+          <div className="co-footer">
+            {step !== 'welcome' && (
+              <div className="co-footer-status">
+                <StatusLine step={step} profile={profile} resumeFileName={resumeFileName} />
+              </div>
+            )}
+            <button
+              className="co-cta"
+              disabled={!canContinue || submitting}
+              onClick={handleNext}
+            >
+              {submitting ? 'Saving…' : nextLabel} {!submitting && <span className="co-cta-arrow">→</span>}
             </button>
-            <button type="button" disabled>
-              Skip for now
-            </button>
+            {step === 'welcome' && (
+              <button className="co-tutorial" type="button">
+                <span className="co-tutorial-play">▶</span> View Tutorial Video
+              </button>
+            )}
           </div>
         </div>
 
-        <div className="onboarding-layout">
-          <div className="onboarding-flow">
-            <div className="onboarding-brand">
-              <span className="onboarding-brand-mark">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M6.5 7.5h11A2.5 2.5 0 0 1 20 10v7.5A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5V10a2.5 2.5 0 0 1 2.5-2.5Z" />
-                  <path d="M9 7.5V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8v1.7" />
-                  <path d="M9 13.5h6" />
-                </svg>
-              </span>
-              <strong>CareerOS</strong>
-            </div>
-
-            <div className="onboarding-heading">
-              <span className="eyebrow">New account</span>
-              <h1>{stepTitle}</h1>
-              <p>
-                {session?.username ? `Welcome, ${session.username}.` : 'Welcome.'} We’ll use your resume
-                to suggest roles, skills, and preferences so setup stays quick.
-              </p>
-            </div>
-
-            <ol className="onboarding-step-list">
-              {STEPS.map((item, index) => (
-                <li key={item} className={index === stepIndex ? 'active' : index < stepIndex ? 'done' : ''}>
-                  <span>{index + 1}</span>
-                  <strong>{item === 'presets' ? 'Search setup' : item[0].toUpperCase() + item.slice(1)}</strong>
-                </li>
-              ))}
-            </ol>
-
-            <div className="onboarding-card">
-          <StepBadge stepIndex={stepIndex} />
-
-          {step === 'welcome' && (
-            <div className="onboarding-panel onboarding-hero-panel">
-              <div className="onboarding-intro-copy">
-                <h2>Set up once. Review better matches.</h2>
-                <p>
-                  Confirm the profile we infer from your resume, then land in a focused workspace.
-                </p>
-              </div>
-              <div className="onboarding-callouts">
-                <article>
-                  <strong>Auto profile</strong>
-                  <p>Roles, level, and skills are suggested from your resume.</p>
-                </article>
-                <article>
-                  <strong>Matched jobs only</strong>
-                  <p>No raw scraping controls or irrelevant job dumps.</p>
-                </article>
-                <article>
-                  <strong>Edit anytime</strong>
-                  <p>Preferences stay flexible after onboarding.</p>
-                </article>
-              </div>
-            </div>
-          )}
-
-          {step === "resume" && (
-            <div className="onboarding-panel">
-              <div className="onboarding-section-head">
-                <div>
-                  <h2>Resume intake</h2>
-                  <p>Upload your current resume and we will prefill the rest of onboarding from it.</p>
-                </div>
-                <span className="onboarding-helper-pill">Auto-detect roles and skills</span>
-              </div>
-
-              <label className="file-upload-label">
-                <span>Upload resume</span>
-                <div className="file-upload-wrapper">
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.txt"
-                    onChange={(event) => {
-                      setResumeFile(event.target.files?.[0] || null)
-                      if (event.target.files?.[0]) {
-                        setResumeFileName(event.target.files[0].name)
-                      }
-                    }}
-                  />
-                  <div className="file-upload-display">
-                    {resumeFileName ? (
-                      <div className="file-selected">
-                        <span>Check {resumeFileName}</span>
-                        <button
-                          type="button"
-                          className="clear-file"
-                          onClick={() => {
-                            setResumeFile(null)
-                            setResumeFileName("")
-                          }}
-                        >
-                          Clear
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="file-placeholder">
-                        <span>Choose a file or drag and drop</span>
-                        <p>PDF, DOC, DOCX, or TXT (max 10MB)</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </label>
-            </div>
-          )}
-
-          {step === 'roles' && (
-            <div className="onboarding-grid">
-              <div className="onboarding-grid-wide onboarding-card-block">
-                <div className="onboarding-section-head">
-                  <div>
-                    <h2>Detected target roles</h2>
-                    <p>Select the roles that best represent what you want to see in your matched feed.</p>
-                  </div>
-                  <span className="onboarding-helper-pill">Suggested from your resume</span>
-                </div>
-
-                <ChoiceChips
-                  options={inferredRoleOptions}
-                  values={profile.target_roles}
-                  onToggle={(role) =>
-                    setProfile((current) => ({
-                      ...current,
-                      target_roles: toggleValue(current.target_roles, role),
-                    }))
-                  }
-                  tone="accent"
-                />
-
-                <div className="onboarding-inline-input">
-                  <input
-                    value={customRole}
-                    onChange={(event) => setCustomRole(event.target.value)}
-                    placeholder="Add another role"
-                  />
-                  <button type="button" className="secondary-action onboarding-inline-button" onClick={addCustomRole}>
-                    Add role
-                  </button>
-                </div>
-              </div>
-
-              <label>
-                <span>Full name</span>
-                <input
-                  value={profile.full_name}
-                  onChange={(event) => setProfile((current) => ({ ...current, full_name: event.target.value }))}
-                />
-              </label>
-
-              <label>
-                <span>Seniority</span>
-                <select
-                  value={profile.seniority || ''}
-                  onChange={(event) => setProfile((current) => ({ ...current, seniority: event.target.value }))}
-                >
-                  <option value="">Select level</option>
-                  {SENIORITY_OPTIONS.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <div className="onboarding-grid-wide onboarding-card-block">
-                <div className="onboarding-section-head">
-                  <div>
-                    <h2>Detected skills</h2>
-                    <p>These will help decide what gets matched to you and how resume tailoring starts.</p>
-                  </div>
-                </div>
-                <div className="skill-chip-row">
-                  {(profile.parsed_skills || []).length > 0 ? (
-                    profile.parsed_skills.map((skill) => (
-                      <span key={skill} className="skill-chip">
-                        {skill}
-                      </span>
-                    ))
-                  ) : (
-                    <p className="onboarding-muted">No skills detected yet. Save your resume first.</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {step === 'preferences' && (
-            <div className="onboarding-grid">
-              <div className="onboarding-card-block onboarding-grid-wide">
-                <div className="onboarding-section-head">
-                  <div>
-                    <h2>Work mode</h2>
-                    <p>Choose how you want these roles to feel in practice. Pick "Any" for no filter.</p>
-                  </div>
-                </div>
-                <ChoiceChips
-                  options={WORK_MODE_OPTIONS}
-                  values={profile.work_modes}
-                  onToggle={(value) =>
-                    setProfile((current) => ({ ...current, work_modes: toggleWithAny(current.work_modes, value) }))
-                  }
-                />
-              </div>
-
-              <div className="onboarding-card-block onboarding-grid-wide">
-                <div className="onboarding-section-head">
-                  <div>
-                    <h2>Employment type</h2>
-                    <p>We prefilled this from your resume where possible, but you can adjust it here.</p>
-                  </div>
-                </div>
-                <ChoiceChips
-                  options={EMPLOYMENT_OPTIONS}
-                  values={profile.employment_types}
-                  onToggle={(value) =>
-                    setProfile((current) => ({
-                      ...current,
-                      employment_types: toggleWithAny(current.employment_types, value),
-                    }))
-                  }
-                />
-              </div>
-
-              <div className="onboarding-card-block onboarding-grid-wide">
-                <div className="onboarding-section-head">
-                  <div>
-                    <h2>Industries</h2>
-                    <p>Pick the spaces you want the matcher to prioritize.</p>
-                  </div>
-                </div>
-                <ChoiceChips
-                  options={INDUSTRY_OPTIONS}
-                  values={profile.industries}
-                  onToggle={(value) =>
-                    setProfile((current) => ({ ...current, industries: toggleWithAny(current.industries, value) }))
-                  }
-                />
-              </div>
-
-              <div className="onboarding-card-block onboarding-grid-wide">
-                <div className="onboarding-section-head">
-                  <div>
-                    <h2>Preferred locations</h2>
-                    <p>Add a few places you care about. Select "Any" to see roles everywhere.</p>
-                  </div>
-                </div>
-                <ChoiceChips
-                  options={LOCATION_OPTIONS}
-                  values={profile.preferred_locations}
-                  onToggle={(value) =>
-                    setProfile((current) => ({
-                      ...current,
-                      preferred_locations: toggleWithAny(current.preferred_locations, value),
-                    }))
-                  }
-                />
-                <div className="onboarding-inline-input">
-                  <input
-                    value={customLocation}
-                    onChange={(event) => setCustomLocation(event.target.value)}
-                    placeholder="Add another location"
-                  />
-                  <button type="button" className="secondary-action onboarding-inline-button" onClick={addCustomLocation}>
-                    Add location
-                  </button>
-                </div>
-              </div>
-
-              <div className="onboarding-card-block onboarding-grid-wide">
-                <div className="onboarding-section-head">
-                  <div>
-                    <h2>Feed quality controls</h2>
-                    <p>Use these to reduce fake jobs, recruiter spam, and low-quality matches.</p>
-                  </div>
-                </div>
-
-                <label>
-                  <span>Preferred sources</span>
-                </label>
-                <ChoiceChips
-                  options={SOURCE_OPTIONS}
-                  values={profile.quality_filters?.preferred_sources || []}
-                  onToggle={(value) =>
-                    setProfile((current) => ({
-                      ...current,
-                      quality_filters: {
-                        ...(current.quality_filters || {}),
-                        preferred_sources: toggleValue(current.quality_filters?.preferred_sources || [], value),
-                      },
-                    }))
-                  }
-                />
-
-                <label>
-                  <span>Minimum fit threshold</span>
-                  <select
-                    value={String(profile.quality_filters?.minimum_match_score ?? 65)}
-                    onChange={(event) =>
-                      setProfile((current) => ({
-                        ...current,
-                        quality_filters: {
-                          ...(current.quality_filters || {}),
-                          minimum_match_score: Number(event.target.value),
-                        },
-                      }))
-                    }
-                  >
-                    <option value="55">Show broader matches</option>
-                    <option value="65">Balanced</option>
-                    <option value="75">Only stronger matches</option>
-                    <option value="85">Only top-fit roles</option>
-                  </select>
-                </label>
-
-                <div className="toggle-grid">
-                  {[
-                    ['include_stretch_roles', 'Include stretch roles if they are still promising'],
-                    ['hide_staffing_agencies', 'Hide staffing agency posts'],
-                    ['hide_suspicious_jobs', 'Hide suspicious or low-trust listings'],
-                    ['exclude_recruiter_posts', 'Hide recruiter-style listings'],
-                    ['require_salary_visibility', 'Only show roles with visible salary'],
-                  ].map(([key, label]) => (
-                    <label key={key} className="toggle-card">
-                      <input
-                        type="checkbox"
-                        checked={Boolean(profile.quality_filters?.[key])}
-                        onChange={(event) =>
-                          setProfile((current) => ({
-                            ...current,
-                            quality_filters: {
-                              ...(current.quality_filters || {}),
-                              [key]: event.target.checked,
-                            },
-                          }))
-                        }
-                      />
-                      <span>{label}</span>
-                    </label>
-                  ))}
-                </div>
-
-                <label>
-                  <span>Exclude keywords</span>
-                </label>
-                <div className="onboarding-inline-input">
-                  <input
-                    value={customExcludeKeyword}
-                    onChange={(event) => setCustomExcludeKeyword(event.target.value)}
-                    placeholder="e.g. commission-only, staffing, relocation required"
-                  />
-                  <button type="button" className="secondary-action onboarding-inline-button" onClick={addExcludeKeyword}>
-                    Add keyword
-                  </button>
-                </div>
-                <div className="skill-chip-row">
-                  {(profile.quality_filters?.exclude_keywords || []).map((keyword) => (
-                    <span key={keyword} className="skill-chip">
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <label className="onboarding-grid-wide">
-                <span>Candidate summary</span>
-                <textarea
-                  value={profile.candidate_summary || ''}
-                  onChange={(event) =>
-                    setProfile((current) => ({ ...current, candidate_summary: event.target.value }))
-                  }
-                  placeholder="A short summary that should shape recommendations and tailoring."
-                />
-              </label>
-            </div>
-          )}
-
-          {step === 'presets' && (
-            <div className="onboarding-panel">
-              <div className="onboarding-section-head">
-                <div>
-                  <h2>Your generated search setup</h2>
-                  <p>These are derived from your resume and preferences so your recommendations stay focused.</p>
-                </div>
-              </div>
-              <div className="preset-list">
-                {presets.length > 0 ? (
-                  presets.map((preset) => (
-                    <article key={preset.id || preset.label} className="preset-card">
-                      <strong>{preset.label}</strong>
-                      <p>{(preset.keywords || []).join(' • ')}</p>
-                    </article>
-                  ))
-                ) : (
-                  <p className="empty-copy">Your presets will appear here after saving your profile.</p>
-                )}
-              </div>
-            </div>
-          )}
-
-          {error && <div className="auth-error">{error}</div>}
-
-          <div className="onboarding-actions">
-            <button
-              type="button"
-              className="secondary-action onboarding-nav-button"
-              onClick={handleBack}
-              disabled={stepIndex === 0 || submitting}
-            >
-              Back
-            </button>
-            <button
-              type="button"
-              className="primary-action onboarding-nav-button"
-              onClick={handleNext}
-              disabled={!canContinue || submitting}
-            >
-              {submitting ? 'Saving...' : nextLabel}
-            </button>
-          </div>
-            </div>
-          </div>
-
-          <OnboardingPreview step={step} profile={profile} resumeFileName={resumeFileName} />
+        {/* RIGHT PANEL */}
+        <div className="co-panel co-panel-right">
+          <RightPreview step={step} profile={profile} resumeFileName={resumeFileName} />
         </div>
       </div>
     </section>
   )
+}
+
+/* ---------- Step Components ---------- */
+
+function WelcomeStep() {
+  return (
+    <>
+      <div className="co-welcome-chip">Welcome to the future of your career</div>
+      <h1 className="co-h1">
+        Your career<br />command center.
+      </h1>
+      <p className="co-lede">
+        CareerOS brings everything you need into one intelligent workspace.
+        Let's get you set up to land your next big role.
+      </p>
+
+      <div className="co-feature-list">
+        <Feature
+          icon={<FeatureIcon d="M4 12l5 5 11-11" />}
+          title="AI Resume Tailor"
+          body="Instantly adapt your resume for any job description to beat ATS filters."
+        />
+        <Feature
+          icon={<FeatureIcon d="M4 6h4v12H4zM10 6h4v12h-4zM16 6h4v12h-4z" fill />}
+          title="Kanban Job Tracker"
+          body="Visualize your pipeline from applied to offer. Never miss a follow-up."
+        />
+        <Feature
+          icon={<FeatureIcon d="M4 18V10M10 18V4M16 18V8M22 18H2" />}
+          title="Smart Analytics"
+          body="Track your application success rate and optimize your strategy."
+        />
+      </div>
+    </>
+  )
+}
+
+function Feature({ icon, title, body }) {
+  return (
+    <div className="co-feature">
+      <span className="co-feature-icon">{icon}</span>
+      <div>
+        <strong>{title}</strong>
+        <p>{body}</p>
+      </div>
+    </div>
+  )
+}
+
+function FeatureIcon({ d, fill }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d={d} fill={fill ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function ResumeStep({ resumeFileName, onFilePicked, onClear, dragOver, setDragOver, pasteMode, setPasteMode, pastedResume, setPastedResume, termsAccepted, setTermsAccepted }) {
+  return (
+    <>
+      <h1 className="co-h1">Upload your resume.</h1>
+      <p className="co-lede">
+        We'll extract your experience and skills to build your profile automatically. Supported formats: PDF, DOCX.
+      </p>
+
+      <label
+        className={`co-dropzone ${dragOver ? 'drag-over' : ''} ${resumeFileName ? 'has-file' : ''}`}
+        onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => {
+          e.preventDefault(); setDragOver(false)
+          onFilePicked(e.dataTransfer.files?.[0])
+        }}
+      >
+        <input
+          type="file"
+          accept=".pdf,.doc,.docx,.txt"
+          onChange={(e) => onFilePicked(e.target.files?.[0])}
+          hidden
+        />
+        <span className="co-dropzone-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 16V6m0 0l-4 4m4-4l4 4M5 20h14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </span>
+        {resumeFileName ? (
+          <>
+            <strong className="co-dropzone-title">{resumeFileName}</strong>
+            <span className="co-dropzone-sub">Ready to upload</span>
+            <button type="button" className="co-browse" onClick={(e) => { e.preventDefault(); onClear() }}>Choose Different File</button>
+          </>
+        ) : (
+          <>
+            <strong className="co-dropzone-title">Click to upload or drag and drop</strong>
+            <span className="co-dropzone-sub">PDF or DOCX (max. 10MB)</span>
+            <span className="co-browse">Browse Files</span>
+          </>
+        )}
+      </label>
+
+      <div className="co-or"><span>OR</span></div>
+
+      <button
+        type="button"
+        className={`co-paste-toggle ${pasteMode ? 'open' : ''}`}
+        onClick={() => setPasteMode((v) => !v)}
+      >
+        <span className="co-paste-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 4h6l1 2h3v14H5V6h3l1-2z" stroke="currentColor" strokeWidth="1.8" fill="none" /><path d="M9 12h6M9 16h6" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" /></svg>
+        </span>
+        <span>Paste resume text instead</span>
+        <span className="co-paste-caret">{pasteMode ? '▲' : '▾'}</span>
+      </button>
+
+      {pasteMode && (
+        <textarea
+          className="co-paste-area"
+          value={pastedResume}
+          onChange={(e) => setPastedResume(e.target.value)}
+          placeholder="Paste your resume contents here…"
+        />
+      )}
+
+      <label className="co-terms">
+        <input type="checkbox" checked={termsAccepted} onChange={(e) => setTermsAccepted(e.target.checked)} />
+        <span>I agree to the <a href="#terms">Terms of Service</a> and consent to CareerOS processing my resume data to create my profile.</span>
+      </label>
+    </>
+  )
+}
+
+function RolesStep({ profile, setProfile, inferredSkills, roleLibrary, customRole, setCustomRole, addCustomRole }) {
+  const skillPool = Array.from(new Set([...(profile.parsed_skills || []), ...inferredSkills]))
+  const selectedRoles = profile.target_roles || []
+
+  return (
+    <>
+      <h1 className="co-h1">Define your targets.</h1>
+      <p className="co-lede">
+        Tell us what you're looking for so we can tailor your job feed and resume recommendations.
+      </p>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">TARGET ROLES</span>
+          <span className="co-required">Required (1+)</span>
+        </div>
+        <div className="co-chip-input">
+          {selectedRoles.map((role) => (
+            <Chip
+              key={role}
+              active
+              tone="role"
+              onRemove={() => setProfile((c) => ({ ...c, target_roles: c.target_roles.filter((r) => r !== role) }))}
+            >{role}</Chip>
+          ))}
+          <input
+            value={customRole}
+            onChange={(e) => setCustomRole(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addCustomRole() } }}
+            placeholder="Type a job title and press Enter…"
+          />
+        </div>
+
+        <div className="co-seniority">
+          {SENIORITY_OPTIONS.map((s) => (
+            <button
+              key={s}
+              type="button"
+              className={profile.seniority === s ? 'active' : ''}
+              onClick={() => setProfile((c) => ({ ...c, seniority: s }))}
+            >{s}</button>
+          ))}
+        </div>
+      </div>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">TOP SKILLS</span>
+          <span className="co-required">Required (3+)</span>
+        </div>
+        <div className="co-search-input">
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="co-search-icon"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+          <input placeholder="Search to add skills…" />
+        </div>
+        <div className="co-extracted">
+          <CheckIcon /> Extracted from your resume
+        </div>
+        <div className="co-chip-row">
+          {skillPool.map((skill) => {
+            const active = (profile.parsed_skills || []).includes(skill)
+            return (
+              <Chip
+                key={skill}
+                active={active}
+                tone="skill"
+                onClick={() => setProfile((c) => ({
+                  ...c,
+                  parsed_skills: toggleValue(c.parsed_skills || [], skill),
+                }))}
+              >{skill} {active ? '✓' : '+'}</Chip>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">PREFERRED INDUSTRIES</span>
+        </div>
+        <div className="co-chip-row">
+          {INDUSTRY_OPTIONS.map((ind) => {
+            const active = (profile.industries || []).includes(ind)
+            return (
+              <Chip
+                key={ind}
+                active={active}
+                tone="skill"
+                onClick={() => setProfile((c) => ({
+                  ...c,
+                  industries: toggleValue(c.industries || [], ind),
+                }))}
+              >{ind}</Chip>
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
+}
+
+function PreferencesStep({ profile, setProfile }) {
+  const modes = profile.work_modes || []
+  const empType = (profile.employment_types || [])[0] || 'Full-time'
+  const workAuth = profile.visa_preferences?.work_authorization || 'US Citizen / Greencard'
+
+  const setMode = (mode) => setProfile((c) => ({ ...c, work_modes: [mode] }))
+  const setEmp = (val) => setProfile((c) => ({ ...c, employment_types: [val] }))
+  const setAuth = (val) => setProfile((c) => ({
+    ...c,
+    visa_preferences: { ...(c.visa_preferences || {}), work_authorization: val },
+  }))
+
+  const [salMin, salMax] = [profile.salary_min || 90000, profile.salary_max || 150000]
+
+  return (
+    <>
+      <h1 className="co-h1">Fine-tune your search.</h1>
+      <p className="co-lede">
+        Set your preferences for location, compensation, and work style to ensure we only show relevant opportunities.
+      </p>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">LOCATION PREFERENCES</span>
+          <span className="co-required">Required</span>
+        </div>
+        <div className="co-toggle-cards co-toggle-cards-4">
+          <label className={`co-toggle-card ${modes.includes('Any') ? 'active' : ''}`}>
+            <input type="radio" name="mode" checked={modes.includes('Any')} onChange={() => setMode('Any')} />
+            <span className="co-toggle-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M5 12h14M12 5v14" fill="none" strokeLinecap="round" /></svg>
+            </span>
+            <span>Any</span>
+          </label>
+          <label className={`co-toggle-card ${modes.includes('Remote') ? 'active' : ''}`}>
+            <input type="radio" name="mode" checked={modes.includes('Remote')} onChange={() => setMode('Remote')} />
+            <span className="co-toggle-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" /></svg>
+            </span>
+            <span>Remote</span>
+          </label>
+          <label className={`co-toggle-card ${modes.includes('Hybrid') ? 'active' : ''}`}>
+            <input type="radio" name="mode" checked={modes.includes('Hybrid')} onChange={() => setMode('Hybrid')} />
+            <span className="co-toggle-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 12h7M13 12h7M8 8l-4 4 4 4M16 8l4 4-4 4" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </span>
+            <span>Hybrid</span>
+          </label>
+          <label className={`co-toggle-card ${modes.includes('On-site') ? 'active' : ''}`}>
+            <input type="radio" name="mode" checked={modes.includes('On-site')} onChange={() => setMode('On-site')} />
+            <span className="co-toggle-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10" /><path d="M10 20v-6h4v6" fill="none" /></svg>
+            </span>
+            <span>On-site</span>
+          </label>
+        </div>
+      </div>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">EXPECTED SALARY (USD)</span>
+        </div>
+        <div className="co-salary-row">
+          <span className="co-salary-value">${salMin.toLocaleString()}</span>
+          <span className="co-salary-step">to</span>
+          <span className="co-salary-value">${salMax >= 150000 ? '150,000+' : salMax.toLocaleString()}</span>
+        </div>
+        <div className="co-salary-slider">
+          <input
+            type="range" min="40000" max="250000" step="5000" value={salMin}
+            onChange={(e) => setProfile((c) => ({ ...c, salary_min: Math.min(Number(e.target.value), (c.salary_max || 150000) - 5000) }))}
+          />
+          <input
+            type="range" min="40000" max="250000" step="5000" value={salMax}
+            onChange={(e) => setProfile((c) => ({ ...c, salary_max: Math.max(Number(e.target.value), (c.salary_min || 90000) + 5000) }))}
+          />
+        </div>
+      </div>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">EMPLOYMENT DETAILS</span>
+        </div>
+        <div className="co-sub-label">Employment Type</div>
+        <div className="co-seniority">
+          {EMPLOYMENT_OPTIONS.map((t) => (
+            <button key={t} type="button" className={empType === t ? 'active' : ''} onClick={() => setEmp(t)}>{t}</button>
+          ))}
+        </div>
+        <div className="co-sub-label" style={{ marginTop: '1rem' }}>Work Authorization</div>
+        <div className="co-seniority">
+          {WORK_AUTH_OPTIONS.map((a) => (
+            <button key={a} type="button" className={workAuth === a ? 'active' : ''} onClick={() => setAuth(a)}>{a}</button>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
+function PresetsStep({ profile, setProfile }) {
+  const integrations = profile.integrations || {}
+  const tracking = profile.tracking_defaults || {}
+  const searches = profile.saved_searches || []
+
+  const setIntegration = (key, val) => setProfile((c) => ({
+    ...c, integrations: { ...(c.integrations || {}), [key]: val },
+  }))
+
+  return (
+    <>
+      <h1 className="co-h1">Final Details.</h1>
+      <p className="co-lede">
+        Set up your saved searches, connect integrations, and configure your tracking defaults.
+      </p>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">SAVED SEARCH CONFIGURATIONS</span>
+          <button className="co-add-new" type="button">+ Add New</button>
+        </div>
+        {searches.map((s) => (
+          <div key={s.id} className="co-saved-search">
+            <div>
+              <strong>{s.label}</strong>
+              <div className="co-saved-meta">
+                <span>Role: {s.role}</span>
+                <span>Loc: {s.location}</span>
+                <span>Sal: {s.salary}</span>
+              </div>
+            </div>
+            <div className="co-saved-actions">
+              <button type="button" aria-label="Edit">✎</button>
+              <button type="button" aria-label="Delete">🗑</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">INTEGRATIONS &amp; SYNC</span>
+        </div>
+        <div className="co-integration">
+          <span className="co-integration-icon co-int-linkedin">in</span>
+          <div>
+            <strong>LinkedIn Import</strong>
+            <p>Sync profile and work history</p>
+          </div>
+          <button
+            type="button"
+            className="co-integration-btn"
+            onClick={() => setIntegration('linkedin', !integrations.linkedin)}
+          >
+            {integrations.linkedin ? 'Connected' : 'Connect'}
+          </button>
+        </div>
+        <div className={`co-integration ${integrations.job_board_sync ? 'connected' : ''}`}>
+          <span className="co-integration-icon co-int-board"><LogoMark /></span>
+          <div>
+            <strong>Job Board Sync</strong>
+            <p>Auto-track applications</p>
+          </div>
+          <span className="co-integration-status">
+            <CheckIcon /> {integrations.job_board_sync ? 'Connected' : 'Not connected'}
+          </span>
+        </div>
+      </div>
+
+      <div className="co-section">
+        <div className="co-section-head">
+          <span className="co-section-title">TRACKING DEFAULTS</span>
+        </div>
+        <label className="co-track-row">
+          <span>Auto-Status Updates</span>
+          <input
+            type="checkbox"
+            className="co-switch"
+            checked={Boolean(tracking.auto_status_updates)}
+            onChange={(e) => setProfile((c) => ({
+              ...c, tracking_defaults: { ...(c.tracking_defaults || {}), auto_status_updates: e.target.checked },
+            }))}
+          />
+        </label>
+      </div>
+    </>
+  )
+}
+
+function StatusLine({ step, profile, resumeFileName }) {
+  if (step === 'resume') {
+    return resumeFileName ? <><CheckIcon /> Resume uploaded</> : <><CheckIcon /> Ready when you are</>
+  }
+  if (step === 'roles') {
+    return (
+      <>
+        <CheckIcon /> {profile.target_roles?.length || 0} Role{profile.target_roles?.length === 1 ? '' : 's'} added
+        <span className="co-sep" />
+        <CheckIcon /> {profile.parsed_skills?.length || 0} Skills selected
+      </>
+    )
+  }
+  if (step === 'preferences') {
+    return (
+      <>
+        <CheckIcon /> Preferences set
+        <span className="co-sep" />
+        <CheckIcon /> Alerts active
+      </>
+    )
+  }
+  if (step === 'presets') {
+    return <><CheckIcon /> Setup Complete</>
+  }
+  return null
+}
+
+function RightPreview({ step, profile, resumeFileName }) {
+  if (step === 'welcome' || step === 'resume' && !resumeFileName) {
+    return (
+      <div className="co-right-card">
+        {step === 'welcome' ? (
+          <>
+            <div className="co-illustration">
+              <BusinessFigure />
+              <span className="co-blob co-blob-a" />
+              <span className="co-blob co-blob-b" />
+            </div>
+            <div className="co-right-copy">
+              <h2>Accelerate Your Career</h2>
+              <p>AI-powered resume tailoring, intelligent job tracking, and professional growth tools—all in one platform.</p>
+              <div className="co-dots">
+                <span /><span className="active" /><span /><span /><span />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="co-awaiting">
+            <div className="co-awaiting-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5" /></svg>
+            </div>
+            <strong>Awaiting Resume</strong>
+            <p>Upload your resume on the left, and we'll show a preview of extracted data here.</p>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  if (step === 'resume' && resumeFileName) {
+    return (
+      <div className="co-right-card">
+        <div className="co-awaiting">
+          <CheckIcon />
+          <strong style={{ marginTop: '0.8rem' }}>{resumeFileName}</strong>
+          <p>We'll parse this file and prefill your profile on the next step.</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (step === 'roles') {
+    return (
+      <div className="co-right-illus-only">
+        <div className="co-illustration">
+          <BusinessFigure />
+          <span className="co-blob co-blob-a" />
+          <span className="co-blob co-blob-b" />
+        </div>
+        <div className="co-right-copy">
+          <h2>Target Profile Preview</h2>
+          <p>Updating Live based on your selections.</p>
+          <div className="co-dots">
+            <span /><span /><span className="active" /><span /><span />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (step === 'preferences') {
+    const mode = (profile.work_modes || [])[0] || 'Remote'
+    const emp = (profile.employment_types || [])[0] || 'Full-time'
+    const auth = profile.visa_preferences?.work_authorization || 'US Citizen / Greencard'
+    const min = profile.salary_min || 90000
+    const max = profile.salary_max || 150000
+    const excl = profile.quality_filters?.exclude_keywords || []
+    return (
+      <div className="co-summary-card">
+        <div className="co-summary-head">
+          <strong>Preference Summary</strong>
+          <span className="co-live"><span className="co-live-dot" /> Updating Live</span>
+        </div>
+        <div className="co-summary-row">
+          <span className="co-summary-icon">🌍</span>
+          <div>
+            <strong>{mode} Only</strong>
+            <p>Anywhere in US</p>
+          </div>
+        </div>
+        <div className="co-summary-row">
+          <span className="co-summary-icon">💰</span>
+          <div>
+            <strong>${Math.round(min/1000)}k – ${max >= 150000 ? '150k+' : Math.round(max/1000) + 'k'}</strong>
+            <p>Base Salary Expectation</p>
+          </div>
+        </div>
+        <div className="co-summary-row">
+          <span className="co-summary-icon">📄</span>
+          <div>
+            <strong>{emp}</strong>
+            <p>{auth}</p>
+          </div>
+        </div>
+        <div className="co-summary-section">
+          <div className="co-summary-head">
+            <span className="co-summary-sub">ACTIVE FILTERS</span>
+            <button className="co-exclusions-link" type="button">{excl.length} Exclusions</button>
+          </div>
+          <div className="co-chip-row">
+            {excl.map((k) => <span key={k} className="co-exclusion">{k}</span>)}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (step === 'presets') {
+    const checks = [
+      ['Profile Details Completed', Boolean(profile.full_name || profile.target_roles?.length)],
+      ['Resume Uploaded & Parsed', Boolean(resumeFileName)],
+      ['Job Preferences Set', Boolean(profile.work_modes?.length)],
+      ['Tracking Defaults Configured', Boolean(profile.tracking_defaults?.auto_status_updates)],
+    ]
+    return (
+      <div className="co-summary-card">
+        <div className="co-summary-head">
+          <strong>System Status</strong>
+          <span className="co-live"><span className="co-live-dot" /> Ready to Launch</span>
+        </div>
+        <div className="co-launch-card">
+          <div className="co-launch-icon" aria-hidden="true">🚀</div>
+          <strong>You're all set!</strong>
+          <p>Your CareerOS workspace is configured and ready to supercharge your job search.</p>
+        </div>
+        <div className="co-checklist">
+          {checks.map(([label, done]) => (
+            <div key={label} className={`co-check-row ${done ? 'done' : ''}`}>
+              <span className="co-check-dot">{done ? '✓' : ''}</span>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  return null
 }
 
 export default OnboardingPage

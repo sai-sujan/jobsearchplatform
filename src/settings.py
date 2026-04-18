@@ -196,7 +196,7 @@ class Settings:
 
     # === DATABASE ===
     DB_PATH = DATA_DIR / 'jobs.db'
-    DATABASE_URL = f'sqlite:///{DB_PATH}'
+    DATABASE_URL = _getenv('DATABASE_URL', f'sqlite:///{DB_PATH}')
 
     # === VENV ===
     VENV_PYTHON = BASE_DIR / 'venv' / 'bin' / 'python3'
