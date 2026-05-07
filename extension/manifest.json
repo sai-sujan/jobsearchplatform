@@ -1,0 +1,90 @@
+{
+  "manifest_version": 3,
+  "name": "CareerOS — Job Saver & Autofill",
+  "version": "1.0.0",
+  "description": "Save jobs and autofill applications from any job board.",
+  "permissions": ["storage", "activeTab", "scripting", "cookies", "tabs"],
+  "host_permissions": [
+    "http://localhost:5001/*",
+    "http://127.0.0.1:5001/*",
+    "http://*/*",
+    "https://*/*",
+    "https://*.linkedin.com/*",
+    "https://*.indeed.com/*",
+    "https://boards.greenhouse.io/*",
+    "https://job-boards.greenhouse.io/*",
+    "https://jobs.lever.co/*",
+    "https://*.myworkdayjobs.com/*",
+    "https://*.ashbyhq.com/*",
+    "https://*.bamboohr.com/*",
+    "https://*.smartrecruiters.com/*",
+    "https://*.workable.com/*",
+    "https://*.icims.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "https://*.linkedin.com/jobs/*",
+        "https://*.indeed.com/viewjob*",
+        "https://*.indeed.com/jobs*",
+        "https://boards.greenhouse.io/*/jobs/*",
+        "https://job-boards.greenhouse.io/*/jobs/*",
+        "https://jobs.lever.co/*/*",
+        "https://*.myworkdayjobs.com/*/job/*",
+        "https://*.ashbyhq.com/*/application*",
+        "https://*.ashbyhq.com/*/*",
+        "https://*.bamboohr.com/jobs/*",
+        "https://*.smartrecruiters.com/*/posting/*",
+        "https://*.workable.com/j/*"
+      ],
+      "js": ["content/detector.js"],
+      "css": ["content/overlay.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "https://*.linkedin.com/jobs/*/apply*",
+        "https://*.indeed.com/apply*",
+        "https://boards.greenhouse.io/*/jobs/*/applications*",
+        "https://job-boards.greenhouse.io/*/jobs/*/applications*",
+        "https://jobs.lever.co/*/*/apply*",
+        "https://*.myworkdayjobs.com/*/job/*/apply*",
+        "https://*.ashbyhq.com/*/application*",
+        "https://*.bamboohr.com/careers/*/applications*",
+        "https://*.smartrecruiters.com/*/posting/*/apply*",
+        "https://*.workable.com/j/*/apply*"
+      ],
+      "js": ["content/autofill.js", "content/ai_panel.js"],
+      "css": ["content/overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["content/overlay.css", "icons/*", "resumes/venkataD_resume.docx"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
