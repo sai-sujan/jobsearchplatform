@@ -387,6 +387,7 @@ const AllJobs = ({ jobs, onStatusChange, onNotesChange, onTailor }) => {
   const [salaryFilter, setSalaryFilter]     = useState('Any')
   const [experienceFilter, setExperienceFilter] = useState('Any')
   const [sortKey, setSortKey]               = useState('relevance')
+  const [dateRange, setDateRange]           = useState('all')
   const [panelWidth, setPanelWidth]         = useState(780)   // open at max — users can drag left to shrink
   const isDragging                          = useRef(false)
   const startX                              = useRef(0)
@@ -418,6 +419,13 @@ const AllJobs = ({ jobs, onStatusChange, onNotesChange, onTailor }) => {
 
   const filteredJobs = useMemo(() => {
     const salaryMin = SALARY_OPTIONS.find((s) => s.label === salaryFilter)?.min || 0
+    const now = Date.now()
+    const dateRangeCutoff = dateRange === 'today'
+      ? new Date(new Date().setHours(0, 0, 0, 0)).getTime()
+      : dateRange === 'week'  ? now - 7 * 24 * 60 * 60 * 1000
+      : dateRange === 'month' ? now - 30 * 24 * 60 * 60 * 1000
+      : null
+
     const list = jobs.filter((job) => {
       const search = searchQuery.trim().toLowerCase()
       if (search) {
@@ -446,6 +454,11 @@ const AllJobs = ({ jobs, onStatusChange, onNotesChange, onTailor }) => {
         if (jobSalary === null || jobSalary < salaryMin) return false
       }
 
+      if (dateRangeCutoff) {
+        const saved = new Date(job['Date Found'] || 0).getTime()
+        if (!saved || saved < dateRangeCutoff) return false
+      }
+
       return true
     })
 
@@ -458,7 +471,7 @@ const AllJobs = ({ jobs, onStatusChange, onNotesChange, onTailor }) => {
       sorted.sort((a, b) => getDisplayMatchScore(b) - getDisplayMatchScore(a))
     }
     return sorted
-  }, [activeFilters, jobs, searchQuery, roleFilter, salaryFilter, experienceFilter, sortKey])
+  }, [activeFilters, jobs, searchQuery, roleFilter, salaryFilter, experienceFilter, sortKey, dateRange])
 
   const selectedJob = useMemo(() => {
     if (filteredJobs.length === 0) return null
@@ -506,6 +519,23 @@ const AllJobs = ({ jobs, onStatusChange, onNotesChange, onTailor }) => {
             </button>
             <FilterDropdown label="Salary" value={salaryFilter} options={SALARY_OPTIONS} onChange={setSalaryFilter} renderOption={(o) => o.label} />
             <FilterDropdown label="Experience" value={experienceFilter} options={EXPERIENCE_OPTIONS} onChange={setExperienceFilter} />
+            <div className="date-range-toggle">
+              {[
+                { key: 'all',   label: 'All Time' },
+                { key: 'today', label: 'Today' },
+                { key: 'week',  label: 'This Week' },
+                { key: 'month', label: 'This Month' },
+              ].map(({ key, label }) => (
+                <button
+                  key={key}
+                  type="button"
+                  className={`date-range-btn${dateRange === key ? ' active' : ''}`}
+                  onClick={() => setDateRange(key)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Right-side actions */}

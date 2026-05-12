@@ -43,6 +43,8 @@ class User(Base):
     search_presets = relationship('SearchPreset', back_populates='user', cascade='all, delete-orphan')
     scrape_runs = relationship('ScrapeRun', back_populates='user', cascade='all, delete-orphan')
     notifications = relationship('EmailNotification', back_populates='user', cascade='all, delete-orphan')
+    email_accounts = relationship('EmailAccount', back_populates='user', cascade='all, delete-orphan')
+    opportunity_threads = relationship('OpportunityThread', back_populates='user', cascade='all, delete-orphan')
 
 
 class UserProfile(Base):
@@ -65,6 +67,7 @@ class UserProfile(Base):
     onboarding_step = Column(String(50), nullable=False, default='welcome')
     onboarding_completed = Column(Boolean, nullable=False, default=False)
     automation_connected = Column(Boolean, nullable=False, default=False)
+    full_profile = Column(JSON, nullable=True)  # Detailed master profile JSON
     embedding = Column(Vector(384), nullable=True)  # Semantic search vector
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -160,6 +163,10 @@ class Job(Base):
 
     # PDF resume path for this job
     resume_path = Column(String(500), nullable=True)  # Path to tailored resume PDF
+
+    # Dice-specific fields
+    contact_info = Column(JSON, nullable=True)  # Recruiter/contact details scraped from job page
+    employment_type = Column(String(200), nullable=True)  # W2, C2C, 1099, Contract, etc.
 
     # Relationships
     user = relationship('User', back_populates='jobs')
@@ -294,3 +301,72 @@ class EmailNotification(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship('User', back_populates='notifications')
+
+
+class EmailAccount(Base):
+    """Read-only email account connection metadata for opportunity sync."""
+    __tablename__ = 'email_accounts'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'provider', 'email_address', name='uq_user_email_account'),
+    )
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
+    provider = Column(String(40), nullable=False, default='gmail')
+    email_address = Column(String(255), nullable=True)
+    access_token_encrypted = Column(Text, nullable=True)
+    refresh_token_encrypted = Column(Text, nullable=True)
+    scopes = Column(JSON, nullable=False, default=list)
+    history_id = Column(String(120), nullable=True)
+    connected_at = Column(DateTime, default=datetime.utcnow)
+    last_sync_at = Column(DateTime, nullable=True)
+    is_active = Column(Boolean, default=True, nullable=False)
+
+    user = relationship('User', back_populates='email_accounts')
+
+
+class OpportunityThread(Base):
+    """Deduplicated, action-scored email thread for the Opportunity Inbox."""
+    __tablename__ = 'opportunity_threads'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'provider', 'thread_id', name='uq_user_provider_thread'),
+    )
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
+    provider = Column(String(40), nullable=False, default='gmail')
+    thread_id = Column(String(255), nullable=False, index=True)
+    message_id = Column(String(255), nullable=True)
+    gmail_message_id = Column(String(255), nullable=True, index=True)
+    gmail_thread_id = Column(String(255), nullable=True, index=True)
+    gmail_history_id = Column(String(120), nullable=True)
+    sync_status = Column(String(40), nullable=False, default='pending', index=True)
+    ai_verdict = Column(String(40), nullable=True, index=True)
+    ai_status = Column(String(40), nullable=False, default='not_needed', index=True)
+    ai_confidence = Column(Float, nullable=True)
+    last_checked_at = Column(DateTime, nullable=True)
+    resolved_at = Column(DateTime, nullable=True)
+    opened_at = Column(DateTime, nullable=True)
+    gmail_url = Column(String(500), nullable=True)
+    sender = Column(String(255), nullable=True)
+    sender_domain = Column(String(255), nullable=True)
+    subject = Column(String(500), nullable=False)
+    snippet = Column(Text, nullable=True)
+    received_at = Column(DateTime, nullable=False, index=True)
+    labels = Column(JSON, nullable=False, default=list)
+    category = Column(String(80), nullable=False, default='Needs review', index=True)
+    action_bucket = Column(String(80), nullable=False, default='Needs review', index=True)
+    urgency_score = Column(Integer, nullable=False, default=0, index=True)
+    signals = Column(JSON, nullable=False, default=list)
+    deadline_at = Column(DateTime, nullable=True)
+    matched_company = Column(String(255), nullable=True)
+    thread_state = Column(String(40), nullable=False, default='waiting_on_me', index=True)
+    is_unread = Column(Boolean, nullable=False, default=False)
+    is_resolved = Column(Boolean, nullable=False, default=False, index=True)
+    one_line_summary = Column(String(500), nullable=True)
+    draft_reply = Column(Text, nullable=True)
+    raw_body_retained = Column(Boolean, nullable=False, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = relationship('User', back_populates='opportunity_threads')

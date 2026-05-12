@@ -23,6 +23,8 @@ from api.deps import get_current_user, require_csrf
 from api.internal import router as internal_router
 from api.jobs import router as jobs_router
 from api.onboarding import router as onboarding_router
+from api.ai import router as ai_router
+from api.opportunities import router as opportunities_router
 from src.models import User
 
 # Initialize database
@@ -35,11 +37,14 @@ app.include_router(auth_router)
 app.include_router(internal_router)
 app.include_router(onboarding_router)
 app.include_router(jobs_router)
+app.include_router(ai_router)
+app.include_router(opportunities_router)
 
 # Enable CORS for React frontend (all localhost ports)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
+    allow_origin_regex=r"^http://(localhost|127\.0\.0\.1):\d+$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

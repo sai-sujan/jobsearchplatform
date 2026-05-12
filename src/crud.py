@@ -17,7 +17,7 @@ from datetime import datetime
 from typing import Callable, Dict, List, Optional, Union
 
 from passlib.context import CryptContext
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func, or_
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -542,6 +542,23 @@ def get_matched_job(db: Session, matched_job_id: str, user_id: str) -> Optional[
     )
 
 
+def _apply_date_range(query, date_range: Optional[str]):
+    """Filter a MatchedJob query by delivered_at based on a named range."""
+    if not date_range or date_range == 'all':
+        return query
+    from datetime import datetime, timedelta, timezone
+    now = datetime.now(timezone.utc)
+    if date_range == 'today':
+        cutoff = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elif date_range == 'week':
+        cutoff = now - timedelta(days=7)
+    elif date_range == 'month':
+        cutoff = now - timedelta(days=30)
+    else:
+        return query
+    return query.filter(MatchedJob.delivered_at >= cutoff)
+
+
 def get_user_matched_jobs(
     db: Session,
     user_id: str,
@@ -549,6 +566,7 @@ def get_user_matched_jobs(
     source: str = None,
     delivery_status: str = 'active',
     preferred_origin: Optional[str] = None,
+    date_range: Optional[str] = None,
     skip: int = 0,
     limit: int = 100,
 ) -> List[MatchedJob]:
@@ -562,11 +580,18 @@ def get_user_matched_jobs(
     if delivery_status:
         query = query.filter(MatchedJob.delivery_status == delivery_status)
     if preferred_origin:
-        query = query.filter(MatchedJob.delivery_origin == preferred_origin)
+        query = query.filter(
+            or_(
+                MatchedJob.delivery_origin == preferred_origin,
+                MatchedJob.delivery_origin == 'extension'
+            )
+        )
     if status:
         query = query.filter(MatchedJob.user_status == status)
     if source:
         query = query.filter(Job.source == source.lower())
+
+    query = _apply_date_range(query, date_range)
 
     return (
         query.order_by(desc(MatchedJob.fit_score), desc(MatchedJob.delivered_at))
@@ -583,6 +608,7 @@ def count_user_matched_jobs(
     source: str = None,
     delivery_status: str = 'active',
     preferred_origin: Optional[str] = None,
+    date_range: Optional[str] = None,
 ) -> int:
     """Count delivered matched jobs for the user."""
     query = (
@@ -594,11 +620,18 @@ def count_user_matched_jobs(
     if delivery_status:
         query = query.filter(MatchedJob.delivery_status == delivery_status)
     if preferred_origin:
-        query = query.filter(MatchedJob.delivery_origin == preferred_origin)
+        query = query.filter(
+            or_(
+                MatchedJob.delivery_origin == preferred_origin,
+                MatchedJob.delivery_origin == 'extension'
+            )
+        )
     if status:
         query = query.filter(MatchedJob.user_status == status)
     if source:
         query = query.filter(Job.source == source.lower())
+
+    query = _apply_date_range(query, date_range)
 
     return query.count()
 

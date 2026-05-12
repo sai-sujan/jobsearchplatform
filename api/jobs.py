@@ -54,7 +54,16 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
     source_labels = {
         "linkedin": "LinkedIn",
         "indeed": "Indeed",
+        "ziprecruiter": "ZipRecruiter",
+        "dice": "Dice",
         "glassdoor": "Glassdoor",
+        "greenhouse": "Greenhouse",
+        "lever": "Lever",
+        "workday": "Workday",
+        "ashby": "Ashby",
+        "bamboohr": "BambooHR",
+        "smartrecruiters": "SmartRecruiters",
+        "workable": "Workable",
         "company": "Company Site",
         "company site": "Company Site",
         "web": "Company Site",
@@ -107,6 +116,8 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
         "Date Found": matched_job.delivered_at.isoformat() if matched_job.delivered_at else (job.date_added.isoformat() if job.date_added else None),
         "Job Description": job.job_description or "",
         "Link": job.job_link,
+        "Employment Type": job.employment_type or "",
+        "Contact Info": job.contact_info or {},
         "Resume Path": matched_job.workspace_resume_path or job.resume_path or "",
         "pdf_path": matched_job.workspace_resume_path or job.resume_path or "",
         "ats_score": int(display_ats_score or 0) if display_ats_score is not None else "N/A",
@@ -116,7 +127,7 @@ def serialize_matched_job(matched_job: MatchedJob) -> dict:
 
 
 def refresh_user_delivery(db: Session, user_id: int) -> None:
-    """Fallback refresh from the legacy jobs store only when needed."""
+    """Sync any new jobs from the legacy jobs store into matched_jobs."""
     if not settings.LEGACY_DELIVERY_FALLBACK_ENABLED:
         return
 
@@ -124,10 +135,7 @@ def refresh_user_delivery(db: Session, user_id: int) -> None:
     if preferred_origin:
         return
 
-    existing_count = count_user_matched_jobs(db, user_id, delivery_status=None)
-    if existing_count > 0:
-        return
-
+    # sync_user_matched_jobs already skips existing rows — safe to call every time
     sync_user_matched_jobs(db, user_id)
 
 
@@ -272,14 +280,151 @@ class JobResponse(BaseModel):
         from_attributes = True
 
 
+@router.get("/jobs/keyword-bank")
+def get_keyword_bank(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Aggregate missing ATS keywords across all user's matched jobs (3-tier extraction)."""
+    from concurrent.futures import ThreadPoolExecutor
+    from src.evaluation.keyword_extractor import extract_jd_keywords, extract_resume_keywords
+
+    resume_asset = next((a for a in user.resume_assets if a.is_active), None)
+    resume_text = resume_asset.original_text if resume_asset else None
+
+    matched_jobs = get_user_matched_jobs(db, user.id, limit=100000)
+
+    # pre-compute resume keywords once
+    have = extract_resume_keywords(resume_text) if resume_text else set()
+
+    # collect (mj_id, title, company, jd_text) for jobs with descriptions
+    entries = []
+    for mj in matched_jobs:
+        job = mj.job
+        if job and job.job_description:
+            entries.append((mj.id, job.title or "", job.company or "", job.job_description))
+
+    def _extract(entry):
+        mj_id, title, company, jd = entry
+        jd_kws = extract_jd_keywords(jd, use_groq=False)
+        missing = jd_kws - have
+        return mj_id, title, company, jd_kws, missing
+
+    missing_map: dict[str, dict] = {}
+    all_map: dict[str, dict] = {}
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for mj_id, title, company, jd_kws, missing in pool.map(_extract, entries):
+            job_ref = {"id": mj_id, "title": title, "company": company}
+            for skill in missing:
+                if skill not in missing_map:
+                    missing_map[skill] = {"count": 0, "jobs": []}
+                missing_map[skill]["count"] += 1
+                missing_map[skill]["jobs"].append(job_ref)
+            for skill in jd_kws:
+                if skill not in all_map:
+                    all_map[skill] = {"count": 0, "jobs": []}
+                all_map[skill]["count"] += 1
+                all_map[skill]["jobs"].append(job_ref)
+
+    def _sort(m):
+        return sorted(
+            [{"keyword": kw, "count": d["count"], "jobs": d["jobs"]} for kw, d in m.items()],
+            key=lambda x: x["count"],
+            reverse=True,
+        )
+
+    return {
+        "keywords": _sort(missing_map),
+        "all_keywords": _sort(all_map),
+        "total_jobs_analyzed": len(entries),
+    }
+
+
+@router.get("/jobs/keyword-trends")
+def get_keyword_trends(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+    period: str = Query("day", pattern="^(day|week|month)$"),
+):
+    """Keyword frequency trends grouped by day/week/month using delivered_at."""
+    from concurrent.futures import ThreadPoolExecutor
+    from collections import defaultdict
+    from datetime import datetime, timezone
+    from src.evaluation.keyword_extractor import extract_jd_keywords
+
+    matched_jobs = get_user_matched_jobs(db, user.id, limit=100000)
+
+    def _bucket_key(dt: datetime) -> str:
+        if period == "day":
+            return dt.strftime("%Y-%m-%d")
+        if period == "week":
+            # ISO week: YYYY-Www
+            return dt.strftime("%G-W%V")
+        # month
+        return dt.strftime("%Y-%m")
+
+    def _bucket_label(key: str) -> str:
+        if period == "day":
+            d = datetime.strptime(key, "%Y-%m-%d")
+            return d.strftime("%b %-d")
+        if period == "week":
+            # parse ISO week
+            d = datetime.strptime(key + "-1", "%G-W%V-%u")
+            return f"Week of {d.strftime('%b %-d')}"
+        d = datetime.strptime(key, "%Y-%m")
+        return d.strftime("%B %Y")
+
+    # group job entries by bucket
+    buckets: dict[str, list] = defaultdict(list)
+    for mj in matched_jobs:
+        job = mj.job
+        if not job or not job.job_description:
+            continue
+        dt = mj.delivered_at
+        if dt is None:
+            continue
+        key = _bucket_key(dt)
+        buckets[key].append((job.job_description, mj.id, job.title or "", job.company or ""))
+
+    if not buckets:
+        return {"period_type": period, "periods": []}
+
+    def _extract_bucket(args):
+        key, entries = args
+        kw_counts: dict[str, int] = defaultdict(int)
+        for jd, *_ in entries:
+            for kw in extract_jd_keywords(jd, use_groq=False):
+                kw_counts[kw] += 1
+        top = sorted(kw_counts.items(), key=lambda x: x[1], reverse=True)[:60]
+        return key, len(entries), top
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(_extract_bucket, buckets.items()))
+
+    # sort periods newest-first
+    results.sort(key=lambda x: x[0], reverse=True)
+
+    periods = []
+    for key, job_count, top_kws in results:
+        periods.append({
+            "key": key,
+            "label": _bucket_label(key),
+            "job_count": job_count,
+            "keywords": [{"keyword": kw, "count": cnt} for kw, cnt in top_kws],
+        })
+
+    return {"period_type": period, "periods": periods}
+
+
 @router.get("/jobs")
 def list_jobs(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
     status: str = Query(None),
     source: str = Query(None),
+    date_range: str = Query(None),
     skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=500),
+    limit: int = Query(100, ge=1, le=2000),
 ):
     """Get delivered matched jobs for the signed-in user."""
     profile = get_or_create_profile(db, user.id)
@@ -291,6 +436,7 @@ def list_jobs(
         status=status,
         source=source,
         preferred_origin=preferred_origin,
+        date_range=date_range,
         skip=skip,
         limit=limit,
     )
@@ -302,12 +448,49 @@ def list_jobs(
         status=status,
         source=source,
         preferred_origin=preferred_origin,
+        date_range=date_range,
     )
+    status_counts = {
+        "not_applied": count_user_matched_jobs(
+            db,
+            user.id,
+            status="not_applied",
+            source=source,
+            preferred_origin=preferred_origin,
+            date_range=date_range,
+        ),
+        "applied": count_user_matched_jobs(
+            db,
+            user.id,
+            status="applied",
+            source=source,
+            preferred_origin=preferred_origin,
+            date_range=date_range,
+        ),
+        "interviewing": count_user_matched_jobs(
+            db,
+            user.id,
+            status="interviewing",
+            source=source,
+            preferred_origin=preferred_origin,
+            date_range=date_range,
+        ),
+        "accepted": count_user_matched_jobs(
+            db,
+            user.id,
+            status="accepted",
+            source=source,
+            preferred_origin=preferred_origin,
+            date_range=date_range,
+        ),
+    }
 
     return {
         "jobs": serialized,
         "stats": {
             "total": total_count,
+            "loaded": len(serialized),
+            "status_counts": status_counts,
             "good_matches": len([score for score in match_scores if 70 <= score < 90]),
             "perfect_matches": len([score for score in match_scores if score >= 90]),
             "last_updated": "Live",
@@ -480,7 +663,7 @@ def generate_job_resume(
     matched_job = require_matched_job(db, user.id, job_id)
     workspace = matched_job.workspace_analysis or {}
     location = matched_job.workspace_location or matched_job.job.location or ""
-    tech_stack = workspace.get("tech_stack") or {}
+    tech_stack = workspace.get("suggested_tech_stack") or workspace.get("tech_stack") or {}
     points = workspace.get("points") or []
     user_name = user.full_name or "Candidate"
 
@@ -589,6 +772,132 @@ def tailor_job_workspace(
         "tailored_data": next_workspace,
         "job": serialize_matched_job(updated),
     }
+
+
+class CreateJobRequest(BaseModel):
+    company: str
+    title: str
+    url: str
+    description: Optional[str] = None
+    location: Optional[str] = None
+    job_type: Optional[str] = None
+    source: Optional[str] = "extension"
+    salary: Optional[str] = None
+    matched_skills: Optional[list] = None
+    contact_info: Optional[dict] = None
+    employment_type: Optional[str] = None
+
+
+def _normalize_job_url(url: str) -> str:
+    """Normalize job URLs to prevent dedup misses from tracking params or SPA variants.
+
+    LinkedIn search pages embed the job ID in ?currentJobId=NNN — convert those
+    to the canonical /jobs/view/NNN/ form so they match scraper-stored URLs.
+    """
+    import re
+    from urllib.parse import urlparse, parse_qs
+    try:
+        parsed = urlparse(url)
+        if "linkedin.com" in parsed.netloc:
+            # Search results page: linkedin.com/jobs/search-results/?currentJobId=123...
+            qs = parse_qs(parsed.query)
+            if "currentJobId" in qs:
+                job_id = qs["currentJobId"][0]
+                return f"https://www.linkedin.com/jobs/view/{job_id}/"
+            # Strip trailing query params from view pages (keep clean path)
+            view_match = re.match(r"(https://[^/]*linkedin\.com/jobs/view/\d+)", url)
+            if view_match:
+                return view_match.group(1) + "/"
+    except Exception:
+        pass
+    return url
+
+
+@router.post("/jobs", dependencies=[Depends(require_csrf)])
+def create_job_manual(
+    req: CreateJobRequest,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Manually save a job (e.g. from the Chrome extension). Dedupes by URL and title+company."""
+    from datetime import datetime as dt
+    from src.models import Job, MatchedJob
+    import uuid as _uuid
+
+    canonical_url = _normalize_job_url(req.url)
+    source = (req.source or "extension").lower()
+
+    # Dedupe by (user_id, job_link) — check both raw and normalized URL
+    existing_job = (
+        db.query(Job)
+        .filter(
+            Job.user_id == str(user.id),
+            Job.job_link.in_([req.url, canonical_url]),
+        )
+        .first()
+    )
+    # Fallback dedup: same title + company for this user
+    if not existing_job:
+        existing_job = (
+            db.query(Job)
+            .filter(
+                Job.user_id == str(user.id),
+                Job.title == req.title.strip(),
+                Job.company == req.company.strip(),
+            )
+            .first()
+        )
+    if existing_job:
+        matched = db.query(MatchedJob).filter(
+            MatchedJob.user_id == str(user.id),
+            MatchedJob.job_id == existing_job.id,
+        ).first()
+        if matched:
+            if source and (existing_job.source or "").strip().lower() in {"extension", "json-ld", ""}:
+                existing_job.source = source
+                db.commit()
+                db.refresh(matched)
+            return {"created": False, "job": serialize_matched_job(matched)}
+
+    job = Job(
+        id=str(_uuid.uuid4()),
+        user_id=str(user.id),
+        company=req.company.strip(),
+        title=req.title.strip(),
+        job_link=canonical_url,
+        location=req.location or "",
+        job_description=req.description or "",
+        source=source,
+        status="not_applied",
+        matched_skills=req.matched_skills or [],
+        date_added=dt.utcnow(),
+        is_new=True,
+        contact_info=req.contact_info or None,
+        employment_type=req.employment_type or None,
+    )
+    db.add(job)
+    db.flush()
+
+    matched = MatchedJob(
+        id=str(_uuid.uuid4()),
+        user_id=str(user.id),
+        job_id=job.id,
+        delivery_origin="extension",
+        delivery_status="active",
+        user_status="not_applied",
+        fit_score=0,
+        base_skill_score=0,
+        industry_boost=0,
+        fit_reasons=[],
+        job_industries=[],
+        matched_industries=[],
+        delivered_at=dt.utcnow(),
+    )
+    db.add(matched)
+    db.commit()
+    db.refresh(matched)
+
+    return {"created": True, "job": serialize_matched_job(matched)}
 
 
 @router.delete("/jobs/{job_id}", dependencies=[Depends(require_csrf)])

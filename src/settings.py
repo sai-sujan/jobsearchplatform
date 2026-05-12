@@ -167,6 +167,15 @@ class Settings:
     ]
     GROQ_MODEL = _getenv('GROQ_MODEL', 'llama-3.3-70b-versatile')
     GROQ_LIGHT_MODEL = _getenv('GROQ_LIGHT_MODEL', 'llama-3.1-8b-instant')
+
+    # Anthropic
+    ANTHROPIC_API_KEY = _getenv('ANTHROPIC_API_KEY', '')
+
+    # New LLM stack
+    LLM_CACHE_DB = DATA_DIR / 'ai_cache' / 'llm_cache.db'
+    LLM_TELEMETRY_LOG = LOGS_DIR / 'llm_calls.jsonl'
+    USE_NEW_LLM_STACK = _getenv('USE_NEW_LLM_STACK', 'True').lower() == 'true'
+
     AI_MATCH_ENABLED = _getenv('AI_MATCH_ENABLED', 'True').lower() == 'true'
     AI_MATCH_MODEL = _getenv('AI_MATCH_MODEL', '')
     AI_MATCH_MAX_RESUME_CHARS = int(_getenv('AI_MATCH_MAX_RESUME_CHARS', '1400'))
@@ -175,6 +184,15 @@ class Settings:
     AI_MATCH_MAX_TOKENS = int(_getenv('AI_MATCH_MAX_TOKENS', '350'))
     AI_TAILOR_MAX_JOB_CHARS = int(_getenv('AI_TAILOR_MAX_JOB_CHARS', '2200'))
     AI_TAILOR_MAX_TOKENS = int(_getenv('AI_TAILOR_MAX_TOKENS', '700'))
+    
+    # === RAG ===
+    RAG_ENABLED = _getenv('RAG_ENABLED', 'True').lower() == 'true'
+    RAG_CHUNK_SIZE = int(_getenv('RAG_CHUNK_SIZE', '600'))
+    RAG_MAX_CHUNKS_QA = int(_getenv('RAG_MAX_CHUNKS_QA', '3'))
+    RAG_MAX_CHUNKS_CL = int(_getenv('RAG_MAX_CHUNKS_CL', '5'))
+    RAG_MAX_CHUNKS = int(_getenv('RAG_MAX_CHUNKS', '5'))  # default when per-endpoint override not set
+    # Fraction of total context budget for RAG-retrieved chunks vs. pinned structured facts (0.0–1.0)
+    RAG_CONTEXT_RATIO = float(_getenv('RAG_CONTEXT_RATIO', '0.6'))
 
     # === API SERVER ===
     API_HOST = _getenv('API_HOST', '0.0.0.0')
@@ -184,15 +202,23 @@ class Settings:
     # === AUTHENTICATION ===
     JWT_SECRET = _getenv('JWT_SECRET', 'your-secret-key-change-in-production')
     JWT_ALGORITHM = 'HS256'
-    JWT_EXPIRATION_HOURS = int(_getenv('JWT_EXPIRATION_HOURS', '24'))
+    JWT_EXPIRATION_HOURS = int(_getenv('JWT_EXPIRATION_HOURS', '720'))
     SESSION_COOKIE_NAME = _getenv('SESSION_COOKIE_NAME', 'jobapp_session')
     CSRF_COOKIE_NAME = _getenv('CSRF_COOKIE_NAME', 'jobapp_csrf')
-    SESSION_EXPIRES_HOURS = int(_getenv('SESSION_EXPIRES_HOURS', '24'))
+    SESSION_EXPIRES_HOURS = int(_getenv('SESSION_EXPIRES_HOURS', '720'))
     COOKIE_SECURE = _getenv('COOKIE_SECURE', 'False').lower() == 'true'
     COOKIE_SAMESITE = _getenv('COOKIE_SAMESITE', 'lax')
     INTERNAL_API_TOKEN = _getenv('INTERNAL_API_TOKEN', '')
     LEGACY_DELIVERY_FALLBACK_ENABLED = _getenv('LEGACY_DELIVERY_FALLBACK_ENABLED', 'True').lower() == 'true'
     LEGACY_BOOTSTRAP_MAX_JOBS = int(_getenv('LEGACY_BOOTSTRAP_MAX_JOBS', '80'))
+    GMAIL_CLIENT_ID = _getenv('GMAIL_CLIENT_ID', '')
+    GMAIL_CLIENT_SECRET = _getenv('GMAIL_CLIENT_SECRET', '')
+    GMAIL_REDIRECT_URI = _getenv('GMAIL_REDIRECT_URI', 'http://localhost:5001/api/opportunities/gmail/callback')
+    GMAIL_READONLY_SCOPES = [
+        'https://www.googleapis.com/auth/gmail.readonly',
+        'https://www.googleapis.com/auth/userinfo.email',
+        'openid',
+    ]
 
     # === DATABASE ===
     DB_PATH = DATA_DIR / 'jobs.db'

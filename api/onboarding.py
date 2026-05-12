@@ -148,6 +148,7 @@ class OnboardingProfileRequest(BaseModel):
     parsed_skills: list[str] = Field(default_factory=list)
     onboarding_step: str = "welcome"
     automation_connected: bool = False
+    full_profile: Optional[dict] = None
 
 
 class CompleteOnboardingRequest(BaseModel):
@@ -177,6 +178,7 @@ def _serialize_profile(user: User, profile, resume_asset, presets):
             "onboarding_step": profile.onboarding_step,
             "onboarding_completed": profile.onboarding_completed,
             "automation_connected": profile.automation_connected,
+            "full_profile": profile.full_profile or {},
             "prompt_context": build_role_prompt_context(
                 {
                     "target_roles": profile.target_roles or [],
@@ -274,6 +276,12 @@ def save_onboarding_profile(
     if not summary:
         summary = summarize_candidate("", request.target_roles, request.parsed_skills)
 
+    # Merge full_profile shallowly so partial updates (e.g. only eeo_voluntary) don't wipe other sections
+    merged_full_profile = None
+    if request.full_profile is not None:
+        existing = get_or_create_profile(db, user.id)
+        merged_full_profile = {**(existing.full_profile or {}), **request.full_profile}
+
     profile = update_user_profile(
         db,
         user.id,
@@ -290,6 +298,7 @@ def save_onboarding_profile(
         parsed_skills=request.parsed_skills,
         onboarding_step=request.onboarding_step,
         automation_connected=request.automation_connected,
+        full_profile=merged_full_profile,
     )
     presets = replace_search_presets(
         db,
@@ -335,3 +344,66 @@ def get_profile(user: User = Depends(get_current_user), db: Session = Depends(ge
     resume_asset = get_active_resume_asset(db, user.id)
     presets = get_search_presets(db, user.id)
     return _serialize_profile(user, profile, resume_asset, presets)
+
+
+@router.get("/profile/autofill")
+def get_autofill_profile(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Return normalized profile data for the Chrome extension autofill feature."""
+    profile = get_or_create_profile(db, user.id)
+    resume_asset = get_active_resume_asset(db, user.id)
+    resume_text = resume_asset.original_text if resume_asset else ""
+    
+    # Use the detailed full_profile as the primary source of truth
+    fp = profile.full_profile or {}
+    personal = fp.get("personal", {})
+    work_auth = fp.get("work_authorization", {})
+    eeo = fp.get("eeo_voluntary", {})
+    experience = fp.get("experience", {})
+    skills_boundary = fp.get("skills_boundary", {})
+    facts = fp.get("resume_facts", {})
+
+    # Fallback to legacy fields if full_profile is missing basic info
+    full_name = personal.get("full_name") or user.full_name or ""
+    email = personal.get("email") or (user.username if "@" in (user.username or "") else "")
+    
+    return {
+        "personal": {
+            "firstName": personal.get("first_name") or (full_name.split()[0] if full_name else ""),
+            "lastName": personal.get("last_name") or (full_name.split()[-1] if " " in full_name else ""),
+            "fullName": full_name,
+            "preferredName": personal.get("preferred_name") or "",
+            "email": email,
+            "phone": personal.get("phone") or "",
+            "address": personal.get("address") or "",
+            "streetAddress": personal.get("street_address") or "",
+            "apartment": personal.get("apartment") or "",
+            "city": personal.get("city") or (profile.preferred_locations[0] if profile.preferred_locations else ""),
+            "state": personal.get("province_state") or "",
+            "stateAbbr": personal.get("state_abbreviation") or "",
+            "zip": personal.get("postal_code") or "",
+            "country": personal.get("country") or "United States",
+            "countryCode": personal.get("country_code") or "US",
+            "linkedin": personal.get("linkedin_url") or "",
+            "github": personal.get("github_url") or "",
+            "portfolio": personal.get("portfolio_url") or personal.get("website_url") or "",
+        },
+        "work_auth": {
+            "authorized": work_auth.get("legally_authorized_to_work", True),
+            "requires_sponsorship": work_auth.get("require_sponsorship", False),
+            "visa_status": work_auth.get("work_permit_type", ""),
+        },
+        "compensation": fp.get("compensation", {}),
+        "demographics": {
+            "gender": eeo.get("gender") or "Prefer not to say",
+            "race": eeo.get("race_ethnicity") or "Prefer not to say",
+            "veteran": eeo.get("veteran_status") or "I am not a protected veteran",
+            "disability": eeo.get("disability_status") or "I don't wish to answer",
+        },
+        "experience_meta": experience,
+        "skills_detailed": skills_boundary,
+        "resume_facts": facts,
+        "availability": fp.get("availability", {}),
+        "resume_text": resume_text[:3000] if resume_text else "",
+        "target_roles": profile.target_roles or [experience.get("target_role")] or [],
+        "candidate_summary": profile.candidate_summary or "",
+    }

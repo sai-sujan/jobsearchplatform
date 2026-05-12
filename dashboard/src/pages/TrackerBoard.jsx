@@ -29,7 +29,9 @@ function TrackerBoard({ jobs, onStatusChange, onDelete }) {
     () =>
       COLUMNS.map((column) => ({
         ...column,
-        jobs: jobs.filter((job) => getColumnStatus(job) === column.key),
+        jobs: jobs
+          .filter((job) => getColumnStatus(job) === column.key)
+          .sort((a, b) => new Date(b['Date Found'] || 0) - new Date(a['Date Found'] || 0)),
       })),
     [jobs],
   )

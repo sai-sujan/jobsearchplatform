@@ -80,6 +80,43 @@ def init_db():
                         "ON matched_jobs (user_id, delivery_origin, delivery_status)"
                     )
                 )
+        if 'jobs' in inspector.get_table_names():
+            jobs_columns = {column["name"] for column in inspector.get_columns('jobs')}
+            if 'contact_info' not in jobs_columns:
+                connection.execute(text("ALTER TABLE jobs ADD COLUMN contact_info JSON"))
+            if 'employment_type' not in jobs_columns:
+                connection.execute(text("ALTER TABLE jobs ADD COLUMN employment_type VARCHAR(200)"))
+        if 'opportunity_threads' in inspector.get_table_names():
+            opportunity_columns = {column["name"] for column in inspector.get_columns('opportunity_threads')}
+            opportunity_column_sql = {
+                'gmail_message_id': "ALTER TABLE opportunity_threads ADD COLUMN gmail_message_id VARCHAR(255)",
+                'gmail_thread_id': "ALTER TABLE opportunity_threads ADD COLUMN gmail_thread_id VARCHAR(255)",
+                'gmail_history_id': "ALTER TABLE opportunity_threads ADD COLUMN gmail_history_id VARCHAR(120)",
+                'sync_status': "ALTER TABLE opportunity_threads ADD COLUMN sync_status VARCHAR(40) DEFAULT 'pending'",
+                'ai_verdict': "ALTER TABLE opportunity_threads ADD COLUMN ai_verdict VARCHAR(40)",
+                'ai_status': "ALTER TABLE opportunity_threads ADD COLUMN ai_status VARCHAR(40) DEFAULT 'not_needed'",
+                'ai_confidence': "ALTER TABLE opportunity_threads ADD COLUMN ai_confidence FLOAT",
+                'last_checked_at': "ALTER TABLE opportunity_threads ADD COLUMN last_checked_at DATETIME",
+                'resolved_at': "ALTER TABLE opportunity_threads ADD COLUMN resolved_at DATETIME",
+                'opened_at': "ALTER TABLE opportunity_threads ADD COLUMN opened_at DATETIME",
+                'gmail_url': "ALTER TABLE opportunity_threads ADD COLUMN gmail_url VARCHAR(500)",
+            }
+            for column_name, ddl in opportunity_column_sql.items():
+                if column_name not in opportunity_columns:
+                    connection.execute(text(ddl))
+            opportunity_indexes = {index["name"] for index in inspector.get_indexes('opportunity_threads')}
+            if 'ix_opportunity_threads_gmail_message_id' not in opportunity_indexes:
+                connection.execute(
+                    text("CREATE INDEX ix_opportunity_threads_gmail_message_id ON opportunity_threads (gmail_message_id)")
+                )
+            if 'ix_opportunity_threads_sync_status' not in opportunity_indexes:
+                connection.execute(
+                    text("CREATE INDEX ix_opportunity_threads_sync_status ON opportunity_threads (sync_status)")
+                )
+            if 'ix_opportunity_threads_ai_verdict' not in opportunity_indexes:
+                connection.execute(
+                    text("CREATE INDEX ix_opportunity_threads_ai_verdict ON opportunity_threads (ai_verdict)")
+                )
 
 
 def get_db():

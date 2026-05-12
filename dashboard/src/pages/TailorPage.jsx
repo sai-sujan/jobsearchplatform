@@ -1,12 +1,217 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../lib/api'
 import { getJobId, normalizeStatus } from '../lib/jobs'
 import './TailorPage.css'
 
-function Chip({ children, tone = 'neutral' }) {
-  return <span className={`tp-chip tp-chip-${tone}`}>{children}</span>
+// ── Resume text parser ───────────────────────────────────────────────────────
+
+const SECTION_MAP = {
+  TECHNICALSKILLS: 'skills', SKILLS: 'skills', CORETECHNICALSKILLS: 'skills',
+  WORKEXPERIENCE: 'experience', EXPERIENCE: 'experience', PROFESSIONALEXPERIENCE: 'experience',
+  EDUCATION: 'education', PROJECTS: 'projects', CERTIFICATIONS: 'certifications',
+  AWARDS: 'awards', SUMMARY: 'summary', PROFILE: 'summary',
+}
+const HEADING_RE = /^[A-Z][A-Z &/]{2,40}$/
+
+function sectionKey(line) {
+  const k = line.replace(/\s+/g, '').toUpperCase()
+  return SECTION_MAP[k] || (HEADING_RE.test(line) ? line.toLowerCase() : null)
 }
 
+function parseSkillLine(line) {
+  // "Programming LanguagesPython, SQL" → split where label ends (last lowercase) before value starts (next uppercase)
+  const m = line.match(/^([A-Z][A-Za-z&/ ]*?[a-z])([A-Z].*)$/)
+  if (m) return { label: m[1].trim(), value: m[2].trim() }
+  // fallback: no camelCase split found → treat whole line as value
+  return { label: '', value: line }
+}
+
+function parseResumeText(text) {
+  if (!text || text.length < 30) return { ok: false }
+  const clean = text.replace(/\r/g, '').replace(/\u00A0/g, ' ').trim()
+  const lines = clean.split('\n').map((l) => l.trim()).filter(Boolean)
+
+  // split into buckets by section headings
+  const buckets = [] // [{key, lines[]}]
+  let headerLines = []
+  let foundFirstSection = false
+  let cur = null
+
+  for (const line of lines) {
+    const key = sectionKey(line)
+    if (key && SECTION_MAP[line.replace(/\s+/g, '').toUpperCase()]) {
+      foundFirstSection = true
+      if (cur) buckets.push(cur)
+      cur = { key: SECTION_MAP[line.replace(/\s+/g, '').toUpperCase()], lines: [] }
+    } else if (!foundFirstSection) {
+      headerLines.push(line)
+    } else {
+      cur?.lines.push(line)
+    }
+  }
+  if (cur) buckets.push(cur)
+
+  // parse header — a contacts line has an email/phone; a title line may have | but no @
+  const isContactLine = (l) => l.includes('@') || /\(\d{3}\)/.test(l) || /\d{3}[-.\s]\d{3}[-.\s]\d{4}/.test(l)
+  const header = { name: '', title: '', contacts: [] }
+  if (headerLines.length > 0) {
+    header.name = headerLines[0]
+    if (headerLines[1]) {
+      if (isContactLine(headerLines[1])) {
+        // line 1 is already the contact line (no title)
+        header.contacts = headerLines[1].split(/\s*\|\s*/).map((s) => s.trim()).filter(Boolean)
+      } else {
+        header.title = headerLines[1]
+        if (headerLines[2]) {
+          if (isContactLine(headerLines[2]) || headerLines[2].includes('|')) {
+            header.contacts = headerLines[2].split(/\s*\|\s*/).map((s) => s.trim()).filter(Boolean)
+          }
+        }
+      }
+    }
+  }
+
+  // parse skills
+  const skillsBucket = buckets.find((b) => b.key === 'skills')
+  const skills = (skillsBucket?.lines || []).map(parseSkillLine).filter((s) => s.value)
+
+  // parse experience
+  const DATE_RE = /(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{4}|\d{4}\s*[–\-]\s*(?:\d{4}|Present)/i
+  const hasDate = (l) => DATE_RE.test(l)
+
+  const expBucket = buckets.find((b) => b.key === 'experience')
+  const experience = []
+  if (expBucket) {
+    let role = null
+    for (const line of expBucket.lines) {
+      const isBullet = /^[•\-\u2022\*]/.test(line)
+
+      if (isBullet) {
+        if (!role) role = { title: '', company: '', location: '', dates: '', bullets: [] }
+        role.bullets.push(line.replace(/^[•\-\u2022\*]\s*/, ''))
+        continue
+      }
+
+      // Lowercase-start line after bullets = wrapped continuation of previous bullet
+      if (role && role.bullets.length > 0 && /^[a-z]/.test(line)) {
+        role.bullets[role.bullets.length - 1] += ' ' + line
+        continue
+      }
+
+      if (hasDate(line)) {
+        // "Compass Group January 2025 – Present" → company + dates
+        const dateM = line.match(/^(.+?)\s+((?:Jan\w*|Feb\w*|Mar\w*|Apr\w*|May|Jun\w*|Jul\w*|Aug\w*|Sep\w*|Oct\w*|Nov\w*|Dec\w*)\s+\d{4}.*|\d{4}.*)$/i)
+        if (role) {
+          role.company = dateM ? dateM[1].trim() : line
+          role.dates   = dateM ? dateM[2].trim() : ''
+        }
+      } else {
+        // New role title line — greedy split extracts trailing "City, ST/USA"
+        if (role) experience.push(role)
+        role = { title: '', company: '', location: '', dates: '', bullets: [] }
+        const locM = line.match(/^(.+)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*,\s*(?:USA|Remote|[A-Z]{2,3})\s*(?:\(.*\))?)$/)
+        if (locM) { role.title = locM[1].trim(); role.location = locM[2].trim() }
+        else { role.title = line }
+      }
+    }
+    if (role) experience.push(role)
+  }
+
+  // generic other sections
+  const other = buckets
+    .filter((b) => b.key !== 'skills' && b.key !== 'experience')
+    .map((b) => ({ heading: b.key.charAt(0).toUpperCase() + b.key.slice(1), lines: b.lines }))
+    .filter((b) => b.lines.length > 0)
+
+  const ok = !!(header.name && (skills.length > 0 || experience.length > 0))
+  return { ok, header, skills, experience, other }
+}
+
+// ── BaseResumeCard component ──────────────────────────────────────────────────
+
+function BaseResumeCard({ text }) {
+  const parsed = useMemo(() => parseResumeText(text), [text])
+
+  if (!parsed.ok) {
+    return (
+      <div className="tp-resume-body">
+        <div className="tp-base-fallback">
+          {text.split(/\n{2,}/).map((p, i) => <p key={i}>{p.trim()}</p>)}
+        </div>
+      </div>
+    )
+  }
+
+  const { header, skills, experience, other } = parsed
+
+  return (
+    <div className="tp-resume-body tp-base-structured">
+      <header className="tp-br-header">
+        <h3 className="tp-br-name">{header.name}</h3>
+        {header.title && <div className="tp-br-title">{header.title}</div>}
+        {header.contacts.length > 0 && (
+          <div className="tp-br-contacts">
+            {header.contacts.map((c, i) => <span key={i} className="tp-br-contact">{c}</span>)}
+          </div>
+        )}
+      </header>
+
+      {skills.length > 0 && (
+        <section className="tp-resume-section">
+          <div className="tp-section-title">Technical Skills</div>
+          <dl className="tp-br-skills">
+            {skills.map((s, i) => (
+              <div key={i} className="tp-br-skill-row">
+                {s.label && <dt className="tp-br-skill-label">{s.label}</dt>}
+                <dd className={`tp-br-skill-values${s.label ? '' : ' tp-br-skill-values-full'}`}>
+                  {s.value.split(',').map((v) => v.trim()).filter(Boolean).map((v, j) => (
+                    <span key={j} className="tp-skill">{v}</span>
+                  ))}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {experience.length > 0 && (
+        <section className="tp-resume-section">
+          <div className="tp-section-title">Work Experience</div>
+          {experience.map((r, i) => (
+            <div key={i} className="tp-exp tp-br-role">
+              <div className="tp-br-role-head">
+                <strong>{r.title || r.company}</strong>
+                {r.dates && <span className="tp-br-dates">{r.dates}</span>}
+              </div>
+              {(r.company && r.title ? r.company : '') && (
+                <div className="tp-exp-meta">
+                  {[r.company, r.location].filter(Boolean).join(' · ')}
+                </div>
+              )}
+              {r.location && !r.company && (
+                <div className="tp-exp-meta">{r.location}</div>
+              )}
+              {r.bullets.length > 0 && (
+                <ul>
+                  {r.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                </ul>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {other.map((sec, i) => (
+        <section key={i} className="tp-resume-section">
+          <div className="tp-section-title">{sec.heading}</div>
+          <div className="tp-br-generic">
+            {sec.lines.map((l, j) => <div key={j}>{l}</div>)}
+          </div>
+        </section>
+      ))}
+    </div>
+  )
+}
 
 function TechStackGrid({ techStack }) {
   if (!techStack || Object.keys(techStack).length === 0) return null
@@ -125,7 +330,7 @@ function TailorView({ jobs, setView, tailoredData, setTailoredData, selectedJobI
       {!hasResume && (
         <div className="tp-banner tp-banner-warn">
           <svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /></svg>
-          No resume uploaded — AI bullets will be generic. <a href="/profile" style={{ color: '#b45309', fontWeight: 600 }}>Upload your resume in Settings →</a>
+          No resume uploaded — AI bullets will be generic. <a href="/settings" style={{ color: '#b45309', fontWeight: 600 }}>Upload your resume in Settings →</a>
         </div>
       )}
 
@@ -143,36 +348,33 @@ function TailorView({ jobs, setView, tailoredData, setTailoredData, selectedJobI
       )}
 
       <div className="tp-workspace">
-        {/* Left: JD + ATS score */}
+        {/* Top: JD full-width */}
         <div className="tp-jd-card">
           <div className="tp-jd-head">
             <strong>Job Description</strong>
-            {matchedScore !== null && (
-              <span className={`tp-ats-badge ${atsTone}`}>{matchedScore}% match</span>
-            )}
-          </div>
-
-          {matchedScore !== null && (
-            <div className="tp-ats-score-block">
-              <div className="tp-ats-num">{matchedScore}%</div>
-              <span className="tp-ats-lbl">ATS MATCH SCORE</span>
-              <div className="tp-ats-bar"><span style={{ width: `${matchedScore}%` }} /></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              {matchedScore !== null && (
+                <span className={`tp-ats-badge ${atsTone}`}>{matchedScore}% ATS match</span>
+              )}
+              {matchedScore !== null && (
+                <div className="tp-ats-bar-inline">
+                  <span style={{ width: `${matchedScore}%` }} />
+                </div>
+              )}
+              <span className="tp-jd-hint" style={{ margin: 0 }}>
+                {selectedJob ? `${selectedJob.Company} · ${selectedJob.Title}` : 'Select a job or paste below'}
+              </span>
             </div>
-          )}
-
+          </div>
           <textarea
             className="tp-jd-textarea"
             value={jd}
             onChange={(e) => setJd(e.target.value)}
             placeholder="Select a job above — the description will load here, or paste manually."
-            rows={matchedScore !== null ? 6 : 10}
           />
-          <p className="tp-jd-hint">
-            {selectedJob ? `${selectedJob.Company} · ${selectedJob.Title}` : 'Select a job or paste a JD above'}
-          </p>
         </div>
 
-        {/* Right: Resume columns */}
+        {/* Bottom: Resume columns fill remaining height */}
         <div className="tp-resumes">
           <div className="tp-resume-col">
             <div className="tp-col-head">
@@ -180,11 +382,7 @@ function TailorView({ jobs, setView, tailoredData, setTailoredData, selectedJobI
               <span className="tp-muted">{hasResume ? 'From profile' : 'Not uploaded'}</span>
             </div>
             {baseResume?.resume?.original_text ? (
-              <div className="tp-resume-body">
-                <pre className="tp-base-snippet">
-                  {baseResume.resume.original_text.slice(0, 2200)}{baseResume.resume.original_text.length > 2200 ? '\n…' : ''}
-                </pre>
-              </div>
+              <BaseResumeCard text={baseResume.resume.original_text} />
             ) : (
               <div className="tp-empty-state">
                 <div className="tp-empty-icon">
@@ -194,7 +392,7 @@ function TailorView({ jobs, setView, tailoredData, setTailoredData, selectedJobI
                 </div>
                 <strong>No resume uploaded</strong>
                 <p>Upload your resume in Settings for AI-grounded tailoring.</p>
-                <a href="/profile" style={{ fontSize: '0.8rem', color: '#4f46e5', fontWeight: 600 }}>Go to Settings →</a>
+                <a href="/settings" style={{ fontSize: '0.8rem', color: '#4f46e5', fontWeight: 600 }}>Go to Settings →</a>
               </div>
             )}
           </div>
@@ -262,36 +460,48 @@ function TailorView({ jobs, setView, tailoredData, setTailoredData, selectedJobI
   )
 }
 
-function PreviewView({ setView, tailoredData, selectedJob, onNotesChange, onboarding }) {
+function EditableBullet({ text, onChange, onRemove }) {
+  return (
+    <div className="tp-bullet-row">
+      <span className="tp-bullet-dot" />
+      <textarea
+        className="tp-bullet-input"
+        value={text}
+        onChange={(e) => onChange(e.target.value)}
+        rows={2}
+      />
+      <button type="button" className="tp-bullet-remove" onClick={onRemove} title="Remove">×</button>
+    </div>
+  )
+}
+
+function PreviewView({ setView, tailoredData, setTailoredData, selectedJob, onNotesChange }) {
   const [generatingPdf, setGeneratingPdf] = useState(false)
   const [pdfUrl, setPdfUrl] = useState(null)
   const [pdfError, setPdfError] = useState('')
   const [saved, setSaved] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
-  const [qaTab, setQaTab] = useState('qa')
 
   const atsScore = tailoredData?.ats_score || null
   const points = tailoredData?.points || []
+  const techStack = tailoredData?.suggested_tech_stack || {}
+  const location = tailoredData?.location || ''
 
-  // Auto-generate PDF when entering preview
-  useEffect(() => {
+  const updatePoint = (i, val) => setTailoredData((d) => ({ ...d, points: d.points.map((p, idx) => idx === i ? val : p) }))
+  const removePoint = (i) => setTailoredData((d) => ({ ...d, points: d.points.filter((_, idx) => idx !== i) }))
+  const addPoint = () => setTailoredData((d) => ({ ...d, points: [...(d.points || []), ''] }))
+  const updateLocation = (val) => setTailoredData((d) => ({ ...d, location: val }))
+
+  const handleGeneratePdf = () => {
     if (!selectedJob?.id) return
     setGeneratingPdf(true)
     setPdfError('')
+    setPdfUrl(null)
     const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5001'
     api.post(`/api/jobs/${selectedJob.id}/resume`)
-      .then((resp) => {
-        const url = `${API_BASE}${resp.data.pdf_url}`
-        setPdfUrl(url)
-      })
-      .catch((e) => {
-        setPdfError(e?.response?.data?.detail || 'PDF generation failed.')
-      })
+      .then((resp) => setPdfUrl(`${API_BASE}${resp.data.pdf_url}`))
+      .catch((e) => setPdfError(e?.response?.data?.detail || 'PDF generation failed.'))
       .finally(() => setGeneratingPdf(false))
-  }, [selectedJob?.id])
-
-  const handleDownload = () => {
-    if (pdfUrl) window.open(pdfUrl, '_blank')
   }
 
   const handleSave = async () => {
@@ -306,14 +516,19 @@ function PreviewView({ setView, tailoredData, selectedJob, onNotesChange, onboar
       <header className="tp-topbar">
         <div className="tp-topbar-title">
           <button type="button" className="tp-back-link" onClick={() => setView('tailor')}>← Back</button>
-          <h1>Resume Preview</h1>
+          <h1>Resume Editor</h1>
           {selectedJob && <p className="tp-muted">Tailored for {selectedJob.Title} at {selectedJob.Company}</p>}
         </div>
         <div className="tp-topbar-actions">
-          <button type="button" className="tp-btn-ghost" onClick={handleDownload} disabled={!pdfUrl || generatingPdf}>
+          <button type="button" className="tp-btn-ghost" onClick={handleGeneratePdf} disabled={generatingPdf || !selectedJob?.id}>
             <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" /></svg>
-            {generatingPdf ? 'Compiling…' : 'Download PDF'}
+            {generatingPdf ? 'Compiling PDF…' : pdfUrl ? 'Regenerate PDF' : 'Generate PDF'}
           </button>
+          {pdfUrl && (
+            <button type="button" className="tp-btn-ghost" onClick={() => window.open(pdfUrl, '_blank')}>
+              Download ↗
+            </button>
+          )}
           <button type="button" className="tp-btn-primary" onClick={handleSave} disabled={saved}>
             {saved ? 'Saved ✓' : 'Save to Job Card'}
           </button>
@@ -321,115 +536,109 @@ function PreviewView({ setView, tailoredData, selectedJob, onNotesChange, onboar
       </header>
 
       {errorMsg && <div className="tp-error-banner">{errorMsg}</div>}
+      {pdfError && <div className="tp-error-banner">{pdfError} <button type="button" style={{ marginLeft: 8, fontWeight: 700, background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer' }} onClick={handleGeneratePdf}>Retry</button></div>}
+      {generatingPdf && (
+        <div className="tp-loading-steps">
+          <div className="tp-step active"><span className="tp-step-dot" />Compiling LaTeX resume…</div>
+          <span className="tp-muted" style={{ fontSize: 12 }}>~10–15 seconds</span>
+        </div>
+      )}
+      {pdfUrl && !generatingPdf && (
+        <div className="tp-pdf-ready-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+          PDF ready —
+          <a href={pdfUrl} target="_blank" rel="noreferrer">Open in new tab ↗</a>
+        </div>
+      )}
 
       <div className="tp-preview-layout">
-        <div className="tp-preview-resume tp-pdf-panel">
-          {generatingPdf && (
-            <div className="tp-pdf-loading">
-              <div className="tp-pdf-spinner" />
-              <p>Compiling LaTeX resume…</p>
-              <small>This takes about 10–15 seconds</small>
+        {/* Left: editable resume content */}
+        <div className="tp-edit-panel">
+          <div className="tp-edit-section">
+            <div className="tp-edit-section-head">
+              <span className="tp-section-title" style={{ margin: 0, border: 0, padding: 0 }}>Experience Bullets</span>
+              <button type="button" className="tp-add-bullet-btn" onClick={addPoint}>+ Add bullet</button>
             </div>
-          )}
-          {!generatingPdf && pdfError && (
-            <div className="tp-pdf-error">
-              <p>{pdfError}</p>
-              <button type="button" className="tp-btn-ghost" onClick={() => {
-                setGeneratingPdf(true); setPdfError('')
-                api.post(`/api/jobs/${selectedJob.id}/resume`)
-                  .then((r) => { const b = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5001'; setPdfUrl(`${b}${r.data.pdf_url}`) })
-                  .catch((e) => setPdfError(e?.response?.data?.detail || 'Failed.'))
-                  .finally(() => setGeneratingPdf(false))
-              }}>Retry</button>
-            </div>
-          )}
-          {!generatingPdf && pdfUrl && (
-            <iframe
-              src={pdfUrl}
-              title="Tailored Resume PDF"
-              className="tp-pdf-iframe"
-            />
-          )}
-        </div>
-
-        <aside className="tp-qa">
-          <div className="tp-qa-tabs">
-            <button type="button" className={qaTab === 'qa' ? 'active' : ''} onClick={() => setQaTab('qa')}>Final QA</button>
-            <button type="button" className={qaTab === 'details' ? 'active' : ''} onClick={() => setQaTab('details')}>Job Details</button>
+            {points.length === 0 ? (
+              <p className="tp-muted" style={{ fontSize: 13, padding: '8px 0' }}>No bullets yet. Go back and generate tailored content.</p>
+            ) : (
+              points.map((p, i) => (
+                <EditableBullet
+                  key={i}
+                  text={typeof p === 'string' ? p : p.text || ''}
+                  onChange={(val) => updatePoint(i, val)}
+                  onRemove={() => removePoint(i)}
+                />
+              ))
+            )}
           </div>
 
-          {qaTab === 'qa' && (
-            <>
-              <div className="tp-qa-score-card">
-                <span className="tp-qa-label">Final ATS Score</span>
-                <div className="tp-qa-score">{atsScore !== null ? `${atsScore}%` : '—'}</div>
-                {atsScore !== null && <div className="tp-qa-bar"><span style={{ width: `${atsScore}%` }} /></div>}
-                <span className="tp-qa-hint">
-                  {atsScore !== null ? `${atsScore >= 80 ? 'Strong match' : 'Needs improvement'} — AI tailored` : 'Run tailor to compute score'}
-                </span>
-              </div>
-
-              <div className="tp-qa-checklist">
-                <div className="tp-qa-checklist-title">OPTIMIZATION CHECKLIST</div>
-                {[
-                  { label: 'Tailored Points', done: points.length > 0, sub: `${points.length} bullets generated` },
-                  { label: 'Skill Keywords', done: !!tailoredData?.suggested_tech_stack, sub: tailoredData?.suggested_tech_stack ? 'Suggested skills added' : 'Not yet generated' },
-                  { label: 'Location Match', done: !!tailoredData?.location, sub: tailoredData?.location || 'Not set' },
-                  { label: 'ATS Score', done: atsScore !== null && atsScore >= 75, warn: atsScore !== null && atsScore < 75, sub: atsScore !== null ? `Score: ${atsScore}%` : 'Not computed' },
-                ].map((c) => (
-                  <div key={c.label} className={`tp-qa-row ${c.done ? 'done' : ''} ${c.warn ? 'warn' : ''}`}>
-                    <span className="tp-qa-mark">{c.warn ? '!' : c.done ? '✓' : '○'}</span>
-                    <div>
-                      <strong>{c.label}</strong>
-                      {c.sub && <p>{c.sub}</p>}
-                    </div>
-                  </div>
+          {Object.keys(techStack).length > 0 && (
+            <div className="tp-edit-section">
+              <div className="tp-section-title" style={{ margin: 0, border: 0, padding: '0 0 0.5rem' }}>Suggested Skills</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {Object.values(techStack).flat().filter((s) => typeof s === 'string').map((s) => (
+                  <span key={s} className="tp-skill tp-skill-new">{s}</span>
                 ))}
               </div>
-
-              {selectedJob && (
-                <div className="tp-qa-targeting">
-                  <div className="tp-qa-checklist-title">TARGETING</div>
-                  <div className="tp-qa-targeting-card">
-                    <strong>{selectedJob.Title}</strong>
-                    <span>{selectedJob.Company}</span>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-
-          {qaTab === 'details' && selectedJob && (
-            <div className="tp-qa-details">
-              <div className="tp-qa-checklist-title">JOB DETAILS</div>
-              <div className="tp-qa-detail-row"><strong>Title</strong><span>{selectedJob.Title || '—'}</span></div>
-              <div className="tp-qa-detail-row"><strong>Company</strong><span>{selectedJob.Company || '—'}</span></div>
-              <div className="tp-qa-detail-row"><strong>Location</strong><span>{selectedJob.Location || '—'}</span></div>
-              <div className="tp-qa-detail-row"><strong>Type</strong><span>{selectedJob['Job Type'] || '—'}</span></div>
-              <div className="tp-qa-detail-row"><strong>Salary</strong><span>{selectedJob.Salary || selectedJob.salary || '—'}</span></div>
-              {selectedJob.Link && (
-                <div className="tp-qa-detail-row"><strong>Link</strong><a href={selectedJob.Link} target="_blank" rel="noreferrer" style={{ color: '#4f46e5', fontSize: 12 }}>View posting ↗</a></div>
-              )}
-              {(selectedJob.Description || selectedJob.description) && (
-                <div style={{ marginTop: 10 }}>
-                  <div className="tp-qa-checklist-title">DESCRIPTION</div>
-                  <p style={{ fontSize: 12, color: '#475569', whiteSpace: 'pre-wrap', maxHeight: 200, overflowY: 'auto', lineHeight: 1.5 }}>
-                    {(selectedJob.Description || selectedJob.description || '').slice(0, 800)}
-                    {(selectedJob.Description || selectedJob.description || '').length > 800 ? '…' : ''}
-                  </p>
-                </div>
-              )}
             </div>
           )}
 
-          {qaTab === 'details' && !selectedJob && (
-            <p style={{ fontSize: 13, color: '#94a3b8', padding: 12 }}>No job selected.</p>
+          <div className="tp-edit-section">
+            <div className="tp-section-title" style={{ margin: 0, border: 0, padding: '0 0 0.5rem' }}>Location</div>
+            <input
+              className="tp-location-input"
+              value={location}
+              onChange={(e) => updateLocation(e.target.value)}
+              placeholder="e.g. San Francisco, CA (Open to Relocate)"
+            />
+          </div>
+        </div>
+
+        {/* Right: score + job details */}
+        <aside className="tp-qa">
+          <div className="tp-qa-score-card">
+            <span className="tp-qa-label">ATS Match Score</span>
+            <div className="tp-qa-score">{atsScore !== null ? `${atsScore}%` : '—'}</div>
+            {atsScore !== null && <div className="tp-qa-bar"><span style={{ width: `${atsScore}%` }} /></div>}
+            <span className="tp-qa-hint">
+              {atsScore !== null ? (atsScore >= 80 ? 'Strong match' : 'Needs improvement') : 'Run tailor to compute score'}
+            </span>
+          </div>
+
+          <div className="tp-qa-checklist">
+            <div className="tp-qa-checklist-title">CHECKLIST</div>
+            {[
+              { label: 'Tailored Bullets', done: points.length > 0, sub: `${points.length} bullets` },
+              { label: 'Skills Updated', done: Object.keys(techStack).length > 0, sub: Object.keys(techStack).length > 0 ? 'AI-suggested skills added' : 'No skills yet' },
+              { label: 'Location Set', done: !!location, sub: location || 'Not set' },
+              { label: 'ATS Score', done: atsScore !== null && atsScore >= 75, warn: atsScore !== null && atsScore < 75, sub: atsScore !== null ? `Score: ${atsScore}%` : 'Not computed' },
+            ].map((c) => (
+              <div key={c.label} className={`tp-qa-row ${c.done ? 'done' : ''} ${c.warn ? 'warn' : ''}`}>
+                <span className="tp-qa-mark">{c.warn ? '!' : c.done ? '✓' : '○'}</span>
+                <div>
+                  <strong>{c.label}</strong>
+                  {c.sub && <p>{c.sub}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {selectedJob && (
+            <div className="tp-qa-targeting">
+              <div className="tp-qa-checklist-title">TARGETING</div>
+              <div className="tp-qa-targeting-card">
+                <strong>{selectedJob.Title}</strong>
+                <span>{selectedJob.Company}</span>
+                {selectedJob.Location && <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{selectedJob.Location}</span>}
+              </div>
+            </div>
           )}
 
           <div className="tp-qa-actions">
-            <button type="button" className="tp-btn-ghost-full" onClick={() => setView('tailor')}>Return to Edit</button>
-            <button type="button" className="tp-btn-primary-full" onClick={handleSave} disabled={saved}>
-              {saved ? 'Saved ✓' : 'Finalize & Save'}
+            <button type="button" className="tp-btn-ghost-full" onClick={() => setView('tailor')}>← Back to Workspace</button>
+            <button type="button" className="tp-btn-primary-full" onClick={handleGeneratePdf} disabled={generatingPdf || !selectedJob?.id}>
+              {generatingPdf ? 'Compiling…' : 'Generate & Download PDF'}
             </button>
           </div>
         </aside>
@@ -461,9 +670,9 @@ function TailorPage({ jobs = [], onNotesChange, onboarding }) {
         <PreviewView
           setView={setView}
           tailoredData={tailoredData}
+          setTailoredData={setTailoredData}
           selectedJob={selectedJob}
           onNotesChange={onNotesChange}
-          onboarding={onboarding}
         />
       )}
     </section>

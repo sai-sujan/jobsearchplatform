@@ -108,6 +108,41 @@
 }
 .remove-filter:hover { opacity: 1; }
 
+/* Date range toggle */
+.date-range-toggle {
+  display: flex;
+  gap: 2px;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.date-range-btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.13s;
+  white-space: nowrap;
+}
+
+.date-range-btn:hover {
+  color: #0f172a;
+  background: rgba(255,255,255,0.6);
+}
+
+.date-range-btn.active {
+  background: #fff;
+  color: #4f46e5;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+}
+
 /* 3. Right actions container */
 .alljobs-toolbar-actions {
   display: flex;

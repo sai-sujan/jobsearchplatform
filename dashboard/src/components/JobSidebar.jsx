@@ -26,10 +26,10 @@ const STATUS_TIMELINE = [
 ]
 
 const WORKSPACE_TABS = [
+  { id: 'notes', label: 'Notes' },
   { id: 'overview', label: 'Overview' },
   { id: 'details', label: 'Job Details' },
   { id: 'company', label: 'Company' },
-  { id: 'notes', label: 'Notes' },
 ]
 
 const GENERIC_TECH_STACK_TEMPLATE = {
@@ -218,11 +218,13 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   const [resumeHistory, setResumeHistory] = useState([])
   const [resumeHistoryError, setResumeHistoryError] = useState('')
   const [activityTick, setActivityTick] = useState(0)
+  const [statusMenuOpen, setStatusMenuOpen] = useState(false)
+  const [pendingStatus, setPendingStatus] = useState(null)
 
   useEffect(() => {
     if (!job) return undefined
 
-    setActiveTab('overview')
+    setActiveTab('notes')
     setEditMode(false)
     setJsonMode(false)
     setJsonText('')
@@ -243,6 +245,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
     setNotesText(job['Notes'] || '')
     setNotesSaving(false)
     setNotesError('')
+    setStatusMenuOpen(false)
+    setPendingStatus(null)
     setStatusEvents([])
     setEventsError('')
     setResumeHistory([])
@@ -342,10 +346,83 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   if (!job) return null
 
   const currentStatus = normalizeStatus(job.Status)
-  const sourceLabel = getSourceLabel(job)
-  const matchedSkills = getMatchedSkills(job, 12)
+  const displayStatus = pendingStatus || currentStatus
+  const currentStatusOption = STATUS_OPTIONS.find((option) => option.value === displayStatus) || STATUS_OPTIONS[0]
+  const currentTimelineStep = STATUS_TIMELINE.find((step) => step.value === currentStatus) || STATUS_TIMELINE[0]
+  const flowStatuses = STATUS_TIMELINE.filter((step) => step.value !== 'skipped')
+  const currentFlowIndex = currentStatus === 'skipped'
+    ? flowStatuses.length - 1
+    : Math.max(flowStatuses.findIndex((step) => step.value === currentStatus), 0)
+  const progressPercent = currentStatus === 'skipped'
+    ? 100
+    : Math.round((currentFlowIndex / Math.max(flowStatuses.length - 1, 1)) * 100)
+  const nextTimelineStep = currentStatus === 'skipped'
+    ? null
+    : flowStatuses[Math.min(currentFlowIndex + 1, flowStatuses.length - 1)]
   const matchScore = editedData.ats_score !== 'N/A' ? Number(editedData.ats_score) || 0 : 'N/A'
   const scoreForRing = typeof matchScore === 'number' ? Math.max(0, Math.min(matchScore, 100)) : 0
+  const fitSignalItems = [
+    {
+      label: 'Skills Match',
+      value: matchScore === 'N/A' ? 'Unscored' : (matchScore > 80 ? 'High' : (matchScore > 60 ? 'Medium' : 'Partial')),
+      fill: matchScore === 'N/A' ? 0 : (matchScore > 80 ? 88 : (matchScore > 60 ? 64 : 40)),
+    },
+    {
+      label: 'Experience',
+      value: matchScore === 'N/A' ? 'Unscored' : (matchScore > 75 ? 'Full' : 'Strong'),
+      fill: matchScore === 'N/A' ? 0 : (matchScore > 75 ? 84 : 70),
+    },
+    {
+      label: 'Domain',
+      value: matchScore === 'N/A' ? 'Unscored' : 'Relevant',
+      fill: matchScore === 'N/A' ? 0 : 72,
+    },
+  ]
+  const statusCopy = {
+    not_applied: {
+      headline: 'Saved',
+      detail: 'Review the fit, tailor your resume, then submit when ready.',
+      actionLabel: 'Mark applied',
+      actionStatus: 'applied',
+      nextLabel: 'Apply',
+    },
+    applied: {
+      headline: 'Applied',
+      detail: 'Application is submitted. Track replies, follow-ups, and recruiter signals here.',
+      actionLabel: 'Move to interviewing',
+      actionStatus: 'interviewing',
+      nextLabel: 'Interviewing',
+    },
+    interviewing: {
+      headline: 'Interviewing',
+      detail: 'You are in motion. Use notes for prep, recruiter names, and deadlines.',
+      actionLabel: 'Mark offer',
+      actionStatus: 'accepted',
+      nextLabel: 'Offer',
+    },
+    accepted: {
+      headline: 'Offer',
+      detail: 'Offer received. Keep negotiation notes and next-step details here.',
+      actionLabel: 'Archive when done',
+      actionStatus: 'skipped',
+      nextLabel: 'Decision',
+    },
+    skipped: {
+      headline: 'Archived',
+      detail: 'This role is closed out. Restore it if you want to work on it again.',
+      actionLabel: 'Restore to saved',
+      actionStatus: 'not_applied',
+      nextLabel: 'Saved',
+    },
+  }[currentStatus] || {
+    headline: currentTimelineStep.label,
+    detail: currentTimelineStep.hint,
+    actionLabel: 'Update status',
+    actionStatus: 'not_applied',
+    nextLabel: nextTimelineStep?.label || 'Next',
+  }
+  const sourceLabel = getSourceLabel(job)
+  const matchedSkills = getMatchedSkills(job, 12)
   const companyMonogram = getCompanyMonogram(job.Company)
   const stackEntries = Object.entries(editedData.tech_stack || {})
   const suggestedEntries = Object.entries(editedData.suggested_tech_stack || {})
@@ -533,9 +610,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
       setActivityTick((t) => t + 1)
     } catch (error) {
       console.error('Generate resume error:', error)
-      setGenerateError(
-        `Resume generation failed: ${error?.response?.data?.detail || error.message || 'Unknown error.'}`,
-      )
+      setGenerateError(error?.response?.data?.detail || 'Resume generation failed. Refresh suggestions and try again.')
     } finally {
       setGenerating(false)
     }
@@ -694,47 +769,49 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
               </button>
             </div>
 
-            {editMode ? (
-              <>
-                <button type="button" className="detail-button subtle" onClick={handleJsonToggle}>
-                  {jsonMode ? 'Structured editor' : 'Raw JSON'}
-                </button>
-                <button type="button" className="detail-button subtle" onClick={handleCancel} disabled={saving}>
-                  Cancel
-                </button>
-                <button type="button" className="detail-button primary" onClick={handleSave} disabled={saving}>
-                  {saving ? 'Saving...' : 'Save changes'}
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  className={`detail-chip ${isSpecialInterest ? 'active' : ''}`}
-                  onClick={handleToggleSpecialInterest}
-                >
-                  {isSpecialInterest ? 'Priority role' : 'Mark priority'}
-                </button>
-                <button type="button" className="detail-button subtle" onClick={handleEdit}>
-                  Edit workspace
-                </button>
-                <button
-                  type="button"
-                  className="detail-button danger"
-                  onClick={() => {
-                    if (window.confirm('Delete this role from the board? This cannot be undone.')) {
-                      onDelete(job)
-                    }
-                  }}
-                >
-                  Delete
-                </button>
-              </>
-            )}
+            <div className="job-detail-action-group">
+              {editMode ? (
+                <>
+                  <button type="button" className="detail-button subtle" onClick={handleJsonToggle}>
+                    {jsonMode ? 'Structured editor' : 'Raw JSON'}
+                  </button>
+                  <button type="button" className="detail-button subtle" onClick={handleCancel} disabled={saving}>
+                    Cancel
+                  </button>
+                  <button type="button" className="detail-button primary" onClick={handleSave} disabled={saving}>
+                    {saving ? 'Saving...' : 'Save changes'}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className={`detail-chip ${isSpecialInterest ? 'active' : ''}`}
+                    onClick={handleToggleSpecialInterest}
+                  >
+                    {isSpecialInterest ? 'Priority role' : 'Mark priority'}
+                  </button>
+                  <button type="button" className="detail-button subtle" onClick={handleEdit}>
+                    Edit workspace
+                  </button>
+                  <button
+                    type="button"
+                    className="detail-button danger"
+                    onClick={() => {
+                      if (window.confirm('Delete this role from the board? This cannot be undone.')) {
+                        onDelete(job)
+                      }
+                    }}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
 
-            <button type="button" className="detail-close" onClick={onClose} aria-label="Close detail panel">
-              Close
-            </button>
+              <button type="button" className="detail-close" onClick={onClose} aria-label="Close detail panel">
+                Close
+              </button>
+            </div>
           </div>
         </header>
 
@@ -764,56 +841,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
 
             {activeTab === 'overview' && (
               <div className="job-detail-main">
-                {/* Module 1: Fit Overview */}
+                {/* Module 1: Improve your chances */}
                 <div className="detail-module-card animate-reveal">
-                  <header className="module-header">
-                    <span className="module-title">AI Fit Intelligence</span>
-                    <span className="detail-chip active">
-                      {aiMatchLoading ? 'Loading' : (aiMatchError ? 'Error' : getHumanReadableScore(matchScore))}
-                    </span>
-                  </header>
-                  
-                  {aiMatchLoading ? (
-                    <div className="match-strength-container">
-                      <div className="skeleton" style={{ height: '24px', width: '60%', marginBottom: '12px' }}></div>
-                      <div className="skeleton" style={{ height: '8px', width: '100%' }}></div>
-                    </div>
-                  ) : (
-                    <div className="match-strength-container">
-                      <div className="match-strength-meta">
-                        <span className="match-label-large">You're a {getHumanReadableScore(matchScore).toLowerCase()}</span>
-                        <span className="tj-stat-unit">{matchScore === 'N/A' ? 0 : matchScore}% Match Strength</span>
-                      </div>
-                      <div className="match-bar-track">
-                        <div 
-                          className="match-bar-fill" 
-                          style={{ '--fill-width': `${matchScore === 'N/A' ? 0 : matchScore}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="signal-grid">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className={`signal-item ${aiMatchLoading ? 'skeleton' : ''}`}>
-                         {!aiMatchLoading && (
-                           <>
-                             <span className="signal-label">{i === 1 ? 'Skills Match' : (i === 2 ? 'Experience' : 'Domain')}</span>
-                             <span className="signal-value">
-                               {i === 1 ? (matchScore > 80 ? 'High' : (matchScore > 60 ? 'Medium' : 'Partial')) : ''}
-                               {i === 2 ? (matchScore > 75 ? 'Full' : 'Strong') : ''}
-                               {i === 3 ? 'Relevant' : ''}
-                             </span>
-                           </>
-                         )}
-                         {aiMatchLoading && <div style={{ height: '32px' }}></div>}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Module 2: Improve your chances */}
-                <div className="detail-module-card animate-reveal" style={{ animationDelay: '0.1s' }}>
                   <header className="module-header">
                     <span className="module-title">Coaching</span>
                     <h3 className="module-sub-title">Improve your chances</h3>
@@ -855,8 +884,112 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
               </div>
             )}
 
+            {activeTab === 'notes' && (
+              <div className="workspace-stack">
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Working area</p>
+                      <h3>Notes</h3>
+                    </div>
+                    <button
+                      type="button"
+                      className="mini-action"
+                      onClick={handleSaveNotes}
+                      disabled={notesSaving}
+                    >
+                      {notesSaving ? 'Saving...' : 'Save notes'}
+                    </button>
+                  </div>
+
+                  {notesError && <p className="inline-note">{notesError}</p>}
+
+                  <textarea
+                    className="rail-notes main-notes"
+                    value={notesText}
+                    onChange={(event) => setNotesText(event.target.value)}
+                    placeholder="Capture recruiter names, interview prep, deadlines, follow-ups, and role-specific reminders."
+                  />
+                </section>
+
+                <section className="workspace-section">
+                  <div className="section-topline">
+                    <div>
+                      <p className="section-kicker">Activity</p>
+                      <h3>Timeline</h3>
+                    </div>
+                  </div>
+
+                  {eventsError && <p className="inline-note">{eventsError}</p>}
+
+                  {statusEvents.length > 0 ? (
+                    <div className="timeline-history main-timeline">
+                      {statusEvents.slice(0, 10).map((event) => (
+                        <div key={event.id} className={`timeline-history-item timeline-event-${event.event_type || 'unknown'}`}>
+                          <strong>{event.label || event.event_type}</strong>
+                          {event.detail && <p className="timeline-event-detail">{event.detail}</p>}
+                          <p className="timeline-event-time">{formatDisplayDate(event.created_at)}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="empty-copy">No tracked activity yet. Status changes and updates will appear here.</p>
+                  )}
+                </section>
+              </div>
+            )}
+
             {activeTab === 'details' && (
               <div className="job-detail-main">
+                {(job['Employment Type'] || (job['Contact Info'] && Object.keys(job['Contact Info']).length > 0)) && (
+                  <div className="detail-module-card" style={{ marginBottom: '12px' }}>
+                    <header className="module-header">
+                      <span className="module-title">Role Details</span>
+                    </header>
+                    {job['Employment Type'] && (
+                      <div style={{ marginBottom: '10px' }}>
+                        <span style={{ fontSize: '12px', color: 'var(--muted)', display: 'block', marginBottom: '6px' }}>Employment Type</span>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                          {job['Employment Type'].split(',').map((t) => t.trim()).filter(Boolean).map((type) => (
+                            <span
+                              key={type}
+                              style={{
+                                padding: '3px 10px',
+                                borderRadius: '99px',
+                                fontSize: '12px',
+                                fontWeight: 600,
+                                background: type === 'No C2C' ? '#fee2e2' : type === 'C2C' ? '#fef3c7' : type === 'Contract W2' ? '#d1fae5' : type === 'W2' ? '#dcfce7' : type === '1099' ? '#fce7f3' : type === 'Onsite Interview' ? '#f0f9ff' : '#e0e7ff',
+                                color: type === 'No C2C' ? '#991b1b' : type === 'C2C' ? '#92400e' : type === 'Contract W2' ? '#065f46' : type === 'W2' ? '#166534' : type === '1099' ? '#9d174d' : type === 'Onsite Interview' ? '#0369a1' : '#3730a3',
+                              }}
+                            >
+                              {type}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {job['Contact Info'] && Object.keys(job['Contact Info']).length > 0 && (
+                      <div>
+                        <span style={{ fontSize: '12px', color: 'var(--muted)', display: 'block', marginBottom: '6px' }}>Recruiter Contact</span>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          {job['Contact Info'].name && (
+                            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>{job['Contact Info'].name}</span>
+                          )}
+                          {job['Contact Info'].email && (
+                            <a href={`mailto:${job['Contact Info'].email}`} style={{ fontSize: '13px', color: 'var(--primary)', textDecoration: 'none' }}>
+                              {job['Contact Info'].email}
+                            </a>
+                          )}
+                          {job['Contact Info'].phone && (
+                            <a href={`tel:${job['Contact Info'].phone}`} style={{ fontSize: '13px', color: 'var(--primary)', textDecoration: 'none' }}>
+                              {job['Contact Info'].phone}
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <div className="detail-module-card">
                     <header className="module-header">
                       <span className="module-title">Job Posting</span>
@@ -1261,128 +1394,109 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
           </main>
 
           <aside className="job-detail-rail">
-            <section className="workspace-section rail-card">
-              <div className="section-topline">
+            <section className="workspace-section rail-card status-rail-card">
+              <div className="status-card-head">
                 <div>
-                  <p className="section-kicker">Pipeline</p>
                   <h3>Application status</h3>
                 </div>
               </div>
 
-              <select
-                className="rail-select"
-                value={currentStatus}
-                onChange={(event) => onStatusChange(job, event.target.value)}
-              >
-                {STATUS_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+              <div className="status-picker">
+                <button
+                  type="button"
+                  className={`status-picker-trigger ${statusMenuOpen ? 'open' : ''} ${pendingStatus ? 'committing' : ''}`}
+                  onClick={() => setStatusMenuOpen((open) => !open)}
+                  aria-haspopup="listbox"
+                  aria-expanded={statusMenuOpen}
+                >
+                  <span className={`status-dot status-${displayStatus}`} aria-hidden="true" />
+                  <span>{currentStatusOption.label}</span>
+                  <span className="status-chevron" aria-hidden="true" />
+                </button>
 
-              <div className="status-timeline">
+                {statusMenuOpen && (
+                  <div className="status-picker-menu" role="listbox" aria-label="Application status">
+                    {STATUS_OPTIONS.map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        role="option"
+                        aria-selected={option.value === displayStatus}
+                        className={`status-picker-option ${option.value === displayStatus ? 'selected' : ''}`}
+                        onClick={() => {
+                          setPendingStatus(option.value)
+                          onStatusChange(job, option.value)
+                          setStatusMenuOpen(false)
+                        }}
+                      >
+                        <span className={`status-dot status-${option.value}`} aria-hidden="true" />
+                        <span>{option.label}</span>
+                        {option.value === displayStatus && <span className="status-check" aria-hidden="true" />}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="status-rail-divider" aria-hidden="true" />
+
+              <div className="status-timeline status-timeline-rail" aria-label="Application pipeline">
                 {STATUS_TIMELINE.map((step) => (
                   <div
                     key={step.value}
-                    className={`timeline-step ${getTimelineState(currentStatus, step.value)}`}
+                    className={`timeline-step status-chip-${step.value} ${getTimelineState(currentStatus, step.value)}`}
                   >
                     <span className="timeline-dot" />
                     <div className="timeline-copy">
                       <strong>{step.label}</strong>
-                      <p>{step.hint}</p>
+                      {step.value === currentStatus && statusEvents[0]?.created_at ? (
+                        <p>{formatDisplayDate(statusEvents[0].created_at)}</p>
+                      ) : null}
                     </div>
                   </div>
                 ))}
               </div>
+            </section>
 
-              {(statusEvents.length > 0 || eventsError) && (
-                <div className="timeline-history">
-                  <p className="section-kicker">Activity</p>
-                  {eventsError && <p className="inline-note">{eventsError}</p>}
-                  {statusEvents.slice(0, 8).map((event) => (
-                    <div key={event.id} className={`timeline-history-item timeline-event-${event.event_type || 'unknown'}`}>
-                      <strong>{event.label || event.event_type}</strong>
-                      {event.detail && <p className="timeline-event-detail">{event.detail}</p>}
-                      <p className="timeline-event-time">{formatDisplayDate(event.created_at)}</p>
-                    </div>
-                  ))}
+            <section className="workspace-section rail-card fit-intel-rail-card">
+              <div className="fit-intel-head">
+                <h3>AI Fit Intelligence</h3>
+                <span className="status-fit-level">
+                  {aiMatchLoading ? 'Loading' : (aiMatchError ? 'Error' : getHumanReadableScore(matchScore))}
+                </span>
+              </div>
+
+              {aiMatchLoading ? (
+                <div className="status-fit-loading">
+                  <div className="skeleton" style={{ height: '8px', width: '100%' }}></div>
                 </div>
+              ) : (
+                <>
+                  <div className="status-fit-track" aria-hidden="true">
+                    <span style={{ width: `${scoreForRing}%` }} />
+                  </div>
+                  <div className="status-fit-meta">
+                    <span>{matchScore === 'N/A' ? 'No score yet' : `${matchScore}% match strength`}</span>
+                  </div>
+                </>
               )}
-            </section>
 
-            <section className="workspace-section rail-card">
-              <div className="section-topline">
-                <div>
-                  <p className="section-kicker">Research</p>
-                  <h3>Notes</h3>
-                </div>
-                <button
-                  type="button"
-                  className="mini-action"
-                  onClick={handleSaveNotes}
-                  disabled={notesSaving}
-                >
-                  {notesSaving ? 'Saving...' : 'Save'}
-                </button>
-              </div>
+              {aiMatchError && !aiMatchLoading && (
+                <p className="status-fit-error">{aiMatchError}</p>
+              )}
 
-              {notesError && <p className="inline-note">{notesError}</p>}
-
-              <textarea
-                className="rail-notes"
-                value={notesText}
-                onChange={(event) => setNotesText(event.target.value)}
-                placeholder="Capture recruiter names, interview prep, deadlines, or company research."
-              />
-            </section>
-
-            <section className="workspace-section rail-card">
-              <div className="section-topline">
-                <div>
-                  <p className="section-kicker">Shortcuts</p>
-                  <h3>Quick actions</h3>
-                </div>
-              </div>
-
-              <div className="rail-actions">
-                <button
-                  type="button"
-                  className="rail-action primary"
-                  onClick={() => onStatusChange(job, 'applied')}
-                >
-                  Mark applied
-                </button>
-                <button
-                  type="button"
-                  className="rail-action"
-                  onClick={() => onStatusChange(job, 'interviewing')}
-                >
-                  Move to interviewing
-                </button>
-                <button
-                  type="button"
-                  className="rail-action"
-                  onClick={handleGenerateResume}
-                  disabled={generating}
-                >
-                  {generating ? 'Generating PDF...' : 'Generate resume PDF'}
-                </button>
-                <button
-                  type="button"
-                  className="rail-action"
-                  onClick={handleAutoTailor}
-                  disabled={tailoring}
-                >
-                  {tailoring ? 'Refreshing...' : 'Refresh AI suggestions'}
-                </button>
-                <button
-                  type="button"
-                  className="rail-action danger"
-                  onClick={() => onStatusChange(job, 'skipped')}
-                >
-                  Archive role
-                </button>
+              <div className="fit-signal-list">
+                {fitSignalItems.map((item) => (
+                  <div key={item.label} className="fit-signal-row">
+                    <div className="fit-signal-meta">
+                      <span>{item.label}</span>
+                      <strong>{item.value}</strong>
+                    </div>
+                    <div className="fit-signal-track" aria-hidden="true">
+                      <span style={{ width: `${item.fill}%` }} />
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
           </aside>

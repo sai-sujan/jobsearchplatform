@@ -6,10 +6,13 @@ import AllJobs from './pages/AllJobs'
 import AppliedJobs from './pages/AppliedJobs'
 import AuthPage from './pages/AuthPage'
 import OnboardingPage from './pages/OnboardingPage'
-import ProfilePage from './pages/ProfilePage'
+import OpportunityInbox from './pages/OpportunityInbox'
+import Settings from './pages/Settings'
 import TailorPage from './pages/TailorPage'
 import TodaysJobs from './pages/TodaysJobs'
 import TrackerBoard from './pages/TrackerBoard'
+import SavedJobs from './pages/SavedJobs'
+import KeywordBank from './pages/KeywordBank'
 import { api, storeToken } from './lib/api'
 import { APPLIED_STATUSES, normalizeStatus } from './lib/jobs'
 import NotificationToast from './components/NotificationToast'
@@ -18,10 +21,15 @@ const NAV_ICONS = {
   today: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-11.7 8.38 8.38 0 0 1 3.8.9L21 3.5v8z"/><line x1="12" y1="12" x2="16" y2="16"/></svg>,
   recommended: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>,
   applied: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,
+  saved: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>,
   tracker: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>,
+  inbox: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="M7 17h10"/></svg>,
   sparkles: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M19 8.08V7c0-2.21-1.79-4-4-4h-4"/><path d="M15 10l-4 4"/><path d="M15 14l-4-4"/></svg>,
+  keywords: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><circle cx="8" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="11" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="10" r="1" fill="currentColor" stroke="none"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
   profile: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
 }
+
+const JOB_FETCH_LIMIT = 2000
 
 function App() {
   const navigate = useNavigate()
@@ -50,7 +58,7 @@ function App() {
 
       if (onboardingResponse.data.profile?.onboarding_completed) {
         try {
-          const jobsResponse = await api.get('/api/jobs')
+          const jobsResponse = await api.get('/api/jobs', { params: { limit: JOB_FETCH_LIMIT } })
           setJobs(jobsResponse.data.jobs || [])
           setStats(jobsResponse.data.stats || {})
         } catch (jobsError) {
@@ -92,7 +100,7 @@ function App() {
 
     const interval = setInterval(async () => {
       try {
-        const response = await api.get('/api/jobs')
+        const response = await api.get('/api/jobs', { params: { limit: JOB_FETCH_LIMIT } })
         setJobs(response.data.jobs || [])
         setStats(response.data.stats || {})
       } catch {
@@ -176,8 +184,13 @@ function App() {
   }
 
   const recommendedJobs = [...jobs].sort((left, right) => (right['Skill Score'] || 0) - (left['Skill Score'] || 0))
-  const appliedCount = jobs.filter((job) => APPLIED_STATUSES.includes(normalizeStatus(job.Status))).length
-  const hasMatchedJobs = recommendedJobs.length > 0
+  const statusCounts = stats.status_counts || {}
+  const totalCount = Number.isFinite(stats.total) ? stats.total : jobs.length
+  const appliedCount = APPLIED_STATUSES.reduce(
+    (total, status) => total + (statusCounts[status] ?? jobs.filter((job) => normalizeStatus(job.Status) === status).length),
+    0,
+  )
+  const savedCount = statusCounts.not_applied ?? jobs.filter((job) => normalizeStatus(job.Status) === 'not_applied').length
   const renderNavCount = (count) => (count > 0 ? <span>{count}</span> : null)
 
   if (loading) {
@@ -266,17 +279,26 @@ function App() {
           <NavLink to="/jobs" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.recommended}</span>
             <span className="nav-label">All Jobs</span>
-            {renderNavCount(recommendedJobs.length)}
+            {renderNavCount(totalCount)}
           </NavLink>
           <NavLink to="/applied" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.applied}</span>
             <span className="nav-label">Applied Jobs</span>
             {renderNavCount(appliedCount)}
           </NavLink>
+          <NavLink to="/saved" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
+            <span className="nav-icon">{NAV_ICONS.saved}</span>
+            <span className="nav-label">Saved Jobs</span>
+            {renderNavCount(savedCount)}
+          </NavLink>
           <NavLink to="/tracker" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.tracker}</span>
             <span className="nav-label">Tracker</span>
-            {renderNavCount(jobs.length)}
+            {renderNavCount(totalCount)}
+          </NavLink>
+          <NavLink to="/opportunities" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
+            <span className="nav-icon">{NAV_ICONS.inbox}</span>
+            <span className="nav-label">Opportunity Inbox</span>
           </NavLink>
         </nav>
 
@@ -285,6 +307,10 @@ function App() {
           <NavLink to="/tailor" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">{NAV_ICONS.sparkles}</span>
             <span className="nav-label">AI Resume Tailor</span>
+          </NavLink>
+          <NavLink to="/keyword-bank" className={({ isActive }) => `topnav-link ${isActive ? 'active' : ''}`}>
+            <span className="nav-icon">{NAV_ICONS.keywords}</span>
+            <span className="nav-label">Keyword Bank</span>
           </NavLink>
         </nav>
 
@@ -343,9 +369,17 @@ function App() {
           <span>Board</span>
           {renderNavCount(jobs.length)}
         </NavLink>
+        <NavLink to="/opportunities" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
+          <span className="nav-icon">{NAV_ICONS.inbox}</span>
+          <span>Inbox</span>
+        </NavLink>
         <NavLink to="/tailor" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
           <span className="nav-icon">{NAV_ICONS.sparkles}</span>
           <span>Tailor</span>
+        </NavLink>
+        <NavLink to="/keyword-bank" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
+          <span className="nav-icon">{NAV_ICONS.keywords}</span>
+          <span>Keywords</span>
         </NavLink>
       </nav>
 
@@ -361,12 +395,15 @@ function App() {
           <Route path="/today" element={<TodaysJobs jobs={recommendedJobs} session={session} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
           <Route path="/jobs" element={<AllJobs jobs={jobs} stats={stats} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} onNotesChange={handleNotesChange} onTailor={handleTailorJob} />} />
           <Route path="/applied" element={<AppliedJobs jobs={jobs} session={session} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
+          <Route path="/saved" element={<SavedJobs jobs={jobs} session={session} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
           <Route path="/tracker" element={<TrackerBoard jobs={jobs} onStatusChange={handleStatusChange} onDelete={handleDeleteJob} />} />
+          <Route path="/opportunities" element={<OpportunityInbox />} />
           <Route path="/tailor" element={<TailorPage jobs={jobs} onNotesChange={handleNotesChange} onboarding={onboarding} />} />
+          <Route path="/keyword-bank" element={<KeywordBank />} />
           <Route
             path="/settings"
             element={(
-              <ProfilePage
+              <Settings
                 onboarding={onboarding}
                 onUpdated={(nextState) => {
                   setOnboarding(nextState)

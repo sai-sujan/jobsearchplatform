@@ -4,10 +4,45 @@ Helpers for onboarding, role profile normalization, and generated presets.
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
 from src.settings import settings
+from src.utils.ai_utils import call_groq, AIServiceError
+
+# A template of the detailed candidate profile
+EMPTY_FULL_PROFILE = {
+    "personal": {
+        "full_name": "", "first_name": "", "last_name": "", "preferred_name": "",
+        "email": "", "phone": "", "city": "", "province_state": "", "state_abbreviation": "",
+        "country": "", "country_code": "", "postal_code": "", "address": "",
+        "street_address": "", "apartment": "", "linkedin_url": "", "github_url": "",
+        "portfolio_url": "", "website_url": "", "password": ""
+    },
+    "work_authorization": {
+        "legally_authorized_to_work": True, "require_sponsorship": False, "work_permit_type": ""
+    },
+    "compensation": {
+        "salary_expectation": "", "salary_currency": "USD", "salary_range_min": "", "salary_range_max": "",
+        "currency_conversion_note": ""
+    },
+    "experience": {
+        "years_of_experience_total": "", "education_level": "", "current_title": "", "target_role": ""
+    },
+    "skills_boundary": {
+        "programming_languages": [], "frameworks": [], "tools": [], "ml_specializations": []
+    },
+    "resume_facts": {
+        "preserved_companies": [], "preserved_projects": [], "preserved_school": "", "real_metrics": []
+    },
+    "eeo_voluntary": {
+        "gender": "", "race_ethnicity": "", "veteran_status": "", "disability_status": ""
+    },
+    "availability": {
+        "earliest_start_date": "Immediately"
+    }
+}
 
 
 def _load_common_skills() -> list[str]:
@@ -141,7 +176,88 @@ def infer_profile_from_resume(resume_text: str, parsed_skills: list[str]) -> dic
         "employment_types": employment_types,
         "industries": industries,
         "candidate_summary": summarize_candidate(resume_text, inferred_roles, parsed_skills),
+        "full_profile": ai_extract_profile_from_resume(resume_text)
     }
+
+
+def ai_extract_profile_from_resume(resume_text: str) -> dict:
+    """Use AI to extract a detailed master profile from raw resume text."""
+    import copy
+
+    system_prompt = (
+        "You are a precise data extraction API. "
+        "Extract every piece of information from a resume into a JSON object. "
+        "Return ONLY valid JSON — no prose, no markdown fences, no commentary. "
+        "Leave missing fields as empty string or empty list, never null."
+    )
+
+    user_prompt = f"""RESUME:
+{resume_text[:7000]}
+
+Extract into this exact JSON shape. Follow the field-level rules below precisely.
+
+FIELD RULES:
+personal.full_name         — candidate's full legal name (usually the largest text at the top)
+personal.first_name        — first word(s) of full_name before the last name
+personal.last_name         — last word of full_name
+personal.preferred_name    — nickname if shown, else same as first_name
+personal.email             — email address (look for @ symbol in contact section)
+personal.phone             — phone number (look for xxx-xxx-xxxx or (xxx) xxx-xxxx patterns)
+personal.city              — city from mailing address if present
+personal.province_state    — full state name (e.g. Missouri)
+personal.state_abbreviation — 2-letter state code (e.g. MO)
+personal.postal_code       — ZIP code if present
+personal.address           — full address line if present
+personal.street_address    — street portion of address
+personal.apartment         — apartment/suite number if present
+personal.country           — country (default "United States" if US address)
+personal.country_code      — 2-letter country code (default "US")
+personal.linkedin_url      — full linkedin.com/in/... URL if present
+personal.github_url        — full github.com/... URL if present
+personal.portfolio_url     — personal website or portfolio URL (not LinkedIn/GitHub)
+
+work_authorization.legally_authorized_to_work — true (leave as true unless sponsorship is mentioned)
+work_authorization.require_sponsorship        — true only if "require sponsorship" or visa like OPT/H-1B is mentioned
+work_authorization.work_permit_type           — visa type if mentioned (OPT, H-1B, CPT, etc.) else ""
+
+experience.years_of_experience_total — calculate total professional experience years from work history dates, or extract "X years" phrase; return as string
+experience.education_level           — highest degree: "Bachelor's Degree", "Master's Degree", "Doctorate / PhD", etc.
+experience.current_title             — most recent job title from work history
+experience.target_role               — the role this person seems to be targeting based on their background
+
+skills_boundary.programming_languages — list of coding languages (Python, JavaScript, SQL, Java, Go, etc.)
+skills_boundary.frameworks            — libraries and frameworks (PyTorch, React, FastAPI, LangChain, etc.)
+skills_boundary.tools                 — infrastructure and tools (Docker, Git, AWS, CI/CD, PostgreSQL, etc.)
+skills_boundary.ml_specializations    — ML/AI specializations (RAG, LLMs, Computer Vision, NLP, LoRA, etc.)
+
+resume_facts.preserved_companies — ALL company/employer names from work experience (exact names as written)
+resume_facts.preserved_school    — university or college name (exact as written)
+resume_facts.preserved_projects  — notable project names if listed
+resume_facts.real_metrics        — EVERY quantified achievement with a number or % (e.g. "Reduced latency by 50%", "Served 10k users"). Extract ALL of them.
+
+availability.earliest_start_date — "Immediately" unless a future date is mentioned
+
+Return ONLY the JSON. Schema:
+{json.dumps(EMPTY_FULL_PROFILE, indent=2)}"""
+
+    try:
+        raw_resp = call_groq(system_prompt, user_prompt, max_tokens=2500, temperature=0.05)
+
+        clean_json = re.sub(r"^```json\s*|\s*```$", "", raw_resp, flags=re.MULTILINE).strip()
+        # Sometimes the model wraps in an outer object key
+        data = json.loads(clean_json)
+
+        # Deep-merge extracted data onto a fresh copy of the empty template
+        merged = copy.deepcopy(EMPTY_FULL_PROFILE)
+        for key, val in data.items():
+            if key in merged and isinstance(val, dict) and isinstance(merged[key], dict):
+                merged[key] = {**merged[key], **{k: v for k, v in val.items() if v not in (None, "", [])}}
+            elif val not in (None, ""):
+                merged[key] = val
+        return merged
+    except Exception as e:
+        print(f"[onboarding] AI profile extraction failed: {e}")
+        return copy.deepcopy(EMPTY_FULL_PROFILE)
 
 
 def summarize_candidate(resume_text: str, target_roles: list[str], parsed_skills: list[str]) -> str:

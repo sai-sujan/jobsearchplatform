@@ -1,10 +1,10 @@
 .tp-page {
-  min-height: 100vh;
-  padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
+  padding: 1.1rem clamp(1rem, 2vw, 1.5rem) 0;
   background: #f1f5f9;
-  display: grid;
-  gap: 1rem;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-sizing: border-box;
 }
 
 /* Topbar */
@@ -96,20 +96,21 @@
 
 /* ── Main workspace grid ── */
 .tp-workspace {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 1rem;
-  align-items: start;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-/* ── JD card (left) ── */
+/* ── JD card (top, fixed height) ── */
 .tp-jd-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 0.85rem;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  display: grid; gap: 0.75rem;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  display: flex; flex-direction: column; gap: 0.55rem;
+  flex-shrink: 0;
 }
 .tp-jd-head {
   display: flex; justify-content: space-between; align-items: center;
@@ -141,16 +142,20 @@
 }
 .tp-ats-bar { height: 4px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-top: 0.5rem; }
 .tp-ats-bar span { display: block; height: 100%; background: #4f46e5; border-radius: 999px; transition: width 0.5s ease; }
+.tp-ats-bar-inline {
+  width: 80px; height: 4px; background: #e2e8f0; border-radius: 999px; overflow: hidden; flex-shrink: 0;
+}
+.tp-ats-bar-inline span { display: block; height: 100%; background: #4f46e5; border-radius: 999px; transition: width 0.5s ease; }
 
 .tp-jd-textarea {
   width: 100%; box-sizing: border-box;
-  min-height: 5rem;
-  padding: 0.6rem 0.75rem;
+  height: 5.5rem;
+  padding: 0.55rem 0.75rem;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem;
   font-size: 0.82rem;
   color: #0f172a;
-  resize: vertical;
+  resize: none;
   font-family: inherit;
   line-height: 1.55;
   background: #fafafa;
@@ -161,20 +166,25 @@
 }
 .tp-jd-hint { font-size: 0.72rem; color: #94a3b8; }
 
-/* ── Resume columns (right panel) ── */
+/* ── Resume columns — sticky after JD scrolls away ── */
 .tp-resumes {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  overflow: hidden;
 }
 .tp-resume-col {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 0.85rem;
-  overflow: hidden;
+  border-radius: 0 0 0 0;
+  overflow-y: auto;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
   display: flex; flex-direction: column;
   min-width: 0;
+  height: 100%;
 }
 .tp-resume-col-tailored {
   border-color: #c7d2fe;
@@ -214,7 +224,7 @@
 }
 
 /* Resume body */
-.tp-resume-body { flex: 1; padding: 1rem; overflow-y: auto; max-height: 440px; }
+.tp-resume-body { flex: 1; padding: 1rem; }
 .tp-resume-text {
   font-size: 0.78rem; color: #374151;
   white-space: pre-wrap; line-height: 1.6;
@@ -237,13 +247,89 @@
 .tp-resume-section { margin-bottom: 1rem; }
 .tp-resume-section:last-child { margin-bottom: 0; }
 
-/* Base resume pretty display */
-.tp-base-snippet {
-  font-size: 0.8rem; color: #374151; line-height: 1.6;
-  white-space: pre-wrap;
-  overflow-y: auto;
-  max-height: 390px;
+/* ── Structured Base Resume Card ── */
+.tp-base-structured {
+  padding: 0.85rem 1rem;
 }
+
+/* Header */
+.tp-br-header {
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.tp-br-name {
+  margin: 0 0 0.1rem;
+  font-size: 1rem; font-weight: 700;
+  color: #0f172a; letter-spacing: -0.01em;
+}
+.tp-br-title {
+  font-size: 0.74rem; color: #4f46e5; font-weight: 600;
+  line-height: 1.4; margin-bottom: 0.3rem;
+}
+.tp-br-contacts {
+  display: flex; flex-wrap: wrap;
+  gap: 0.2rem 0.5rem;
+  font-size: 0.69rem; color: #64748b;
+}
+.tp-br-contact { display: inline-flex; align-items: center; }
+.tp-br-contact:not(:last-child)::after {
+  content: '·'; margin-left: 0.5rem; color: #cbd5e1;
+}
+
+/* Skills grid */
+.tp-br-skills {
+  margin: 0; display: flex; flex-direction: column; gap: 0.35rem;
+}
+.tp-br-skill-row {
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  gap: 0.4rem; align-items: start;
+}
+.tp-br-skill-label {
+  font-size: 0.69rem; font-weight: 600; color: #475569;
+  line-height: 1.5; margin: 0; padding-top: 1px;
+}
+.tp-br-skill-values {
+  margin: 0; display: flex; flex-wrap: wrap; gap: 0.2rem;
+}
+.tp-br-skill-values-full {
+  grid-column: 1 / -1;
+}
+.tp-br-skill-values .tp-skill { font-size: 0.67rem; padding: 0.12rem 0.4rem; }
+
+/* Experience */
+.tp-br-role {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #f1f5f9;
+}
+.tp-br-role:last-child { border-bottom: none; }
+.tp-br-role-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 0.4rem; flex-wrap: wrap;
+}
+.tp-br-role-head strong { font-size: 0.82rem; font-weight: 700; color: #0f172a; }
+.tp-br-dates {
+  font-size: 0.67rem; color: #64748b; font-weight: 500;
+  white-space: nowrap; flex-shrink: 0;
+}
+.tp-br-role .tp-exp-meta { margin-top: 0.08rem; font-size: 0.71rem; }
+.tp-br-role ul { margin: 0.3rem 0 0; padding-left: 1rem; }
+.tp-br-role li { font-size: 0.74rem; color: #374151; line-height: 1.55; margin-bottom: 0.2rem; }
+
+/* Generic section fallback */
+.tp-br-generic {
+  font-size: 0.75rem; color: #374151;
+  line-height: 1.55; display: flex; flex-direction: column; gap: 0.12rem;
+}
+
+/* Clean text fallback (no pre, no monospace) */
+.tp-base-fallback {
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem; color: #374151; line-height: 1.65;
+}
+.tp-base-fallback p { margin: 0 0 0.55rem; }
+.tp-base-fallback p:last-child { margin-bottom: 0; }
 
 .tp-empty-state {
   flex: 1; display: flex; flex-direction: column;
@@ -323,8 +409,9 @@
 /* Preview view */
 .tp-preview-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 1rem;
+  min-height: calc(100vh - 180px);
   align-items: start;
 }
 
@@ -379,7 +466,9 @@
 /* QA panel */
 .tp-qa {
   background: transparent;
-  display: grid; gap: 0.9rem;
+  display: flex; flex-direction: column; gap: 0.75rem;
+  overflow-y: auto;
+  padding-bottom: 1rem;
 }
 .tp-qa-tabs {
   display: inline-flex; gap: 0.5rem;
@@ -487,8 +576,9 @@
 }
 
 @media (max-width: 1100px) {
-  .tp-workspace { grid-template-columns: 1fr; }
   .tp-resumes, .tp-preview-layout { grid-template-columns: 1fr; }
+  .tp-resumes { position: static; height: auto; overflow: visible; }
+  .tp-resume-col { height: auto; min-height: 60vh; overflow-y: visible; }
 }
 @media (max-width: 700px) {
   .tp-resumes { grid-template-columns: 1fr; }
@@ -545,22 +635,74 @@
   .tp-resume-document { border: none; padding: 0; }
 }
 
-/* ── PDF Preview Panel ── */
+/* ── Editable preview panel ── */
+.tp-edit-panel {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 0.85rem 0.85rem 0 0;
+  padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+  overflow-y: auto;
+}
+.tp-edit-section {
+  display: grid; gap: 0.6rem;
+}
+.tp-edit-section-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+}
+.tp-add-bullet-btn {
+  border: 1px dashed #c7d2fe; background: transparent;
+  color: #4338ca; font-size: 0.78rem; font-weight: 600;
+  padding: 0.2rem 0.6rem; border-radius: 0.4rem; cursor: pointer;
+}
+.tp-add-bullet-btn:hover { background: #eef1ff; }
+.tp-bullet-row {
+  display: grid; grid-template-columns: 1rem 1fr 1.5rem;
+  gap: 0.5rem; align-items: start;
+}
+.tp-bullet-dot {
+  width: 6px; height: 6px; background: #94a3b8; border-radius: 50%;
+  margin-top: 0.65rem; flex-shrink: 0;
+}
+.tp-bullet-input {
+  width: 100%; box-sizing: border-box;
+  border: 1px solid #e2e8f0; border-radius: 0.4rem;
+  padding: 0.45rem 0.6rem; font-size: 0.82rem;
+  color: #1e293b; font-family: inherit; line-height: 1.5;
+  resize: vertical; min-height: 2.5rem;
+  background: #fafafa;
+}
+.tp-bullet-input:focus { outline: none; border-color: #4f46e5; background: #fff; box-shadow: 0 0 0 2px rgba(79,70,229,0.1); }
+.tp-bullet-remove {
+  border: none; background: none; color: #94a3b8;
+  font-size: 1.1rem; cursor: pointer; padding: 0;
+  margin-top: 0.35rem; line-height: 1;
+}
+.tp-bullet-remove:hover { color: #dc2626; }
+.tp-location-input {
+  width: 100%; box-sizing: border-box;
+  border: 1px solid #e2e8f0; border-radius: 0.4rem;
+  padding: 0.45rem 0.6rem; font-size: 0.85rem;
+  color: #1e293b; font-family: inherit;
+  background: #fafafa;
+}
+.tp-location-input:focus { outline: none; border-color: #4f46e5; background: #fff; }
+
+/* PDF ready banner */
+.tp-pdf-ready-banner {
+  display: flex; align-items: center; gap: 8px;
+  background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+  padding: 8px 14px; font-size: 13px; color: #15803d; font-weight: 600;
+}
+.tp-pdf-ready-banner svg { width: 16px; height: 16px; flex-shrink: 0; }
+.tp-pdf-ready-banner a { color: #15803d; text-decoration: underline; }
+
+/* Legacy PDF panel (keep for reference) */
 .tp-pdf-panel {
-  display: flex; flex-direction: column; min-height: 700px;
+  display: flex; flex-direction: column; min-height: 500px;
   background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;
 }
 .tp-pdf-iframe {
-  width: 100%; flex: 1; min-height: 700px; border: none; display: block;
+  width: 100%; flex: 1; min-height: 500px; border: none; display: block;
 }
-.tp-pdf-loading, .tp-pdf-error {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 10px; padding: 40px; text-align: center;
-}
-.tp-pdf-loading p { font-size: 14px; font-weight: 600; color: #374151; margin: 0; }
-.tp-pdf-loading small { font-size: 12px; color: #94a3b8; }
-.tp-pdf-error p { color: #dc2626; font-size: 13px; }
 .tp-pdf-spinner {
   width: 36px; height: 36px; border: 3px solid #e2e8f0;
   border-top-color: #4f46e5; border-radius: 50%;

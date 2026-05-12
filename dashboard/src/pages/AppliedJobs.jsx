@@ -258,12 +258,14 @@ function AppliedJobs({ jobs, session, onStatusChange, onDelete }) {
               ) : (
                 pagedJobs.map((job) => {
                   const stage = stageFor(job)
+                  const isActive = sidebarOpen && selectedJob && getJobId(job) === getJobId(selectedJob)
                   return (
                     <button
                       key={getJobId(job)}
                       type="button"
-                      className="application-row"
+                      className={`application-row${isActive ? ' application-row-active' : ''}`}
                       onClick={() => { setSelectedJob(job); setSidebarOpen(true) }}
+                      aria-pressed={isActive}
                     >
                       <div className="application-position">
                         <span className="app-position-logo">{(job.Company || 'J').charAt(0).toUpperCase()}</span>

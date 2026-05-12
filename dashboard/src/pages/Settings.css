@@ -192,6 +192,145 @@
   min-height: 520px;
 }
 
+/* -- Search Config Tab ----------------------------------------------------- */
+
+.sc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.sc-card {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.sc-card-wide {
+  grid-column: 1 / -1;
+}
+
+.sc-card-title {
+  display: grid;
+  gap: 0.25rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sc-card-title h3,
+.sc-card-title p {
+  margin: 0;
+}
+
+.sc-card-title h3 {
+  color: #0f172a;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.sc-card-title p {
+  color: #64748b;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.sc-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 2rem;
+}
+
+.sc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 100%;
+  padding: 0.42rem 0.58rem;
+  border: 1px solid #dfe5ff;
+  border-radius: 7px;
+  background: #f4f6ff;
+  color: #2539c7;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.sc-chip span {
+  overflow-wrap: anywhere;
+}
+
+.sc-chip strong {
+  color: #6470c9;
+  font-size: 0.86rem;
+  line-height: 1;
+}
+
+.sc-inline-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2.4rem;
+  gap: 0.5rem;
+}
+
+.sc-inline-input input {
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  color: #0f172a;
+  font: inherit;
+}
+
+.sc-inline-input input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.sc-inline-input button {
+  border: 0;
+  border-radius: 7px;
+  background: #2f45d6;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.sc-choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.sc-choice {
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.sc-choice.active {
+  border-color: #4f46e5;
+  background: #eef1ff;
+  color: #3441c5;
+}
+
+.sc-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.sc-summary {
+  min-height: 110px;
+}
+
 .settings-actions {
   display: flex;
   gap: 0.65rem;
@@ -232,9 +371,195 @@
   color: #6b7280;
 }
 
+/* ── Profile Settings Tab ─────────────────────────────────────────────────── */
+
+.sp-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.sp-card {
+  background: #fff;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  padding: 1.25rem 1.375rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sp-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #4f46e5;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sp-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.sp-row-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.sp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sp-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sp-input {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #0f172a;
+  font-family: inherit;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.sp-input:focus { border-color: #4f46e5; }
+.sp-input::placeholder { color: #94a3b8; }
+select.sp-input { cursor: pointer; }
+
+.sp-textarea {
+  min-height: 68px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.sp-toggle-row {
+  display: flex;
+  gap: 6px;
+  padding-top: 2px;
+}
+
+.sp-toggle-btn {
+  padding: 5px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #f8fafc;
+  color: #64748b;
+  font-family: inherit;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.sp-toggle-btn.active {
+  background: #4f46e5;
+  color: #fff;
+  border-color: #4f46e5;
+}
+
 @media (max-width: 1080px) {
   .settings-hero,
   .settings-layout {
     grid-template-columns: 1fr;
   }
+
+  .sc-grid,
+  .sc-field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sc-card-wide {
+    grid-column: auto;
+  }
+}
+
+/* Resume upload tab */
+.resume-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-upload-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.resume-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.resume-filename {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-filename--none {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.resume-skills-count {
+  font-size: 11px;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.resume-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 16px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.13s;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.resume-upload-btn:hover {
+  background: #4338ca;
+}
+
+.resume-empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #94a3b8;
+  font-size: 13px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
 }
