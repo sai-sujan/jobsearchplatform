@@ -229,6 +229,7 @@ export default function KeywordBank() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [refreshKey, setRefreshKey] = useState(0)
 
   const [dataset, setDataset] = useState('missing') // 'missing' | 'overall' | 'trends'
   const [view, setView] = useState('bubbles')        // 'bubbles' | 'list'
@@ -239,6 +240,8 @@ export default function KeywordBank() {
   const [trendError, setTrendError] = useState(null)
 
   useEffect(() => {
+    setLoading(true)
+    setError(null)
     api.get('/api/jobs/keyword-bank')
       .then((res) => setData(res.data))
       .catch((err) => {
@@ -247,7 +250,7 @@ export default function KeywordBank() {
         setError(`Could not load keyword data. (${status ?? 'network'}: ${detail})`)
       })
       .finally(() => setLoading(false))
-  }, [])
+  }, [refreshKey])
 
   // fetch trend data when Trends mode active or granularity changes
   useEffect(() => {
@@ -261,7 +264,7 @@ export default function KeywordBank() {
         setTrendError(`Could not load trends. (${detail})`)
       })
       .finally(() => setTrendLoading(false))
-  }, [dataset, granularity])
+  }, [dataset, granularity, refreshKey])
 
   if (loading) return <div className="kb-page"><div className="kb-loading">Loading keyword bank...</div></div>
   if (error) return <div className="kb-page"><div className="kb-loading kb-error">{error}</div></div>
@@ -303,6 +306,19 @@ export default function KeywordBank() {
               <button type="button" className={`kb-toggle-btn${view === 'list' ? ' active' : ''}`} onClick={() => setView('list')}>Sections</button>
             </div>
           )}
+          <button
+            type="button"
+            className={`kb-refresh-btn${loading || trendLoading ? ' spinning' : ''}`}
+            onClick={() => setRefreshKey((k) => k + 1)}
+            title="Refresh"
+            disabled={loading || trendLoading}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="23 4 23 10 17 10" />
+              <polyline points="1 20 1 14 7 14" />
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+          </button>
         </div>
       </div>
 

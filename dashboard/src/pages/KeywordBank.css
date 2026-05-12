@@ -321,6 +321,46 @@
   border-radius: 12px;
 }
 
+/* Refresh button */
+.kb-refresh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.13s;
+  flex-shrink: 0;
+}
+
+.kb-refresh-btn:hover:not(:disabled) {
+  border-color: #94a3b8;
+  color: var(--text);
+  background: #f8fafc;
+}
+
+.kb-refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.kb-refresh-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.kb-refresh-btn.spinning svg {
+  animation: kb-spin 0.8s linear infinite;
+}
+
+@keyframes kb-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ── Trends pane ─────────────────────────────────────────────────── */
 
 .trends-pane {

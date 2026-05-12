@@ -222,6 +222,12 @@ function Settings({ onboarding, onUpdated }) {
       setSaving(true)
       setError('')
 
+      if (activeTab === 'resume') {
+        setMessage('Use the upload button to update your resume.')
+        setTimeout(() => setMessage(''), 3000)
+        return
+      }
+
       if (activeTab === 'personal_disclosures') {
         const response = await api.put('/api/onboarding/profile', buildOnboardingPayload({ full_profile: { eeo_voluntary: eeo } }))
         applyOnboardingResponse(response.data)

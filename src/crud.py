@@ -727,9 +727,17 @@ def sync_user_matched_jobs(db: Session, user_id: str) -> List[MatchedJob]:
     active_job_ids = set()
 
     for job in all_jobs:
-        fit_snapshot = build_current_fit_snapshot(job, profile, resume_asset=resume_asset)
         matched_job = existing.get(job.id)
         active_job_ids.add(job.id)
+
+        # never touch extension-saved jobs — user explicitly saved them, always keep active
+        if matched_job and matched_job.delivery_origin == 'extension':
+            if matched_job.delivery_status not in ('active', 'archived'):
+                matched_job.delivery_status = 'active'
+                db.add(matched_job)
+            continue
+
+        fit_snapshot = build_current_fit_snapshot(job, profile, resume_asset=resume_asset)
 
         if matched_job is None:
             matched_job = MatchedJob(

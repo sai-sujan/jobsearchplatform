@@ -58,6 +58,14 @@ _STOP_WORDS = {
     'other', 'more', 'most', 'some', 'any', 'all', 'both', 'each', 'few',
     'join', 'help', 'make', 'take', 'give', 'get', 'set', 'run', 'work',
     'nice', 'have', 'nice-to-have', 'bonus', 'optional',
+    # generic business/job-description words — not skills
+    'product', 'engineering', 'guidance', 'access', 'support', 'management',
+    'solutions', 'systems', 'services', 'processes', 'practices', 'tools',
+    'applications', 'projects', 'environments', 'frameworks', 'technologies',
+    'high', 'quality', 'fast', 'large', 'scale', 'cross', 'functional',
+    'written', 'verbal', 'communication', 'problem', 'solving', 'analytical',
+    'detail', 'oriented', 'self', 'motivated', 'driven', 'passionate',
+    'e.g', 'i.e', 'ie', 'eg',
 }
 
 
@@ -82,9 +90,16 @@ def _is_useful(term: str) -> bool:
     t = term.strip()
     if len(t) < 2:
         return False
-    if t.lower() in _STOP_WORDS:
+    tl = t.lower()
+    if tl in _STOP_WORDS:
         return False
     if re.match(r'^\d+$', t):
+        return False
+    # reject pure-punctuation or abbreviation artifacts like "e.g.", "i.e."
+    if re.match(r'^[a-z]\.[a-z]\.?$', tl):
+        return False
+    # reject if all non-alpha characters (e.g. "/", "--")
+    if not re.search(r'[a-zA-Z]{2,}', t):
         return False
     # reject if first word is a stop word (e.g. "nice to have", "knowledge of")
     first_word = t.split()[0].lower() if t.split() else ''
