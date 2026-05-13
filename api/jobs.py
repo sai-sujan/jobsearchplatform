@@ -287,15 +287,18 @@ def get_keyword_bank(
 ):
     """Aggregate missing ATS keywords across all user's matched jobs (3-tier extraction)."""
     from concurrent.futures import ThreadPoolExecutor
-    from src.evaluation.keyword_extractor import extract_jd_keywords, extract_resume_keywords
+    from src.evaluation.keyword_extractor import (
+        extract_jd_keywords, extract_resume_keywords, _to_canonical,
+    )
 
     resume_asset = next((a for a in user.resume_assets if a.is_active), None)
     resume_text = resume_asset.original_text if resume_asset else None
 
     matched_jobs = get_user_matched_jobs(db, user.id, limit=100000)
 
-    # pre-compute resume keywords once
+    # pre-compute resume keywords once (canonical-expanded for alias matching)
     have = extract_resume_keywords(resume_text) if resume_text else set()
+    have_canonical = {_to_canonical(k) for k in have}
 
     # collect (mj_id, title, company, jd_text) for jobs with descriptions
     entries = []
@@ -307,7 +310,7 @@ def get_keyword_bank(
     def _extract(entry):
         mj_id, title, company, jd = entry
         jd_kws = extract_jd_keywords(jd, use_groq=False)
-        missing = jd_kws - have
+        missing = {k for k in jd_kws if _to_canonical(k) not in have_canonical}
         return mj_id, title, company, jd_kws, missing
 
     missing_map: dict[str, dict] = {}

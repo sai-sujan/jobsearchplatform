@@ -66,7 +66,53 @@ _STOP_WORDS = {
     'written', 'verbal', 'communication', 'problem', 'solving', 'analytical',
     'detail', 'oriented', 'self', 'motivated', 'driven', 'passionate',
     'e.g', 'i.e', 'ie', 'eg',
+    # soft skills / work arrangements — not tech skills
+    'leadership', 'mentoring', 'coaching', 'collaboration', 'ownership',
+    'onsite', 'on-site', 'hybrid', 'remote', 'in-person', 'office',
+    'problem solving', 'critical thinking', 'time management',
+    'my email address', 'cell phone number', 'phone number', 'email address',
+    'etc.', 'solid', 'hands-on', 'hands on', 'day-to-day',
 }
+
+
+# Alias groups — all forms in a group are treated as the same skill.
+# When user has any form in their resume, none of the other forms count as missing.
+_ALIAS_GROUPS: list[set] = [
+    {'aws', 'amazon web services', 'amazon aws'},
+    {'gcp', 'google cloud platform', 'google cloud'},
+    {'azure', 'microsoft azure', 'azure cloud'},
+    {'k8s', 'kubernetes'},
+    {'js', 'javascript'},
+    {'ts', 'typescript'},
+    {'postgres', 'postgresql', 'psql'},
+    {'mongo', 'mongodb'},
+    {'es', 'elasticsearch', 'elastic search'},
+    {'tf', 'tensorflow'},
+    {'iac', 'infrastructure as code'},
+    {'llm', 'large language models', 'large language model'},
+    {'gen ai', 'generative ai'},
+    {'ml', 'machine learning'},
+    {'dl', 'deep learning'},
+    {'nlp', 'natural language processing'},
+    {'cv', 'computer vision'},
+    {'ci/cd', 'ci cd', 'continuous integration', 'continuous deployment', 'continuous delivery'},
+    {'oop', 'object oriented programming', 'object-oriented programming'},
+    {'rest', 'restful', 'rest api', 'restful api'},
+    {'sql', 'structured query language'},
+    {'nosql', 'no-sql'},
+]
+
+# flat map: term -> canonical (shortest in group)
+_ALIAS_MAP: dict[str, str] = {}
+for _group in _ALIAS_GROUPS:
+    _canonical = min(_group, key=len)
+    for _term in _group:
+        _ALIAS_MAP[_term] = _canonical
+
+
+def _to_canonical(term: str) -> str:
+    """Normalize a term to its canonical alias, or return as-is."""
+    return _ALIAS_MAP.get(term.lower(), term.lower())
 
 
 def _load_whitelist() -> list[str]:
@@ -250,4 +296,6 @@ def compute_missing(jd_text: str, resume_text: Optional[str], use_groq: bool = T
         else:
             have = set()
 
-    return sorted(jd_kws - have)
+    # Expand both sides to canonical forms so aliases match (aws ↔ amazon web services, etc.)
+    have_canonical = {_to_canonical(k) for k in have}
+    return sorted(k for k in jd_kws if _to_canonical(k) not in have_canonical)
