@@ -288,7 +288,7 @@ def get_keyword_bank(
     """Aggregate missing ATS keywords across all user's matched jobs (3-tier extraction)."""
     from concurrent.futures import ThreadPoolExecutor
     from src.evaluation.keyword_extractor import (
-        extract_jd_keywords, extract_resume_keywords, _to_canonical,
+        extract_jd_keywords, extract_resume_keywords, scan_whitelist, _to_canonical,
     )
 
     resume_asset = next((a for a in user.resume_assets if a.is_active), None)
@@ -309,7 +309,8 @@ def get_keyword_bank(
 
     def _extract(entry):
         mj_id, title, company, jd = entry
-        jd_kws = extract_jd_keywords(jd, use_groq=False)
+        # whitelist-only: prevents non-tech noise (healthcare benefits, etc.) from T2 patterns
+        jd_kws = scan_whitelist(jd)
         missing = {k for k in jd_kws if _to_canonical(k) not in have_canonical}
         return mj_id, title, company, jd_kws, missing
 
@@ -353,7 +354,7 @@ def get_keyword_trends(
     from concurrent.futures import ThreadPoolExecutor
     from collections import defaultdict
     from datetime import datetime, timezone
-    from src.evaluation.keyword_extractor import extract_jd_keywords
+    from src.evaluation.keyword_extractor import scan_whitelist
 
     matched_jobs = get_user_matched_jobs(db, user.id, limit=100000)
 
@@ -396,7 +397,7 @@ def get_keyword_trends(
         key, entries = args
         kw_counts: dict[str, int] = defaultdict(int)
         for jd, *_ in entries:
-            for kw in extract_jd_keywords(jd, use_groq=False):
+            for kw in scan_whitelist(jd):
                 kw_counts[kw] += 1
         top = sorted(kw_counts.items(), key=lambda x: x[1], reverse=True)[:60]
         return key, len(entries), top
