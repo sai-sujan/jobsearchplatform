@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - path: .env.docker
+        required: false
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: 5001
+      DATABASE_URL: sqlite:////app/data/jobs.db
+      RESUME_PATH: /app/resume/master_resume.txt
+      CHROME_PATH: /opt/google/chrome/chrome
+      CHROME_USER_DATA_DIR: /app/data/chrome
+      CHROME_PROFILE_DIR: Default
+      USE_EXISTING_CHROME: "False"
+      CORS_ORIGINS: http://localhost:5174,http://127.0.0.1:5174
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./resume:/app/resume
+      - ./config:/app/config
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:5001/api/health >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:5001
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "5174:5174"

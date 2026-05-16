@@ -13,6 +13,23 @@ Automate LinkedIn job searching and resume evaluation using Playwright and OpenA
 
 ## Quick Start
 
+### Docker (recommended for a fresh clone)
+
+```bash
+cd job-applications
+cp .env.docker.example .env.docker
+docker compose up --build
+```
+
+Then open:
+
+- Dashboard: http://localhost:5174
+- Backend health check: http://localhost:5001/api/health
+
+See [DOCKER.md](DOCKER.md) for env variables, mounted data folders, and container commands.
+
+### Local Python setup
+
 ### 1. Setup Environment
 
 ```bash

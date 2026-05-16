@@ -16,6 +16,7 @@ ENV/
 
 # === Environment Variables ===
 .env
+.env.docker
 .env.*.local
 
 # === IDE & Editor ===

@@ -1,4 +1,4 @@
-.PHONY: help setup install run clean test lint format dev-setup scheduler dashboard
+.PHONY: help setup install run clean test lint format dev-setup scheduler dashboard docker-up docker-down docker-build docker-logs
 
 # Colors for output
 BLUE := \033[0;34m
@@ -19,6 +19,8 @@ help:
 	@echo "  $(GREEN)clean-db$(NC)        - Clean & deduplicate Excel"
 	@echo "  $(GREEN)scheduler$(NC)       - Start scheduled automation"
 	@echo "  $(GREEN)dashboard$(NC)       - Start web dashboard"
+	@echo "  $(GREEN)docker-up$(NC)       - Start backend + dashboard with Docker Compose"
+	@echo "  $(GREEN)docker-down$(NC)     - Stop Docker Compose services"
 	@echo ""
 	@echo "$(YELLOW)Development:$(NC)"
 	@echo "  $(GREEN)dev-setup$(NC)       - Setup dev environment (+ testing)"
@@ -128,6 +130,21 @@ check: lint
 dashboard:
 	@echo "$(BLUE)Starting dashboard...$(NC)"
 	cd dashboard && npm install && npm run dev
+
+# Docker
+docker-up:
+	@test -f .env.docker || (echo "$(YELLOW)Creating .env.docker from example...$(NC)" && cp .env.docker.example .env.docker)
+	docker compose up --build
+
+docker-build:
+	@test -f .env.docker || cp .env.docker.example .env.docker
+	docker compose build
+
+docker-down:
+	docker compose down
+
+docker-logs:
+	docker compose logs -f
 
 # Cleaning
 clean:
