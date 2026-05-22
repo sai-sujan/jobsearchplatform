@@ -216,12 +216,20 @@
 
     if (host.includes("dice.com")) {
       const chipText = getDiceChipText();
+      const diceParsed = parseDice();
       if (parsed?.title) {
         if (chipText) parsed.description = [parsed.description, chipText].filter(Boolean).join(" ").slice(0, 8000);
+        if (diceParsed?.company) parsed.company = diceParsed.company;
+        if (diceParsed?.location) parsed.location = parsed.location || diceParsed.location;
+        if (diceParsed?.description && diceParsed.description.length > (parsed.description || "").length) {
+          parsed.description = diceParsed.description;
+        }
+        if (diceParsed?.employment_type) parsed.employment_type = diceParsed.employment_type;
+        if (diceParsed?.contact_info) parsed.contact_info = diceParsed.contact_info;
+        parsed.source = "dice";
         return parsed;
       }
-      parsed = parseDice();
-      if (parsed?.title) return parsed;
+      if (diceParsed?.title) return diceParsed;
     }
 
     if (parsed?.title) return parsed;
@@ -476,15 +484,53 @@
 
     if (autoApplyBtn) {
       autoApplyBtn.addEventListener("click", async () => {
-        const applyBtn = findDiceApplyButton();
-        if (!applyBtn) {
-          autoApplyBtn.textContent = "No Apply btn found";
+        autoApplyBtn.textContent = "Saving first…";
+        autoApplyBtn.disabled = true;
+
+        const latestJob = await detectJob().catch(() => null);
+        const saveResponse = await chrome.runtime.sendMessage({
+          type: "SAVE_JOB",
+          job: jobForSave(latestJob?.title ? latestJob : job),
+        }).catch(() => null);
+
+        if (!saveResponse?.ok) {
+          const needsAuth = saveResponse?.error === "Not authenticated" || saveResponse?.status === 401;
+          autoApplyBtn.textContent = needsAuth ? "Sign in first" : "Save failed";
+          autoApplyBtn.disabled = false;
+          await chrome.runtime.sendMessage({ type: "CANCEL_DICE_AUTO_APPLY" }).catch(() => {});
           return;
         }
-        autoApplyBtn.textContent = "Applying…";
-        autoApplyBtn.disabled = true;
-        await chrome.storage.local.set({ careerosAutoApply: true });
-        applyBtn.click();
+
+        const applyBtn = findDiceApplyButton();
+        if (!applyBtn) {
+          autoApplyBtn.textContent = "Saved, no Apply btn";
+          await chrome.runtime.sendMessage({ type: "CANCEL_DICE_AUTO_APPLY" }).catch(() => {});
+          return;
+        }
+
+        autoApplyBtn.textContent = "Saved. Applying…";
+        launcher.classList.add("careeros-launcher-bar--saved");
+        saveBtn.querySelector(".careeros-launcher-bar-label").textContent = saveResponse.created ? "Saved!" : "Already saved";
+
+        const session = await chrome.runtime.sendMessage({
+          type: "BEGIN_DICE_AUTO_APPLY",
+          url: window.location.href,
+        }).catch(() => null);
+        if (!session?.ok) {
+          autoApplyBtn.textContent = "Auto Apply unavailable";
+          autoApplyBtn.disabled = false;
+          return;
+        }
+        setTimeout(() => {
+          chrome.runtime.sendMessage({ type: "CANCEL_DICE_AUTO_APPLY" }).catch(() => {});
+        }, 90000);
+        try {
+          applyBtn.click();
+        } catch (_) {
+          autoApplyBtn.textContent = "Open Apply manually";
+          autoApplyBtn.disabled = false;
+          await chrome.runtime.sendMessage({ type: "CANCEL_DICE_AUTO_APPLY" }).catch(() => {});
+        }
       });
     }
 
@@ -901,19 +947,132 @@
   // ── Inline parsers ─────────────────────────────────────────────────────────
 
   function parseDice() {
+    function diceRoot() {
+      return (
+        document.querySelector('[data-testid="jobDetailsContainer"]') ||
+        document.querySelector('[data-cy="jobDetails"]') ||
+        document.querySelector('article') ||
+        document.querySelector('main') ||
+        document.body
+      );
+    }
+
+    function labelValue(text, labels) {
+      for (const label of labels) {
+        const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const match = text.match(new RegExp(`\\b${escaped}\\b\\s*:?\\s*([^\\n|•]+)`, "i"));
+        if (match?.[1]) return cleanText(match[1]);
+      }
+      return "";
+    }
+
+    function likelyPersonName(value) {
+      const text = cleanText(value).replace(/^(by|from)\s+/i, "");
+      if (!text || text.length > 80) return "";
+      if (/[.@]|\d|job|dice|recruiter|contact|company|employer|posted/i.test(text)) return "";
+      if (!/^[A-Z][a-zA-Z.'-]+(?:\s+[A-Z][a-zA-Z.'-]+){1,3}$/.test(text)) return "";
+      return text;
+    }
+
+    function textWithLines(el) {
+      return String(el?.innerText || el?.textContent || "")
+        .split(/\n+/)
+        .map(cleanText)
+        .filter(Boolean)
+        .join("\n");
+    }
+
+    function cleanContactRawText(value) {
+      return String(value || "")
+        .split(/\n+/)
+        .map(cleanText)
+        .filter((line) => line && !/^(contact the job poster|view profile)$/i.test(line))
+        .join("\n");
+    }
+
+    function findDiceContactCard(root) {
+      const scopes = [root, document.body, document].filter(Boolean);
+      for (const scope of scopes) {
+        const direct =
+          scope.querySelector?.('[data-cy="recruiterInfo"]') ||
+          scope.querySelector?.('[data-cy="contactInfo"]') ||
+          scope.querySelector?.('[data-testid*="recruiter" i]') ||
+          scope.querySelector?.('[data-testid*="contact" i]') ||
+          scope.querySelector?.('[class*="recruiter" i]') ||
+          scope.querySelector?.('[class*="contact-info" i]') ||
+          scope.querySelector?.('[class*="posted-by" i]');
+        if (direct) return direct;
+      }
+
+      const labelEl = Array.from(document.querySelectorAll("span, div, p, h2, h3, strong, button"))
+        .find((el) => /^contact the job poster$/i.test(cleanText(el.innerText || el.textContent || "")));
+      if (!labelEl) return null;
+
+      let node = labelEl;
+      for (let i = 0; i < 6 && node; i += 1) {
+        const text = textWithLines(node);
+        if (/contact the job poster/i.test(text) && /recruiter|hiring|talent|@/i.test(text) && text.length < 1400) {
+          return node;
+        }
+        node = node.parentElement;
+      }
+      return labelEl.parentElement || labelEl;
+    }
+
+    function extractContactInfo(root, jobCompany) {
+      const contactEl = findDiceContactCard(root);
+      const rootText = cleanText(document.body?.innerText || root?.innerText || root?.textContent || "");
+      const contactRaw = cleanContactRawText(textWithLines(contactEl));
+      const scanText = [contactRaw, rootText].filter(Boolean).join("\n").slice(0, 12000);
+      const contactInfo = {};
+
+      const emailMatch = scanText.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/);
+      if (emailMatch) contactInfo.email = emailMatch[0];
+      const phoneMatch = scanText.match(/(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
+      if (phoneMatch) contactInfo.phone = phoneMatch[0].trim();
+
+      const labeledName = labelValue(scanText, ["Recruiter", "Contact", "Contact Name", "Posted by", "Hiring Manager"]);
+      const lineName = contactRaw
+        .split(/\n+/)
+        .map((line) => likelyPersonName(line))
+        .find(Boolean);
+      const name = likelyPersonName(labeledName) || lineName;
+      if (name) contactInfo.name = name;
+
+      const titleLine = contactRaw
+        .split(/\n+/)
+        .map(cleanText)
+        .find((line) => /\b(recruiter|hiring manager|talent acquisition|sourcer)\b/i.test(line));
+      if (titleLine) contactInfo.title = titleLine.slice(0, 160);
+
+      const contactCompany = labelValue(contactRaw || scanText, ["Recruiter Company", "Staffing Company", "Company", "Employer"]);
+      const titleCompany = titleLine?.match(/@\s*(.+)$/)?.[1] || "";
+      if (contactCompany && contactCompany.toLowerCase() !== "dice") {
+        contactInfo.company = contactCompany.slice(0, 160);
+      } else if (titleCompany) {
+        contactInfo.company = cleanText(titleCompany).slice(0, 160);
+      } else if (jobCompany) {
+        contactInfo.company = jobCompany;
+      }
+      if (contactRaw) contactInfo.raw = contactRaw.slice(0, 1000);
+      if (!(contactInfo.name || contactInfo.email || contactInfo.phone)) return {};
+      return contactInfo;
+    }
+
+    const root = diceRoot();
     const title =
-      firstText(['[data-cy="jobTitle"]', 'h1[class*="title" i]', "h1"]) ||
+      firstText(['[data-cy="jobTitle"]', 'h1[class*="title" i]', "h1"], root) ||
       titleFromDocument();
     if (!title) return null;
     const company =
-      firstText(['[data-cy="companyNameLink"]', '[class*="employer" i]', '[class*="company" i]']) ||
+      firstText(['[data-cy="companyNameLink"]', '[data-cy="companyName"]', '[class*="employer" i]', '[class*="company" i]'], root) ||
       companyFromHost();
     const location =
-      firstText(['[data-cy="location"]', '[class*="location" i]']);
+      firstText(['[data-cy="location"]', '[class*="location" i]'], root);
     const descEl =
-      document.querySelector('[data-testid="jobDescription"]') ||
-      document.querySelector('[class*="job-description" i]') ||
-      document.querySelector('[id*="jobDescription" i]');
+      root.querySelector('[data-testid="jobDescription"]') ||
+      root.querySelector('[class*="job-description" i]') ||
+      root.querySelector('[id*="jobDescription" i]');
     const description = cleanText(descEl?.innerText || descEl?.textContent || "");
     const chipText = getDiceChipText();
 
@@ -946,24 +1105,7 @@
     }
 
     // ── Contact info ──────────────────────────────────────────────────────────
-    const recruiterEl =
-      document.querySelector('[data-cy="recruiterInfo"]') ||
-      document.querySelector('[data-cy="contactInfo"]') ||
-      document.querySelector('[data-testid*="recruiter" i]') ||
-      document.querySelector('[class*="recruiter" i]') ||
-      document.querySelector('[class*="contact-info" i]');
-    const contactRaw = cleanText(recruiterEl?.innerText || "");
-    const contactInfo = {};
-    if (contactRaw) {
-      const emailMatch = contactRaw.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/);
-      if (emailMatch) contactInfo.email = emailMatch[0];
-      const phoneMatch = contactRaw.match(/(\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
-      if (phoneMatch) contactInfo.phone = phoneMatch[0].trim();
-      const lines = contactRaw.split(/\n+/).map((l) => l.trim()).filter(Boolean);
-      if (lines.length > 0 && !lines[0].includes("@") && !/\d{3}/.test(lines[0])) {
-        contactInfo.name = lines[0];
-      }
-    }
+    const contactInfo = extractContactInfo(root, company);
 
     return {
       title,

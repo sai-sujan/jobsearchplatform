@@ -60,6 +60,56 @@
   flex-wrap: wrap;
 }
 
+.saved-toolbar-copy {
+  display: grid;
+  gap: 0.15rem;
+}
+.saved-toolbar-copy span {
+  color: #6b7280;
+  font-size: 0.78rem;
+}
+
+.saved-filter-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.55rem;
+}
+.saved-filter-tabs button {
+  min-height: 1.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.saved-filter-tabs button.active {
+  background: #ffffff;
+  border-color: #dbe3ef;
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+.saved-filter-tabs span {
+  min-width: 1.25rem;
+  height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 0.7rem;
+}
+
 .saved-search { position: relative; min-width: 15rem; }
 .saved-search svg {
   position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%);
@@ -102,6 +152,94 @@
 }
 .saved-row:hover { background: #fafbfd; border-color: #eef0f4; }
 
+.saved-contact-panel {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.1rem 0 0 2.9rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #dbeafe;
+  border-radius: 0.65rem;
+  background: #f8fbff;
+  cursor: default;
+}
+
+.saved-contact-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.saved-contact-heading > div {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.saved-contact-heading strong {
+  color: #0f172a;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.saved-contact-heading span {
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.saved-contact-heading button {
+  min-height: 1.85rem;
+  padding: 0 0.7rem;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.45rem;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.saved-contact-heading button:hover { background: #eff6ff; }
+
+.saved-contact-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.saved-contact-details a,
+.saved-contact-details span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.65rem;
+  padding: 0 0.6rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.saved-contact-details a {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.saved-contact-panel pre {
+  max-height: 8rem;
+  overflow: auto;
+  margin: 0;
+  padding: 0.65rem;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  color: #475569;
+  font: 0.74rem/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  white-space: pre-wrap;
+}
+
 .saved-position {
   display: grid;
   grid-template-columns: 2.2rem minmax(0, 1fr);
@@ -120,7 +258,37 @@
   margin: 0; color: #0f172a; font-size: 0.9rem; font-weight: 600;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.saved-position small { color: #9ca3af; font-size: 0.78rem; }
+.saved-position small {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  color: #9ca3af;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saved-source-chip,
+.saved-contact-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 1.25rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  font-size: 0.67rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.saved-source-chip {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.saved-contact-chip {
+  background: #dcfce7;
+  color: #166534;
+}
 
 .saved-muted { color: #6b7280; font-size: 0.85rem; }
 
@@ -188,6 +356,10 @@
 }
 
 @media (max-width: 760px) {
+  .saved-filter-tabs {
+    width: 100%;
+    overflow-x: auto;
+  }
   .saved-table-head { display: none; }
   .saved-row {
     grid-template-columns: 1fr;
@@ -195,5 +367,8 @@
     padding: 0.85rem;
     border: 1px solid #eef0f4;
     background: #fff;
+  }
+  .saved-contact-panel {
+    margin-left: 0;
   }
 }

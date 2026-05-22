@@ -7,6 +7,8 @@ const DEFAULT_API_BASE = "http://localhost:5001";
 const STORAGE_TOKEN_KEY = "careeros_token";
 const STORAGE_CSRF_KEY = "careeros_csrf";
 const STORAGE_USER_KEY = "careeros_user";
+const STORAGE_AUTO_APPLY_KEY = "careerosAutoApply";
+const AUTO_APPLY_TTL_MS = 90_000;
 
 async function getApiBase() {
   const data = await chrome.storage.local.get("careeros_api_base");
@@ -95,12 +97,52 @@ function jobForSave(job = {}) {
 
 // ── Auto Apply tab watcher ────────────────────────────────────────────────────
 
+async function clearDiceAutoApply() {
+  await chrome.storage.local.remove(STORAGE_AUTO_APPLY_KEY).catch(() => {});
+}
+
+async function cleanupDiceAutoApplyOnBoot() {
+  const data = await chrome.storage.local.get(STORAGE_AUTO_APPLY_KEY).catch(() => ({}));
+  const session = data?.[STORAGE_AUTO_APPLY_KEY];
+  if (!session || session === true || typeof session !== "object" || Number(session.expiresAt || 0) < Date.now()) {
+    await clearDiceAutoApply();
+  }
+}
+
+async function getDiceAutoApplySession() {
+  const data = await chrome.storage.local.get(STORAGE_AUTO_APPLY_KEY).catch(() => ({}));
+  const session = data?.[STORAGE_AUTO_APPLY_KEY];
+
+  // Legacy boolean flags caused stale auto-click sessions after extension reloads.
+  if (!session || session === true || typeof session !== "object") {
+    if (session) await clearDiceAutoApply();
+    return null;
+  }
+
+  if (!session.active || Number(session.expiresAt || 0) < Date.now()) {
+    await clearDiceAutoApply();
+    return null;
+  }
+
+  return session;
+}
+
+cleanupDiceAutoApplyOnBoot();
+
+chrome.runtime.onStartup?.addListener(() => {
+  clearDiceAutoApply();
+});
+
+chrome.runtime.onInstalled?.addListener(() => {
+  clearDiceAutoApply();
+});
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status !== "complete") return;
   if (!tab.url?.includes("dice.com")) return;
 
-  const data = await chrome.storage.local.get("careerosAutoApply").catch(() => ({}));
-  if (!data?.careerosAutoApply) return;
+  const session = await getDiceAutoApplySession();
+  if (!session) return;
 
   // Inject the click logic directly — bypasses content script SPA guard
   chrome.scripting.executeScript({
@@ -114,7 +156,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
       function findBtn(pattern) {
         return Array.from(document.querySelectorAll("button")).find(
-          (el) => pattern.test(el.textContent.trim()) && !el.disabled
+          (el) => pattern.test(el.textContent.trim()) && !el.disabled && el.offsetParent !== null
         ) || null;
       }
 
@@ -123,7 +165,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         if (!btn) return false;
         btn.click();
         chrome.storage.local.remove("careerosAutoApply").catch(() => {});
-        setTimeout(() => chrome.runtime.sendMessage({ type: "CLOSE_TAB" }).catch(() => {}), 1500);
+        setTimeout(() => chrome.runtime.sendMessage({ type: "CLOSE_TAB" }).catch(() => {}), 7000);
         return true;
       }
 
@@ -133,7 +175,10 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         let tries = 0;
         const poll = setInterval(() => {
           if (submitAndClose()) { clearInterval(poll); return; }
-          if (++tries > maxTries) clearInterval(poll);
+          if (++tries > maxTries) {
+            chrome.storage.local.remove("careerosAutoApply").catch(() => {});
+            clearInterval(poll);
+          }
         }, 500);
       }
 
@@ -151,6 +196,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
         // Neither Submit nor Next found — page still loading
         if (retries < 20) setTimeout(() => act(retries + 1), 700);
+        else chrome.storage.local.remove("careerosAutoApply").catch(() => {});
       }
 
       setTimeout(() => act(), 1200);
@@ -211,6 +257,23 @@ async function handleMessage(msg) {
 
     case "LOGOUT": {
       await clearToken();
+      return { ok: true };
+    }
+
+    case "BEGIN_DICE_AUTO_APPLY": {
+      await chrome.storage.local.set({
+        [STORAGE_AUTO_APPLY_KEY]: {
+          active: true,
+          sourceUrl: msg.url || "",
+          startedAt: Date.now(),
+          expiresAt: Date.now() + AUTO_APPLY_TTL_MS,
+        },
+      });
+      return { ok: true };
+    }
+
+    case "CANCEL_DICE_AUTO_APPLY": {
+      await clearDiceAutoApply();
       return { ok: true };
     }
 

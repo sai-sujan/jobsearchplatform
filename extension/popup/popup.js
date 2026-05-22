@@ -239,13 +239,28 @@ function detectJobOnPage() {
     );
   }
 
-  const structured = parseJsonLdJob();
-  if (structured?.title) return structured;
-
   const h = window.location.hostname;
+  const structured = parseJsonLdJob();
+  if (structured?.title && !h.includes("dice.com")) return structured;
   let title = "", company = "", location = "", description = "";
 
-  if (h.includes("linkedin.com")) {
+  if (h.includes("dice.com")) {
+    const diceJob = parseDiceJob();
+    if (structured?.title) {
+      return {
+        ...structured,
+        company: diceJob?.company || structured.company,
+        location: structured.location || diceJob?.location || "",
+        description: (diceJob?.description && diceJob.description.length > (structured.description || "").length)
+          ? diceJob.description
+          : structured.description,
+        source: "dice",
+        employment_type: diceJob?.employment_type,
+        contact_info: diceJob?.contact_info,
+      };
+    }
+    if (diceJob?.title) return diceJob;
+  } else if (h.includes("linkedin.com")) {
     const detailsRoot =
       document.querySelector(".jobs-search__job-details--container") ||
       document.querySelector(".jobs-details") ||
@@ -338,6 +353,124 @@ function detectJobOnPage() {
 
   if (!title) return null;
   return { title, company, location, description: description.slice(0, 4000), url: window.location.href, source: "extension" };
+
+  function parseDiceJob() {
+    const root =
+      document.querySelector('[data-testid="jobDetailsContainer"]') ||
+      document.querySelector('[data-cy="jobDetails"]') ||
+      document.querySelector("article") ||
+      document.querySelector("main") ||
+      document.body;
+    const title =
+      firstText(['[data-cy="jobTitle"]', 'h1[class*="title" i]', "h1"], root) ||
+      titleFromDocument();
+    if (!title) return null;
+    const company =
+      firstText(['[data-cy="companyNameLink"]', '[data-cy="companyName"]', '[class*="employer" i]', '[class*="company" i]'], root) ||
+      companyFromHost();
+    const location = firstText(['[data-cy="location"]', '[class*="location" i]'], root);
+    const descEl =
+      root.querySelector('[data-testid="jobDescription"]') ||
+      root.querySelector('[class*="job-description" i]') ||
+      root.querySelector('[id*="jobDescription" i]');
+    const description = [
+      cleanText(descEl?.innerText || descEl?.textContent || ""),
+      cleanText(root?.innerText || "").slice(0, 3000),
+    ].filter(Boolean).join(" ").slice(0, 8000);
+    const scanText = description.toUpperCase();
+    const employmentBits = [];
+    if (/\bCONTRACT[-\s]W[-\s]?2\b/.test(scanText)) employmentBits.push("Contract W2");
+    else {
+      if (/\bW[-\s]?2\b/.test(scanText)) employmentBits.push("W2");
+      if (/\bCONTRACT\b/.test(scanText)) employmentBits.push("Contract");
+    }
+    if (/NO[-\s]?C[-\s]?2[-\s]?C\b|NO\s+CORP[-\s]?TO[-\s]?CORP/.test(scanText)) employmentBits.push("No C2C");
+    else if (/\bC[-\s]?2[-\s]?C\b|CORP[-\s]TO[-\s]CORP|CORP2CORP/.test(scanText)) employmentBits.push("C2C");
+    if (/\b1099\b/.test(scanText)) employmentBits.push("1099");
+
+    return {
+      title,
+      company,
+      location,
+      description,
+      url: window.location.href,
+      source: "dice",
+      employment_type: employmentBits.join(", ") || undefined,
+      contact_info: extractDiceContact(root, company),
+    };
+  }
+
+  function diceTextWithLines(el) {
+    return String(el?.innerText || el?.textContent || "")
+      .split(/\n+/)
+      .map(cleanText)
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  function cleanDiceContactRaw(value) {
+    return String(value || "")
+      .split(/\n+/)
+      .map(cleanText)
+      .filter((line) => line && !/^(contact the job poster|view profile)$/i.test(line))
+      .join("\n");
+  }
+
+  function findDiceContactCard(root) {
+    const scopes = [root, document.body, document].filter(Boolean);
+    for (const scope of scopes) {
+      const direct =
+        scope.querySelector?.('[data-cy="recruiterInfo"]') ||
+        scope.querySelector?.('[data-cy="contactInfo"]') ||
+        scope.querySelector?.('[data-testid*="recruiter" i]') ||
+        scope.querySelector?.('[data-testid*="contact" i]') ||
+        scope.querySelector?.('[class*="recruiter" i]') ||
+        scope.querySelector?.('[class*="contact-info" i]') ||
+        scope.querySelector?.('[class*="posted-by" i]');
+      if (direct) return direct;
+    }
+
+    const labelEl = Array.from(document.querySelectorAll("span, div, p, h2, h3, strong, button"))
+      .find((el) => /^contact the job poster$/i.test(cleanText(el.innerText || el.textContent || "")));
+    if (!labelEl) return null;
+
+    let node = labelEl;
+    for (let i = 0; i < 6 && node; i += 1) {
+      const text = diceTextWithLines(node);
+      if (/contact the job poster/i.test(text) && /recruiter|hiring|talent|@/i.test(text) && text.length < 1400) {
+        return node;
+      }
+      node = node.parentElement;
+    }
+    return labelEl.parentElement || labelEl;
+  }
+
+  function extractDiceContact(root, jobCompany) {
+    const contactEl = findDiceContactCard(root);
+    const contactRaw = cleanDiceContactRaw(diceTextWithLines(contactEl));
+    const scanText = [contactRaw, cleanText(document.body?.innerText || root?.innerText || root?.textContent || "")].filter(Boolean).join("\n").slice(0, 12000);
+    const contactInfo = {};
+    const emailMatch = scanText.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/);
+    if (emailMatch) contactInfo.email = emailMatch[0];
+    const phoneMatch = scanText.match(/(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
+    if (phoneMatch) contactInfo.phone = phoneMatch[0].trim();
+    const name = dicePersonName(scanText) || contactRaw.split(/\n+/).map(dicePersonName).find(Boolean);
+    if (name) contactInfo.name = name;
+    const titleLine = contactRaw.split(/\n+/).map(cleanText).find((line) => /\b(recruiter|hiring manager|talent acquisition|sourcer)\b/i.test(line));
+    if (titleLine) contactInfo.title = titleLine.slice(0, 160);
+    const titleCompany = titleLine?.match(/@\s*(.+)$/)?.[1] || "";
+    if (titleCompany) contactInfo.company = cleanText(titleCompany).slice(0, 160);
+    else if (jobCompany) contactInfo.company = jobCompany;
+    if (contactRaw) contactInfo.raw = contactRaw.slice(0, 1000);
+    return contactInfo.name || contactInfo.email || contactInfo.phone ? contactInfo : undefined;
+  }
+
+  function dicePersonName(text) {
+    const labeled = cleanText(text).match(/\b(?:Recruiter|Contact|Contact Name|Posted by|Hiring Manager)\b\s*:?\s*([A-Z][a-zA-Z.'-]+(?:\s+[A-Z][a-zA-Z.'-]+){1,3})/i)?.[1] || cleanText(text);
+    const value = cleanText(labeled).replace(/^(by|from)\s+/i, "");
+    if (!value || value.length > 80 || /[.@]|\d|job|dice|recruiter|contact|company|employer|posted/i.test(value)) return "";
+    return /^[A-Z][a-zA-Z.'-]+(?:\s+[A-Z][a-zA-Z.'-]+){1,3}$/.test(value) ? value : "";
+  }
 }
 
 // ── Cover Letter ──────────────────────────────────────────────────────────────

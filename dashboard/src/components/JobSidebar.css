@@ -208,6 +208,104 @@
   line-height: 1.5;
 }
 
+.contact-info-block {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-info-label {
+  display: block;
+  color: var(--slate-500);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.contact-info-panel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  background: #f8fbff;
+}
+
+.contact-info-panel strong {
+  display: block;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.contact-info-panel p {
+  margin: 3px 0 0;
+  color: var(--slate-600);
+  font-size: 13px;
+}
+
+.contact-info-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.contact-info-actions a,
+.contact-info-actions button {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.contact-info-lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.contact-info-lines a,
+.contact-info-lines span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: var(--slate-600);
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.contact-info-lines a {
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
+.contact-info-raw {
+  max-height: 120px;
+  overflow: auto;
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: var(--slate-600);
+  font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  white-space: pre-wrap;
+}
+
 /* Sidebar Actions (Top Right) */
 .job-detail-actions.top-actions {
   display: flex;

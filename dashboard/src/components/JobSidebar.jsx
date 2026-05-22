@@ -172,6 +172,44 @@ function copyText(text, setMessage) {
   window.setTimeout(() => setMessage(''), 1800)
 }
 
+function getContactInfo(job) {
+  const contact = job?.['Contact Info']
+  if (!contact || typeof contact !== 'object') return {}
+  return contact
+}
+
+function hasContactInfo(job) {
+  const contact = getContactInfo(job)
+  return Boolean(contact.name || contact.email || contact.phone)
+}
+
+function cleanContactRaw(raw) {
+  return String(raw || '')
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter((line) => line && !/^(contact the job poster|view profile)$/i.test(line))
+    .join('\n')
+}
+
+function contactCopyText(contact) {
+  const raw = cleanContactRaw(contact.raw)
+  return [
+    contact.name,
+    contact.title,
+    contact.company,
+    contact.email,
+    contact.phone,
+    raw,
+  ].filter(Boolean).join('\n')
+}
+
+function linkedInSearchUrl(contact, job) {
+  const query = [contact.name, contact.company || job?.Company, 'LinkedIn']
+    .filter(Boolean)
+    .join(' ')
+  return `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(query)}`
+}
+
 function getHumanReadableScore(score) {
   if (score === 'N/A' || !score) return 'Unscored'
   if (score >= 85) return 'Top match'
@@ -224,7 +262,7 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   useEffect(() => {
     if (!job) return undefined
 
-    setActiveTab('notes')
+    setActiveTab(hasContactInfo(job) ? 'details' : 'notes')
     setEditMode(false)
     setJsonMode(false)
     setJsonText('')
@@ -424,6 +462,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
   const sourceLabel = getSourceLabel(job)
   const matchedSkills = getMatchedSkills(job, 12)
   const companyMonogram = getCompanyMonogram(job.Company)
+  const contactInfo = getContactInfo(job)
+  const contactAvailable = hasContactInfo(job)
   const stackEntries = Object.entries(editedData.tech_stack || {})
   const suggestedEntries = Object.entries(editedData.suggested_tech_stack || {})
   const rawPreview = JSON.stringify(
@@ -726,6 +766,18 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                 <span>{editedData.location || job.Location || 'Remote / flexible'}</span>
                 <span>&middot;</span>
                 <span>{job['Job Type'] || 'Full-time'}</span>
+                {job['Employment Type'] && (
+                  <>
+                    <span>&middot;</span>
+                    <span>{job['Employment Type']}</span>
+                  </>
+                )}
+                {contactAvailable && (
+                  <>
+                    <span>&middot;</span>
+                    <span>Contact saved</span>
+                  </>
+                )}
                 <span>&middot;</span>
                 <span>Posted {formatDisplayDate(job['Date Found'])}</span>
               </div>
@@ -941,8 +993,8 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
 
             {activeTab === 'details' && (
               <div className="job-detail-main">
-                {(job['Employment Type'] || (job['Contact Info'] && Object.keys(job['Contact Info']).length > 0)) && (
-                  <div className="detail-module-card" style={{ marginBottom: '12px' }}>
+                {(job['Employment Type'] || contactAvailable) && (
+                  <div className="detail-module-card job-contact-card" style={{ marginBottom: '12px' }}>
                     <header className="module-header">
                       <span className="module-title">Role Details</span>
                     </header>
@@ -968,24 +1020,41 @@ function JobSidebar({ job, onClose, onStatusChange, onDelete, onNext, onPrev, ha
                         </div>
                       </div>
                     )}
-                    {job['Contact Info'] && Object.keys(job['Contact Info']).length > 0 && (
-                      <div>
-                        <span style={{ fontSize: '12px', color: 'var(--muted)', display: 'block', marginBottom: '6px' }}>Recruiter Contact</span>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          {job['Contact Info'].name && (
-                            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>{job['Contact Info'].name}</span>
-                          )}
-                          {job['Contact Info'].email && (
-                            <a href={`mailto:${job['Contact Info'].email}`} style={{ fontSize: '13px', color: 'var(--primary)', textDecoration: 'none' }}>
-                              {job['Contact Info'].email}
-                            </a>
-                          )}
-                          {job['Contact Info'].phone && (
-                            <a href={`tel:${job['Contact Info'].phone}`} style={{ fontSize: '13px', color: 'var(--primary)', textDecoration: 'none' }}>
-                              {job['Contact Info'].phone}
-                            </a>
-                          )}
+                    {contactAvailable && (
+                      <div className="contact-info-block">
+                        <span className="contact-info-label">Recruiter Contact</span>
+                        <div className="contact-info-panel">
+                          <div>
+                            <strong>{contactInfo.name || 'Contact saved'}</strong>
+                            {(contactInfo.title || contactInfo.company) && (
+                              <p>{contactInfo.title || contactInfo.company}</p>
+                            )}
+                          </div>
+                          <div className="contact-info-actions">
+                            {contactInfo.name && (
+                              <a href={linkedInSearchUrl(contactInfo, job)} target="_blank" rel="noopener noreferrer">
+                                Find on LinkedIn
+                              </a>
+                            )}
+                            <button type="button" onClick={() => copyText(contactCopyText(contactInfo), setSaveMessage)}>
+                              Copy contact
+                            </button>
+                          </div>
                         </div>
+                        <div className="contact-info-lines">
+                          {contactInfo.email && (
+                            <a href={`mailto:${contactInfo.email}`}>
+                              {contactInfo.email}
+                            </a>
+                          )}
+                          {contactInfo.phone && (
+                            <a href={`tel:${contactInfo.phone}`}>
+                              {contactInfo.phone}
+                            </a>
+                          )}
+                          {contactInfo.company && <span>{contactInfo.company}</span>}
+                        </div>
+                        {cleanContactRaw(contactInfo.raw) && <pre className="contact-info-raw">{cleanContactRaw(contactInfo.raw)}</pre>}
                       </div>
                     )}
                   </div>
